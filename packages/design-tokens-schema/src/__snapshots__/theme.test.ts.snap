@@ -18485,12 +18485,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "value": 240,
         },
       },
-      "mobile": {
-        "display": {
-          "$type": "other",
-          "$value": "None",
-        },
-      },
       "row-gap": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-row",
@@ -30609,61 +30603,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     },
   },
   "todo": {
-    "accordion": {
-      "button": {
-        "font-family": {
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": [
-              "Source Sans Pro",
-              "Helvetica",
-              "Arial",
-              "sans-serif",
-            ],
-            "studio.tokens": {
-              "originalType": "fontFamilies",
-            },
-          },
-          "$type": "fontFamily",
-          "$value": "{basis.text.font-family.default}",
-        },
-        "font-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 1,
-            },
-            "studio.tokens": {
-              "originalType": "fontSizes",
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.text.font-size.md}",
-        },
-        "font-weight": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-weight",
-            "nl.nldesignsystem.value-resolved-as": 700,
-            "studio.tokens": {
-              "originalType": "fontWeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.font-weight.bold}",
-        },
-        "line-height": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "line-height",
-            "nl.nldesignsystem.value-resolved-as": 1.5,
-            "studio.tokens": {
-              "originalType": "lineHeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.line-height.md}",
-        },
-      },
-    },
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
@@ -33486,67 +33425,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     },
     "checkbox": {
       "checked": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.34901960784313724,
-                  0.16470588235294117,
-                  0.403921568627451,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -33656,132 +33534,10 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.4235294117647059,
-                  0.2,
-                  0.49411764705882355,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
       "indeterminate": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.34901960784313724,
-                  0.16470588235294117,
-                  0.403921568627451,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -33891,67 +33647,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.4235294117647059,
-                  0.2,
-                  0.49411764705882355,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
@@ -38675,110 +38370,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$value": "{basis.space.row.xl}",
       },
     },
-    "textarea": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9176470588235294,
-                0.9215686274509803,
-                0.9254901960784314,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.28627450980392155,
-                0.29411764705882354,
-                0.30980392156862746,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.10980392156862745,
-                0.11372549019607843,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
-    "textbox": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9176470588235294,
-                0.9215686274509803,
-                0.9254901960784314,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.28627450980392155,
-                0.29411764705882354,
-                0.30980392156862746,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.10980392156862745,
-                0.11372549019607843,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
@@ -39208,6 +38799,46 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "$value": "{basis.focus.color}",
           },
         },
+        "font-family": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": [
+              "Source Sans Pro",
+              "Helvetica",
+              "Arial",
+              "sans-serif",
+            ],
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1,
+            },
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 700,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.bold}",
+        },
         "gap": {
           "$extensions": {
             "nl.nldesignsystem.value-resolved-as": {
@@ -39301,6 +38932,17 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "$type": "dimension",
             "$value": "{basis.size.icon.md}",
           },
+        },
+        "line-height": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "line-height",
+            "nl.nldesignsystem.value-resolved-as": 1.5,
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.line-height.md}",
         },
         "padding-block-end": {
           "$extensions": {
@@ -43399,6 +43041,67 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$value": "{basis.form-control.border-width}",
       },
       "checked": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.34901960784313724,
+                  0.16470588235294117,
+                  0.403921568627451,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -43457,6 +43160,67 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.4235294117647059,
+                  0.2,
+                  0.49411764705882355,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "disabled": {
@@ -43597,6 +43361,67 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
       },
       "indeterminate": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.34901960784313724,
+                  0.16470588235294117,
+                  0.403921568627451,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -43655,6 +43480,67 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.4235294117647059,
+                  0.2,
+                  0.49411764705882355,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "invalid": {
@@ -54103,6 +53989,56 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9176470588235294,
+                0.9215686274509803,
+                0.9254901960784314,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.28627450980392155,
+                0.29411764705882354,
+                0.30980392156862746,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.10980392156862745,
+                0.11372549019607843,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
+      },
       "invalid": {
         "background-color": {
           "$extensions": {
@@ -54542,6 +54478,56 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
+      },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9176470588235294,
+                0.9215686274509803,
+                0.9254901960784314,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.28627450980392155,
+                0.29411764705882354,
+                0.30980392156862746,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.10980392156862745,
+                0.11372549019607843,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
       },
       "invalid": {
         "background-color": {
@@ -81093,59 +81079,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     },
   },
   "todo": {
-    "accordion": {
-      "button": {
-        "font-family": {
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": [
-              "IBM Plex Sans",
-              "sans-serif",
-            ],
-            "studio.tokens": {
-              "originalType": "fontFamilies",
-            },
-          },
-          "$type": "fontFamily",
-          "$value": "{basis.text.font-family.default}",
-        },
-        "font-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 1,
-            },
-            "studio.tokens": {
-              "originalType": "fontSizes",
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.text.font-size.md}",
-        },
-        "font-weight": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-weight",
-            "nl.nldesignsystem.value-resolved-as": 700,
-            "studio.tokens": {
-              "originalType": "fontWeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.font-weight.bold}",
-        },
-        "line-height": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "line-height",
-            "nl.nldesignsystem.value-resolved-as": 1.5,
-            "studio.tokens": {
-              "originalType": "lineHeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.line-height.md}",
-        },
-      },
-    },
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
@@ -83962,67 +83895,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     },
     "checkbox": {
       "checked": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0.23137254901960785,
-                  0.5058823529411764,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -84132,132 +84004,10 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.01568627450980392,
-                  0.28627450980392155,
-                  0.6039215686274509,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
       "indeterminate": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0.23137254901960785,
-                  0.5058823529411764,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -84367,67 +84117,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.01568627450980392,
-                  0.28627450980392155,
-                  0.6039215686274509,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
@@ -89135,110 +88824,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "$value": "{basis.space.row.xl}",
       },
     },
-    "textarea": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9215686274509803,
-                0.9215686274509803,
-                0.9215686274509803,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.48627450980392156,
-                0.48627450980392156,
-                0.48627450980392156,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.10588235294117647,
-                0.10588235294117647,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
-    "textbox": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9215686274509803,
-                0.9215686274509803,
-                0.9215686274509803,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.48627450980392156,
-                0.48627450980392156,
-                0.48627450980392156,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.10588235294117647,
-                0.10588235294117647,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
@@ -89657,6 +89242,44 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             "$value": "{basis.focus.color}",
           },
         },
+        "font-family": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": [
+              "IBM Plex Sans",
+              "sans-serif",
+            ],
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1,
+            },
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 700,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.bold}",
+        },
         "gap": {
           "$extensions": {
             "nl.nldesignsystem.value-resolved-as": {
@@ -89750,6 +89373,17 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             "$type": "dimension",
             "$value": "{basis.size.icon.md}",
           },
+        },
+        "line-height": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "line-height",
+            "nl.nldesignsystem.value-resolved-as": 1.5,
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.line-height.md}",
         },
         "padding-block-end": {
           "$extensions": {
@@ -93818,6 +93452,67 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "$value": "{basis.form-control.border-width}",
       },
       "checked": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0.23137254901960785,
+                  0.5058823529411764,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -93876,6 +93571,67 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.01568627450980392,
+                  0.28627450980392155,
+                  0.6039215686274509,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "disabled": {
@@ -94016,6 +93772,67 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
       },
       "indeterminate": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0.23137254901960785,
+                  0.5058823529411764,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -94074,6 +93891,67 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.01568627450980392,
+                  0.28627450980392155,
+                  0.6039215686274509,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "invalid": {
@@ -102611,6 +102489,56 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9215686274509803,
+                0.9215686274509803,
+                0.9215686274509803,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.48627450980392156,
+                0.48627450980392156,
+                0.48627450980392156,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.10588235294117647,
+                0.10588235294117647,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
+      },
       "invalid": {
         "background-color": {
           "$extensions": {
@@ -103048,6 +102976,56 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
+      },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9215686274509803,
+                0.9215686274509803,
+                0.9215686274509803,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.48627450980392156,
+                0.48627450980392156,
+                0.48627450980392156,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.10588235294117647,
+                0.10588235294117647,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
       },
       "invalid": {
         "background-color": {
@@ -128714,59 +128692,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     },
   },
   "todo": {
-    "accordion": {
-      "button": {
-        "font-family": {
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": [
-              "Noto Sans",
-              "sans-serif",
-            ],
-            "studio.tokens": {
-              "originalType": "fontFamilies",
-            },
-          },
-          "$type": "fontFamily",
-          "$value": "{basis.text.font-family.default}",
-        },
-        "font-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 1,
-            },
-            "studio.tokens": {
-              "originalType": "fontSizes",
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.text.font-size.md}",
-        },
-        "font-weight": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "font-weight",
-            "nl.nldesignsystem.value-resolved-as": 700,
-            "studio.tokens": {
-              "originalType": "fontWeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.font-weight.bold}",
-        },
-        "line-height": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "line-height",
-            "nl.nldesignsystem.value-resolved-as": 1.5,
-            "studio.tokens": {
-              "originalType": "lineHeights",
-            },
-          },
-          "$type": "number",
-          "$value": "{basis.text.line-height.md}",
-        },
-      },
-    },
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
@@ -131329,67 +131254,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     },
     "checkbox": {
       "checked": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.23137254901960785,
-                  0.058823529411764705,
-                  0.6901960784313725,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -131499,132 +131363,10 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.23137254901960785,
-                  0.058823529411764705,
-                  0.6901960784313725,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
       "indeterminate": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.23137254901960785,
-                  0.058823529411764705,
-                  0.6901960784313725,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.active.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.active.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
-          },
-        },
         "disabled": {
           "background-color": {
             "$extensions": {
@@ -131734,67 +131476,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
             "$type": "color",
             "$value": "{basis.form-control.focus.color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.23137254901960785,
-                  0.058823529411764705,
-                  0.6901960784313725,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.form-control.hover.accent-color}",
-          },
-          "border-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 0,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.transparent}",
-          },
-          "border-width": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "border-width",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 0.125,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.form-control.hover.border-width}",
-          },
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-hover}",
           },
         },
       },
@@ -136236,110 +135917,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "$value": "{basis.space.row.xl}",
       },
     },
-    "textarea": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.8745098039215686,
-                0.8901960784313725,
-                0.9098039215686274,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.23921568627450981,
-                0.3254901960784314,
-                0.4549019607843137,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0.10196078431372549,
-                0.25098039215686274,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
-    "textbox": {
-      "hover": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.8745098039215686,
-                0.8901960784313725,
-                0.9098039215686274,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.background-color}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.23921568627450981,
-                0.3254901960784314,
-                0.4549019607843137,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.border-color}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0.10196078431372549,
-                0.25098039215686274,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.form-control.hover.color}",
-        },
-      },
-    },
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
@@ -136714,6 +136291,44 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             "$value": "{basis.focus.color}",
           },
         },
+        "font-family": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": [
+              "Noto Sans",
+              "sans-serif",
+            ],
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1,
+            },
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 700,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.bold}",
+        },
         "gap": {
           "$extensions": {
             "nl.nldesignsystem.value-resolved-as": {
@@ -136786,6 +136401,17 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             "$type": "dimension",
             "$value": "{basis.size.icon.md}",
           },
+        },
+        "line-height": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "line-height",
+            "nl.nldesignsystem.value-resolved-as": 1.5,
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.line-height.md}",
         },
         "padding-block-end": {
           "$extensions": {
@@ -140596,6 +140222,67 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "$value": "{basis.form-control.border-width}",
       },
       "checked": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.23137254901960785,
+                  0.058823529411764705,
+                  0.6901960784313725,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -140654,6 +140341,67 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.23137254901960785,
+                  0.058823529411764705,
+                  0.6901960784313725,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "disabled": {
@@ -140794,6 +140542,67 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
       },
       "indeterminate": {
+        "active": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.23137254901960785,
+                  0.058823529411764705,
+                  0.6901960784313725,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.active.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.active.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-active}",
+          },
+        },
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
@@ -140852,6 +140661,67 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "$type": "color",
           "$value": "{basis.color.action-1-inverse.color-default}",
+        },
+        "hover": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.23137254901960785,
+                  0.058823529411764705,
+                  0.6901960784313725,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.form-control.hover.accent-color}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.125,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.form-control.hover.border-width}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1-inverse.color-hover}",
+          },
         },
       },
       "invalid": {
@@ -148540,6 +148410,56 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.8745098039215686,
+                0.8901960784313725,
+                0.9098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.23921568627450981,
+                0.3254901960784314,
+                0.4549019607843137,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
+      },
       "invalid": {
         "background-color": {
           "$extensions": {
@@ -148977,6 +148897,56 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "$type": "number",
         "$value": "{basis.form-control.font-weight}",
+      },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.8745098039215686,
+                0.8901960784313725,
+                0.9098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.background-color}",
+        },
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.23921568627450981,
+                0.3254901960784314,
+                0.4549019607843137,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.border-color}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.hover.color}",
+        },
       },
       "invalid": {
         "background-color": {

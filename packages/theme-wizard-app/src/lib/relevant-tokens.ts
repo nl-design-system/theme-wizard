@@ -27,7 +27,11 @@ const filterBySubType = <T extends BaseDesignToken>(tokens: T[], subType?: strin
 
   const subTypeTokens = tokens.filter((token) => {
     const cssProperties = getExtension(token, EXTENSION_CSS_PROPERTIES);
-    return !Array.isArray(cssProperties) || cssProperties.includes(subType);
+    return (
+      !Array.isArray(cssProperties) ||
+      cssProperties.every((property) => property.startsWith('--')) ||
+      cssProperties.includes(subType)
+    );
   });
 
   return subTypeTokens.length > 0 ? subTypeTokens : tokens;
