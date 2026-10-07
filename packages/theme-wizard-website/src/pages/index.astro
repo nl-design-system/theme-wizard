@@ -27,43 +27,42 @@ export const items = [
 ]
 ---
 
-<BaseLayout title="Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
-      <main slot="main" class="wizard-main">
-        <wizard-container size="md">
-          <clippy-story-preview size="lg">
-            <clippy-stack size="4xl">
-              <clippy-heading level="1">Hoe wil je starten?</clippy-heading>
-
-              <clippy-stack size="lg">
-                {items.map(link => (
-                  <wizard-card-as-link>
-                    <a href={link.href} slot="link">{link.linkLabel}</a>
-                    <link.icon slot="pre-header" aria-hidden="true" />
-                    <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
-                    <p class="nl-paragraph" slot="body">{link.description}</p>
-                  </wizard-card-as-link>
-                ))}
-              </clippy-stack>
-            </clippy-stack>
-          </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-stack'
   import '@nl-design-system-community/clippy-components/clippy-story-preview'
+  import '@nl-design-system-community/clippy-components/clippy-page-layout';
+  import '@nl-design-system-community/clippy-components/clippy-layout';
+  import '@nl-design-system-community/clippy-components/clippy-main';
 </script>
 
-<style>
-  .wizard-main {
-    display: grid;
-    place-content: center;
-  }
-</style>
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <clippy-page-layout layout-block-alignment="center">
+      <wizard-page-header slot="header"></wizard-page-header>
+      <clippy-layout size="xs">
+        <clippy-main id="content">
+          <header slot="header">
+            <clippy-heading level="1">Hoe wil je starten?</clippy-heading>
+          </header>
+
+          <clippy-story-preview size="lg">
+            <clippy-stack size="lg">
+              {items.map(link => (
+                <wizard-card-as-link>
+                  <a href={link.href} slot="link">{link.linkLabel}</a>
+                  <link.icon slot="pre-header" aria-hidden="true" />
+                  <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
+                  <p class="nl-paragraph" slot="body">{link.description}</p>
+                </wizard-card-as-link>
+              ))}
+            </clippy-stack>
+          </clippy-story-preview>
+
+        </clippy-main>
+      </clippy-layout>
+
+      <wizard-page-footer slot="footer"></wizard-page-footer>
+    </clippy-page-layout>
+  </theme-wizard-app>
+</BaseLayout>
