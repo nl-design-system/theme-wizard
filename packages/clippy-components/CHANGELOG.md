@@ -1,5 +1,16 @@
 # @nl-design-system-community/clippy-components
 
+## 3.6.0
+
+### Minor Changes
+
+- 4ff8681:
+  - feat: Add `clippy-layout` component
+  - feat: `clippy-page-layout` exposes new generic padding custom properties
+  - feat: Add `layout-block-alignment` attribute to `clippy-page-layout`
+  - refactor: Removed `clippy-layout-detail` and `clippy-layout-overview` in favor of `clippy-layout`
+  - refactor: Changed breakpoint in `clippy-page-header` to align with layout breakpoints
+
 ## 3.5.0
 
 ### Minor Changes
