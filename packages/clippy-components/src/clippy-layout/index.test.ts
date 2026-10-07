@@ -1,17 +1,17 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyLayoutDetail } from './index';
+import { ClippyLayout } from './index';
 
-const tag = 'clippy-layout-detail';
+const tag = 'clippy-layout';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyLayoutDetail;
+  let component: ClippyLayout;
 
   beforeEach(() => {
     document.body.innerHTML = `
       <${tag}></${tag}>
     `;
-    component = document.querySelector(tag) as ClippyLayoutDetail;
+    component = document.querySelector(tag) as ClippyLayout;
   });
 
   afterEach(() => {
@@ -30,11 +30,11 @@ describe(`<${tag}>`, () => {
 
     it('renders all containers', async () => {
       await component.updateComplete;
-      const contentContainer = component.shadowRoot?.querySelector('.clippy-layout-detail__content');
-      const gridContainer = component.shadowRoot?.querySelector('.clippy-layout-detail__grid');
-      const sidebarContainer = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
-      const breadcrumbContainer = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
-      const mainWrap = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      const contentContainer = component.shadowRoot?.querySelector('.clippy-layout__content');
+      const gridContainer = component.shadowRoot?.querySelector('.clippy-layout__grid');
+      const sidebarContainer = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
+      const breadcrumbContainer = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
+      const mainWrap = component.shadowRoot?.querySelector('.clippy-layout__wrap-main');
 
       expect(contentContainer).not.toBeNull();
       expect(gridContainer).not.toBeNull();
@@ -51,7 +51,7 @@ describe(`<${tag}>`, () => {
           <p>Main content</p>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
@@ -66,7 +66,7 @@ describe(`<${tag}>`, () => {
           <nav slot="sidebar">Navigation</nav>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
@@ -81,7 +81,7 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Home / Page</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
@@ -101,7 +101,7 @@ describe(`<${tag}>`, () => {
           <p>Main paragraph 2</p>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
@@ -121,7 +121,7 @@ describe(`<${tag}>`, () => {
           <main>Main content</main>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
@@ -190,7 +190,7 @@ describe(`<${tag}>`, () => {
           <main>Main content</main>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
@@ -214,14 +214,14 @@ describe(`<${tag}>`, () => {
     it('hides sidebar wrapper when sidebar slot is empty', async () => {
       await component.updateComplete;
 
-      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
       expect(sidebarWrapper).toHaveAttribute('hidden');
     });
 
     it('hides breadcrumb wrapper when breadcrumb slot is empty', async () => {
       await component.updateComplete;
 
-      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
       expect(breadcrumbWrapper).toHaveAttribute('hidden');
     });
 
@@ -231,14 +231,14 @@ describe(`<${tag}>`, () => {
           <nav slot="sidebar">Navigation</nav>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
       // update cycle — await updateComplete again to flush it (documented Lit behavior).
       await component.updateComplete;
 
-      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
       expect(sidebarWrapper).not.toHaveAttribute('hidden');
     });
 
@@ -248,21 +248,21 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Home / Page</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
       // update cycle — await updateComplete again to flush it (documented Lit behavior).
       await component.updateComplete;
 
-      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
       expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
     });
 
     it('always shows main wrapper regardless of content', async () => {
       await component.updateComplete;
 
-      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout__wrap-main');
       expect(mainWrapper).not.toHaveAttribute('hidden');
 
       // Also test with content
@@ -271,10 +271,10 @@ describe(`<${tag}>`, () => {
           <main>Main content</main>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
-      const mainWrapperWithContent = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      const mainWrapperWithContent = component.shadowRoot?.querySelector('.clippy-layout__wrap-main');
       expect(mainWrapperWithContent).not.toHaveAttribute('hidden');
     });
 
@@ -284,14 +284,14 @@ describe(`<${tag}>`, () => {
           <nav slot="sidebar">Sidebar</nav>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
       // update cycle — await updateComplete again to flush it (documented Lit behavior).
       await component.updateComplete;
 
-      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
       expect(sidebarWrapper).not.toHaveAttribute('hidden');
 
       // Remove sidebar content
@@ -310,14 +310,14 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Breadcrumb</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
       // update cycle — await updateComplete again to flush it (documented Lit behavior).
       await component.updateComplete;
 
-      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
       expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
 
       // Remove breadcrumb content
@@ -335,7 +335,7 @@ describe(`<${tag}>`, () => {
     it('shows sidebar wrapper when content is dynamically added', async () => {
       await component.updateComplete;
 
-      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
       expect(sidebarWrapper).toHaveAttribute('hidden');
 
       const nav = document.createElement('nav');
@@ -354,7 +354,7 @@ describe(`<${tag}>`, () => {
     it('shows breadcrumb wrapper when content is dynamically added', async () => {
       await component.updateComplete;
 
-      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
       expect(breadcrumbWrapper).toHaveAttribute('hidden');
 
       const div = document.createElement('div');
@@ -376,16 +376,16 @@ describe(`<${tag}>`, () => {
           <nav slot="sidebar">Sidebar</nav>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDetail;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
       // update cycle — await updateComplete again to flush it (documented Lit behavior).
       await component.updateComplete;
 
-      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
-      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
-      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout__sidebar');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout__breadcrumb');
+      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout__wrap-main');
 
       // Sidebar has content, breadcrumb and main are empty
       expect(sidebarWrapper).not.toHaveAttribute('hidden');

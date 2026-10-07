@@ -12,9 +12,11 @@ import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import {
   BaseDesignToken,
+  getExtension,
   isColorToken,
   stringifyColor,
   stringifyToken,
+  EXTENSION_COLORSCALE_SEED,
 } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
@@ -25,7 +27,6 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { EXTENSION_COLORSCALE_SEED } from '../../lib/ColorScale/siblings';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
@@ -167,9 +168,7 @@ export class WizardStepForm extends LitElement {
 
     const scaleParams = getColorScaleParams(path);
     const seedColor = scaleParams
-      ? (this.theme.at(scaleParams.regularGroupPath) as BaseDesignToken | undefined)?.$extensions?.[
-          EXTENSION_COLORSCALE_SEED
-        ]
+      ? getExtension(this.theme.at(scaleParams.regularGroupPath), EXTENSION_COLORSCALE_SEED)
       : undefined;
 
     return tokens.findIndex((token) => {

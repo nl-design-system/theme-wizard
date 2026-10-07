@@ -11,6 +11,10 @@ allowBuilds:
 
 overrides:
   tar@<=7.5.18: ^7.5.19 # GHSA-23hp-3jrh-7fpw
+  # Force a patched `shell-quote`. It is pulled in transitively by `@changesets/cli` > `launch-editor`, whose range
+  # (^1.10.0) already allows the fix, but the lockfile resolved to a version vulnerable to command injection via
+  # `quote()`. See https://github.com/advisories/GHSA-pqg4-j6r4-53mv — fixed in 1.11.0.
+  shell-quote@<1.11.0: '>=1.11.0'
 
 # Configure pnpm so peer dependencies must be explicitly added instead of being automatically installed.
 autoInstallPeers: false

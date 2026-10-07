@@ -1,5 +1,5 @@
+import { EXTENSION_COLORSCALE_SEED } from '@nl-design-system-community/design-tokens-schema';
 import { describe, expect, it } from 'vitest';
-import { EXTENSION_COLORSCALE_SEED } from './siblings';
 import { getSiblingGroupsWithOnlyRefsTo } from './siblings';
 
 const GROUP_PATH = 'basis.color.accent-1';

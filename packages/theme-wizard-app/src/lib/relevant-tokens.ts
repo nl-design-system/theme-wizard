@@ -1,13 +1,15 @@
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import {
-  BaseDesignToken,
+  type BaseDesignToken,
+  EXTENSION_TOKEN_STAGED,
+  getExtension,
   isColorToken,
   isRef,
   stringifyToken,
   walkTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 import type Theme from './Theme';
-import { EXTENSION_TOKEN_STAGED, type StagedDesignToken } from '../utils/types';
+import { type StagedDesignToken } from '../utils/types';
 
 export type RelevantTokensResult = {
   tokens: BaseDesignToken[];
@@ -24,8 +26,12 @@ const filterBySubType = <T extends BaseDesignToken>(tokens: T[], subType?: strin
   }
 
   const subTypeTokens = tokens.filter((token) => {
-    const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
-    return !Array.isArray(cssProperties) || cssProperties.includes(subType);
+    const cssProperties = getExtension(token, EXTENSION_CSS_PROPERTIES);
+    return (
+      !Array.isArray(cssProperties) ||
+      cssProperties.every((property) => property.startsWith('--')) ||
+      cssProperties.includes(subType)
+    );
   });
 
   return subTypeTokens.length > 0 ? subTypeTokens : tokens;
@@ -37,13 +43,13 @@ const getStagedTokens = (
   subType?: string,
 ): BaseDesignToken[] => {
   const stagedTypeTokens = scrapedTokens.filter(
-    (token) => token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === type,
+    (token) => getExtension(token, EXTENSION_TOKEN_STAGED) === true && token.$type === type,
   );
 
   const filteredTokens = filterBySubType(stagedTypeTokens, subType);
 
   return filteredTokens.toSorted(
-    (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
+    (a, b) => (getExtension(b, EXTENSION_USAGE_COUNT) || 0) - (getExtension(a, EXTENSION_USAGE_COUNT) || 0),
   );
 };
 
