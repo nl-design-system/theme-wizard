@@ -35,7 +35,7 @@ import '@nl-design-system-community/clippy-components/clippy-layout';
 | Attribute / Property | Type   | Values                | Default   |
 | -------------------- | ------ | --------------------- | --------- |
 | `purpose`            | string | `default` \| `detail` | `default` |
-| `size`               | string | `md` \| `sm` \| `xs`  | `default` |
+| `size`               | string | `md` \| `sm` \| `xs`  | `md`      |
 
 ## CSS Custom Properties
 
