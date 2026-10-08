@@ -1,3 +1,4 @@
+import { componentsNavigationItems } from '@/lib/components';
 import { test, expect } from './fixtures/fixtures';
 
 test.beforeEach(async ({ componentPage }) => {
@@ -16,8 +17,12 @@ test('page has accessibility basics', async ({ page }) => {
   await expect.soft(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test('shows sidebar with all components', async ({ page }) => {
-  await expect(page.locator('wizard-sidebar-link')).not.toHaveCount(0);
+test.describe('shows sidebar with all components', () => {
+  componentsNavigationItems.forEach((item) => {
+    test(item.href, async ({ componentPage }) => {
+      await expect(componentPage.sidebarLink(item.label)).toBeVisible();
+    });
+  });
 });
 
 test('page shows an on-page navigation with links to each of the pages sections', async ({ page }) => {
