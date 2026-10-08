@@ -1,24 +1,22 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
-import { components } from '@/lib/components'
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title
-  }
-}))
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/components');
 ---
 
 <BaseLayout title="Componenten - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
-      <nav slot="sidebar">
-        {componentList.map(({slug, title}) => (
-          <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>
-        ))}
-      </nav>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+      {subNavigationItems ?
+        <clippy-side-navigation
+          slot="sidebar"
+          label="Components"
+          items={JSON.stringify(subNavigationItems)}
+        ></clippy-side-navigation>
+      : null}
       <main slot="main">
         <h1>Componenten</h1>
         <!-- TODO: show list of components with illustrations -->

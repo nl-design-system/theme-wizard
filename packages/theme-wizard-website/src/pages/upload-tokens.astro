@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getNavigationItems } from '@/navigation.config';
+const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
 <BaseLayout title="Upload je thema - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
       <main slot="main" class="wizard-main">
         <wizard-container size="xl">
           <clippy-story-preview size="lg">

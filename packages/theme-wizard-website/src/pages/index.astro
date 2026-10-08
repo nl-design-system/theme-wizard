@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react'
+import { getNavigationItems } from '@/navigation.config';
 
 export const items = [
   {
@@ -25,12 +26,15 @@ export const items = [
     icon: IconFileCode,
   }
 ]
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
           <clippy-story-preview size="lg">
