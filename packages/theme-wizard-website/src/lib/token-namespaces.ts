@@ -1,7 +1,7 @@
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { getBasisTokenTree } from './basis-token-nav';
 import { getNlTokenTree } from './nl-token-nav';
-import { createTokenTreeNav } from './token-tree-nav';
+import { createTokenTreeNav, DESIGN_TOKENS_BASE_URL } from './token-tree-nav';
 
 interface TokenNamespaceDefinition {
   // URL segment and token path prefix, e.g. `basis` for /design-tokens/basis
@@ -34,7 +34,7 @@ const DEFINITIONS = [
 ] as const satisfies readonly TokenNamespaceDefinition[];
 
 export const TOKEN_NAMESPACES = DEFINITIONS.map((definition) => {
-  const href = `/design-tokens/${definition.id}`;
+  const href = `${DESIGN_TOKENS_BASE_URL}/${definition.id}`;
   return { ...definition, href, nav: createTokenTreeNav(href, definition.id) };
 });
 

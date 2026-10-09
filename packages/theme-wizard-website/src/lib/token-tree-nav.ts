@@ -6,6 +6,8 @@ import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/desig
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
 
+export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
+
 export interface BreadcrumbItem {
   href: string;
   title: string;
@@ -25,7 +27,7 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
 
   const getBreadcrumbTrail = (tree: TokenTreeNode[], currentPath: TokenPath): BreadcrumbItem[] => {
     const breadcrumbs: BreadcrumbItem[] = [
-      { href: '/design-tokens', title: 'Design tokens' },
+      { href: DESIGN_TOKENS_BASE_URL, title: 'Design tokens' },
       { href: basePath, title: namespace },
     ];
     let nodes = tree;

@@ -2,7 +2,7 @@
 import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
 import TokenLinkList from '@/components/TokenLinkList.astro';
 import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
-import type { BreadcrumbItem } from '@/lib/token-tree-nav';
+import { DESIGN_TOKENS_BASE_URL, type BreadcrumbItem } from '@/lib/token-tree-nav';
 
 export function getStaticPaths() {
   return TOKEN_NAMESPACES.map((namespace) => ({ params: { namespace: namespace.id } }));
@@ -10,7 +10,7 @@ export function getStaticPaths() {
 
 const namespace = getTokenNamespace(Astro.params.namespace);
 const breadcrumbs: BreadcrumbItem[] = [
-  { href: '/design-tokens', title: 'Design tokens' },
+  { href: DESIGN_TOKENS_BASE_URL, title: 'Design tokens' },
   { href: namespace.href, title: namespace.pageTitle, current: true },
 ];
 ---
