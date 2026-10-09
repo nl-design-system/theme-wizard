@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
 import type { CurrentDesignTokenPage } from '@/lib/design-tokens-nav';
 import type { BreadcrumbItem } from '@/lib/token-tree-nav';
+import { getNavigationItems } from '@/navigation.config';
 
 interface Props {
   title: string;
@@ -12,12 +13,13 @@ interface Props {
 
 const { title, current, crumbs } = Astro.props;
 const navItems = getDesignTokensNavItems(current);
+const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
 <BaseLayout title={title}>
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
       <clippy-side-navigation
         slot="sidebar"
