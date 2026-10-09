@@ -1,0 +1,28 @@
+---
+import TokenLinkList from '@/components/TokenLinkList.astro';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import type { TokenNamespaceId } from '@/lib/token-namespaces';
+import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
+import { capitalize } from 'es-toolkit';
+
+interface Props {
+  namespace: TokenNamespaceId;
+  node: TokenTreeNode;
+  tokenPath: string;
+}
+
+const { namespace, node, tokenPath } = Astro.props;
+---
+
+<clippy-heading level="1">{capitalize(node.key)}</clippy-heading>
+<wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+
+{
+  node.isLeaf ? (
+    <wizard-token-field path={tokenPath} />
+  ) : (
+    <TokenLinkList namespace={namespace} nodes={node.children} />
+  )
+}
+
+{node.isLeaf && <TokenStoryMatches groups={tokenPath} />}

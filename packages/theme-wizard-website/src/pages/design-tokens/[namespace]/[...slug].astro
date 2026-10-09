@@ -1,0 +1,27 @@
+---
+import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
+import TokenNodeContent from '@/components/TokenNodeContent.astro';
+import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+
+export function getStaticPaths() {
+  return TOKEN_NAMESPACES.flatMap((namespace) =>
+    namespace.nav.getStaticSlugs(namespace.getTree()).map(({ params }) => ({
+      params: { namespace: namespace.id, slug: params.slug },
+    })),
+  );
+}
+
+const namespace = getTokenNamespace(Astro.params.namespace);
+const { breadcrumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage(
+  namespace.getTree(),
+  Astro.params.slug,
+);
+---
+
+<DesignTokensLayout
+  title={`${node.key} - ${namespace.pageTitle} - Theme Wizard`}
+  current={{ namespace: namespace.id, segments }}
+  breadcrumbs={breadcrumbs}
+>
+  <TokenNodeContent namespace={namespace.id} node={node} tokenPath={tokenPath} />
+</DesignTokensLayout>

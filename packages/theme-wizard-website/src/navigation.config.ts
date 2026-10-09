@@ -1,8 +1,8 @@
 import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
-import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
 import { componentsNavigationItems } from '@/lib/components';
-const basisTokenTree = getBasisTokenTree();
-const basisTokenNavItems = toNavigationItems(basisTokenTree, []);
+import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
+import { DESIGN_TOKENS_BASE_URL } from '@/lib/token-tree-nav';
+const designTokensNavItems = getDesignTokensNavItems();
 const styleGuideItems: NavigationItems = [
   { href: '/style-guide/color-system', label: 'Kleur systeem' },
   { href: '/style-guide/typography-system', label: 'Typografie systeem' },
@@ -11,17 +11,16 @@ const styleGuideItems: NavigationItems = [
   { href: '/style-guide/design-tokens', label: 'Design tokens' },
 ];
 
-// @TODO: translations
 const navigationItems: NavigationItems = [
   { href: '/wizard', label: 'Start' },
-  { href: '/basis-tokens', items: basisTokenNavItems, label: 'Huisstijl' },
+  { href: DESIGN_TOKENS_BASE_URL, items: designTokensNavItems, label: 'Huisstijl' },
   { href: '/components', items: componentsNavigationItems, label: 'Componenten' },
   { href: '/style-guide', items: styleGuideItems, label: 'Stijlgids' },
   { href: '/publish-tokens', label: 'Publiceren' },
 ];
 
 const isCurrentPage = (href: string, slug: string): boolean => {
-  return slug.endsWith(href);
+  return slug === href || slug.startsWith(`${href}/`);
 };
 
 const setCurrentRecursive = (items: NavigationItems, slug: string): NavigationItems => {

@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
+import type { CurrentDesignTokenPage } from '@/lib/design-tokens-nav';
+import type { BreadcrumbItem } from '@/lib/token-tree-nav';
+import { getNavigationItems } from '@/navigation.config';
+
+interface Props {
+  title: string;
+  current?: CurrentDesignTokenPage;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { title, current, breadcrumbs } = Astro.props;
+const designTokenNavigationItems = getDesignTokensNavItems(current);
+const siteNavigationItems = getNavigationItems(Astro.url.pathname);
+---
+
+<BaseLayout title={title}>
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(siteNavigationItems)}></wizard-page-header>
+
+      <clippy-side-navigation
+        slot="sidebar"
+        label="Design tokens"
+        items={JSON.stringify(designTokenNavigationItems)}
+      ></clippy-side-navigation>
+
+      <wizard-container slot="main">
+        <clippy-stack size="lg">
+          {breadcrumbs && <utrecht-breadcrumb-nav json={JSON.stringify(breadcrumbs)}></utrecht-breadcrumb-nav>}
+          <main>
+            <clippy-story-preview size="lg">
+              <clippy-stack size="lg">
+                <slot />
+              </clippy-stack>
+            </clippy-story-preview>
+          </main>
+        </clippy-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
