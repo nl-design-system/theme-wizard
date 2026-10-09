@@ -1,8 +1,8 @@
 ---
-import StyleGuideNav from "@/components/StyleGuideNav.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import { capitalize } from 'es-toolkit/string';
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
 const SECTIONS = [
   {
@@ -16,20 +16,31 @@ const SECTIONS = [
     tokens: ['none', 'sm', 'md', 'lg', 'round'],
   },
 ]
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/style-guide');
 ---
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
   import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 </script>
 
 <BaseLayout title="Randen en lijnen systeem - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
-      <StyleGuideNav />
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
+      <clippy-side-navigation
+        slot="sidebar"
+        label="Stijlgids"
+        items={JSON.stringify(subNavigationItems)}
+      ></clippy-side-navigation>
+
       <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(SECTIONS.map(section => ({title: section.name, id: section.id})))}></wizard-anchor-nav>
+
       <wizard-container slot="main">
         <clippy-stack size="3xl">
           <clippy-heading level="1">Randen en lijnen systeem</clippy-heading>

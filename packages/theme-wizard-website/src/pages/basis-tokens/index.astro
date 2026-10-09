@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
+import { getBasisTokenTree } from '@/lib/basis-token-nav';
 import { capitalize } from 'es-toolkit';
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
 const tree = getBasisTokenTree();
-const navItems = toNavigationItems(tree, []);
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/basis-tokens');
 ---
 
 <script>
@@ -16,12 +18,12 @@ const navItems = toNavigationItems(tree, []);
 <BaseLayout title="Basis tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
       <clippy-side-navigation
         slot="sidebar"
         label="Basis tokens"
-        items={JSON.stringify(navItems)}
+        items={JSON.stringify(subNavigationItems)}
       ></clippy-side-navigation>
 
       <wizard-container slot="main">

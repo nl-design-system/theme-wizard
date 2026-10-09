@@ -1,3 +1,7 @@
+import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
+
+const COMPONENTS_BASE_PATH = '/components';
+
 export const components = {
   button: { stories: () => import('./stories/Button/button-react.stories'), title: 'Button' },
   code: { stories: () => import('./stories/code-react.stories'), title: 'Code' },
@@ -11,3 +15,20 @@ export const components = {
   paragraph: { stories: () => import('./stories/paragraph-react.stories'), title: 'Paragraph' },
   'skip-link': { stories: () => import('./stories/skip-link-react.stories'), title: 'Skip Link' },
 };
+
+// @TODO translations?
+export const componentsNavigationItems: NavigationItems = await Promise.all(
+  Object.entries(components).map(async ([slug, { title }]) => {
+    const basePath = `${COMPONENTS_BASE_PATH}/${slug}`;
+    return {
+      href: `${basePath}`,
+      items: [
+        {
+          href: `${basePath}/tokens`,
+          label: 'Tokens',
+        },
+      ],
+      label: title,
+    };
+  }),
+);

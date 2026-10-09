@@ -7,7 +7,9 @@ import { Traverse } from 'neotraverse/modern'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
 import '@nl-design-system-candidate/link-css/link.css'
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
-import { getStories } from '@nl-design-system-community/theme-wizard-app/utils'
+import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
+
 import './index.css';
 
 type StoryObject = {
@@ -24,13 +26,6 @@ export function getStaticPaths() {
     params: { slug }
   }))
 }
-
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title,
-  }
-}))
 
 const slug = Astro.params.slug as keyof typeof components
 const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
@@ -71,19 +66,23 @@ const storiesWithTokens = stories.map(([id, story]) => {
       : []
   })
 })
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/components');
 ---
 
 <BaseLayout title=`${slug} - Componenten - Theme Wizard`>
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
-      <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
-      <nav slot="sidebar">
-        {componentList.map(({slug: componentSlug, title}) => (
-          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
-        ))}
-      </nav>
+      {subNavigationItems ?
+        <clippy-side-navigation
+          slot="sidebar"
+          label="Components"
+          items={JSON.stringify(subNavigationItems)}
+        ></clippy-side-navigation>
+      : null}
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
