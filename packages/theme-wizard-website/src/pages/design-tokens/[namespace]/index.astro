@@ -9,7 +9,7 @@ export function getStaticPaths() {
 }
 
 const namespace = getTokenNamespace(Astro.params.namespace);
-const crumbs: BreadcrumbItem[] = [
+const breadcrumbs: BreadcrumbItem[] = [
   { href: '/design-tokens', title: 'Design tokens' },
   { href: namespace.href, title: namespace.pageTitle, current: true },
 ];
@@ -18,7 +18,7 @@ const crumbs: BreadcrumbItem[] = [
 <DesignTokensLayout
   title={`${namespace.pageTitle} - Theme Wizard`}
   current={{ namespace: namespace.id, segments: [] }}
-  crumbs={crumbs}
+  breadcrumbs={breadcrumbs}
 >
   <clippy-heading level="1">{namespace.heading}</clippy-heading>
   <TokenLinkList namespace={namespace.id} nodes={namespace.getTree()} />

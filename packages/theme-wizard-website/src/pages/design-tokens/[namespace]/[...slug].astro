@@ -12,7 +12,7 @@ export function getStaticPaths() {
 }
 
 const namespace = getTokenNamespace(Astro.params.namespace);
-const { crumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage(
+const { breadcrumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage(
   namespace.getTree(),
   Astro.params.slug,
 );
@@ -21,7 +21,7 @@ const { crumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage(
 <DesignTokensLayout
   title={`${node.key} - ${namespace.pageTitle} - Theme Wizard`}
   current={{ namespace: namespace.id, segments }}
-  crumbs={crumbs}
+  breadcrumbs={breadcrumbs}
 >
   <TokenNodeContent namespace={namespace.id} node={node} tokenPath={tokenPath} />
 </DesignTokensLayout>
