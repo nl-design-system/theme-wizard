@@ -18,7 +18,7 @@ declare global {
 
 export const defaultNavigationItems: NavigationItems = [
   { href: '/wizard', label: t('nav.wizard') as string },
-  { href: '/basis-tokens', label: t('nav.identity') as string },
+  { href: '/design-tokens', label: t('nav.identity') as string },
   { href: '/components', label: t('nav.components') as string },
   { href: '/style-guide', label: t('nav.styleGuide') as string },
   { href: '/publish-tokens', label: t('nav.publish') as string },

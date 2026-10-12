@@ -106,6 +106,13 @@ function resolveMatchingRef(
   }
   seen.add(path);
 
+  // A token's own path can already be one of the groupPaths (e.g. a component's own leaf
+  // token, like `nl.data-badge.background-color`, viewed on its own design-tokens page) —
+  // that's a match in itself, with nothing to dereference.
+  if (groupPaths.some((groupPath) => referencesGroup(path, groupPath))) {
+    return path;
+  }
+
   // A ref can omit the `brand.` prefix even when the token it points to is nested under it —
   // same fallback `resolveRef` in design-tokens-schema's resolve-refs.ts uses.
   const token = (dlv(themeTokens, path) ?? dlv(themeTokens, `brand.${path}`)) as { $value?: unknown } | undefined;
