@@ -3,8 +3,8 @@ import type { BaseDesignToken } from './tokens/base-token';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
 import { splitFontFamily } from './tokens/fontfamily-token';
-import { isRef, isTokenLike } from './tokens/token-reference';
-import { walkTokens } from './walker';
+import { isRef, isTokenLike, isValueObject } from './tokens/token-reference';
+import { SKIP, walkObject, walkTokens } from './walker';
 
 /**
  * @description Process a lineHeight value and return its target type and transformed value
@@ -99,28 +99,44 @@ const upgradeLineHeightToken = (token: BaseDesignToken, rootConfig: Record<strin
 };
 
 /**
- * @description Upgrade a color token (parse legacy color strings to modern format)
+ * @description Parse a legacy color string to the modern color format. Refs and unparsable values are left as-is.
  */
-const upgradeColorToken = (token: BaseDesignToken): void => {
-  if (typeof token.$value === 'string' && !isRef(token.$value)) {
+const parseColorValue = (value: unknown): unknown => {
+  if (typeof value === 'string' && !isRef(value)) {
     try {
-      token.$value = parseColor(token.$value);
+      return parseColor(value);
     } catch {
       // If parsing fails, leave the value as is - schema validation will catch it
     }
   }
+  return value;
+};
+
+/**
+ * @description Upgrade a color token (parse legacy color strings to modern format)
+ */
+const upgradeColorToken = (token: BaseDesignToken): void => {
+  token.$value = parseColorValue(token.$value);
+};
+
+/**
+ * @description Parse a stringified number to an actual number. Refs are left as-is.
+ */
+const parseNumberValue = (value: unknown): unknown => {
+  if (typeof value === 'string' && !isRef(value)) {
+    const parsedValue = Number(value);
+    if (Number.isFinite(parsedValue)) {
+      return parsedValue;
+    }
+  }
+  return value;
 };
 
 /**
  * @description Upgrade a number token (parse a stringified value to an actual number)
  */
 const upgradeNumberToken = (token: BaseDesignToken): void => {
-  if (typeof token.$value === 'string' && !isRef(token.$value)) {
-    const parsedValue = Number(token.$value);
-    if (Number.isFinite(parsedValue)) {
-      token.$value = parsedValue;
-    }
-  }
+  token.$value = parseNumberValue(token.$value);
 };
 
 /**
@@ -193,10 +209,95 @@ const upgradeFontWeightToken = (token: BaseDesignToken): void => {
 };
 
 /**
+ * @description Parse a legacy shadow dimension (x/y/blur/spread). Unlike dimension tokens, Token
+ * Studio stores these as unitless numbers (meaning px), so that's tried as a fallback.
+ */
+const parseShadowDimensionValue = (value: unknown): unknown => {
+  if (isRef(value)) {
+    return value;
+  }
+  const stringValue = typeof value === 'number' ? String(value) : value;
+  const parsedDimension = parseDimensionValue(stringValue);
+  if (parsedDimension !== stringValue) {
+    return parsedDimension;
+  }
+  const parsedNumber = parseNumberValue(stringValue);
+  return typeof parsedNumber === 'number' ? { unit: 'px', value: parsedNumber } : value;
+};
+
+/**
+ * @description Upgrade a single legacy shadow object (`{ x, y, blur, spread, color, type }`)
+ */
+const upgradeLegacyShadowValue = (value: unknown): unknown => {
+  if (isRef(value) || !isValueObject(value) || !('x' in value)) {
+    return value;
+  }
+
+  const upgraded: Record<string, unknown> = {
+    blur: parseShadowDimensionValue(value['blur']),
+    color: parseColorValue(value['color']),
+    offsetX: parseShadowDimensionValue(value['x']),
+    offsetY: parseShadowDimensionValue(value['y']),
+    spread: parseShadowDimensionValue(value['spread']),
+  };
+  if (value['type'] === 'innerShadow') {
+    upgraded['inset'] = true;
+  }
+  return upgraded;
+};
+
+/**
+ * @description Upgrade a boxShadow token (convert to shadow type, map Token Studio shape to DTCG)
+ */
+const upgradeBoxShadowToken = (token: BaseDesignToken): void => {
+  token.$type = 'shadow';
+  token.$value = Array.isArray(token.$value)
+    ? token.$value.map(upgradeLegacyShadowValue)
+    : upgradeLegacyShadowValue(token.$value);
+};
+
+const LEGACY_SHADOW_GROUP_KEYS = ['x', 'y', 'blur', 'spread', 'color'] as const;
+
+/**
+ * @description Some legacy themes model a shadow as a group of sibling `x`/`y`/`blur`/`spread`/`color` tokens
+ */
+const isLegacyShadowGroup = (data: unknown): data is Record<string, BaseDesignToken> => {
+  if (!isValueObject(data) || isTokenLike(data)) {
+    return false;
+  }
+  return LEGACY_SHADOW_GROUP_KEYS.every((key) => isTokenLike(data[key]));
+};
+
+/**
+ * @description Upgrade a legacy shadow group (sibling `x`/`y`/`blur`/`spread`/`color` tokens)
+ */
+const upgradeLegacyShadowGroup = (group: Record<string, BaseDesignToken>): void => {
+  const value = {
+    blur: parseShadowDimensionValue(group['blur'].$value),
+    color: parseColorValue(group['color'].$value),
+    offsetX: parseShadowDimensionValue(group['x'].$value),
+    offsetY: parseShadowDimensionValue(group['y'].$value),
+    spread: parseShadowDimensionValue(group['spread'].$value),
+  };
+
+  for (const key of LEGACY_SHADOW_GROUP_KEYS) {
+    delete group[key];
+  }
+
+  Object.assign(group, { $type: 'shadow', $value: value });
+};
+
+/**
  * @description NLDS themes use $type: fontSize, fontSizes and lineHeight instead of number/dimension,
  * so a quick round of preprocessing helps to get them in order.
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+  // Cannot use walkTokens to detect legacy shadows groups, because a group is NOT a token.
+  walkObject(rootConfig, isLegacyShadowGroup, (group) => {
+    upgradeLegacyShadowGroup(group);
+    return SKIP;
+  });
+
   walkTokens(rootConfig, (token) => {
     switch (token.$type) {
       case 'dimension':
@@ -225,6 +326,9 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
       case 'fontWeight':
       case 'fontWeights':
         upgradeFontWeightToken(token);
+        break;
+      case 'boxShadow':
+        upgradeBoxShadowToken(token);
         break;
     }
   });
