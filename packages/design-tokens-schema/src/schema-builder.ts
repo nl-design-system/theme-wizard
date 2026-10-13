@@ -4,6 +4,7 @@ import { BaseDesignTokenSchema, withGroupExtensions } from './tokens/base-token'
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
+import { ShadowTokenSchema } from './tokens/shadow-token';
 
 /**
  * Map all known `css-syntax` extensions to one of the documented DTCG token $types
@@ -25,7 +26,7 @@ const CSS_SYNTAX_TO_DTCG_TYPE: Record<string, string> = {
  * using BaseDesignTokenSchema when we don't have a dedicated one
  */
 const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodType> = {
-  boxShadow: BaseDesignTokenSchema,
+  boxShadow: ShadowTokenSchema,
   color: ColorTokenValidationSchema,
   cursor: BaseDesignTokenSchema,
   dimension: DimensionTokenSchema,

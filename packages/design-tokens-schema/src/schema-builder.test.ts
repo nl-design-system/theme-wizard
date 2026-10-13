@@ -4,6 +4,7 @@ import { BaseDesignTokenSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
+import { ShadowTokenSchema } from './tokens/shadow-token';
 
 const BASE_TOKEN = { $type: 'anything', $value: 'anything' };
 
@@ -53,7 +54,7 @@ describe('buildSchema', () => {
       });
 
       it('returns BaseDesignTokenSchema for ["<spread-shadow>"]', () => {
-        expect(buildSchema(withModernSyntax('["<spread-shadow>"]'))).toBe(BaseDesignTokenSchema);
+        expect(buildSchema(withModernSyntax('["<spread-shadow>"]'))).toBe(ShadowTokenSchema);
       });
     });
 
