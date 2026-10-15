@@ -26,7 +26,7 @@ describe(`<${tag}>`, () => {
     it('renders only cancel button by default', async () => {
       await modal.updateComplete;
 
-      const footer = modal.shadowRoot?.querySelector('.ams-dialog__footer');
+      const footer = modal.shadowRoot?.querySelector('.ams-modal-dialog__footer');
       const cancelButton = footer?.querySelector('button[value="cancel"]');
       const confirmButton = footer?.querySelector('button[value="confirm"]');
 
@@ -34,21 +34,20 @@ describe(`<${tag}>`, () => {
       expect(confirmButton).toBeNull();
     });
 
-    it('renders no buttons when actions is "none"', async () => {
+    it('renders no footer and buttons when actions is "none"', async () => {
       modal.actions = 'none';
       await modal.updateComplete;
 
-      const footer = modal.shadowRoot?.querySelector('.ams-dialog__footer');
-      const buttons = footer?.querySelectorAll('button');
+      const footer = modal.shadowRoot?.querySelector('.ams-modal-dialog__footer');
 
-      expect(buttons?.length).toBe(0);
+      expect(footer).toBeNull();
     });
 
     it('renders only cancel button when actions is "cancel"', async () => {
       modal.actions = 'cancel';
       await modal.updateComplete;
 
-      const footer = modal.shadowRoot?.querySelector('.ams-dialog__footer');
+      const footer = modal.shadowRoot?.querySelector('.ams-modal-dialog__footer');
       const cancelButton = footer?.querySelector('button[value="cancel"]');
       const confirmButton = footer?.querySelector('button[value="confirm"]');
 
@@ -61,20 +60,20 @@ describe(`<${tag}>`, () => {
       modal.actions = 'confirm';
       await modal.updateComplete;
 
-      const footer = modal.shadowRoot?.querySelector('.ams-dialog__footer');
+      const footer = modal.shadowRoot?.querySelector('.ams-modal-dialog__footer');
       const cancelButton = footer?.querySelector('button[value="cancel"]');
       const confirmButton = footer?.querySelector('button[value="confirm"]');
 
       expect(cancelButton).toBeNull();
       expect(confirmButton).toBeDefined();
-      expect(confirmButton?.textContent?.trim()).toBe('OK');
+      expect(confirmButton?.textContent?.trim()).toBe('Confirm');
     });
 
     it('renders both buttons when actions is "both"', async () => {
       modal.actions = 'both';
       await modal.updateComplete;
 
-      const footer = modal.shadowRoot?.querySelector('.ams-dialog__footer');
+      const footer = modal.shadowRoot?.querySelector('.ams-modal-dialog__footer');
       const cancelButton = footer?.querySelector('button[value="cancel"]');
       const confirmButton = footer?.querySelector('button[value="confirm"]');
 
@@ -105,7 +104,7 @@ describe(`<${tag}>`, () => {
     it('renders a close button in the header', async () => {
       await modal.updateComplete;
 
-      const header = modal.shadowRoot?.querySelector('.ams-dialog__header');
+      const header = modal.shadowRoot?.querySelector('.ams-modal-dialog__header');
       const closeButton = header?.querySelector('clippy-button[icon-only]');
 
       expect(closeButton).toBeDefined();

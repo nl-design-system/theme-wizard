@@ -14,17 +14,25 @@ export default css`
    Same as the new NLDS website: https://github.com/nl-design-system/documentatie/blob/5f1e57f4d601fd3926ada8f968d137366e263825/packages/website/src/styles/missing-tokens.css#L160
    ============================================ */
   .denhaag-side-navigation__link {
+    box-sizing: border-box;
+
+    /* denhaag.side-navigation.link.min-block-size */
+    min-block-size: var(--basis-pointer-target-min-block-size);
+
+    /* denhaag.side-navigation.link.min-inline-size */
+    min-inline-size: var(--basis-pointer-target-min-inline-size);
+
     /* denhaag.side-navigation.link.padding-inline-end */
-    padding-inline-end: var(--basis-space-inline-xl);
+    padding-inline-end: var(--basis-space-inline-md);
 
     /* denhaag.side-navigation.link.padding-inline-start */
-    padding-inline-start: var(--basis-space-inline-xl);
+    padding-inline-start: var(--basis-space-inline-md);
 
     @media (forced-colors: none) {
       border-color: var(--basis-color-transparent);
       border-inline-start-style: solid;
       border-inline-start-width: var(--basis-border-width-lg);
-      margin-inline-start: calc(var(--basis-border-width-lg) * -1);
+      translate: calc(var(--basis-border-width-lg) * -1);
     }
   }
 
@@ -75,6 +83,7 @@ export default css`
     /* denhaag.side-navigation.expand-button.active.background-color */
     background-color: var(--basis-color-action-1-bg-active);
   }
+
   .denhaag-side-navigation__expand-button:focus-visible {
     /* denhaag.side-navigation.expand-button.focus.background-color */
     background-color: var(--basis-focus-background-color);
