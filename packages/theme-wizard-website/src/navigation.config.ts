@@ -20,7 +20,7 @@ const navigationItems: NavigationItems = [
 ];
 
 const isCurrentPage = (href: string, slug: string): boolean => {
-  return slug === href || slug.startsWith(`${href}/`);
+  return slug.endsWith(href);
 };
 
 const setCurrentRecursive = (items: NavigationItems, slug: string): NavigationItems => {
