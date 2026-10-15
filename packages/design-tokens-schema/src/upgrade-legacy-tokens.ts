@@ -1,4 +1,4 @@
-import { parse_dimension } from '@projectwallace/css-parser';
+import { parse_dimension, parse_dimension as parse_duration } from '@projectwallace/css-parser';
 import type { BaseDesignToken } from './tokens/base-token';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
@@ -66,7 +66,7 @@ const upgradeDimensionToken = (token: BaseDesignToken): void => {
  */
 const parseDurationValue = (value: unknown): unknown => {
   if (typeof value === 'string') {
-    const parsed = parse_dimension(value);
+    const parsed = parse_duration(value);
     if ((parsed.unit === 's' || parsed.unit === 'ms') && Number.isFinite(parsed.value)) {
       return parsed;
     }

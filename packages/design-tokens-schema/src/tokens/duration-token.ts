@@ -2,8 +2,6 @@ import * as z from 'zod';
 import { BaseDesignTokenSchema } from './base-token';
 import { TokenReferenceSchema } from './token-reference';
 
-// 8.5 Duration
-
 export const DurationTypeSchema = z.literal('duration');
 export type DurationType = z.infer<typeof DurationTypeSchema>;
 
