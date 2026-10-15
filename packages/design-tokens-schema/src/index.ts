@@ -1,6 +1,7 @@
 export * from './tokens/base-token';
 export * from './tokens/color-token';
 export * from './tokens/dimension-token';
+export * from './tokens/duration-token';
 export * from './tokens/fontfamily-token';
 export * from './tokens/merge-tokens';
 export * from './tokens/number-token';

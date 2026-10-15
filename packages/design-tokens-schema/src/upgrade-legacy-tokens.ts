@@ -1,4 +1,4 @@
-import { parse_dimension } from '@projectwallace/css-parser';
+import { parse_dimension, parse_dimension as parse_duration } from '@projectwallace/css-parser';
 import type { BaseDesignToken } from './tokens/base-token';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
@@ -58,6 +58,27 @@ const parseDimensionValue = (value: unknown): unknown => {
  */
 const upgradeDimensionToken = (token: BaseDesignToken): void => {
   token.$value = parseDimensionValue(token.$value);
+};
+
+/**
+ * @description Parse a duration string value (e.g., "200ms", "1s") to a duration object,
+ * reusing whichever unit (s or ms) the legacy value was expressed in
+ */
+const parseDurationValue = (value: unknown): unknown => {
+  if (typeof value === 'string') {
+    const parsed = parse_duration(value);
+    if ((parsed.unit === 's' || parsed.unit === 'ms') && Number.isFinite(parsed.value)) {
+      return parsed;
+    }
+  }
+  return value;
+};
+
+/**
+ * @description Upgrade a duration token
+ */
+const upgradeDurationToken = (token: BaseDesignToken): void => {
+  token.$value = parseDurationValue(token.$value);
 };
 
 /**
@@ -302,6 +323,9 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
     switch (token.$type) {
       case 'dimension':
         upgradeDimensionToken(token);
+        break;
+      case 'duration':
+        upgradeDurationToken(token);
         break;
       case 'fontSize':
       case 'fontSizes':
