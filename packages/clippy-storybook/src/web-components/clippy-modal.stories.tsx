@@ -96,7 +96,11 @@ export const Default: Story = {
           ref: modalRef,
           title: args.title,
         },
-        React.createElement('p', null, 'This is the modal content. You can place any content here.'),
+        React.createElement(
+          'p',
+          { className: 'nl-paragraph' },
+          'This is the modal content. You can place any content here.',
+        ),
       ),
     );
   },
@@ -130,7 +134,11 @@ export const ActionsNone: Story = {
           ref: modalRef,
           title: 'Modal without footer actions',
         },
-        React.createElement('p', null, 'This modal has no footer buttons. You can only close it using the X button.'),
+        React.createElement(
+          'p',
+          { className: 'nl-paragraph' },
+          'This modal has no footer buttons. You can only close it using the X button.',
+        ),
       ),
     );
   },
@@ -164,7 +172,7 @@ export const ActionsCancel: Story = {
           ref: modalRef,
           title: 'Modal with cancel button',
         },
-        React.createElement('p', null, 'This modal has only a cancel button in the footer.'),
+        React.createElement('p', { className: 'nl-paragraph' }, 'This modal has only a cancel button in the footer.'),
       ),
     );
   },
@@ -198,7 +206,7 @@ export const ActionsConfirm: Story = {
           ref: modalRef,
           title: 'Modal with confirm button',
         },
-        React.createElement('p', null, 'This modal has only a confirm button in the footer.'),
+        React.createElement('p', { className: 'nl-paragraph' }, 'This modal has only a confirm button in the footer.'),
       ),
     );
   },
@@ -232,7 +240,11 @@ export const ActionsBoth: Story = {
           ref: modalRef,
           title: 'Modal with both buttons',
         },
-        React.createElement('p', null, 'This modal has both confirm and cancel buttons in the footer.'),
+        React.createElement(
+          'p',
+          { className: 'nl-paragraph' },
+          'This modal has both confirm and cancel buttons in the footer.',
+        ),
       ),
     );
   },
@@ -268,7 +280,7 @@ export const CustomLabels: Story = {
           ref: modalRef,
           title: 'Modal met aangepaste labels',
         },
-        React.createElement('p', null, 'Deze modal heeft aangepaste knoplabels.'),
+        React.createElement('p', { className: 'nl-paragraph' }, 'Deze modal heeft aangepaste knoplabels.'),
       ),
     );
   },
@@ -302,7 +314,11 @@ export const WithTitleSlot: Story = {
           ref: modalRef,
         },
         React.createElement('span', { slot: 'title' }, '⚠️ Important Notice'),
-        React.createElement('p', null, 'This modal uses a custom title slot instead of the title property.'),
+        React.createElement(
+          'p',
+          { className: 'nl-paragraph' },
+          'This modal uses a custom title slot instead of the title property.',
+        ),
       ),
     );
   },
@@ -339,13 +355,17 @@ export const RichContent: Story = {
           ref: modalRef,
           title: 'Terms and Conditions',
         },
-        React.createElement('p', { id: 'modal-description' }, 'Please read and accept the following terms:'),
+        React.createElement(
+          'p',
+          { id: 'modal-description', className: 'nl-paragraph' },
+          'Please read and accept the following terms:',
+        ),
         React.createElement('ul', null, [
           React.createElement('li', { key: '1' }, 'You agree to use this service responsibly'),
           React.createElement('li', { key: '2' }, 'You will not share your credentials'),
           React.createElement('li', { key: '3' }, 'You accept our privacy policy'),
         ]),
-        React.createElement('p', null, 'By clicking Accept, you agree to all terms above.'),
+        React.createElement('p', { className: 'nl-paragraph' }, 'By clicking Accept, you agree to all terms above.'),
       ),
     );
   },
