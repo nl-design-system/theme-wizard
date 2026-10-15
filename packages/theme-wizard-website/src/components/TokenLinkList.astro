@@ -1,0 +1,27 @@
+---
+import type { TokenNamespaceId } from '@/lib/token-namespaces';
+import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
+import { capitalize } from 'es-toolkit';
+
+interface Props {
+  namespace: TokenNamespaceId;
+  nodes: TokenTreeNode[];
+}
+
+const { namespace, nodes } = Astro.props;
+---
+
+<wizard-unstyled-list>
+  {
+    nodes.map((node) => (
+      <li>
+        <wizard-link-to-token path={`${namespace}.${node.path.join('.')}`}>
+          <a slot="link" href={`/design-tokens/${namespace}/${node.path.join('/')}`}>
+            Bewerk '{node.key}'
+          </a>
+          {capitalize(node.key)}
+        </wizard-link-to-token>
+      </li>
+    ))
+  }
+</wizard-unstyled-list>

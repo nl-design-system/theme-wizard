@@ -13,7 +13,7 @@ test('page has accessibility basics', async ({ page }) => {
 
 test('shows sidebar with all styleguide pages', async ({ page }) => {
   await page.goto('/style-guide/design-tokens');
-  await expect(page.locator('wizard-sidebar-link')).not.toHaveCount(0);
+  await expect(page.locator('clippy-side-navigation[label="Stijlgids"]').getByRole('link')).not.toHaveCount(0);
 });
 
 test('page uses values as stored by the configuration page', async ({ page, wizardStepFormPage }) => {

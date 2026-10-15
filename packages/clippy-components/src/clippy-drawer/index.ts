@@ -1,9 +1,10 @@
-import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
+import amsModalDialogStyles from '@amsterdam/design-system-css/dist/modal-dialog/modal-dialog.css?inline';
 import { safeCustomElement } from '@lib/decorators';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import { ClippyModal } from '@src/clippy-modal';
 import { unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
+import { amsModalDialogOverideStyles } from '../clippy-modal/styles';
 import styles from './styles';
 
 const tag = 'clippy-drawer';
@@ -16,7 +17,12 @@ const tag = 'clippy-drawer';
  */
 @safeCustomElement(tag)
 export class ClippyDrawer extends ClippyModal {
-  static override readonly styles = [unsafeCSS(amsDialogStyles), unsafeCSS(buttonStyles), styles];
+  static override readonly styles = [
+    unsafeCSS(amsModalDialogStyles),
+    amsModalDialogOverideStyles,
+    unsafeCSS(buttonStyles),
+    styles,
+  ];
 
   @property({ reflect: true, type: String })
   side: 'inline-start' | 'inline-end' = 'inline-start';

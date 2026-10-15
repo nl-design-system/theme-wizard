@@ -100,7 +100,7 @@ export class WizardStepFormTaskNavigationList extends LitElement {
           this.completedPaths.size > 0
             ? html`
                 <div class="utrecht-action-group utrecht-action-group--row">
-                  <a href="/basis-tokens" class="nl-button nl-button--primary">
+                  <a href="/design-tokens/basis" class="nl-button nl-button--primary">
                     <span class="nl-button__label">Volgende stap</span>
                   </a>
                 </div>

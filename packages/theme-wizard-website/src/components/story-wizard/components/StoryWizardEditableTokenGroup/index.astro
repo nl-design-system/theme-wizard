@@ -20,12 +20,12 @@ const { group } = Astro.props;
   <details class="wizard-token-preset__advanced">
     <summary class="wizard-token-preset__advanced-summary">{group.advancedTitle ?? 'Geavanceerde instellingen'}</summary>
 
-    <ul class="wizard-secretly-a-list wizard-secretly-a-list--compact">
+    <wizard-unstyled-list>
       {group.tokens.map((token) => (
         <li>
           <wizard-token-field label={token.label} path={token.path}></wizard-token-field>
         </li>
       ))}
-    </ul>
+    </wizard-unstyled-list>
   </details>
 </section>

@@ -5,6 +5,7 @@ import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
 import { StoryWizardModel } from '@/lib/story-wizard';
 import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
 import './index.css';
 
@@ -14,31 +15,28 @@ export function getStaticPaths() {
   }))
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title
-  }
-}))
 
 const slug = Astro.params.slug as keyof typeof components
 const { title } = components[slug]
 await loadStoryWizardComponentStyles(slug)
 const wizard = await StoryWizardModel.fromComponentId(slug)
-
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/components');
 ---
 
 <BaseLayout title={`${slug} - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
-      <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
-      <nav slot="sidebar">
-        {componentList.map(({slug: componentSlug, title}) => (
-          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
-        ))}
-      </nav>
+      {subNavigationItems ?
+        <clippy-side-navigation
+          slot="sidebar"
+          label="Components"
+          items={JSON.stringify(subNavigationItems)}
+        ></clippy-side-navigation>
+      : null}
+
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
@@ -63,4 +61,5 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
 
 <script>
   import '@/components/story-wizard/controller';
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 </script>

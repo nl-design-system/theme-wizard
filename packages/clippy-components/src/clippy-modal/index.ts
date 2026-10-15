@@ -1,4 +1,4 @@
-import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
+import amsModalDialogStyles from '@amsterdam/design-system-css/dist/modal-dialog/modal-dialog.css?inline';
 import { safeCustomElement } from '@lib/decorators';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import './../clippy-heading';
@@ -8,6 +8,7 @@ import CloseIcon from '@tabler/icons/outline/x.svg?raw';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { amsModalDialogOverideStyles } from './styles';
 
 let dialogInstanceCounter = 0;
 
@@ -46,7 +47,7 @@ export class ClippyModal extends LitElement {
    * Button labels for confirm/cancel actions. Consumers can override these,
    * e.g. with localized strings.
    */
-  @property({ attribute: 'confirm-label', type: String }) confirmLabel = 'OK';
+  @property({ attribute: 'confirm-label', type: String }) confirmLabel = 'Confirm';
   @property({ attribute: 'cancel-label', type: String }) cancelLabel = 'Cancel';
 
   @query('dialog')
@@ -56,7 +57,11 @@ export class ClippyModal extends LitElement {
 
   private previouslyFocusedElement: HTMLElement | null = null;
 
-  static override readonly styles = [unsafeCSS(amsDialogStyles), unsafeCSS(buttonStyles)];
+  static override readonly styles = [
+    unsafeCSS(amsModalDialogStyles),
+    amsModalDialogOverideStyles,
+    unsafeCSS(buttonStyles),
+  ];
 
   readonly open = () => {
     if (!this.dialogElement) return;
@@ -110,7 +115,7 @@ export class ClippyModal extends LitElement {
   override render() {
     return html`
       <dialog
-        class="ams-dialog"
+        class="ams-modal-dialog"
         closedby=${this.closedBy}
         aria-modal="true"
         aria-labelledby=${this.titleId}
@@ -120,39 +125,49 @@ export class ClippyModal extends LitElement {
         ?open=${this.standardOpen}
       >
         <form method="dialog" novalidate>
-          <header class="ams-dialog__header">
+          <header class="ams-modal-dialog__header">
             <clippy-heading level="1" id=${this.titleId}>
               <slot name="title">${this.title}</slot>
             </clippy-heading>
-            <clippy-button icon-only @click=${this.onCloseClick} purpose="subtle">
+            <clippy-button
+              class="ams-modal-dialog__close-button"
+              icon-only
+              @click=${this.onCloseClick}
+              purpose="subtle"
+            >
               <clippy-icon slot="iconStart">${unsafeSVG(CloseIcon)}</clippy-icon>
               Sluiten
             </clippy-button>
           </header>
-          <div class="ams-dialog__body">
+          <div class="ams-modal-dialog__body">
             <slot></slot>
           </div>
-          <footer class="ams-dialog__footer">
-            <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
-            ${
-              this.actions === 'confirm' || this.actions === 'both'
-                ? html`
-                    <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-                      ${this.confirmLabel}
-                    </button>
-                  `
-                : nothing
-            }
-            ${
-              this.actions === 'cancel' || this.actions === 'both'
-                ? html`
-                    <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-                      ${this.cancelLabel}
-                    </button>
-                  `
-                : nothing
-            }
-          </footer>
+          ${
+            this.actions === 'none'
+              ? nothing
+              : html`
+                  <footer class="ams-modal-dialog__footer">
+                    ${
+                      this.actions === 'confirm' || this.actions === 'both'
+                        ? html`
+                            <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
+                              ${this.confirmLabel}
+                            </button>
+                          `
+                        : nothing
+                    }
+                    ${
+                      this.actions === 'cancel' || this.actions === 'both'
+                        ? html`
+                            <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
+                              ${this.cancelLabel}
+                            </button>
+                          `
+                        : nothing
+                    }
+                  </footer>
+                `
+          }
         </form>
       </dialog>
     `;

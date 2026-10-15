@@ -1,15 +1,29 @@
 ---
-import StyleGuideNav from "@/components/StyleGuideNav.astro"
 import BaseLayout from "@/layouts/BaseLayout.astro"
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, '/style-guide');
 ---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+</script>
 
 <BaseLayout title="Style-guide - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
-      <StyleGuideNav />
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
+      <clippy-side-navigation
+        slot="sidebar"
+        label="Stijlgids"
+        items={JSON.stringify(subNavigationItems)}
+      ></clippy-side-navigation>
+
       <main slot="main">
-        <h1>Styleguide</h1>
+        <clippy-heading level="1">Styleguide</clippy-heading>
       </main>
      </wizard-layout>
   </theme-wizard-app>

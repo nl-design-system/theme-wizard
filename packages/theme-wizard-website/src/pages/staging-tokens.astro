@@ -5,6 +5,8 @@ import '@nl-design-system-candidate/paragraph-css/paragraph.css'
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
+import { getNavigationItems } from '@/navigation.config';
+const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
 <script>
@@ -15,6 +17,8 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
+      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
       <main slot="main" class="wizard-main">
         <wizard-container size="3xl">
           <clippy-story-preview size="lg">

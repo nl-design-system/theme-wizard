@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import '@nl-design-system-candidate/link-css/link.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
 import { IconArrowLeft } from '@tabler/icons-react';
+import { getNavigationItems } from '@/navigation.config';
 
 interface Props {
   title?: string;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
 <script>
@@ -27,7 +30,7 @@ const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
 <BaseLayout title={`${title} - Wizard - Theme Wizard`}>
   <theme-wizard-app>
     <clippy-page-layout>
-      <wizard-page-header slot="header"></wizard-page-header>
+      <wizard-page-header slot="header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
       <clippy-layout size="xs">
         <a class="nl-link wizard-back-link" href={backLink?.href ?? './'} slot="breadcrumb">
@@ -55,10 +58,6 @@ const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
 </BaseLayout>
 
 <style>
-  .wizard-main {
-    padding-block: var(--basis-space-block-5xl);
-  }
-
   .wizard-back-link {
     align-items: center;
     display: flex;

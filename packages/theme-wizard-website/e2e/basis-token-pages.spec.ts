@@ -9,7 +9,7 @@ const CASES: { segments: string[]; title: string }[] = [
 ];
 
 CASES.forEach(({ segments, title }) => {
-  test.describe(`/basis-tokens/${segments.join('/')}`, () => {
+  test.describe(`/design-tokens/basis/${segments.join('/')}`, () => {
     test.beforeEach(async ({ basisTokenPage }) => {
       await basisTokenPage.goto(segments);
     });
@@ -24,7 +24,7 @@ CASES.forEach(({ segments, title }) => {
     });
 
     test('shows a breadcrumb matching the URL', async ({ basisTokenPage }) => {
-      const expectedCrumbs = ['basis', ...segments];
+      const expectedCrumbs = ['Design tokens', 'basis', ...segments];
 
       await expect(basisTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs);
       await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(title, { ignoreCase: true });
