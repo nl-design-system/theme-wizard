@@ -147,7 +147,6 @@ export class ClippyModal extends LitElement {
               ? nothing
               : html`
                   <footer class="ams-modal-dialog__footer">
-                    <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
                     ${
                       this.actions === 'confirm' || this.actions === 'both'
                         ? html`
@@ -173,55 +172,4 @@ export class ClippyModal extends LitElement {
       </dialog>
     `;
   }
-
-  // override render() {
-  //   return html`
-  //     <dialog
-  //       class="ams-modal-dialog"
-  //       closedby=${this.closedBy}
-  //       aria-modal="true"
-  //       aria-labelledby=${this.titleId}
-  //       aria-describedby=${this.ariaDescribedby || undefined}
-  //       @close=${this.onDialogClose}
-  //       @cancel=${this.onDialogCancel}
-  //       ?open=${this.standardOpen}
-  //     >
-  //       <form method="dialog" novalidate>
-  //         <header class="ams-modal-dialog__header">
-  //           <clippy-heading level="1" id=${this.titleId}>
-  //             <slot name="title">${this.title}</slot>
-  //           </clippy-heading>
-  //           <clippy-button icon-only @click=${this.onCloseClick} purpose="subtle">
-  //             <clippy-icon slot="iconStart">${unsafeSVG(CloseIcon)}</clippy-icon>
-  //             Sluiten
-  //           </clippy-button>
-  //         </header>
-  //         <div class="ams-modal-dialog__body">
-  //           <slot></slot>
-  //         </div>
-  //         <footer class="ams-modal-dialog__footer">
-  //           <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
-  //           ${
-  //             this.actions === 'confirm' || this.actions === 'both'
-  //               ? html`
-  //                   <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-  //                     ${this.confirmLabel}
-  //                   </button>
-  //                 `
-  //               : nothing
-  //           }
-  //           ${
-  //             this.actions === 'cancel' || this.actions === 'both'
-  //               ? html`
-  //                   <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-  //                     ${this.cancelLabel}
-  //                   </button>
-  //                 `
-  //               : nothing
-  //           }
-  //         </footer>
-  //       </form>
-  //     </dialog>
-  //   `;
-  // }
 }
