@@ -61,6 +61,27 @@ const upgradeDimensionToken = (token: BaseDesignToken): void => {
 };
 
 /**
+ * @description Parse a duration string value (e.g., "200ms", "1s") to a duration object,
+ * reusing whichever unit (s or ms) the legacy value was expressed in
+ */
+const parseDurationValue = (value: unknown): unknown => {
+  if (typeof value === 'string') {
+    const parsed = parse_dimension(value);
+    if ((parsed.unit === 's' || parsed.unit === 'ms') && Number.isFinite(parsed.value)) {
+      return parsed;
+    }
+  }
+  return value;
+};
+
+/**
+ * @description Upgrade a duration token
+ */
+const upgradeDurationToken = (token: BaseDesignToken): void => {
+  token.$value = parseDurationValue(token.$value);
+};
+
+/**
  * @description Upgrade a fontSize token (convert to dimension type, parse value, set subtype)
  */
 const upgradeFontSizeToken = (token: BaseDesignToken): void => {
@@ -302,6 +323,9 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
     switch (token.$type) {
       case 'dimension':
         upgradeDimensionToken(token);
+        break;
+      case 'duration':
+        upgradeDurationToken(token);
         break;
       case 'fontSize':
       case 'fontSizes':

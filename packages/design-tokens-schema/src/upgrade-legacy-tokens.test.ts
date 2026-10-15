@@ -780,3 +780,58 @@ describe('legacy shadow group (sibling x/y/blur/spread/color tokens)', () => {
     });
   });
 });
+
+describe('duration', () => {
+  it('upgrades a legacy duration value expressed in ms', () => {
+    const config = {
+      motion: {
+        fast: { $type: 'duration', $value: '200ms' },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      motion: {
+        fast: { $type: 'duration', $value: { unit: 'ms', value: 200 } },
+      },
+    });
+  });
+
+  it('upgrades a legacy duration value expressed in s, reusing the s unit', () => {
+    const config = {
+      motion: {
+        slow: { $type: 'duration', $value: '1s' },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      motion: {
+        slow: { $type: 'duration', $value: { unit: 's', value: 1 } },
+      },
+    });
+  });
+
+  it.each([
+    ['a token reference', '{basis.motion.fast}'],
+    ['an unparsable duration string', 'not-a-duration'],
+    ['a duration value with an unsupported unit', '2min'],
+    ['an already-modern duration value', { unit: 'ms', value: 200 }],
+  ])('leaves %s as-is', (_description, value) => {
+    const config = {
+      motion: {
+        fast: { $type: 'duration', $value: value },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      motion: {
+        fast: { $type: 'duration', $value: value },
+      },
+    });
+  });
+});

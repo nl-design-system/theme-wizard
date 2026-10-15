@@ -3,6 +3,7 @@ import * as z from 'zod';
 import { BaseDesignTokenSchema, withGroupExtensions } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
+import { DurationTokenSchema } from './tokens/duration-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
 import { ShadowTokenSchema } from './tokens/shadow-token';
 
@@ -19,6 +20,7 @@ const CSS_SYNTAX_TO_DTCG_TYPE: Record<string, string> = {
   '<length>': 'dimension',
   '<line-style>': 'lineStyle',
   '<number>': 'number',
+  '<time>': 'duration',
 };
 
 /**
@@ -30,6 +32,7 @@ const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodType> = {
   color: ColorTokenValidationSchema,
   cursor: BaseDesignTokenSchema,
   dimension: DimensionTokenSchema,
+  duration: DurationTokenSchema,
   fontFamily: FontFamilyTokenSchema,
   lineStyle: BaseDesignTokenSchema,
   // Use BaseDesignTokenSchema so that legacy tokens (e.g. lineHeight upgraded to dimension)
