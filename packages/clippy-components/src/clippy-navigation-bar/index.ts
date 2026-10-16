@@ -54,7 +54,7 @@ export class ClippyNavigationBar extends LitElement {
     }
 
     return html`
-      <nav class="ma-navigation-bar" aria-labelledby=${this.label ? this.#navId : nothing}>
+      <nav class="clippy-navigation-bar | ma-navigation-bar" aria-labelledby=${this.label ? this.#navId : nothing}>
         ${this.label ? html`<span id=${this.#navId} class="sr-only">${this.label}</span>` : nothing}
         <div class="clippy-navigation-bar__content | ma-navigation-bar__content">
           <ul class="ma-navigation-bar__list">

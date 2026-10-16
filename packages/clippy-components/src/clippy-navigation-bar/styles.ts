@@ -12,6 +12,13 @@ export default css`
     );
   }
 
+  .clippy-navigation-bar {
+    min-block-size: calc(
+      var(--basis-pointer-target-min-block-size) + var(--ma-page-header-content-padding-block-start) +
+        var(--ma-page-header-content-padding-block-end)
+    );
+  }
+
   .clippy-navigation-bar__list-item {
     display: flex;
   }
