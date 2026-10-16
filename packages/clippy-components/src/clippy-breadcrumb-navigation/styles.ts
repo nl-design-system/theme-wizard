@@ -15,8 +15,8 @@ export default css`
   }
 
   .clippy-breadcrumb-navigation__item {
-    block-size: auto;
     align-items: stretch;
+    block-size: auto;
   }
 
   .clippy-breadcrumb-navigation__link,

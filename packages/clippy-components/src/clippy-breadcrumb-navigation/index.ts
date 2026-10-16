@@ -47,7 +47,7 @@ export class ClippyBreadcrumbNavigation extends LitElement {
           class="clippy-breadcrumb-navigation__link | utrecht-breadcrumb-nav__link${item.current ? ' utrecht-breadcrumb-nav__link--disabled' : ''} | utrecht-link utrecht-link--html-a"
           href=${item.current ? nothing : item.href}
           aria-current=${item.current ? 'page' : nothing}
-          aria-disabled=${item.current ? 'page' : nothing}
+          aria-disabled=${item.current ? true : nothing}
           target=${item.target || nothing}
           hreflang=${item.hreflang || nothing}
           lang=${item.lang || nothing}

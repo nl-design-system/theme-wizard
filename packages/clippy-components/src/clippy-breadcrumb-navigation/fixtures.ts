@@ -2,16 +2,23 @@ import { NavigationItems } from '@src/clippy-navigation-bar';
 
 export const simple: NavigationItems = [
   {
-    href: '#',
+    href: '#path',
     label: 'Path',
   },
   {
-    href: '#',
+    href: '#to',
     label: 'To',
   },
   {
     current: true,
-    href: '#',
+    href: '#page',
     label: 'Page',
+  },
+];
+
+export const single: NavigationItems = [
+  {
+    href: '#path',
+    label: 'Path',
   },
 ];
