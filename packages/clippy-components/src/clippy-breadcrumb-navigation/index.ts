@@ -1,11 +1,14 @@
 import { type NavigationItem } from '@src/clippy-navigation-bar';
 import { safeCustomElement } from '@src/lib/decorators';
 import '@src/clippy-heading';
+import '@src/clippy-icon';
+import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
 import breadcrumbStyles from '@utrecht/breadcrumb-nav-css/dist/index.css?inline';
 import linkStyles from '@utrecht/link-css/dist/index.css?inline';
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
 
@@ -32,16 +35,16 @@ export class ClippyBreadcrumbNavigation extends LitElement {
 
   readonly #navId = crypto.randomUUID();
 
-  #renderItem(item: NavigationItem): TemplateResult {
+  #renderItem(item: NavigationItem, isLast: boolean): TemplateResult {
     return html`
       <li
-        class="utrecht-breadcrumb-nav__item"
+        class="clippy-breadcrumb-navigation__item | utrecht-breadcrumb-nav__item"
         itemscope
         itemtype="https://schema.org/ListItem"
         itemprop="itemListElement"
       >
         <a
-          class="utrecht-link utrecht-link--html-a | utrecht-breadcrumb-nav__link ${item.current ? 'utrecht-breadcrumb-nav__link--disabled' : ''}"
+          class="clippy-breadcrumb-navigation__link | utrecht-breadcrumb-nav__link${item.current ? ' utrecht-breadcrumb-nav__link--disabled' : ''} | utrecht-link utrecht-link--html-a"
           href=${item.current ? nothing : item.href}
           aria-current=${item.current ? 'page' : nothing}
           aria-disabled=${item.current ? 'page' : nothing}
@@ -53,6 +56,7 @@ export class ClippyBreadcrumbNavigation extends LitElement {
           ${item.label}
         </a>
       </li>
+      ${isLast ? nothing : html`<li hidden aria-hidden="true" class="clippy-breadcrumb-navigation__separator | utrecht-breadcrumb-nav__separator utrecht-breadcrumb-nav__separator--html-li"><clippy-icon aria-hidden="true">${unsafeSVG(ChevronRightIcon)}</clippy-icon></li>`}
     `;
   }
 
@@ -65,7 +69,7 @@ export class ClippyBreadcrumbNavigation extends LitElement {
           itemscope
           itemtype="https://schema.org/BreadcrumbList"
         >
-          ${map(this.items, (item) => this.#renderItem(item))}
+          ${this.items ? map(this.items, (item, index) => this.#renderItem(item, index === this.items!.length - 1)) : nothing}
         </ol>
       </nav>
     `;
