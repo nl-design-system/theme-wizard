@@ -151,9 +151,6 @@ importers:
       '@nl-design-system-candidate/heading-tokens':
         specifier: 1.1.2
         version: 1.1.2
-      '@nl-design-system-candidate/link-css':
-        specifier: 3.0.0
-        version: 3.0.0
       '@nl-design-system-candidate/link-tokens':
         specifier: 3.0.3
         version: 3.0.3
@@ -2481,9 +2478,6 @@ packages:
 
   '@nl-design-system-candidate/link-css@2.0.3':
     resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
-
-  '@nl-design-system-candidate/link-css@3.0.0':
-    resolution: {integrity: sha512-M5J3edajdsGfcFOYuqx7tHoC0seCHqnFwh3ak6P8MAo20/OLA1Eod7lTQmoIvXzswyD6TiZp0qjLvGpwfHLqmg==}
 
   '@nl-design-system-candidate/link-docs@1.2.1':
     resolution: {integrity: sha512-sCLgimS46bOt1gEgRElnVVETrv80YD3MnxY0NNrC2A0mg3ubnZR+C/dQ/NmDfGXmE2qXLlexzd5csk1qiRsapw==}
@@ -9484,8 +9478,6 @@ snapshots:
   '@nl-design-system-candidate/heading-tokens@1.1.2': {}
 
   '@nl-design-system-candidate/link-css@2.0.3': {}
-
-  '@nl-design-system-candidate/link-css@3.0.0': {}
 
   '@nl-design-system-candidate/link-docs@1.2.1': {}
 
