@@ -6,7 +6,6 @@ export const simple: NavigationItems = [
     label: 'Anchor 1',
   },
   {
-    current: true,
     href: '#',
     label: 'Anchor 2',
   },

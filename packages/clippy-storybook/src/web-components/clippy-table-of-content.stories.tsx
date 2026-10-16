@@ -7,15 +7,18 @@ import React from 'react';
 
 type StoryArgs = {
   items: NavigationItems;
-  label: string | undefined;
+  label?: string;
+  style?: React.CSSProperties;
+};
+
+const defaultArgs = {
+  items: simple,
+  label: undefined,
 };
 
 const meta = {
   id: 'clippy-table-of-content',
-  args: {
-    items: simple,
-    label: undefined,
-  },
+  args: defaultArgs,
   parameters: {
     docs: {
       description: {
@@ -34,4 +37,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const Highlighted: Story = {
+  name: 'Highlighted',
+  args: {
+    ...defaultArgs,
+    style: {
+      '--clippy-table-of-content-highlighted': 1,
+    } as React.CSSProperties,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The table of content can be highlighted by setting the `--clippy-table-of-content-highlighted` CSS variable to `1`. Commonly used in combination with media- or container queries.',
+      },
+    },
+  },
 };

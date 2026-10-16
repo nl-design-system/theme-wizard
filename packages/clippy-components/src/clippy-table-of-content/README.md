@@ -32,6 +32,12 @@ nav.items = [
 | `items`              | [`NavigationItems`](#types) | Array of items to display in the navigation | `[]`        |
 | `label`              | `string`                    | The description of the navigation           | `undefined` |
 
+## CSS Custom Properties
+
+| Attribute / Property                    | Type     | Description                                               | Default |
+| --------------------------------------- | -------- | --------------------------------------------------------- | ------- |
+| `--clippy-table-of-content-highlighted` | `number` | Boolean to signal if the table of contents is highlighted | `0`     |
+
 ## Types
 
 ```ts
