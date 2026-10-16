@@ -181,6 +181,9 @@ importers:
       '@tabler/icons':
         specifier: 3.48.0
         version: 3.48.0
+      '@utrecht/breadcrumb-nav-css':
+        specifier: 3.0.1
+        version: 3.0.1
       '@utrecht/combobox-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -188,6 +191,9 @@ importers:
         specifier: 1.0.1
         version: 1.0.1
       '@utrecht/data-list-css':
+        specifier: 3.0.1
+        version: 3.0.1
+      '@utrecht/link-css':
         specifier: 3.0.1
         version: 3.0.1
       '@utrecht/listbox-css':
