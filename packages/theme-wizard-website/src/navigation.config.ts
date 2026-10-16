@@ -20,7 +20,7 @@ const navigationItems: NavigationItems = [
 ];
 
 const isCurrentPage = (href: string, slug: string): boolean => {
-  return slug.endsWith(href);
+  return slug === href;
 };
 
 const setCurrentRecursive = (items: NavigationItems, slug: string): NavigationItems => {
@@ -38,4 +38,20 @@ export const getNavigationItems = (slug: string): NavigationItems => {
 export const getSubNavigationItems = (items: NavigationItems, slug: string): NavigationItems => {
   const currentItem = items.find((item) => item.href === slug);
   return currentItem?.items || [];
+};
+
+export const getBreadcrumbNavigationItems = (items: NavigationItems): NavigationItems => {
+  const path = items.reduce((acc: NavigationItems, item) => {
+    if (item.current) {
+      return [...acc, item];
+    }
+    if (item.items) {
+      const subPath = getBreadcrumbNavigationItems(item.items);
+      if (subPath.length > 0) {
+        return [...acc, item, ...subPath];
+      }
+    }
+    return acc;
+  }, []);
+  return path;
 };
