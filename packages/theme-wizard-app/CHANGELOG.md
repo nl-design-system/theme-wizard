@@ -1,5 +1,27 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.3.0
+
+### Minor Changes
+
+- 9af3fc1: ## Clippy components
+  
+  refactor: Adjusted the minimum height of `clippy-navigation-bar` to the min-target-size + clippy-page-header padding.
+  
+  ## Theme Wizard
+  
+  refactor: navigation.config.ts reverts back to initial mechanism to set the current page.
+  refactor: `wizard-page-header` now sets toplevel items to current when a sub-item is current for the navigation bar.
+
+### Patch Changes
+
+- Updated dependencies [9af3fc1]
+- Updated dependencies [7b8ccab]
+  - @nl-design-system-community/clippy-components@3.7.0
+  - @nl-design-system-community/design-tokens-schema@2.5.0
+  - @nl-design-system-community/color-scale-generator@1.0.3
+  - @nl-design-system-community/css-scraper@1.2.4
+
 ## 2.2.3
 
 ### Patch Changes
