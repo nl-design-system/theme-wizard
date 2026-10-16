@@ -1,6 +1,6 @@
 # `<clippy-breadcrumb-navigation>`
 
-A table of content component.
+A clippy breadcrumb navigation component.
 
 ## Usage
 

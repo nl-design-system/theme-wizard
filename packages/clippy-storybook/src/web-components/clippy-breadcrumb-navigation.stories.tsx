@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-breadcrumb-navigation';
-import { simple } from '@nl-design-system-community/clippy-components/src/clippy-breadcrumb-navigation/fixtures.js';
+import {
+  simple,
+  single,
+} from '@nl-design-system-community/clippy-components/src/clippy-breadcrumb-navigation/fixtures.js';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-breadcrumb-navigation/README.md?raw';
 import { NavigationItems } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
 import React from 'react';
@@ -34,4 +37,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const Single: Story = {
+  name: 'Single Item',
+  args: {
+    ...Default.args,
+    items: single,
+  },
 };
