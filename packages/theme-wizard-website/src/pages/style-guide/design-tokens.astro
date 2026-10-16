@@ -1,90 +1,72 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import '@nl-design-system-community/clippy-components/clippy-stack';
-import '@nl-design-system-community/clippy-components/clippy-story-preview';
-import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
+import StyleguideLayout from '@/layouts/StyleguideLayout.astro';
 
-const SECTION_IDS = {
-  typography: 'typography',
-  colors: 'colors',
-  spacing: 'spacing',
-  components: 'components'
-}
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
-const subNavigationItems = getSubNavigationItems(navigationItems, '/style-guide');
+const SECTIONS = [
+  {
+    name: "Typography",
+    id: 'typography',
+  },
+  {
+    name: "Kleuren",
+    id: 'colors',
+  },
+  {
+    name: "Witruimte",
+    id: 'spacing',
+  },
+  {
+    name: "Componenten",
+    id: 'components',
+  },
+]
 ---
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
-  import '@nl-design-system-community/clippy-components/clippy-reset-theme';
-  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  import '@nl-design-system-community/clippy-components/clippy-table-of-content';
 </script>
 
-<BaseLayout title="Design tokens - Stijlgids - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+<StyleguideLayout title="Typografie systeem" layoutPurpose="detail">
+  <clippy-table-of-content slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-content>
 
-      <clippy-side-navigation
-        slot="sidebar"
-        label="Stijlgids"
-        items={JSON.stringify(subNavigationItems)}
-      ></clippy-side-navigation>
+  <clippy-stack size="5xl">
+    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'typography')?.id}>
+      <clippy-stack size="xl">
+        <clippy-heading level="2">{SECTIONS.find(section => section.id === 'typography')?.name}</clippy-heading>
+        <clippy-story-preview size="lg">
+          <wizard-style-guide-typography></wizard-style-guide-typography>
+        </clippy-story-preview>
+      </clippy-stack>
+    </section>
 
-      <wizard-anchor-nav slot="aside-nav" items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
-      <wizard-container slot="main">
-        <clippy-stack size="3xl">
-          <clippy-heading level="1">Design tokens</clippy-heading>
+    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'colors')?.id}>
+      <clippy-stack size="xl">
+        <clippy-heading level="2">{SECTIONS.find(section => section.id === 'colors')?.name}</clippy-heading>
+        <clippy-story-preview size="lg">
+          <wizard-style-guide-colors></wizard-style-guide-colors>
+        </clippy-story-preview>
+      </clippy-stack>
+    </section>
 
-          <clippy-stack size="5xl">
-            <section class="wizard-token-section" id={SECTION_IDS.typography}>
-              <clippy-stack size="xl">
-                <clippy-heading level="2">Typografie</clippy-heading>
-                <clippy-story-preview size="lg">
-                  <wizard-style-guide-typography></wizard-style-guide-typography>
-                </clippy-story-preview>
-              </clippy-stack>
-            </section>
+    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'spacing')?.id}>
+      <clippy-stack size="xl">
+        <clippy-heading level="2">{SECTIONS.find(section => section.id === 'spacing')?.name}</clippy-heading>
+        <clippy-story-preview size="lg">
+          <wizard-style-guide-spacing></wizard-style-guide-spacing>
+        </clippy-story-preview>
+      </clippy-stack>
+    </section>
 
-            <section class="wizard-token-section" id={SECTION_IDS.colors}>
-              <clippy-stack size="xl">
-                <clippy-heading level="2">Kleuren</clippy-heading>
-                <clippy-story-preview size="lg">
-                  <wizard-style-guide-colors></wizard-style-guide-colors>
-                </clippy-story-preview>
-              </clippy-stack>
-            </section>
+    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'components')?.id}>
+      <clippy-stack size="xl">
+        <clippy-heading level="2">{SECTIONS.find(section => section.id === 'components')?.name}</clippy-heading>
+        <clippy-story-preview size="lg">
+          <wizard-style-guide-components></wizard-style-guide-components>
+        </clippy-story-preview>
+      </clippy-stack>
+    </section>
 
-            <section class="wizard-token-section" id={SECTION_IDS.spacing}>
-              <clippy-stack size="xl">
-                <clippy-heading level="2">Witruimte</clippy-heading>
-                <clippy-story-preview size="lg">
-                  <wizard-style-guide-spacing></wizard-style-guide-spacing>
-                </clippy-story-preview>
-              </clippy-stack>
-            </section>
-
-            <section class="wizard-token-section" id={SECTION_IDS.components}>
-              <clippy-stack size="xl">
-                <clippy-heading level="2">Componenten</clippy-heading>
-                <clippy-story-preview size="lg">
-                  <wizard-style-guide-components></wizard-style-guide-components>
-                </clippy-story-preview>
-              </clippy-stack>
-            </section>
-
-          </clippy-stack>
-        </clippy-stack>
-      </wizard-container>
-    </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-token-section {
-    scroll-margin-block: calc(var(--clippy-page-layout-header-block-size, 4rem) + var(--basis-space-row-xl));
-  }
-</style>
+  </clippy-stack>
+</StyleguideLayout>
