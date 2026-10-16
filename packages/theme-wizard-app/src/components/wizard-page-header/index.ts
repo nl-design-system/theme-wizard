@@ -1,4 +1,7 @@
-import type { NavigationItems } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
+import type {
+  NavigationItems,
+  NavigationItem,
+} from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
 import '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 import '@nl-design-system-community/clippy-components/clippy-page-header';
@@ -30,10 +33,36 @@ export class WizardPageHeader extends LitElement {
 
   static override readonly styles = [styles];
 
+  #hasCurrentInChildren = (items: NavigationItem[]): boolean => {
+    return items.some((item) => {
+      if (item.current) {
+        return true;
+      }
+      if (item.items && item.items.length > 0) {
+        return this.#hasCurrentInChildren(item.items);
+      }
+      return false;
+    });
+  };
+
+  #parseNavigationItems = (items: NavigationItems): NavigationItems => {
+    return items.map((item) => {
+      const parsedItem = { ...item };
+
+      if (item.items && item.items.length > 0 && this.#hasCurrentInChildren(item.items)) {
+        parsedItem.current = true;
+      }
+
+      return parsedItem;
+    });
+  };
+
   override render() {
+    const parsedNavigationItems = this.#parseNavigationItems(this.navigationItems);
+
     return html`
       <clippy-page-header variant="compact">
-        <clippy-navigation-bar .items=${this.navigationItems} slot="navigation-bar"></clippy-navigation-bar>
+        <clippy-navigation-bar .items=${parsedNavigationItems} slot="navigation-bar"></clippy-navigation-bar>
         <clippy-side-navigation .items=${this.navigationItems} slot="navigation-drawer"></clippy-side-navigation>
         <a class="wizard-page-header__logo" href="/" slot="logo">
           <wizard-logo></wizard-logo>
