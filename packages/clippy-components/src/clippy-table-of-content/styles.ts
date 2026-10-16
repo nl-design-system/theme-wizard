@@ -7,6 +7,7 @@ export default css`
 
   :host {
     --_clippy-table-of-content-highlighted: var(--clippy-table-of-content-highlighted, 0);
+
     /* Override semantic heading level 2 with level 4 styles */
     --nl-heading-level-2-margin-block-start: var(--nl-heading-level-4-margin-block-start);
     --nl-heading-level-2-margin-block-end: var(--nl-heading-level-4-margin-block-end);
