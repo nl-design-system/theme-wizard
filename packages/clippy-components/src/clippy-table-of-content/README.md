@@ -30,7 +30,7 @@ nav.items = [
 | Attribute / Property | Type                        | Description                                 | Default     |
 | -------------------- | --------------------------- | ------------------------------------------- | ----------- |
 | `items`              | [`NavigationItems`](#types) | Array of items to display in the navigation | `[]`        |
-| `label`              | `string`                    | The description of the navigation           | `undefined` |
+| `label`              | `string`                    | The description of the navigation           | 'Inhoudsopgave' |
 
 ## CSS Custom Properties
 
