@@ -8,7 +8,7 @@ export default css`
   :host {
     --_clippy-layout-content-max-inline-size: var(
       --clippy-layout-content-max-inline-size,
-      var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
+      var(--_clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
     --_clippy-layout-content-sm-max-inline-size: var(--clippy-layout-content-sm-max-inline-size, 960px);
     --_clippy-layout-content-xs-max-inline-size: var(--clippy-layout-content-xs-max-inline-size, 640px);

@@ -8,6 +8,7 @@ export default css`
   :host {
     /* Clippy-page-layout */
     --clippy-page-layout-background-color: var(--basis-color-accent-1-bg-subtle);
+    --clippy-page-layout-content-max-inline-size: 1920px;
 
     /* Clippy-combobox */
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);

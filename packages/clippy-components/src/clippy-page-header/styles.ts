@@ -8,7 +8,7 @@ export default css`
   :host {
     --ma-page-header-content-max-inline-size: var(
       --clippy-page-header-content-max-inline-size,
-      var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
+      var(--_clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
   }
 

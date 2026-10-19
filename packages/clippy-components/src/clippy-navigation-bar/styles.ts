@@ -8,7 +8,7 @@ export default css`
   :host {
     --ma-navigation-bar-content-max-inline-size: var(
       --clippy-navigation-bar-content-max-inline-size,
-      var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
+      var(--_clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
     --_clippy-navigation-bar-padding-block-start: var(
       --ma-page-header-content-padding-block-start,
