@@ -21,7 +21,7 @@ export class DesignTokenPage {
   }
 
   get breadcrumb(): Locator {
-    return this.page.locator('utrecht-breadcrumb-nav');
+    return this.page.locator('clippy-breadcrumb-navigation');
   }
 
   get breadcrumbLinks(): Locator {
@@ -30,11 +30,11 @@ export class DesignTokenPage {
 
   // getByRole has no option for matching aria-current, so an attribute selector is required.
   get currentBreadcrumbLink(): Locator {
-    return this.breadcrumb.locator('a[aria-current="location"]');
+    return this.breadcrumb.locator('a[aria-current="page"]');
   }
 
   get sidebar(): Locator {
-    return this.page.locator('clippy-side-navigation[label="Design tokens"]');
+    return this.page.locator('clippy-side-navigation[label="Zijmenu"]');
   }
 
   sidebarLink(label: string): Locator {

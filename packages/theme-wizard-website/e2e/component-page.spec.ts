@@ -26,7 +26,7 @@ test.describe('shows sidebar with all components', () => {
 });
 
 test('page shows an on-page navigation with links to each of the pages sections', async ({ page }) => {
-  await expect(page.locator('.wizard-anchor-nav').getByRole('link')).not.toHaveCount(0);
+  await expect(page.locator('clippy-table-of-contents').getByRole('link')).not.toHaveCount(0);
 });
 
 test.describe('stories', () => {
@@ -36,7 +36,7 @@ test.describe('stories', () => {
 
   test('story renders example component', async ({ page }) => {
     const preview = page.locator('clippy-story-preview').first();
-    const component = preview.locator('clippy-react-element');
+    const component = preview.locator('clippy-react-element').first();
     await expect(component).toBeVisible();
   });
 

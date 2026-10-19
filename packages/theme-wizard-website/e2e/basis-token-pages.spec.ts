@@ -24,7 +24,7 @@ CASES.forEach(({ segments, title }) => {
     });
 
     test('shows a breadcrumb matching the URL', async ({ basisTokenPage }) => {
-      const expectedCrumbs = ['Design tokens', 'basis', ...segments];
+      const expectedCrumbs = ['Huisstijl', 'Basis tokens', ...segments.slice(0, -1)];
 
       await expect(basisTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs);
       await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(title, { ignoreCase: true });
