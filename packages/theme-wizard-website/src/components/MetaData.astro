@@ -1,0 +1,24 @@
+---
+export interface Props {
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  skipTitleSuffix?: boolean;
+}
+const {
+  metaTitle,
+  metaDescription = 'Preview and analyze website themes',
+  noIndex,
+  skipTitleSuffix
+} = Astro.props;
+
+const renderedMetaTitle = `${metaTitle}${!skipTitleSuffix ? ` | Theme Wizard` : ""}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1" />
+<title>{renderedMetaTitle}</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+{metaDescription && <meta name="description" content={metaDescription} />}
+{noIndex && <meta name="robots" content="noindex" />}
