@@ -1,9 +1,7 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import MainLayout from './MainLayout.astro';
 import '@nl-design-system-candidate/link-css/link.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-import { IconArrowLeft } from '@tabler/icons-react';
-import { getNavigationItems } from '@/navigation.config';
 
 interface Props {
   title?: string;
@@ -13,54 +11,18 @@ interface Props {
   }
 }
 
-const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
+const { title = 'Wizard - Theme Wizard', backLink = { label: 'Naar overzicht',href: './'} } = Astro.props;
 ---
 
 <script>
-  import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
-  import '@nl-design-system-community/clippy-components/clippy-page-layout';
-  import '@nl-design-system-community/clippy-components/clippy-layout';
-  import '@nl-design-system-community/clippy-components/clippy-main';
 </script>
 
-<BaseLayout title={`${title} - Wizard - Theme Wizard`}>
-  <theme-wizard-app>
-    <clippy-page-layout>
-      <wizard-page-header slot="header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-
-      <clippy-layout size="xs">
-        <a class="nl-link wizard-back-link" href={backLink?.href ?? './'} slot="breadcrumb">
-          <IconArrowLeft />
-          {backLink?.label ?? 'Naar overzicht'}
-        </a>
-        <clippy-main id="content">
-          <header slot="header">
-            <clippy-stack size="xl">
-              <clippy-heading level="1">{title}</clippy-heading>
-              <slot name="header" />
-            </clippy-stack>
-          </header>
-          <clippy-story-preview size="lg">
-            <clippy-stack size="4xl">
-              <slot />
-            </clippy-stack>
-          </clippy-story-preview>
-        </clippy-main>
-      </clippy-layout>
-
-      <wizard-page-footer slot="footer"></wizard-page-footer>
-    </clippy-page-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-back-link {
-    align-items: center;
-    display: flex;
-    gap: var(--basis-space-column-sm);
-  }
-</style>
+<MainLayout title={title} metaTitle={`${title} - Wizard`} layoutSize="xs" layoutBlockAlignment="center" backLink={backLink} mainPath="/wizard">
+  <clippy-story-preview size="lg">
+    <clippy-stack size="4xl">
+      <slot />
+    </clippy-stack>
+  </clippy-story-preview>
+</MainLayout>
