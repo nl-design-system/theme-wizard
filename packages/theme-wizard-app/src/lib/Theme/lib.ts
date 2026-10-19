@@ -37,28 +37,6 @@ export const refToCssVariable = (value: string): string =>
   });
 
 /**
- * Flattens preset token values into `{ path, value }` updates.
- * Unlike `walkTokens`, this also handles tokens that only specify `$value` without `$type`.
- */
-export const presetTokensToUpdateMany = (
-  tokens: unknown,
-  basePath = '',
-): { path: string; value: BaseDesignToken['$value'] }[] => {
-  if (!isValueObject(tokens)) {
-    return [];
-  }
-
-  if (Object.hasOwn(tokens, '$value')) {
-    const result = { path: basePath, value: tokens['$value'] };
-    return [result];
-  }
-
-  return Object.entries(tokens).flatMap(([key, value]) =>
-    presetTokensToUpdateMany(value, basePath ? `${basePath}.${key}` : key),
-  );
-};
-
-/**
  * Converts token values to a style object of CSS custom properties.
  * Example: `{ nl: { button: { color: { $value: '{basis.color.default.color-default}' } } } }`
  * becomes `{ '--nl-button-color': 'var(--basis-color-default-color-default)' }`.
