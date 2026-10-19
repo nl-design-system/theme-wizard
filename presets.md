@@ -76,7 +76,7 @@ const isPreset = (input: unknown): input is Preset => {
 Algorithm:
 
 - Eventually, appy a deep merge of `myTheme` and `preset` when conditions below are met
-- QUESTION: do we skip top-level `$`-prefixed keys?
+- QUESTION: do we skip top-level `$`-prefixed keys? (`$description`, `$extensions`, `$deprecated` etc.)
 - QUESTION: what to do if one or more of the below conditions aren't met?
 - Validations:
   - QUESTION: Must each leaf/token match exactly in the target group? Do we throw if preset contains a token not present in the groep, or do we silently ignore?
@@ -141,59 +141,6 @@ const theme = {
             ],
           },
         },
-      },
-    },
-  },
-};
-```
-
-## Extending presets
-
-WE ARE NOT GOING TO SUPPORT EXTENDING PRESETS
-
-```js
-// TODO: Where to put this in our JSON config?? Or don't we even add it there?
-// Global accent-1 default preset that can be extended to use in buttons, headers, footers, notes, etc.
-// prettier-ignore
-const accent1DefaultPreset = {
-  // Default state
-  'color':            { $type: 'color', $value: '{basis.color.accent-1.color-default}' },
-  'background-color': { $type: 'color', $value: '{basis.color.accent-1.border-default}' },
-  'border-color':     { $type: 'color', $value: '{basis.color.accent-1.border-default}' },
-
-  // Active state
-  active: {
-    'color':            { $type: 'color', $value: '{basis.color.accent-1.color-active}' },
-    'background-color': { $type: 'color', $value: '{basis.color.accent-1.border-active}' },
-    'border-color':     { $type: 'color', $value: '{basis.color.accent-1.border-active}' },
-  },
-  // Hover state
-  hover: {
-    'color':            { $type: 'color', $value: '{basis.color.accent-1.color-hover}' },
-    'background-color': { $type: 'color', $value: '{basis.color.accent-1.border-hover}' },
-    'border-color':     { $type: 'color', $value: '{basis.color.accent-1.border-hover}' },
-  },
-};
-
-const accent1DefaultSubtlePreset = {};
-const accent1InversePreset = {};
-const accent1InverseSubtlePreset = {};
-
-const myTheme = {
-  $extensions: {
-    'nl.nldesign-system.token-presets': {
-      'basis-color-accent-1-default': accent1DefaultPreset
-    }
-  },
-  basis: {
-    // Some color.accent-1 tokens here
-  },
-  nl: {
-    'number-badge': {
-      $extends: '{$extensions.'nl.nldesign-system.token-presets'.basis-color-accent-1-default}',
-      'border-radius': {
-        $type: 'dimension',
-        $value: { value: 1, unit: 'rem' },
       },
     },
   },
