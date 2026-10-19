@@ -5,14 +5,18 @@ import '@utrecht/body-css/dist/index.css';
 import '@nl-design-system-candidate/link-css/link.css';
 import MetaData, {type Props as MetaDataProps} from '../components/MetaData.astro'
 import { getNavigationItems, getSubNavigationItems, getBreadcrumbNavigationItems } from '@/navigation.config';
+import type { Purpose, Size } from '@nl-design-system-community/clippy-components/src/clippy-layout/types.js';
+import type { BlockAlignment } from '@nl-design-system-community/clippy-components/src/clippy-page-layout/types.js';
 
 interface Props extends MetaDataProps {
-  layoutPurpose?: "default" | 'detail';
-  mainPath: string;
+  layoutPurpose?: Purpose;
+  layoutSize?: Size;
+  layoutBlockAlignment?: BlockAlignment;
+  mainPath?: string;
   title: string;
 }
 
-const {title, layoutPurpose = 'default', mainPath = '/', ...metaData} = Astro.props;
+const {title, layoutPurpose = 'default', layoutSize, layoutBlockAlignment, mainPath = '/', ...metaData} = Astro.props;
 
 const navigationItems = getNavigationItems(Astro.url.pathname);
 const subNavigationItems = getSubNavigationItems(navigationItems, mainPath);
@@ -43,10 +47,10 @@ const breadCrumbNavigationItems = getBreadcrumbNavigationItems(navigationItems);
   </head>
   <body class="utrecht-body">
     <theme-wizard-app>
-      <clippy-page-layout>
+      <clippy-page-layout layout-block-alignment={layoutBlockAlignment}>
         <wizard-page-header slot="header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
-        <clippy-layout purpose={layoutPurpose}>
+        <clippy-layout purpose={layoutPurpose} size={layoutSize}>
 
           {breadCrumbNavigationItems && breadCrumbNavigationItems.length > 0 ? (
             <clippy-breadcrumb-navigation items={JSON.stringify(breadCrumbNavigationItems)} slot="breadcrumb"></clippy-breadcrumb-navigation>

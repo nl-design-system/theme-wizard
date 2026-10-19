@@ -3,16 +3,16 @@ export interface Props {
   metaTitle: string;
   metaDescription?: string;
   noIndex?: boolean;
-  skipTitleSuffix?: boolean;
+  skipMetaTitleSuffix?: boolean;
 }
 const {
   metaTitle,
   metaDescription = 'Preview and analyze website themes',
   noIndex,
-  skipTitleSuffix
+  skipMetaTitleSuffix
 } = Astro.props;
 
-const renderedMetaTitle = `${metaTitle}${!skipTitleSuffix ? ` | Theme Wizard` : ""}`;
+const renderedMetaTitle = `${metaTitle}${!skipMetaTitleSuffix ? ` | Theme Wizard` : ""}`;
 ---
 
 <meta charset="utf-8" />
