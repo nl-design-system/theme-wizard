@@ -1,34 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getNavigationItems } from '@/navigation.config';
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<BaseLayout title="Verklein Thema - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-
-      <main slot="main" class="wizard-main">
-        <wizard-container size="xl">
-          <clippy-story-preview size="lg">
-            <clippy-heading level="1">Verklein je thema</clippy-heading>
-            <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) verkleinen door allerlei theme-wizard-specifieke velden te verwijderen.</p>
-            <wizard-token-minify-form></wizard-token-minify-form>
-          </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-main {
-    padding-block: var(--basis-space-block-5xl);
-  }
-
-  wizard-container {
-    margin-inline: auto;
-  }
-</style>
+<MainLayout title="Verklein je thema" metaTitle="Verklein Thema" layoutSize="xs" layoutBlockAlignment="center">
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">Laat de Theme Wizard jouw thema (.json) verkleinen door allerlei theme-wizard-specifieke velden te verwijderen.</p>
+  <clippy-story-preview size="lg">
+    <wizard-token-minify-form></wizard-token-minify-form>
+  </clippy-story-preview>
+</MainLayout>
