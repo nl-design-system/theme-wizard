@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import '@nl-design-system-community/clippy-components/clippy-table-of-content';
+import '@nl-design-system-community/clippy-components/clippy-table-of-contents';
 import { NavigationItems } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
-import { simple } from '@nl-design-system-community/clippy-components/src/clippy-table-of-content/fixtures.js';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-table-of-content/README.md?raw';
+import { simple } from '@nl-design-system-community/clippy-components/src/clippy-table-of-contents/fixtures.js';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-table-of-contents/README.md?raw';
 import React from 'react';
 
 type StoryArgs = {
@@ -17,7 +17,7 @@ const defaultArgs = {
 };
 
 const meta = {
-  id: 'clippy-table-of-content',
+  id: 'clippy-table-of-contents',
   args: defaultArgs,
   parameters: {
     docs: {
@@ -26,9 +26,9 @@ const meta = {
       },
     },
   },
-  render: (args: StoryArgs) => React.createElement('clippy-table-of-content', args),
+  render: (args: StoryArgs) => React.createElement('clippy-table-of-contents', args),
   tags: ['autodocs'],
-  title: 'Clippy/Table Of Content',
+  title: 'Clippy/Table Of Contents',
 } satisfies Meta<StoryArgs>;
 
 export default meta;
@@ -44,14 +44,14 @@ export const Highlighted: Story = {
   args: {
     ...defaultArgs,
     style: {
-      '--clippy-table-of-content-highlighted': 1,
+      '--clippy-table-of-contents-highlighted': 1,
     } as React.CSSProperties,
   },
   parameters: {
     docs: {
       description: {
         story:
-          'The table of content can be highlighted by setting the `--clippy-table-of-content-highlighted` CSS variable to `1`. Commonly used in combination with media- or container queries.',
+          'The table of content can be highlighted by setting the `--clippy-table-of-contents-highlighted` CSS variable to `1`. Commonly used in combination with media- or container queries.',
       },
     },
   },

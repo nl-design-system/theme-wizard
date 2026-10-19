@@ -6,7 +6,7 @@ export default css`
   }
 
   :host {
-    --_clippy-table-of-content-highlighted: var(--clippy-table-of-content-highlighted, 0);
+    --_clippy-table-of-contents-highlighted: var(--clippy-table-of-contents-highlighted, 0);
 
     /* Override semantic heading level 2 with level 4 styles */
     --nl-heading-level-2-margin-block-start: var(--nl-heading-level-4-margin-block-start);
@@ -21,12 +21,12 @@ export default css`
     container-type: inline-size;
   }
 
-  .clippy-table-of-content__content {
+  .clippy-table-of-contents__content {
     display: flex;
     flex-direction: column;
     gap: var(--basis-space-row-xl);
 
-    @container style(--_clippy-table-of-content-highlighted: 1) {
+    @container style(--_clippy-table-of-contents-highlighted: 1) {
       background-color: var(--ma-table-of-contents-highlighted-background-color);
       padding-block-end: var(--ma-table-of-contents-highlighted-padding-block-end);
       padding-block-start: var(--ma-table-of-contents-highlighted-padding-block-start);

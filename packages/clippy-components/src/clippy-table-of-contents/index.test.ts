@@ -2,12 +2,12 @@ import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import { page } from 'vitest/browser';
 import { simple, empty, nested } from './fixtures';
-import { ClippyTableOfContent } from './index';
+import { ClippyTableOfContents } from './index';
 
-const tag = 'clippy-table-of-content';
+const tag = 'clippy-table-of-contents';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyTableOfContent;
+  let component: ClippyTableOfContents;
 
   // helpers
   const getLinks = () => Array.from(component.shadowRoot!.querySelectorAll('a'));
@@ -16,7 +16,7 @@ describe(`<${tag}>`, () => {
 
   beforeEach(() => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    component = document.querySelector(tag) as ClippyTableOfContent;
+    component = document.querySelector(tag) as ClippyTableOfContents;
   });
 
   afterEach(() => {
