@@ -6,8 +6,6 @@ export default css`
   }
 
   :host {
-    --_clippy-table-of-contents-highlighted: var(--clippy-table-of-contents-highlighted, 0);
-
     /* Override semantic heading level 2 with level 4 styles */
     --nl-heading-level-2-margin-block-start: var(--nl-heading-level-4-margin-block-start);
     --nl-heading-level-2-margin-block-end: var(--nl-heading-level-4-margin-block-end);
@@ -25,13 +23,5 @@ export default css`
     display: flex;
     flex-direction: column;
     gap: var(--basis-space-row-xl);
-
-    @container style(--_clippy-table-of-contents-highlighted: 1) {
-      background-color: var(--ma-table-of-contents-highlighted-background-color);
-      padding-block-end: var(--ma-table-of-contents-highlighted-padding-block-end);
-      padding-block-start: var(--ma-table-of-contents-highlighted-padding-block-start);
-      padding-inline-end: var(--ma-table-of-contents-highlighted-padding-inline-end);
-      padding-inline-start: var(--ma-table-of-contents-highlighted-padding-inline-start);
-    }
   }
 `;

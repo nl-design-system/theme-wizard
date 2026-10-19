@@ -38,21 +38,3 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   name: 'Default',
 };
-
-export const Highlighted: Story = {
-  name: 'Highlighted',
-  args: {
-    ...defaultArgs,
-    style: {
-      '--clippy-table-of-contents-highlighted': 1,
-    } as React.CSSProperties,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'The table of content can be highlighted by setting the `--clippy-table-of-contents-highlighted` CSS variable to `1`. Commonly used in combination with media- or container queries.',
-      },
-    },
-  },
-};

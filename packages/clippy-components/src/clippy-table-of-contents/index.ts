@@ -19,7 +19,6 @@ declare global {
 
 /**
  * Clippy Table Of Content Component
- * @cssprop --clippy-table-of-contents-highlighted - Boolean to signal if the table of contents is highlighted
  */
 @safeCustomElement(tag)
 export class ClippyTableOfContents extends LitElement {
