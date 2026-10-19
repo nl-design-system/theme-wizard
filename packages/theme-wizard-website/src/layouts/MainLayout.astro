@@ -4,6 +4,7 @@ import '@utrecht/root-css/dist/index.css';
 import '@utrecht/body-css/dist/index.css';
 import '@nl-design-system-candidate/link-css/link.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import { IconArrowLeft } from '@tabler/icons-react';
 import MetaData, {type Props as MetaDataProps} from '../components/MetaData.astro'
 import { getNavigationItems, getSubNavigationItems, getBreadcrumbNavigationItems } from '@/navigation.config';
 import type { Purpose, Size } from '@nl-design-system-community/clippy-components/src/clippy-layout/types.js';
@@ -15,9 +16,13 @@ interface Props extends MetaDataProps {
   layoutBlockAlignment?: BlockAlignment;
   mainPath?: string;
   title: string;
+  backLink?: {
+    href: string;
+    label: string;
+  }
 }
 
-const {title, layoutPurpose = 'default', layoutSize, layoutBlockAlignment, mainPath = '/', ...metaData} = Astro.props;
+const {backLink, title, layoutPurpose = 'default', layoutSize, layoutBlockAlignment, mainPath = '/', ...metaData} = Astro.props;
 
 const navigationItems = getNavigationItems(Astro.url.pathname);
 const subNavigationItems = getSubNavigationItems(navigationItems, mainPath);
@@ -53,9 +58,16 @@ const breadCrumbNavigationItems = getBreadcrumbNavigationItems(navigationItems);
 
         <clippy-layout purpose={layoutPurpose} size={layoutSize}>
 
-          {breadCrumbNavigationItems && breadCrumbNavigationItems.length > 0 ? (
+          {breadCrumbNavigationItems && breadCrumbNavigationItems.length > 1 ? (
             <clippy-breadcrumb-navigation items={JSON.stringify(breadCrumbNavigationItems)} slot="breadcrumb"></clippy-breadcrumb-navigation>
           ) : null}
+
+          {backLink ?
+            <a class="nl-link wizard-back-link" href={backLink?.href ?? './'} slot="breadcrumb">
+              <IconArrowLeft />
+              {backLink?.label ?? 'Naar overzicht'}
+            </a>
+          : null}
 
           {subNavigationItems && subNavigationItems.length > 0 ? (
             <clippy-side-navigation
@@ -96,6 +108,14 @@ const breadCrumbNavigationItems = getBreadcrumbNavigationItems(navigationItems);
     </script>
   </body>
 </html>
+
+<style>
+  .wizard-back-link {
+    align-items: center;
+    display: flex;
+    gap: var(--basis-space-column-sm);
+  }
+</style>
 
 <style is:global>
   .wizard-anchor {

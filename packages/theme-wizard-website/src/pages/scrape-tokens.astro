@@ -8,10 +8,12 @@ const scraperUrl = withRelatedProject({
   defaultHost: process.env.API_HOST || '',
 });
 
+const backLink = { href: '/', label: 'Terug naar start' };
+
 // TODO: fix layout exeption
 ---
 
-<MainLayout title="Maak je eigen thema" metaTitle="Maak je eigen thema" layoutSize="xs" layoutBlockAlignment="center">
+<MainLayout title="Maak je eigen thema" metaTitle="Maak je eigen thema" layoutSize="xs" layoutBlockAlignment="center" backLink={backLink}>
   <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
 </MainLayout>
 
