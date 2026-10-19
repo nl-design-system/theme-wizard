@@ -10,7 +10,6 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
-import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
 import {
   SET_THEME_TOKENS_EVENT,
   UPDATE_DESIGN_TOKENS_EVENT,
@@ -19,7 +18,6 @@ import {
 } from '../../utils/events';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
-import { WizardTokenPreset } from '../wizard-token-presets';
 import componentStyles from './styles';
 
 const tag = 'theme-wizard-app';
@@ -164,9 +162,6 @@ export class WizardApp extends LitElement {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
-    } else if (target instanceof WizardTokenPreset) {
-      const updates = presetTokensToUpdateMany(target.value);
-      this.theme.updateMany(updates);
     } else {
       return;
     }
