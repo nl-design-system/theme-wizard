@@ -1,7 +1,5 @@
 # presets
 
-## try 2
-
 ```js
 const amsPageFooterPresetAccent1Default = {
   $description: 'Accent 1 - Default',
@@ -71,7 +69,7 @@ const isPreset = (input: unknown): input is Preset => {
 - ???? This also allows us to store each individual preset in the `$extensions` of a theme, component, token, etc. It would always be applied from the root, not relative to the group/theme/component itself. ???
 - This allows us to **make the Start-theme a PRESET** so you can update/upgrade your theme by calling `applyPreset(myOutdatedTheme, startThemePreset)`
 
-### `applyPreset(myTheme: Theme, preset: Preset): Theme`
+## `applyPreset(myTheme: Theme, preset: Preset): Theme`
 
 Algorithm:
 
@@ -87,62 +85,3 @@ Algorithm:
       - For this we must validate the preset-token against the actual target theme.
         QUESTION: Do we need to do this before applying, or will we make this an error in the theme after applying the preset?
 - QUESTION: Do we need a `overrideExisting` option? If we can skip overrides, we can re-apply a preset without breaking someone's theme, but also provide a `forceApplyPreset()` to sort of 'reset' their theme.
-
-### Try #1
-
-```js
-const theme = {
-  basis: {},
-  ams: {
-    'page-footer': {
-      // Regular tokens of ams.page-footer: color and background-color
-      color: {
-        $type: 'color',
-        $value: 'white',
-      },
-      'background-color': {
-        $type: 'color',
-        $value: 'green',
-      },
-
-      $extensions: {
-        // A dictionary of presets so we can loop over them but also do `presets[my-id]` easily
-        'nl.nldesign-system.token-presets': {
-          'page-footer.accent-1.default': {
-            id: 'page-footer.accent-1.default',
-            name: 'Accent 1 - Default',
-            tokens: [
-              {
-                color: {
-                  $type: 'color', // must match ams.page-footer.color
-                  $value: '{basis.color.accent-1.color-default}', // must be valid ref (match type + exists)
-                },
-                'background-color': {
-                  $type: 'color',
-                  $value: '{basis.color.accent-1.bg-subtle}',
-                },
-              },
-            ],
-          },
-          'page-footer.accent-1.inverse': {
-            id: 'page-footer.accent-1.inverse',
-            name: 'Accent 1 - Inverse',
-            tokens: [
-              {
-                color: {
-                  $type: 'color',
-                  $value: '{basis.color.accent-1-inverse.color-default}',
-                },
-                'background-color': {
-                  $type: 'color',
-                  $value: '{basis.color.accent-1-inverse.bg-subtle}',
-                },
-              },
-            ],
-          },
-        },
-      },
-    },
-  },
-};
-```
