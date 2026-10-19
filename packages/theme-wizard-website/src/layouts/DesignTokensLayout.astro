@@ -1,0 +1,27 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import type { CurrentDesignTokenPage } from '@/lib/design-tokens-nav';
+import type { BreadcrumbItem } from '@/lib/token-tree-nav';
+
+interface Props {
+  title: string;
+  metaTitle: string;
+  current?: CurrentDesignTokenPage;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { title, metaTitle } = Astro.props;
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
+
+<MainLayout title={title} metaTitle={metaTitle} mainPath="/design-tokens">
+  <clippy-story-preview size="lg">
+    <clippy-stack size="lg">
+      <slot />
+    </clippy-stack>
+  </clippy-story-preview>
+</MainLayout>

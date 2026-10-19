@@ -1,11 +1,9 @@
 ---
-import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import { TOKEN_NAMESPACES } from '@/lib/token-namespaces';
 ---
 
-<DesignTokensLayout title="Design tokens - Theme Wizard">
-  <clippy-heading level="1">Design tokens</clippy-heading>
-
+<DesignTokensLayout title="Design tokens" metaTitle="Design tokens" >
   <wizard-unstyled-list>
     {
       TOKEN_NAMESPACES.map((namespace) => (

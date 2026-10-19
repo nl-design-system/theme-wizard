@@ -1,12 +1,8 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import WithPageNav from '@/components/WithPageNav.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
 import dlv from 'dlv'
 import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-import '@nl-design-system-candidate/link-css/link.css'
-import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
 import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
@@ -65,91 +61,48 @@ const storiesWithTokens = stories.map(([id, story]) => {
       : []
   })
 })
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
-const subNavigationItems = getSubNavigationItems(navigationItems, '/components');
 ---
 
-<BaseLayout title={`${title} - Theme Wizard`}>
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
 
-      {subNavigationItems ?
-        <clippy-side-navigation
-          slot="sidebar"
-          label="Components"
-          items={JSON.stringify(subNavigationItems)}
-        ></clippy-side-navigation>
-      : null}
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+  import '@nl-design-system-community/clippy-components/clippy-table-of-contents';
+</script>
 
-      <main slot="main" class="wizard-main">
-        <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
-        <nav>
-          <a class="nl-link" href="/">Wizard</a> /
-          <a class="nl-link" href="/components">componenten</a> /
-          <span>{slug}</span>
-        </nav>
+<MainLayout title={title} metaTitle={title} mainPath="/components" layoutPurpose="detail">
+  <clippy-table-of-contents slot="aside" items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ label: story.name, href: `#${id}` })))}></clippy-table-of-contents>
 
-        <clippy-heading level="1">{title}</clippy-heading>
+  <p class="nl-paragraph" slot="header">
+    Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
+  </p>
 
-        <p class="nl-paragraph">
-          Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
-        </p>
-
-        <WithPageNav>
-          <nav slot="page-nav">
-            <wizard-anchor-nav items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ title: story.name, id })))}></wizard-anchor-nav>
-          </nav>
-
-          <div slot="page-content" class="wizard-page-content">
-            <div id="story-container" data-story-ids={JSON.stringify(storyIds)} data-component-id={slug}></div>
-
-            {storiesWithTokens.map(({id, story, tokens}) => (
-              <section id={id} class="wizard-story-section">
-                <clippy-heading level="2">{story.name}</clippy-heading>
-                <clippy-story-preview>
-                  <div data-story-container={id}></div>
-                </clippy-story-preview>
-                {tokens.length > 0 && (
-                  <wizard-unstyled-list>
-                    {tokens.map((token) => (
-                      <li>
-                        <wizard-token-field label={token.path.join('.')} path={token.path.join('.')}></wizard-token-field>
-                      </li>
-                    ))}
-                  </wizard-unstyled-list>
-                )}
-              </section>
-            ))}
-          </div>
-        </WithPageNav>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-main {
-    background-color: var(--basis-color-default-bg-document);
-    display: grid;
-    padding-block: var(--basis-space-block-3xl);
-    padding-inline: var(--basis-space-inline-xl);
-    row-gap: var(--basis-space-row-3xl);
-  }
-
-  .wizard-page-content {
-    display: grid;
-    row-gap: var(--basis-space-row-5xl);
-  }
-
-  .wizard-story-section {
-    --nl-heading-level-2-font-size: var(--basis-text-font-size-lg);
-
-    display: grid;
-    row-gap: var(--basis-space-row-xl);
-  }
-</style>
+  <clippy-story-preview size="lg">
+    <clippy-stack size="5xl">
+      {storiesWithTokens.map(({id, story, tokens}) => (
+        <section id={id} class="wizard-anchor">
+          <clippy-stack size="2xl">
+            <clippy-heading level="2">{story.name}</clippy-heading>
+            <clippy-story-preview>
+              <div data-story-container={id}></div>
+            </clippy-story-preview>
+            {tokens.length > 0 && (
+              <wizard-unstyled-list>
+                {tokens.map((token) => (
+                  <li>
+                    <wizard-token-field label={token.path.join('.')} path={token.path.join('.')}></wizard-token-field>
+                  </li>
+                ))}
+              </wizard-unstyled-list>
+            )}
+          </clippy-stack>
+        </section>
+      ))}
+      <div id="story-container" data-story-ids={JSON.stringify(storyIds)} data-component-id={slug} hidden></div>
+    </clippy-stack>
+  </clippy-story-preview>
+</MainLayout>
 
 <script>
   import { initStories } from '@/components/render-stories';

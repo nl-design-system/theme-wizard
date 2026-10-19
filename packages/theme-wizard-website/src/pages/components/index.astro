@@ -1,27 +1,20 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
+import MainLayout from "@/layouts/MainLayout.astro"
 import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
+const mainPath = '/components';
 const navigationItems = getNavigationItems(Astro.url.pathname);
-const subNavigationItems = getSubNavigationItems(navigationItems, '/components');
+const subNavigationItems = getSubNavigationItems(navigationItems, mainPath);
 ---
 
-<BaseLayout title="Componenten - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-      {subNavigationItems ?
-        <clippy-side-navigation
-          slot="sidebar"
-          label="Components"
-          items={JSON.stringify(subNavigationItems)}
-        ></clippy-side-navigation>
-      : null}
-      <main slot="main">
-        <h1>Componenten</h1>
-        <!-- TODO: show list of components with illustrations -->
-        <!--https://github.com/nl-design-system/documentatie/tree/a55bc644e9eead2a546b7b1194faca949d41b9f4/static/svg -->
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-story-preview'
+</script>
+
+<MainLayout title="Componenten" metaTitle="Componenten" mainPath={mainPath}>
+  <clippy-story-preview size="lg">
+    <wizard-unstyled-list>
+      {subNavigationItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+    </wizard-unstyled-list>
+  </clippy-story-preview>
+</MainLayout>
