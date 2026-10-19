@@ -9,20 +9,19 @@ import { map } from 'lit/directives/map.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
 
-const tag = 'clippy-table-of-content';
+const tag = 'clippy-table-of-contents';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyTableOfContent;
+    [tag]: ClippyTableOfContents;
   }
 }
 
 /**
  * Clippy Table Of Content Component
- * @cssprop --clippy-table-of-content-highlighted - Boolean to signal if the table of contents is highlighted
  */
 @safeCustomElement(tag)
-export class ClippyTableOfContent extends LitElement {
+export class ClippyTableOfContents extends LitElement {
   static override readonly styles = [unsafeCSS(listStyles), unsafeCSS(linkStyles), styles, srOnly];
 
   @property({ type: Object })
@@ -51,7 +50,7 @@ export class ClippyTableOfContent extends LitElement {
 
   override render() {
     return html`
-      <nav class="clippy-table-of-content__content" aria-labelledby=${this.#navId}>
+      <nav class="clippy-table-of-contents__content" aria-labelledby=${this.#navId}>
         <clippy-heading level=${2} id=${this.#navId}>${this.label}</clippy-heading>
         <ul class="ams-unordered-list">
           ${map(this.items, (item) => this.#renderItem(item))}
