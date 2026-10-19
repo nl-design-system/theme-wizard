@@ -16,18 +16,7 @@ export const components = {
   'skip-link': { stories: () => import('./stories/skip-link-react.stories'), title: 'Skip Link' },
 };
 
-export const componentsNavigationItems: NavigationItems = await Promise.all(
-  Object.entries(components).map(async ([slug, { title }]) => {
-    const basePath = `${COMPONENTS_BASE_PATH}/${slug}`;
-    return {
-      href: `${basePath}`,
-      items: [
-        {
-          href: `${basePath}/tokens`,
-          label: 'Tokens',
-        },
-      ],
-      label: title,
-    };
-  }),
-);
+export const componentsNavigationItems: NavigationItems = Object.entries(components).map(([slug, { title }]) => ({
+  href: `${COMPONENTS_BASE_PATH}/${slug}`,
+  label: title,
+}));
