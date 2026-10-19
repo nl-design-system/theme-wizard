@@ -1,5 +1,5 @@
 ---
-import StyleguideLayout from '@/layouts/StyleguideLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
 
 const SECTIONS = [
   {
@@ -28,11 +28,11 @@ const SECTIONS = [
   import '@nl-design-system-community/clippy-components/clippy-table-of-contents';
 </script>
 
-<StyleguideLayout title="Typografie systeem" layoutPurpose="detail">
+<MainLayout title="Design tokens" metaTitle="Design tokens" layoutPurpose="detail" mainPath="/style-guide">
   <clippy-table-of-contents slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-contents>
 
   <clippy-stack size="5xl">
-    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'typography')?.id}>
+    <section class="wizard-anchor" id={SECTIONS.find(section => section.id === 'typography')?.id}>
       <clippy-stack size="xl">
         <clippy-heading level="2">{SECTIONS.find(section => section.id === 'typography')?.name}</clippy-heading>
         <clippy-story-preview size="lg">
@@ -41,7 +41,7 @@ const SECTIONS = [
       </clippy-stack>
     </section>
 
-    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'colors')?.id}>
+    <section class="wizard-anchor" id={SECTIONS.find(section => section.id === 'colors')?.id}>
       <clippy-stack size="xl">
         <clippy-heading level="2">{SECTIONS.find(section => section.id === 'colors')?.name}</clippy-heading>
         <clippy-story-preview size="lg">
@@ -50,7 +50,7 @@ const SECTIONS = [
       </clippy-stack>
     </section>
 
-    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'spacing')?.id}>
+    <section class="wizard-anchor" id={SECTIONS.find(section => section.id === 'spacing')?.id}>
       <clippy-stack size="xl">
         <clippy-heading level="2">{SECTIONS.find(section => section.id === 'spacing')?.name}</clippy-heading>
         <clippy-story-preview size="lg">
@@ -59,7 +59,7 @@ const SECTIONS = [
       </clippy-stack>
     </section>
 
-    <section class="wizard-token-section" id={SECTIONS.find(section => section.id === 'components')?.id}>
+    <section class="wizard-anchor" id={SECTIONS.find(section => section.id === 'components')?.id}>
       <clippy-stack size="xl">
         <clippy-heading level="2">{SECTIONS.find(section => section.id === 'components')?.name}</clippy-heading>
         <clippy-story-preview size="lg">
@@ -69,4 +69,4 @@ const SECTIONS = [
     </section>
 
   </clippy-stack>
-</StyleguideLayout>
+</MainLayout>
