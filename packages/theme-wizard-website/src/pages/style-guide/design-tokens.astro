@@ -1,5 +1,5 @@
 ---
-import StyleguideLayout from '@/layouts/StyleguideLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
 
 const SECTIONS = [
   {
@@ -28,7 +28,7 @@ const SECTIONS = [
   import '@nl-design-system-community/clippy-components/clippy-table-of-contents';
 </script>
 
-<StyleguideLayout title="Typografie systeem" layoutPurpose="detail">
+<MainLayout title="Design tokens" metaTitle="Design tokens" layoutPurpose="detail" mainPath="/style-guide">
   <clippy-table-of-contents slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-contents>
 
   <clippy-stack size="5xl">
@@ -69,4 +69,4 @@ const SECTIONS = [
     </section>
 
   </clippy-stack>
-</StyleguideLayout>
+</MainLayout>

@@ -1,0 +1,99 @@
+---
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import '@utrecht/root-css/dist/index.css';
+import '@utrecht/body-css/dist/index.css';
+import '@nl-design-system-candidate/link-css/link.css';
+import MetaData, {type Props as MetaDataProps} from '../components/MetaData.astro'
+import { getNavigationItems, getSubNavigationItems, getBreadcrumbNavigationItems } from '@/navigation.config';
+
+interface Props extends MetaDataProps {
+  layoutPurpose?: "default" | 'detail';
+  mainPath: string;
+  title: string;
+}
+
+const {title, layoutPurpose = 'default', mainPath = '/', ...metaData} = Astro.props;
+
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const subNavigationItems = getSubNavigationItems(navigationItems, mainPath);
+const breadCrumbNavigationItems = getBreadcrumbNavigationItems(navigationItems);
+---
+
+<!doctype html>
+<html lang="nl-NL" class="theme-wizard-root | ma-theme | utrecht-root">
+  <head>
+    <MetaData {...metaData} />
+
+    <style is:global>
+      theme-wizard-app:not(:defined) {
+        display: none;
+      }
+    </style>
+
+    <script>
+      // TODO: import this when new version of MA is released
+      // import 'node_modules/@nl-design-system-community/ma-design-tokens/src/font.js';
+      // Then: remove these when importing from MA theme works
+      import '@fontsource/fira-sans/400.css';
+      import '@fontsource/fira-sans/700.css';
+      import '@fontsource/source-sans-pro/400.css';
+      import '@fontsource/source-sans-pro/700.css';
+      // <End TODO>
+    </script>
+  </head>
+  <body class="utrecht-body">
+    <theme-wizard-app>
+      <clippy-page-layout>
+        <wizard-page-header slot="header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+
+        <clippy-layout purpose={layoutPurpose}>
+
+          {breadCrumbNavigationItems && breadCrumbNavigationItems.length > 0 ? (
+            <clippy-breadcrumb-navigation items={JSON.stringify(breadCrumbNavigationItems)} slot="breadcrumb"></clippy-breadcrumb-navigation>
+          ) : null}
+
+          {subNavigationItems && subNavigationItems.length > 0 ? (
+            <clippy-side-navigation
+              slot="sidebar"
+              label={title}
+              items={JSON.stringify(subNavigationItems)}
+            ></clippy-side-navigation>
+          ) : null}
+
+          <clippy-main id="content" purpose={layoutPurpose}>
+            <header slot="header">
+              <clippy-stack size="xl">
+                <clippy-heading level="1">{title}</clippy-heading>
+                <slot name="header" />
+              </clippy-stack>
+            </header>
+
+            <slot name="aside" slot="aside"></slot>
+
+            <clippy-stack size="4xl">
+              <slot />
+            </clippy-stack>
+          </clippy-main>
+        </clippy-layout>
+
+        <wizard-page-footer slot="footer"></wizard-page-footer>
+      </clippy-page-layout>
+    </theme-wizard-app>
+
+    <script>
+      import '@nl-design-system-community/theme-wizard-app';
+      import '@nl-design-system-community/clippy-components/clippy-heading';
+      import '@nl-design-system-community/clippy-components/clippy-stack';
+      import '@nl-design-system-community/clippy-components/clippy-page-layout';
+      import '@nl-design-system-community/clippy-components/clippy-layout';
+      import '@nl-design-system-community/clippy-components/clippy-main';
+      import '@nl-design-system-community/clippy-components/clippy-breadcrumb-navigation';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .wizard-anchor {
+    scroll-margin-block: var(--basis-space-row-xl);
+  }
+</style>
