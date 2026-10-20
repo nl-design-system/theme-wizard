@@ -38,4 +38,4 @@ import '@nl-design-system-community/clippy-components/clippy-page-header';
 
 | Property                                       | Type     | Description                             | Default                                                                                 |
 | ---------------------------------------------- | -------- | --------------------------------------- | --------------------------------------------------------------------------------------- |
-| `--clippy-page-header-content-max-inline-size` | `length` | Maximum inline size of the content area | `var(--_clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))` |
+| `--clippy-page-header-content-max-inline-size` | `length` | Maximum inline size of the content area | `var(--basis-page-max-inline-size)` |
