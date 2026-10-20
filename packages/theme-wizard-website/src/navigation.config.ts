@@ -32,7 +32,9 @@ const setCurrentRecursive = (items: NavigationItems, slug: string): NavigationIt
 };
 
 export const getNavigationItems = (slug: string): NavigationItems => {
-  return setCurrentRecursive(navigationItems, slug);
+  // In build mode `Astro.url.pathname` returns a trailing `/`, so we need to strip it.
+  const parsedSlug = slug.replace(/\/+$/, '');
+  return setCurrentRecursive(navigationItems, parsedSlug);
 };
 
 export const getSubNavigationItems = (items: NavigationItems, slug: string): NavigationItems => {
