@@ -17,6 +17,7 @@ export default css`
       --clippy-page-layout-content-max-inline-size,
       var(--basis-page-max-inline-size)
     ); /* [2] */
+
     --clippy-page-layout-content-block-padding: var(--basis-space-block-3xl); /* [2] */
     --clippy-page-layout-content-inline-padding: var(--basis-space-inline-xl); /* [2] */
 
