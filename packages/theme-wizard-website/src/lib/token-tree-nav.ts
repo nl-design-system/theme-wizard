@@ -8,12 +8,6 @@ import { dequal } from 'dequal';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 
-export interface BreadcrumbItem {
-  href: string;
-  title: string;
-  current?: boolean;
-}
-
 export const createTokenTreeNav = (basePath: string, namespace: string) => {
   const hrefFor = (path: TokenPath) => `${basePath}/${path.join('/')}`;
 
@@ -25,30 +19,12 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
       label: node.key,
     }));
 
-  const getBreadcrumbTrail = (tree: TokenTreeNode[], currentPath: TokenPath): BreadcrumbItem[] => {
-    const breadcrumbs: BreadcrumbItem[] = [
-      { href: DESIGN_TOKENS_BASE_URL, title: 'Design tokens' },
-      { href: basePath, title: namespace },
-    ];
-    let nodes = tree;
-    for (const segment of currentPath) {
-      const node = nodes.find((candidate) => candidate.key === segment);
-      if (!node) {
-        break;
-      }
-      breadcrumbs.push({ current: dequal(node.path, currentPath), href: hrefFor(node.path), title: node.key });
-      nodes = node.children;
-    }
-    return breadcrumbs;
-  };
-
   const getStaticSlugs = (tree: TokenTreeNode[]) =>
     flattenTreePaths(tree).map((path) => ({ params: { slug: path.join('/') } }));
 
   const resolveSlugPage = (tree: TokenTreeNode[], slugParam: string) => {
     const segments = slugParam.split('/') as TokenPath;
     return {
-      breadcrumbs: getBreadcrumbTrail(tree, segments),
       navigationItems: toNavigationItems(tree, segments),
       node: findTreeNode(tree, segments)!,
       segments,
@@ -56,5 +32,5 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
     };
   };
 
-  return { getBreadcrumbTrail, getStaticSlugs, hrefFor, resolveSlugPage, toNavigationItems };
+  return { getStaticSlugs, hrefFor, resolveSlugPage, toNavigationItems };
 };
