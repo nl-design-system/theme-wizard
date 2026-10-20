@@ -36,6 +36,6 @@ import '@nl-design-system-community/clippy-components/clippy-page-header';
 
 ## CSS Custom Properties
 
-| Property                                       | Type     | Description                             | Default                                                                                 |
-| ---------------------------------------------- | -------- | --------------------------------------- | --------------------------------------------------------------------------------------- |
+| Property                                       | Type     | Description                             | Default                             |
+| ---------------------------------------------- | -------- | --------------------------------------- | ----------------------------------- |
 | `--clippy-page-header-content-max-inline-size` | `length` | Maximum inline size of the content area | `var(--basis-page-max-inline-size)` |
