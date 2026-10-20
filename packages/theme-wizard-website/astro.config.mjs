@@ -48,6 +48,8 @@ export default defineConfig({
   server: {
     port: 9492, // (T9 for WIZ)2
   },
+  // Make sure to update vercel.json too when changing this
+  trailingSlash: 'never',
   vite: {
     resolve: {
       alias: {

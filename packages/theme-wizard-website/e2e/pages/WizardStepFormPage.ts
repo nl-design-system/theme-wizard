@@ -43,7 +43,7 @@ export class WizardStepFormPage {
   /** Clicking 'Save' navigates back to the index page, so callers need to re-navigate to see the saved state. */
   async save() {
     await this.saveButton.click();
-    await this.page.waitForURL('**/wizard/');
+    await this.page.waitForURL('**/wizard');
   }
 
   /** The full design token tree currently held by `<theme-wizard-app>`, for before/after diffing. */
