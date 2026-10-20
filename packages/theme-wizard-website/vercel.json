@@ -3,5 +3,6 @@
   "buildCommand": "cd ../.. && pnpm run build",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile --force",
   "outputDirectory": "dist/",
-  "relatedProjects": ["prj_0PZgYT8FcC8BBUQa7GJqzvIQeBCB", "prj_APeeEd1j3BGODnrqQtjIZ1WISlK7"]
+  "relatedProjects": ["prj_0PZgYT8FcC8BBUQa7GJqzvIQeBCB", "prj_APeeEd1j3BGODnrqQtjIZ1WISlK7"],
+  "trailingSlash": false
 }

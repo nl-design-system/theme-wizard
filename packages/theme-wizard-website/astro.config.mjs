@@ -48,6 +48,7 @@ export default defineConfig({
   server: {
     port: 9492, // (T9 for WIZ)2
   },
+  trailingSlash: 'never',
   vite: {
     resolve: {
       alias: {
