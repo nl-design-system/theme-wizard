@@ -1,13 +1,9 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import type { CurrentDesignTokenPage } from '@/lib/design-tokens-nav';
-import type { BreadcrumbItem } from '@/lib/token-tree-nav';
 
 interface Props {
   title: string;
   metaTitle: string;
-  current?: CurrentDesignTokenPage;
-  breadcrumbs?: BreadcrumbItem[];
 }
 
 const { title, metaTitle } = Astro.props;
