@@ -8,7 +8,7 @@ export default css`
   :host {
     --_clippy-layout-content-max-inline-size: var(
       --clippy-layout-content-max-inline-size,
-      var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
+      var(--_clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
     --_clippy-layout-content-sm-max-inline-size: var(--clippy-layout-content-sm-max-inline-size, 960px);
     --_clippy-layout-content-xs-max-inline-size: var(--clippy-layout-content-xs-max-inline-size, 640px);
@@ -71,7 +71,7 @@ export default css`
   .clippy-layout__grid:has(.clippy-layout__sidebar:not([hidden])) {
     @container clippy-layout (inline-size >= 72rem) {
       grid-template-areas: 'sidebar breadcrumb' 'sidebar header' 'sidebar aside' 'sidebar body';
-      grid-template-columns: var(--_clippy-layout-sidebar-inline-size) 1fr;
+      grid-template-columns: var(--_clippy-layout-sidebar-inline-size) minmax(0, 1fr);
       grid-template-rows: auto auto auto 1fr;
     }
   }
@@ -88,7 +88,9 @@ export default css`
     .clippy-layout__grid:has(.clippy-layout__sidebar:not([hidden])) {
       @container clippy-layout-content (inline-size >= 80rem) {
         grid-template-areas: 'sidebar breadcrumb breadcrumb' 'sidebar header aside' 'sidebar body aside';
-        grid-template-columns: var(--_clippy-layout-sidebar-inline-size) 1fr var(--_clippy-layout-sidebar-inline-size);
+        grid-template-columns: var(--_clippy-layout-sidebar-inline-size) minmax(0, 1fr) var(
+            --_clippy-layout-sidebar-inline-size
+          );
         grid-template-rows: auto auto 1fr;
       }
     }

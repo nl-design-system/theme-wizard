@@ -2,6 +2,7 @@ import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import styles from './styles';
+import { BlockAlignment } from './types';
 
 const tag = 'clippy-page-layout';
 
@@ -27,7 +28,7 @@ export class ClippyPageLayout extends LitElement {
   static override readonly styles = [styles];
 
   @property({ attribute: 'layout-block-alignment', reflect: true, type: String })
-  layoutBlockAlignment: 'start' | 'center' = 'start';
+  layoutBlockAlignment: BlockAlignment = 'start';
 
   @query('header') private headerElement!: HTMLElement;
 

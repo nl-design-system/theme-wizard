@@ -1,0 +1,23 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+
+interface Props {
+  title: string;
+  metaTitle: string;
+}
+
+const { title, metaTitle } = Astro.props;
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
+
+<MainLayout title={title} metaTitle={metaTitle} mainPath="/design-tokens">
+  <clippy-story-preview size="lg">
+    <clippy-stack size="lg">
+      <slot />
+    </clippy-stack>
+  </clippy-story-preview>
+</MainLayout>

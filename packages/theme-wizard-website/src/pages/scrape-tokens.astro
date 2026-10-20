@@ -1,7 +1,6 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getNavigationItems } from '@/navigation.config';
+import MainLayout from '../layouts/MainLayout.astro';
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
@@ -9,29 +8,14 @@ const scraperUrl = withRelatedProject({
   defaultHost: process.env.API_HOST || '',
 });
 
-const navigationItems = getNavigationItems(Astro.url.pathname);
+const backLink = { href: '/', label: 'Terug naar start' };
+
+// TODO: fix layout exeption
 ---
 
-<BaseLayout title="Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-
-      <main slot="main" class="wizard-main">
-        <wizard-container size="md">
-          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-main {
-    display: grid;
-    place-content: center;
-  }
-</style>
+<MainLayout title="Maak je eigen thema" metaTitle="Maak je eigen thema" layoutSize="xs" layoutBlockAlignment="center" backLink={backLink}>
+  <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+</MainLayout>
 
 <script>
   import { navigate } from "astro:transitions/client";

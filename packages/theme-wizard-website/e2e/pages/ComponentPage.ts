@@ -27,7 +27,7 @@ export class ComponentPage {
   }
 
   get sidebar(): Locator {
-    return this.page.locator('clippy-side-navigation[label="Components"]');
+    return this.page.locator('clippy-side-navigation[label="Zijmenu"]');
   }
 
   sidebarLink(label: string): Locator {

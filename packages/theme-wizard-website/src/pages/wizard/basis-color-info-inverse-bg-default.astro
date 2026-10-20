@@ -3,9 +3,7 @@ import WizardLayout from '../../layouts/WizardLayout.astro';
 ---
 
 <WizardLayout title="Kleur voor informatief signaal">
-  <header slot="header">
-    <p class="nl-paragraph nl-paragraph--lead">Voor een informatief of neutraal signaal. Je kunt dit later altijd aanpassen.</p>
-  </header>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">Voor een informatief of neutraal signaal. Je kunt dit later altijd aanpassen.</p>
 
   <wizard-step-form returnUrl="./" path="basis.color.info-inverse.bg-default" subType="background-color"></wizard-step-form>
 </WizardLayout>

@@ -1,7 +1,8 @@
 ---
-import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import TokenNodeContent from '@/components/TokenNodeContent.astro';
 import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+import { capitalize } from 'es-toolkit';
 
 export function getStaticPaths() {
   return TOKEN_NAMESPACES.flatMap((namespace) =>
@@ -19,9 +20,8 @@ const { breadcrumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage
 ---
 
 <DesignTokensLayout
-  title={`${node.key} - ${namespace.pageTitle} - Theme Wizard`}
-  current={{ namespace: namespace.id, segments }}
-  breadcrumbs={breadcrumbs}
+  title={capitalize(node.key)}
+  metaTitle={`${node.key} - ${namespace.pageTitle}`}
 >
   <TokenNodeContent namespace={namespace.id} node={node} tokenPath={tokenPath} />
 </DesignTokensLayout>

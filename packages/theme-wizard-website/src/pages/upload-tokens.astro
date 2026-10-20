@@ -1,42 +1,17 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getNavigationItems } from '@/navigation.config';
-const navigationItems = getNavigationItems(Astro.url.pathname);
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<BaseLayout title="Upload je thema - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-
-      <main slot="main" class="wizard-main">
-        <wizard-container size="xl">
-          <clippy-story-preview size="lg">
-            <clippy-stack size="3xl">
-              <clippy-heading level="1">Upload je thema</clippy-heading>
-              <wizard-theme-preset-form></wizard-theme-preset-form>
-            </clippy-stack>
-          </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
+<MainLayout title="Upload je thema" metaTitle="Upload thema" layoutSize="xs" layoutBlockAlignment="center">
+  <clippy-story-preview size="lg">
+    <wizard-theme-preset-form></wizard-theme-preset-form>
+  </clippy-story-preview>
+</MainLayout>
 
 <script>
-import { navigate } from "astro:transitions/client"
+  import { navigate } from "astro:transitions/client"
 
   document.querySelector('theme-wizard-app')?.addEventListener('theme-upload', () => {
     navigate('/design-tokens/basis')
   })
 </script>
-
-<style>
-  .wizard-main {
-    padding-block: var(--basis-space-block-5xl);
-  }
-
-  wizard-container {
-    margin-inline: auto;
-  }
-</style>

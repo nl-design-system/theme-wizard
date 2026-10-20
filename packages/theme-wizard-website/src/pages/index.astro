@@ -1,7 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
 import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react'
-import { getNavigationItems } from '@/navigation.config';
 
 export const items = [
   {
@@ -26,48 +25,25 @@ export const items = [
     icon: IconFileCode,
   }
 ]
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
 ---
 
-<BaseLayout title="Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
-
-      <main slot="main" class="wizard-main">
-        <wizard-container size="md">
-          <clippy-story-preview size="lg">
-            <clippy-stack size="4xl">
-              <clippy-heading level="1">Hoe wil je starten?</clippy-heading>
-
-              <clippy-stack size="lg">
-                {items.map(link => (
-                  <wizard-card-as-link>
-                    <a href={link.href} slot="link">{link.linkLabel}</a>
-                    <link.icon slot="pre-header" aria-hidden="true" />
-                    <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
-                    <p class="nl-paragraph" slot="body">{link.description}</p>
-                  </wizard-card-as-link>
-                ))}
-              </clippy-stack>
-            </clippy-stack>
-          </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
+<MainLayout title="Hoe wil je starten?" metaTitle="Theme Wizard" layoutSize="xs" layoutBlockAlignment="center" skipMetaTitleSuffix>
+  <clippy-story-preview size="lg">
+    <clippy-stack size="lg">
+      {items.map(link => (
+        <wizard-card-as-link>
+          <a href={link.href} slot="link">{link.linkLabel}</a>
+          <link.icon slot="pre-header" aria-hidden="true" />
+          <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
+          <p class="nl-paragraph" slot="body">{link.description}</p>
+        </wizard-card-as-link>
+      ))}
+    </clippy-stack>
+  </clippy-story-preview>
+</MainLayout>
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-stack'
   import '@nl-design-system-community/clippy-components/clippy-story-preview'
 </script>
-
-<style>
-  .wizard-main {
-    display: grid;
-    place-content: center;
-  }
-</style>

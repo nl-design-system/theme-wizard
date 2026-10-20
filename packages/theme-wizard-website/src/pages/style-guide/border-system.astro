@@ -1,8 +1,7 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import MainLayout from '@/layouts/MainLayout.astro';
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import { capitalize } from 'es-toolkit/string';
-import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
 
 const SECTIONS = [
   {
@@ -16,64 +15,36 @@ const SECTIONS = [
     tokens: ['none', 'sm', 'md', 'lg', 'round'],
   },
 ]
-
-const navigationItems = getNavigationItems(Astro.url.pathname);
-const subNavigationItems = getSubNavigationItems(navigationItems, '/style-guide');
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
-  import '@nl-design-system-community/clippy-components/clippy-heading';
-  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  import '@nl-design-system-community/clippy-components/clippy-table-of-contents';
 </script>
 
-<BaseLayout title="Randen en lijnen systeem - Stijlgids - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+<MainLayout title="Randen en lijnen systeem" metaTitle="Randen en lijnen systeem" layoutPurpose="detail" mainPath="/style-guide">
+  <clippy-table-of-contents slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-contents>
 
-      <clippy-side-navigation
-        slot="sidebar"
-        label="Stijlgids"
-        items={JSON.stringify(subNavigationItems)}
-      ></clippy-side-navigation>
-
-      <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(SECTIONS.map(section => ({title: section.name, id: section.id})))}></wizard-anchor-nav>
-
-      <wizard-container slot="main">
-        <clippy-stack size="3xl">
-          <clippy-heading level="1">Randen en lijnen systeem</clippy-heading>
-
-          <clippy-stack size="5xl">
-            {SECTIONS.map(section => (
-              <section class="wizard-token-section" id={section.id}>
-                <clippy-stack size="xl">
-                  <wizard-token-docs groups={`basis.${section.id}`} heading-level="2"></wizard-token-docs>
-                  <clippy-story-preview size="lg">
-                    <clippy-stack size="5xl">
-                      {section.tokens.map((token) => (
-                        <clippy-stack size="2xl">
-                          <clippy-heading level="3">{capitalize(token)}</clippy-heading>
-                          <wizard-token-table groups={`basis.${section.id}.${token}`}></wizard-token-table>
-                          <TokenStoryMatches groups={`basis.${section.id}.${token}`} />
-                        </clippy-stack>
-                      ))}
-                    </clippy-stack>
-                  </clippy-story-preview>
+  <clippy-stack size="5xl">
+    {SECTIONS.map(section => (
+      <section class="wizard-anchor" id={section.id}>
+        <clippy-stack size="xl">
+          <wizard-token-docs groups={`basis.${section.id}`} heading-level="2"></wizard-token-docs>
+          <clippy-story-preview size="lg">
+            <clippy-stack size="5xl">
+              {section.tokens.map((token) => (
+                <clippy-stack size="2xl">
+                  <clippy-heading level="3">{capitalize(token)}</clippy-heading>
+                  <wizard-token-table groups={`basis.${section.id}.${token}`}></wizard-token-table>
+                  <TokenStoryMatches groups={`basis.${section.id}.${token}`} />
                 </clippy-stack>
-              </section>
-            ))}
-          </clippy-stack>
-
+              ))}
+            </clippy-stack>
+          </clippy-story-preview>
         </clippy-stack>
-      </wizard-container>
-    </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-token-section {
-    scroll-margin-block: calc(var(--clippy-page-layout-header-block-size, 4rem) + var(--basis-space-row-xl));
-  }
-</style>
+      </section>
+    ))}
+  </clippy-stack>
+</MainLayout>
