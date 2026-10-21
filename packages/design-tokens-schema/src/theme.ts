@@ -71,7 +71,7 @@ export const excludeParentKeys = (tokens: Record<string, unknown>) => {
       }
       return merge(result, value as Record<PropertyKey, unknown>);
     },
-    {} as Record<string, unknown>,
+    Object.create(null) as Record<string, unknown>,
   );
 };
 
