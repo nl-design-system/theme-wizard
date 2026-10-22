@@ -74,7 +74,7 @@ describe('createThemeStylesheet', () => {
         red: { $type: 'color', $value: '#f00' },
       },
     });
-    expect(result).toContain('--color-brand: var(--color-red);');
+    expect(result).toBe(':host { --color-brand: var(--color-red);\n--color-red: #f00; }');
   });
 
   it('wraps all declarations inside the selector block', () => {

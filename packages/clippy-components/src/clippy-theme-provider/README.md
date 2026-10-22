@@ -44,9 +44,9 @@ Custom properties set on a provider's `:host` cascade into its own shadow tree a
 
 ## Properties
 
-| Property | Attribute | Type         | Description                                                                                      |
-| -------- | --------- | ------------ | ------------------------------------------------------------------------------------------------ |
-| `theme`  | `theme`   | `TokenGroup` | A design-token JSON tree (DTCG-shaped, `$value`/`$type` leaves). As an attribute, a JSON string. |
+| Property | Attribute | Type                                                                                                                               | Description                                                                                                                                         |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme`  | `theme`   | [`TokenGroup`](https://github.com/nl-design-system/theme-wizard/blob/main/packages/design-tokens-schema/src/tokens/token-group.ts) | A design-token JSON tree ([DTCG](https://www.designtokens.org/tr/2025.10/format/)-shaped, `$value`/`$type` leaves). As an attribute, a JSON string. |
 
 ## Slots
 
