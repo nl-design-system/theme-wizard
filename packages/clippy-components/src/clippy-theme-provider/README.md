@@ -16,9 +16,17 @@ import '@nl-design-system-community/clippy-components/clippy-theme-provider';
 </clippy-reset-theme>
 ```
 
-`theme` is an object property (bind it with `.theme=`, not as a string attribute). Pair it with [`<clippy-reset-theme>`](../clippy-reset-theme) as the outermost wrapper to guarantee no custom properties leak in from an ancestor theme before this theme's values are applied.
+`theme` can be bound as an object property (`.theme=`), for templating libraries that support it. It can also be set as a plain HTML attribute containing a JSON string, for consumers without property binding:
 
-Updating `.theme` on an existing instance updates its custom properties live.
+```html
+<clippy-theme-provider theme='{"brand":{"color":{"$value":"rebeccapurple","$type":"color"}}}'>
+  <clippy-button purpose="primary">Themed button</clippy-button>
+</clippy-theme-provider>
+```
+
+Invalid JSON in the attribute logs a warning and leaves `theme` unset. Pair `<clippy-theme-provider>` with [`<clippy-reset-theme>`](../clippy-reset-theme) as the outermost wrapper to guarantee no custom properties leak in from an ancestor theme before this theme's values are applied.
+
+Updating `theme` — either the property or the attribute — on an existing instance updates its custom properties live.
 
 ## Nesting
 
@@ -36,9 +44,9 @@ Custom properties set on a provider's `:host` cascade into its own shadow tree a
 
 ## Properties
 
-| Property | Type         | Description                                                      |
-| -------- | ------------ | ---------------------------------------------------------------- |
-| `theme`  | `TokenGroup` | A design-token JSON tree (DTCG-shaped, `$value`/`$type` leaves). |
+| Property | Attribute | Type         | Description                                                                                      |
+| -------- | --------- | ------------ | ------------------------------------------------------------------------------------------------ |
+| `theme`  | `theme`   | `TokenGroup` | A design-token JSON tree (DTCG-shaped, `$value`/`$type` leaves). As an attribute, a JSON string. |
 
 ## Slots
 

@@ -11,6 +11,14 @@ async function setup() {
   return component;
 }
 
+// The component's own stylesheet (as opposed to its static `display: block` styles) is the
+// last one adopted - it's pushed in `connectedCallback`, after Lit adopts `static styles`.
+function themeStylesheetOf(component: ClippyThemeProvider): CSSStyleSheet {
+  const stylesheet = component.shadowRoot?.adoptedStyleSheets.at(-1);
+  assert(stylesheet instanceof CSSStyleSheet);
+  return stylesheet;
+}
+
 describe(`<${tag}>`, () => {
   afterEach(() => {
     document.body.innerHTML = '';
@@ -44,15 +52,17 @@ describe(`<${tag}>`, () => {
     expect(span?.textContent).toBe('Hello');
   });
 
-  it('adopts a stylesheet on connect', async () => {
+  it('adopts its static styles and its own theme stylesheet on connect', async () => {
     const component = await setup();
-    expect(component.shadowRoot?.adoptedStyleSheets.length).toBe(1);
+    expect(component.shadowRoot?.adoptedStyleSheets.length).toBe(2);
   });
 
-  it('clears the adopted stylesheet on disconnect', async () => {
+  it('removes only its own stylesheet on disconnect, keeping static styles', async () => {
     const component = await setup();
+    const ownStylesheet = themeStylesheetOf(component);
     document.body.innerHTML = '';
-    expect(component.shadowRoot?.adoptedStyleSheets.length).toBe(0);
+    expect(component.shadowRoot?.adoptedStyleSheets).not.toContain(ownStylesheet);
+    expect(component.shadowRoot?.adoptedStyleSheets.length).toBe(1);
   });
 
   it('sets a CSS custom property for each token when `theme` is assigned', async () => {
@@ -60,8 +70,7 @@ describe(`<${tag}>`, () => {
     component.theme = { color: { red: { $type: 'color', $value: '#f00' } } };
     await component.updateComplete;
 
-    const stylesheet = component.shadowRoot?.adoptedStyleSheets[0];
-    assert(stylesheet instanceof CSSStyleSheet);
+    const stylesheet = themeStylesheetOf(component);
     const cssText = [...stylesheet.cssRules].map((r) => r.cssText).join('');
     expect(cssText).toContain('--color-red: #f00;');
   });
@@ -74,8 +83,7 @@ describe(`<${tag}>`, () => {
     component.theme = { color: { $type: 'color', $value: 'blue' } };
     await component.updateComplete;
 
-    const stylesheet = component.shadowRoot?.adoptedStyleSheets[0];
-    assert(stylesheet instanceof CSSStyleSheet);
+    const stylesheet = themeStylesheetOf(component);
     const cssText = [...stylesheet.cssRules].map((r) => r.cssText).join('');
     expect(cssText).toContain('--color: blue;');
     expect(cssText).not.toContain('red');
@@ -91,9 +99,20 @@ describe(`<${tag}>`, () => {
     };
     await component.updateComplete;
 
-    const stylesheet = component.shadowRoot?.adoptedStyleSheets[0];
-    assert(stylesheet instanceof CSSStyleSheet);
+    const stylesheet = themeStylesheetOf(component);
     const cssText = [...stylesheet.cssRules].map((r) => r.cssText).join('');
     expect(cssText).toContain('--color-brand: var(--color-red);');
+  });
+
+  it('accepts a theme as a JSON string attribute', async () => {
+    document.body.innerHTML = `<${tag} theme='{"color":{"red":{"$type":"color","$value":"#f00"}}}'></${tag}>`;
+    const component = document.querySelector(tag) as ClippyThemeProvider;
+    await component.updateComplete;
+
+    expect(component.theme).toEqual({ color: { red: { $type: 'color', $value: '#f00' } } });
+
+    const stylesheet = themeStylesheetOf(component);
+    const cssText = [...stylesheet.cssRules].map((r) => r.cssText).join('');
+    expect(cssText).toContain('--color-red: #f00;');
   });
 });

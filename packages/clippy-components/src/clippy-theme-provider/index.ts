@@ -1,7 +1,9 @@
 import type { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
+import { jsonAttribute } from '@lib/converters';
 import { safeCustomElement } from '@lib/decorators';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
+import styles from './styles';
 import { createThemeStylesheet } from './theme-stylesheet';
 
 const tag = 'clippy-theme-provider';
@@ -14,7 +16,11 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyThemeProvider extends LitElement {
-  @property({ attribute: false })
+  static override readonly styles = [styles];
+
+  // `.theme=${obj}` (property binding) bypasses the converter entirely;
+  // `theme='{"..."}'` (attribute) is parsed as JSON for consumers outside a templating library.
+  @property({ converter: jsonAttribute<TokenGroup>() })
   theme: TokenGroup | undefined;
 
   // Per instance: unlike clippy-reset-theme's stylesheet, this one's content depends on `theme`.
@@ -34,12 +40,16 @@ export class ClippyThemeProvider extends LitElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.shadowRoot?.adoptedStyleSheets.splice(0, this.shadowRoot?.adoptedStyleSheets.length);
+    // Only remove our own sheet - `static styles` owns the rest of `adoptedStyleSheets`.
+    const sheets = this.shadowRoot?.adoptedStyleSheets;
+    const index = sheets?.indexOf(this.#styleSheet) ?? -1;
+    if (index !== -1) {
+      sheets?.splice(index, 1);
+    }
   }
 
   #applyTheme(): void {
-    const tokenRule = this.theme ? createThemeStylesheet(this.theme) : ':host {}';
-    this.#styleSheet.replaceSync(`:host(:not([hidden])) { display: block; }\n${tokenRule}`);
+    this.#styleSheet.replaceSync(createThemeStylesheet(this.theme ?? Object.create(null)));
   }
 
   override render() {

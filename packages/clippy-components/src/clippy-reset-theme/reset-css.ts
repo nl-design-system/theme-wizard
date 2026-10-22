@@ -9,13 +9,13 @@ export type TokenPath = string[];
 
 export { tokenPathToCSSCustomProperty };
 
-function getTokenPaths(obj: TokenNode, partialTokenPath: TokenPath = []): TokenPath[] {
+const getTokenPaths = (obj: TokenNode, partialTokenPath: TokenPath = []): TokenPath[] => {
   if (Object.hasOwn(obj, '$type') || Object.hasOwn(obj, '$value')) return [partialTokenPath];
 
   return Object.keys(obj).flatMap((key) =>
     typeof obj[key] === 'object' && obj[key] !== null ? getTokenPaths(obj[key], [...partialTokenPath, key]) : [],
   );
-}
+};
 
 export const createResetStylesheet = (tokens: TokenNode[], selector = '.reset-theme'): string => {
   const properties = tokens.reduce((set, json) => {
