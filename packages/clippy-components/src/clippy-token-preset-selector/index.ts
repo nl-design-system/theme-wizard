@@ -24,7 +24,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   #options: Map<T['label'], T> = new Map();
 
   @query('select')
-  readonly selectElement?: HTMLSelectElement;
+  selectElement?: HTMLSelectElement;
 
   @property({ converter: arrayFromTokenList })
   set options(options: T[] | string[]) {
@@ -58,6 +58,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
     if (this.selectElement) {
       const selectedValue = this.selectElement.value;
       const option = this.getOptionForValue(selectedValue as T['value']);
+      console.log('option', option);
       if (option && this.value !== option.value) {
         this.value = option.value;
         this.emit('change');
@@ -78,6 +79,32 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
     this.emit('focus');
   }
 
+  #getCurrentIndex(): number {
+    if (!this.selectElement) return -1;
+    const currentValue = this.selectElement.value as T['value'];
+    const option = this.getOptionForValue(currentValue);
+    if (!option) return -1;
+    return [...this.#options.values()].findIndex((o) => o.label === option.label);
+  }
+
+  #selectPrev() {
+    const optionsArray = [...this.#options.values()];
+    if (optionsArray.length === 0 || !this.selectElement) return;
+    const currentIndex = this.#getCurrentIndex();
+    const newIndex = currentIndex <= 0 ? optionsArray.length - 1 : currentIndex - 1;
+    this.selectElement.value = String(optionsArray[newIndex].value);
+    this.selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  #selectNext() {
+    const optionsArray = [...this.#options.values()];
+    if (optionsArray.length === 0 || !this.selectElement) return;
+    const currentIndex = this.#getCurrentIndex();
+    const newIndex = currentIndex >= optionsArray.length - 1 ? 0 : currentIndex + 1;
+    this.selectElement.value = String(optionsArray[newIndex].value);
+    this.selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
   getOptionForValue(value: T['value'] | null): T | undefined {
     for (const option of this.#options.values()) {
       if (option.value === value) {
@@ -94,7 +121,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
         <slot><mark>preview</mark></slot>
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
-        <button><</button>
+        <button @click=${this.#selectPrev}><</button>
         <select
           @change=${this.#handleSelectChange}
           @blur=${this.#handleSelectBlur}
@@ -105,7 +132,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
             (option) => html`<option value=${option.value as string}>${option.label}</option>`,
           )}
         </select>
-        <button>></button>
+        <button @click=${this.#selectNext}>></button>
       </div>
     `;
   }
