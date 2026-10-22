@@ -1,19 +1,21 @@
 // Token utilities are adapted from:
 // https://github.com/nl-design-system/documentatie/blob/main/src/utils.ts
+import { tokenPathToCSSCustomProperty } from '../lib/tokens';
+
 export type Token = { $value?: string; $type?: string; $extensions?: { [key: string]: unknown } }; //| { $type: unknown };
-export type TokenGroup = { $extensions?: { [key: string]: unknown } };
-export type TokenNode = { [key: string]: TokenNode | Token } & TokenGroup; //| { $type: unknown };
+type ResetTokenGroup = { $extensions?: { [key: string]: unknown } };
+export type TokenNode = { [key: string]: TokenNode | Token } & ResetTokenGroup; //| { $type: unknown };
 export type TokenPath = string[];
 
-function getTokenPaths(obj: TokenNode, partialTokenPath: TokenPath = []): TokenPath[] {
+export { tokenPathToCSSCustomProperty };
+
+const getTokenPaths = (obj: TokenNode, partialTokenPath: TokenPath = []): TokenPath[] => {
   if (Object.hasOwn(obj, '$type') || Object.hasOwn(obj, '$value')) return [partialTokenPath];
 
   return Object.keys(obj).flatMap((key) =>
     typeof obj[key] === 'object' && obj[key] !== null ? getTokenPaths(obj[key], [...partialTokenPath, key]) : [],
   );
-}
-
-export const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
+};
 
 export const createResetStylesheet = (tokens: TokenNode[], selector = '.reset-theme'): string => {
   const properties = tokens.reduce((set, json) => {

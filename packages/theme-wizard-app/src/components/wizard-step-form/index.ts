@@ -10,6 +10,7 @@ import {
 } from '@nl-design-system-community/color-scale-generator';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-stack';
+import '@nl-design-system-community/clippy-components/clippy-theme-provider';
 import {
   BaseDesignToken,
   getExtension,
@@ -274,11 +275,11 @@ export class WizardStepForm extends LitElement {
       return html`
         <div class="wizard-step-form__sample wizard-step-form__sample-start" slot="start">
           <clippy-reset-theme>
-            <wizard-preview-theme>
+            <clippy-theme-provider .theme=${this.theme.tokens}>
               <clippy-token-sample-text font-size="var(--basis-text-font-size-lg)" font-family=${value}
                 >Ag</clippy-token-sample-text
               >
-            </wizard-preview-theme>
+            </clippy-theme-provider>
           </clippy-reset-theme>
         </div>
       `;
@@ -297,9 +298,9 @@ export class WizardStepForm extends LitElement {
             : nothing
         }
         <clippy-reset-theme slot="body">
-          <wizard-preview-theme>
+          <clippy-theme-provider .theme=${this.theme.tokens}>
             <wizard-step-form-sample .token=${token} path=${this.path}></wizard-step-form-sample>
-          </wizard-preview-theme>
+          </clippy-theme-provider>
         </clippy-reset-theme>
       </clippy-card-radio-option>
     `;

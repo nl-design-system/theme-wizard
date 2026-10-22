@@ -1,9 +1,12 @@
+import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+import '@nl-design-system-community/clippy-components/clippy-theme-provider';
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import '../wizard-preview-theme';
-import '../wizard-story-react';
+import { customElement, state } from 'lit/decorators.js';
+import type Theme from '../../lib/Theme';
 import type { StoryRenderProps } from '../wizard-story-react';
+import '../wizard-story-react';
+import { themeContext } from '../../contexts/theme';
 import styles from './styles';
 
 const tag = 'wizard-story-example';
@@ -21,6 +24,10 @@ declare global {
 export class WizardStoryExample extends LitElement {
   static override readonly styles = [styles];
 
+  @consume({ context: themeContext, subscribe: true })
+  @state()
+  private readonly theme!: Theme;
+
   story: StoryRenderProps['story'] = undefined;
   componentMeta: StoryRenderProps['componentMeta'] = undefined;
   args: StoryRenderProps['args'] = undefined;
@@ -28,13 +35,13 @@ export class WizardStoryExample extends LitElement {
   override render() {
     return html`
       <clippy-reset-theme>
-        <wizard-preview-theme>
+        <clippy-theme-provider .theme=${this.theme.tokens}>
           <wizard-story-react
             .story=${this.story}
             .componentMeta=${this.componentMeta}
             .args=${this.args ?? this.story?.args ?? {}}
           ></wizard-story-react>
-        </wizard-preview-theme>
+        </clippy-theme-provider>
       </clippy-reset-theme>
     `;
   }

@@ -1,15 +1,15 @@
-import { describe, expect, it } from 'vitest';
-import { arrayFromCommaList, arrayFromTokenList, allowedValuesConverter, nullableNumber } from './index';
+import { describe, expect, it, vi } from 'vitest';
+import { arrayFromCommaList, arrayFromTokenList, allowedValuesConverter, jsonAttribute, nullableNumber } from './index';
 
 describe('arrayFromTokenList', () => {
   it('should return null for null input', () => {
     const result = arrayFromTokenList(null);
-    expect(result).toBe(null);
+    expect(result).toBeNull();
   });
 
   it('should return null for empty string', () => {
     const result = arrayFromTokenList('');
-    expect(result).toBe(null);
+    expect(result).toBeNull();
   });
 
   it('should parse JSON array input', () => {
@@ -61,12 +61,12 @@ describe('arrayFromTokenList', () => {
 describe('arrayFromCommaList', () => {
   it('should return null for null input', () => {
     const result = arrayFromCommaList(null);
-    expect(result).toBe(null);
+    expect(result).toBeNull();
   });
 
   it('should return null for empty string', () => {
     const result = arrayFromCommaList('');
-    expect(result).toBe(null);
+    expect(result).toBeNull();
   });
 
   it('should parse JSON array input', () => {
@@ -139,6 +139,43 @@ describe('nullableNumber', () => {
   it('should parse a float string', () => {
     const result = nullableNumber('3.14');
     expect(result).toBe(3.14);
+  });
+});
+
+describe('jsonAttribute', () => {
+  it('should return undefined for null input', () => {
+    const fromAttribute = jsonAttribute();
+    expect(fromAttribute(null)).toBeUndefined();
+  });
+
+  it('should return undefined for empty string', () => {
+    const fromAttribute = jsonAttribute();
+    expect(fromAttribute('')).toBeUndefined();
+  });
+
+  it('should parse a JSON object', () => {
+    const fromAttribute = jsonAttribute<{ a: string }>();
+    expect(fromAttribute('{"a": "b"}')).toEqual({ a: 'b' });
+  });
+
+  it('should parse a nested JSON object', () => {
+    const fromAttribute = jsonAttribute();
+    expect(fromAttribute('{"color": {"red": {"$value": "#f00"}}}')).toEqual({
+      color: { red: { $value: '#f00' } },
+    });
+  });
+
+  it('should parse a JSON array', () => {
+    const fromAttribute = jsonAttribute<string[]>();
+    expect(fromAttribute('["a", "b"]')).toEqual(['a', 'b']);
+  });
+
+  it('should warn and return undefined for invalid JSON', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const fromAttribute = jsonAttribute();
+    expect(fromAttribute('not-json')).toBeUndefined();
+    expect(warn).toHaveBeenCalledWith('Invalid JSON attribute value: "not-json".');
+    warn.mockRestore();
   });
 });
 

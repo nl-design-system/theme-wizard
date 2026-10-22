@@ -12,7 +12,6 @@ export * from './components/wizard-link-to-token';
 export * from './components/wizard-logo';
 export * from './components/wizard-page-header';
 export * from './components/wizard-page-footer';
-export * from './components/wizard-preview-theme';
 export * from './components/wizard-reuse-suggestions-table';
 export * from './components/wizard-scraped-tokens-preview';
 export * from './components/wizard-scraper';

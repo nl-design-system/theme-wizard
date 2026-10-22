@@ -1,9 +1,9 @@
-import type { TokenGroup } from '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import {
   BaseDesignToken,
   BaseDesignTokenIdentifier,
   isTokenLike,
   isValueObject,
+  type TokenGroup,
   walkTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 

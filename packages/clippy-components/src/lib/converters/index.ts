@@ -32,6 +32,21 @@ export const nullableNumber: AttributeConverterFrom<number | null> = (value) => 
   return Number(value);
 };
 
+/** Parses a JSON attribute value (e.g. a theme passed as a JSON string). Invalid JSON warns and falls back to `undefined`. */
+export const jsonAttribute =
+  <T>(): AttributeConverterFrom<T | undefined> =>
+  (value) => {
+    if (value === null || value === '') {
+      return undefined;
+    }
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      console.warn(`Invalid JSON attribute value: "${value}".`);
+      return undefined;
+    }
+  };
+
 export const allowedValuesConverter = <T extends string, const AllowedValues extends readonly T[]>(
   allowedValues: AllowedValues,
   defaultValue?: AllowedValues[number],
