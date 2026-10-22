@@ -1,9 +1,9 @@
 import '@nl-design-system-community/clippy-components/clippy-html-image';
-import type { TokenGroup } from '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import '@nl-design-system-community/clippy-components/clippy-token-table';
+import type { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
