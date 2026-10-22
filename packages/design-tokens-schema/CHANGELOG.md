@@ -1,5 +1,12 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.5.0
+
+### Minor Changes
+
+- 7b8ccab: feat: add support for validating duration tokens
+  feat: add support for validating shadow tokens
+
 ## 2.4.0
 
 ### Minor Changes
