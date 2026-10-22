@@ -21,7 +21,7 @@ const { namespace, node, tokenPath } = Astro.props;
   )
 }
 
-<wizard-token-preset-selector></wizard-token-preset-selector>
+<wizard-token-preset-selector path={tokenPath}></wizard-token-preset-selector>
 
 {
   !node.isLeaf && (
