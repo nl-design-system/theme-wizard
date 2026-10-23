@@ -1,7 +1,8 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import { FormElement } from '@src/lib/FormElement';
-import { html } from 'lit';
+import selectStyles from '@utrecht/select-css?inline';
+import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import styles from './styles';
 import { Option } from './types';
@@ -19,7 +20,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippyTokenPresetSelector<T extends Option = Option> extends FormElement<T['value']> {
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(selectStyles), styles];
 
   #options: Map<T['label'], T> = new Map();
 
@@ -119,7 +120,12 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
         <button @click=${this.#selectPrev}><</button>
-        <select @change=${this.#handleSelectChange} @blur=${this.#handleSelectBlur} @focus=${this.#handleSelectFocus}>
+        <select
+          class="utrecht-select utrecht-select--html-select"
+          @change=${this.#handleSelectChange}
+          @blur=${this.#handleSelectBlur}
+          @focus=${this.#handleSelectFocus}
+        >
           ${Array.from(this.#options.values()).map(
             (option) =>
               html`<option value=${option.value as string} ?selected=${option.value === this.value}>
