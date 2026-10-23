@@ -58,7 +58,6 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
     if (this.selectElement) {
       const selectedValue = this.selectElement.value;
       const option = this.getOptionForValue(selectedValue as T['value']);
-      console.log('option', option);
       if (option && this.value !== option.value) {
         this.value = option.value;
         this.emit('change');
@@ -82,13 +81,12 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   #getCurrentIndex(): number {
     if (!this.selectElement) return -1;
     const currentValue = this.selectElement.value as T['value'];
-    const option = this.getOptionForValue(currentValue);
-    if (!option) return -1;
-    return [...this.#options.values()].findIndex((o) => o.label === option.label);
+    const optionsArray = this.options;
+    return optionsArray.findIndex((option) => String(option.value) === currentValue);
   }
 
   #selectPrev() {
-    const optionsArray = [...this.#options.values()];
+    const optionsArray = this.options;
     if (optionsArray.length === 0 || !this.selectElement) return;
     const currentIndex = this.#getCurrentIndex();
     const newIndex = currentIndex <= 0 ? optionsArray.length - 1 : currentIndex - 1;
@@ -97,7 +95,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   }
 
   #selectNext() {
-    const optionsArray = [...this.#options.values()];
+    const optionsArray = this.options;
     if (optionsArray.length === 0 || !this.selectElement) return;
     const currentIndex = this.#getCurrentIndex();
     const newIndex = currentIndex >= optionsArray.length - 1 ? 0 : currentIndex + 1;
@@ -115,21 +113,18 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   }
 
   override render() {
-    const selectedOption = this.getOptionForValue(this.value);
     return html`
       <div class="clippy-token-preset-selector__preview">
         <slot><mark>preview</mark></slot>
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
         <button @click=${this.#selectPrev}><</button>
-        <select
-          @change=${this.#handleSelectChange}
-          @blur=${this.#handleSelectBlur}
-          @focus=${this.#handleSelectFocus}
-          .value=${selectedOption?.value ?? ''}
-        >
+        <select @change=${this.#handleSelectChange} @blur=${this.#handleSelectBlur} @focus=${this.#handleSelectFocus}>
           ${Array.from(this.#options.values()).map(
-            (option) => html`<option value=${option.value as string}>${option.label}</option>`,
+            (option) =>
+              html`<option value=${option.value as string} ?selected=${option.value === this.value}>
+                ${option.label}
+              </option>`,
           )}
         </select>
         <button @click=${this.#selectNext}>></button>

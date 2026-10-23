@@ -7,6 +7,7 @@ import React from 'react';
 
 type StoryArgs = {
   options: Options;
+  value?: string;
 };
 
 const meta = {
@@ -32,4 +33,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const PredefinedValue: Story = {
+  name: 'Predefined Value',
+  args: {
+    options: simple,
+    value: 'accent-1-reversed',
+  },
 };
