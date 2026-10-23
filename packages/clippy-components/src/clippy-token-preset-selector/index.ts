@@ -6,6 +6,7 @@ import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import styles from './styles';
 import { Option } from './types';
+import '../clippy-button';
 
 const tag = 'clippy-token-preset-selector';
 
@@ -119,9 +120,9 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
         <slot><mark>preview</mark></slot>
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
-        <button @click=${this.#selectPrev}><</button>
+        <clippy-button purpose="secondary" @click=${this.#selectPrev}><</clippy-button>
         <select
-          class="utrecht-select utrecht-select--html-select"
+          class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
           @change=${this.#handleSelectChange}
           @blur=${this.#handleSelectBlur}
           @focus=${this.#handleSelectFocus}
@@ -133,7 +134,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
               </option>`,
           )}
         </select>
-        <button @click=${this.#selectNext}>></button>
+        <clippy-button purpose="secondary" @click=${this.#selectNext}>></clippy-button>
       </div>
     `;
   }
