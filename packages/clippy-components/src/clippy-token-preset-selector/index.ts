@@ -1,12 +1,17 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import { FormElement } from '@src/lib/FormElement';
+import ChevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
+import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
 import selectStyles from '@utrecht/select-css?inline';
 import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import '../clippy-button';
+import '../clippy-icon';
+import srOnly from '../lib/sr-only';
 import styles from './styles';
 import { Option } from './types';
-import '../clippy-button';
 
 const tag = 'clippy-token-preset-selector';
 
@@ -21,7 +26,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippyTokenPresetSelector<T extends Option = Option> extends FormElement<T['value']> {
-  static override readonly styles = [unsafeCSS(selectStyles), styles];
+  static override readonly styles = [unsafeCSS(selectStyles), styles, srOnly];
 
   #options: Map<T['label'], T> = new Map();
 
@@ -120,7 +125,10 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
         <slot><mark>preview</mark></slot>
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
-        <clippy-button purpose="secondary" @click=${this.#selectPrev}><</clippy-button>
+        <clippy-button purpose="secondary" @click=${this.#selectPrev}>
+          <clippy-icon slot="iconStart">${unsafeSVG(ChevronLeftIcon)}</clippy-icon>
+          <span class="sr-only">Vorige</span>
+        </clippy-button>
         <select
           class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
           @change=${this.#handleSelectChange}
@@ -134,7 +142,10 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
               </option>`,
           )}
         </select>
-        <clippy-button purpose="secondary" @click=${this.#selectNext}>></clippy-button>
+        <clippy-button purpose="secondary" @click=${this.#selectNext}>
+          <clippy-icon slot="iconEnd">${unsafeSVG(ChevronRightIcon)}</clippy-icon>
+          <span class="sr-only">Volgende</span>
+        </clippy-button>
       </div>
     `;
   }
