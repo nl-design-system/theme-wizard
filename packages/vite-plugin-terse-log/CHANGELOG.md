@@ -1,5 +1,11 @@
 # @nl-design-system-community/vite-plugin-terse-log
 
+## 1.0.3
+
+### Patch Changes
+
+- d783324: chore: initial release
+
 ## 1.0.2
 
 ### Patch Changes

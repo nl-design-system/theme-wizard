@@ -1,5 +1,41 @@
 # @nl-design-system-community/clippy-components
 
+## 3.7.0
+
+### Minor Changes
+
+- 9af3fc1: ## Clippy components
+  
+  refactor: Adjusted the minimum height of `clippy-navigation-bar` to the min-target-size + clippy-page-header padding.
+  
+  ## Theme Wizard
+  
+  refactor: navigation.config.ts reverts back to initial mechanism to set the current page.
+  refactor: `wizard-page-header` now sets toplevel items to current when a sub-item is current for the navigation bar.
+- 1c4ce7a: Add `clippy-breadcrumb-navigation` component
+- 38055c9: feat: add `<clippy-theme-provider>` component
+- 30ccd7f: Add `clippy-table-of-contents` component
+
+### Patch Changes
+
+- a4c7f91: ## Clippy Components
+  
+  - `clippy-layout` now prevents inner children to stretch/overflow the grid cells.
+  - `clippy-page-layout` correctly propagates the `--clippy-page-layout-content-max-inline-size` to inner elements.
+  - `clippy-page-layout` now exposes its types
+  
+  ## Theme Wizard App
+  
+  - Custom property overrides are now moved from `wizard-layout` to `wizard-app`
+  
+  ## Theme Wizard Website
+  
+  - `MainLayout` is now the layout which handles everything regarding page navigation and responsiveness.
+  - Every page template extends `MainLayout`
+- Updated dependencies [c642de5]
+- Updated dependencies [7b8ccab]
+  - @nl-design-system-community/design-tokens-schema@2.5.0
+
 ## 3.6.0
 
 ### Minor Changes

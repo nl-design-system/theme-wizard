@@ -1,5 +1,46 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.3.0
+
+### Minor Changes
+
+- 9af3fc1: ## Clippy components
+  
+  refactor: Adjusted the minimum height of `clippy-navigation-bar` to the min-target-size + clippy-page-header padding.
+  
+  ## Theme Wizard
+  
+  refactor: navigation.config.ts reverts back to initial mechanism to set the current page.
+  refactor: `wizard-page-header` now sets toplevel items to current when a sub-item is current for the navigation bar.
+- a4c7f91: ## Clippy Components
+  
+  - `clippy-layout` now prevents inner children to stretch/overflow the grid cells.
+  - `clippy-page-layout` correctly propagates the `--clippy-page-layout-content-max-inline-size` to inner elements.
+  - `clippy-page-layout` now exposes its types
+  
+  ## Theme Wizard App
+  
+  - Custom property overrides are now moved from `wizard-layout` to `wizard-app`
+  
+  ## Theme Wizard Website
+  
+  - `MainLayout` is now the layout which handles everything regarding page navigation and responsiveness.
+  - Every page template extends `MainLayout`
+
+### Patch Changes
+
+- Updated dependencies [9af3fc1]
+- Updated dependencies [a4c7f91]
+- Updated dependencies [c642de5]
+- Updated dependencies [1c4ce7a]
+- Updated dependencies [38055c9]
+- Updated dependencies [7b8ccab]
+- Updated dependencies [30ccd7f]
+  - @nl-design-system-community/clippy-components@3.7.0
+  - @nl-design-system-community/design-tokens-schema@2.5.0
+  - @nl-design-system-community/color-scale-generator@1.0.3
+  - @nl-design-system-community/css-scraper@1.2.4
+
 ## 2.2.3
 
 ### Patch Changes
