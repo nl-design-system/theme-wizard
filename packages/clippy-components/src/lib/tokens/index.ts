@@ -10,8 +10,12 @@ import {
   getTokenSubtype,
   isRef,
   stringifyToken,
+  type TokenPath,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color, { type ColorTypes } from 'colorjs.io';
+
+/** Converts a token path (e.g. `['nl', 'color', 'red']`) into a CSS custom property name (`--nl-color-red`). */
+export const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
 export const stringifyTokenValue = (token: BaseDesignToken): string => {
   const resolvedAs = getExtension(token, EXTENSION_RESOLVED_AS);

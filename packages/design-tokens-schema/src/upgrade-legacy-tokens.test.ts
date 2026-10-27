@@ -814,6 +814,22 @@ describe('duration', () => {
     });
   });
 
+  it('upgrades a legacy duration with uppercase unit', () => {
+    const config = {
+      motion: {
+        slow: { $type: 'duration', $value: '1S' },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      motion: {
+        slow: { $type: 'duration', $value: { unit: 's', value: 1 } },
+      },
+    });
+  });
+
   it.each([
     ['a token reference', '{basis.motion.fast}'],
     ['an unparsable duration string', 'not-a-duration'],
@@ -831,6 +847,74 @@ describe('duration', () => {
     expect(result).toEqual({
       motion: {
         fast: { $type: 'duration', $value: value },
+      },
+    });
+  });
+});
+
+describe('lineHeight', () => {
+  it.each([
+    ['an already-numeric value, unchanged', 1.5, { $type: 'number', $value: 1.5 }],
+    ['the normal keyword, to 1.2', 'normal', { $type: 'number', $value: 1.2 }],
+    ['the normal keyword in mixed case, to 1.2', 'Normal', { $type: 'number', $value: 1.2 }],
+    ['a percentage string, to a unitless number', '150%', { $type: 'number', $value: 1.5 }],
+    ['a stringified unitless number, to type number', '1.4', { $type: 'number', $value: 1.4 }],
+    ['a dimension string, to a dimension value', '24px', { $type: 'dimension', $value: { unit: 'px', value: 24 } }],
+    [
+      'a dimension string with an uppercase unit, to a lowercase dimension value',
+      '24PX',
+      { $type: 'dimension', $value: { unit: 'px', value: 24 } },
+    ],
+  ])('upgrades %s', (_description, value, expected) => {
+    const config = {
+      text: {
+        body: { $type: 'lineHeight', $value: value },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      text: {
+        body: expected,
+      },
+    });
+  });
+
+  it('determines the type from a resolved reference', () => {
+    const config = {
+      basis: {
+        lineHeight: { $type: 'lineHeight', $value: 'normal' },
+      },
+      text: {
+        body: { $type: 'lineHeight', $value: '{basis.lineHeight}' },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      basis: {
+        lineHeight: { $type: 'number', $value: 1.2 },
+      },
+      text: {
+        body: { $type: 'number', $value: '{basis.lineHeight}' },
+      },
+    });
+  });
+
+  it('leaves an unparsable lineHeight string value as-is but types it as lineHeight', () => {
+    const config = {
+      text: {
+        body: { $type: 'lineHeight', $value: '--' },
+      },
+    };
+
+    const result = upgradeLegacyTokens(config);
+
+    expect(result).toEqual({
+      text: {
+        body: { $type: 'lineHeight', $value: '--' },
       },
     });
   });

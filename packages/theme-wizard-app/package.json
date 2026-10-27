@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/theme-wizard-app",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "type": "module",
   "publishConfig": {
     "access": "public",
@@ -94,7 +94,7 @@
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@projectwallace/css-parser": "0.18.8",
-    "@storybook/react-vite": "10.6.1",
+    "@storybook/react-vite": "10.6.3",
     "@types/dlv": "1.1.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

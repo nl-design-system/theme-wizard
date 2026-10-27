@@ -1,5 +1,13 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.5.0
+
+### Minor Changes
+
+- c642de5: feat: support parsing of `lineHeights: 'normal'` to `{ $type: 'number', $value: 1.2` }'
+- 7b8ccab: feat: add support for validating duration tokens
+  feat: add support for validating shadow tokens
+
 ## 2.4.0
 
 ### Minor Changes
