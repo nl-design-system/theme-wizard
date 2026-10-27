@@ -39,7 +39,7 @@ export class WizardThemePresetForm extends LitElement {
   };
 
   readonly #handleConfirm = () => {
-    if (!this.result?.success) {
+    if (!this.result) {
       return;
     }
 
@@ -102,7 +102,22 @@ export class WizardThemePresetForm extends LitElement {
         ?invalid=${this.result?.success === false}
         .errors=${this.result?.success === false ? this.result.error : []}
         submit-label=${t('themePresetForm.submit')}
-      ></wizard-token-upload-form>
+      >
+        ${
+          this.result?.success === false
+            ? html`
+                <button
+                  slot="actions"
+                  class="nl-button nl-button--secondary"
+                  type="button"
+                  @click=${this.#handleConfirm}
+                >
+                  ${t('themePresetForm.acceptWithErrors')}
+                </button>
+              `
+            : nothing
+        }
+      </wizard-token-upload-form>
 
       ${this.result?.success ? this.#renderSummary(this.result) : nothing}
     `;
