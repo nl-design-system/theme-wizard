@@ -17,6 +17,10 @@ const processLineHeightValue = (
   }
 
   if (typeof lineHeight === 'string') {
+    if (lineHeight.toLowerCase() === 'normal') {
+      return { type: 'number', value: 1.2 };
+    }
+
     if (lineHeight.endsWith('%')) {
       const percentage = Number.parseFloat(lineHeight.slice(0, -1));
       return { type: 'number', value: percentage / 100 };
@@ -30,7 +34,7 @@ const processLineHeightValue = (
     const { unit, value: parsedValue } = parse_dimension(lineHeight);
     if (Number.isFinite(parsedValue)) {
       if (unit) {
-        return { type: 'dimension', value: { unit, value: parsedValue } };
+        return { type: 'dimension', value: { unit: unit.toLowerCase(), value: parsedValue } };
       }
       return { type: 'number', value: parsedValue };
     }
@@ -66,7 +70,7 @@ const upgradeDimensionToken = (token: BaseDesignToken): void => {
  */
 const parseDurationValue = (value: unknown): unknown => {
   if (typeof value === 'string') {
-    const parsed = parse_duration(value);
+    const parsed = parse_duration(value.toLowerCase());
     if ((parsed.unit === 's' || parsed.unit === 'ms') && Number.isFinite(parsed.value)) {
       return parsed;
     }
