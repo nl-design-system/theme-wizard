@@ -1,5 +1,13 @@
 # @nl-design-system-community/css-scraper
 
+## 1.2.4
+
+### Patch Changes
+
+- Updated dependencies [c642de5]
+- Updated dependencies [7b8ccab]
+  - @nl-design-system-community/design-tokens-schema@2.5.0
+
 ## 1.2.3
 
 ### Patch Changes
