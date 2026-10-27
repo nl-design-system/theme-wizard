@@ -17,6 +17,8 @@ const processLineHeightValue = (
   }
 
   if (typeof lineHeight === 'string') {
+    // The `normal` keyword roughly maps to 1.2 in most browsers
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-height#values
     if (lineHeight.toLowerCase() === 'normal') {
       return { type: 'number', value: 1.2 };
     }
