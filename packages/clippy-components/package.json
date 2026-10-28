@@ -71,6 +71,7 @@
     "@utrecht/combobox-css": "3.0.1",
     "@utrecht/customizable-text-input-css": "1.0.1",
     "@utrecht/data-list-css": "3.0.1",
+    "@utrecht/form-label-css": "3.0.1",
     "@utrecht/link-css": "3.0.1",
     "@utrecht/listbox-css": "3.0.1",
     "@utrecht/select-css": "3.0.1",

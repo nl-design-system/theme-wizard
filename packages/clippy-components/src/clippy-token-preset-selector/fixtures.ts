@@ -3,7 +3,7 @@ import { Options } from './types';
 export const simple: Options = [
   {
     label: 'Accent-1 - Standaard',
-    value: 'accent-1-standard',
+    value: 'accent-1-default',
   },
   {
     label: 'Accent-1 - Omgedraaid',
@@ -11,7 +11,7 @@ export const simple: Options = [
   },
   {
     label: 'Accent-2 - Standaard',
-    value: 'accent-2-standard',
+    value: 'accent-2-default',
   },
   {
     label: 'Accent-2 - Omgedraaid',

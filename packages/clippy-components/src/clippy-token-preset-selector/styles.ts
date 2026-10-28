@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: flex;
   }
 
   :host {
@@ -26,8 +26,19 @@ export default css`
     --nl-button-secondary-border-color: var(--utrecht-select-border-color, var(--basis-form-control-border-color));
     --utrecht-select-max-inline-size: none;
 
+    flex-direction: column;
+    row-gap: var(--basis-space-row-lg);
     container-name: clippy-token-preset-selector;
     container-type: inline-size;
+  }
+
+  .clippy-token-preset-selector__label {
+    font-family: var(--basis-text-font-family-default);
+  }
+
+  .clippy-token-preset-selector__body {
+    display: flex;
+    flex-direction: column;
   }
 
   .clippy-token-preset-selector__preview {
@@ -40,7 +51,6 @@ export default css`
     display: grid;
     padding-block: var(--_clippy-token-preset-selector-preview-space-block);
     padding-inline: var(--_clippy-token-preset-selector-preview-space-inline);
-    /*place-items: center;*/
 
     @container clippy-token-preset-selector (inline-size >= 48rem) {
       padding-block: var(--_clippy-token-preset-selector-lg-preview-space-block);
@@ -50,10 +60,15 @@ export default css`
 
   .clippy-token-preset-selector__wrap-controls {
     display: flex;
+    order: 2;
   }
 
   .clippy-token-preset-selector__select {
     border-inline: var(--basis-border-width-none);
     text-align: center;
+  }
+
+  .clippy-token-preset-selector__control-button-previous {
+    order: -1;
   }
 `;

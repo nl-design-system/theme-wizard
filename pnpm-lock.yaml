@@ -196,6 +196,9 @@ importers:
       '@utrecht/data-list-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/form-label-css':
+        specifier: 3.0.1
+        version: 3.0.1
       '@utrecht/link-css':
         specifier: 3.0.1
         version: 3.0.1

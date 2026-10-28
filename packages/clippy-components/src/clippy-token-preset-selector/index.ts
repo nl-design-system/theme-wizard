@@ -3,6 +3,7 @@ import { safeCustomElement } from '@src/lib/decorators';
 import { FormElement } from '@src/lib/FormElement';
 import ChevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
+import formLabelStyles from '@utrecht/form-label-css?inline';
 import selectStyles from '@utrecht/select-css?inline';
 import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
@@ -16,6 +17,7 @@ import styles from './styles';
 import { Option } from './types';
 
 const tag = 'clippy-token-preset-selector';
+// const tag = 'clippy-content-select';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,7 +35,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippyTokenPresetSelector<T extends Option = Option> extends FormElement<T['value']> {
-  static override readonly styles = [unsafeCSS(selectStyles), styles, srOnly];
+  static override readonly styles = [unsafeCSS(selectStyles), unsafeCSS(formLabelStyles), styles, srOnly];
 
   #options: Map<T['label'], T> = new Map();
 
@@ -149,41 +151,59 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
     const labelClasses = {
       'clippy-token-preset-selector__label': true,
       'sr-only': !populatedSlots['label'], // If there is no slotted label, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+      'utrecht-form-label': true,
     };
     return html`
       <label for="${this.#id}" class=${classMap(labelClasses)}>
         <slot name="label">${this.hiddenLabel || this.name}</slot>
       </label>
-      <div id=${this.#previewID} class="clippy-token-preset-selector__preview" aria-live="polite">
-        <clippy-html-image>
-          <slot></slot>
-        </clippy-html-image>
-      </div>
-      <div class="clippy-token-preset-selector__wrap-controls">
-        <clippy-button purpose="secondary" icon-only @click=${this.#selectPrev} aria-label="">
-          <clippy-icon slot="iconStart">${unsafeSVG(ChevronLeftIcon)}</clippy-icon>
-          ${this.labelPrevious}
-        </clippy-button>
-        <select
-          id=${this.#id}
-          name=${this.name}
-          aria-controls=${this.#previewID}
-          class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
-          @change=${this.#handleSelectChange}
-          @blur=${this.#handleSelectBlur}
-          @focus=${this.#handleSelectFocus}
-        >
-          ${Array.from(this.#options.values()).map(
-            (option) =>
-              html`<option value=${option.value as string} ?selected=${option.value === this.value}>
-                ${option.label}
-              </option>`,
-          )}
-        </select>
-        <clippy-button purpose="secondary" icon-only @click=${this.#selectNext}>
-          <clippy-icon slot="iconEnd">${unsafeSVG(ChevronRightIcon)}</clippy-icon>
-          ${this.labelNext}
-        </clippy-button>
+      <div class="clippy-token-preset-selector__body">
+        <div class="clippy-token-preset-selector__wrap-controls">
+          <select
+            id=${this.#id}
+            name=${this.name}
+            aria-controls=${this.#previewID}
+            class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
+            @change=${this.#handleSelectChange}
+            @blur=${this.#handleSelectBlur}
+            @focus=${this.#handleSelectFocus}
+          >
+            ${Array.from(this.#options.values()).map(
+              (option) =>
+                html`<option value=${option.value as string} ?selected=${option.value === this.value}>
+                  ${option.label}
+                </option>`,
+            )}
+          </select>
+
+          <clippy-button
+            class="clippy-token-preset-selector__control-button clippy-token-preset-selector__control-button-previous"
+            purpose="secondary"
+            icon-only
+            @click=${this.#selectPrev}
+            controls=${this.#id}
+          >
+            <clippy-icon slot="iconStart">${unsafeSVG(ChevronLeftIcon)}</clippy-icon>
+            ${this.labelPrevious}
+          </clippy-button>
+
+          <clippy-button
+            class="clippy-token-preset-selector__control-button clippy-token-preset-selector__control-button-next"
+            purpose="secondary"
+            icon-only
+            @click=${this.#selectNext}
+            controls=${this.#id}
+          >
+            <clippy-icon slot="iconEnd">${unsafeSVG(ChevronRightIcon)}</clippy-icon>
+            ${this.labelNext}
+          </clippy-button>
+        </div>
+
+        <div id=${this.#previewID} class="clippy-token-preset-selector__preview">
+          <clippy-html-image>
+            <slot></slot>
+          </clippy-html-image>
+        </div>
       </div>
     `;
   }
