@@ -6,9 +6,11 @@ import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
 import selectStyles from '@utrecht/select-css?inline';
 import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { classMap } from 'lit/directives/class-map.js';
 import '../clippy-button';
 import '../clippy-icon';
+import '../clippy-html-image';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
 import { Option } from './types';
@@ -23,6 +25,11 @@ declare global {
 
 /**
  * Clippy Token Preset Selector Component
+ *
+ * @cssprop --clippy-token-preset-selector-preview-space-block - Block space for the preview
+ * @cssprop --clippy-token-preset-selector-preview-space-inline - Inline space for the preview
+ * @cssprop --clippy-token-preset-selector-lg-preview-space-block - Block space for the preview when there is more space
+ * @cssprop --clippy-token-preset-selector-lg-preview-space-inline - Inline space for the preview when there is more space
  */
 @safeCustomElement(tag)
 export class ClippyTokenPresetSelector<T extends Option = Option> extends FormElement<T['value']> {
@@ -56,6 +63,17 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   override get value(): T['value'] | null {
     return super.value;
   }
+
+  get #id() {
+    return `${tag}-${this.name}`;
+  }
+
+  get #previewID() {
+    return `${this.#id}-preview`;
+  }
+
+  @property({ attribute: 'label-previous', type: String }) labelPrevious: string = 'Vorige';
+  @property({ attribute: 'label-next', type: String }) labelNext: string = 'Volgende';
 
   emit(type: 'blur' | 'change' | 'focus' | 'input') {
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
@@ -120,16 +138,36 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   }
 
   override render() {
+    const populatedSlots = Array.from(this.children).reduce(
+      (acc, child) => ({
+        ...acc,
+        [child.slot]: child,
+      }),
+      {} as Record<string, Element>,
+    );
+
+    const labelClasses = {
+      'clippy-token-preset-selector__label': true,
+      'sr-only': !populatedSlots['label'], // If there is no slotted label, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+    };
     return html`
-      <div class="clippy-token-preset-selector__preview">
-        <slot><mark>preview</mark></slot>
+      <label for="${this.#id}" class=${classMap(labelClasses)}>
+        <slot name="label">${this.hiddenLabel || this.name}</slot>
+      </label>
+      <div id=${this.#previewID} class="clippy-token-preset-selector__preview" aria-live="polite">
+        <clippy-html-image>
+          <slot></slot>
+        </clippy-html-image>
       </div>
       <div class="clippy-token-preset-selector__wrap-controls">
-        <clippy-button purpose="secondary" @click=${this.#selectPrev}>
+        <clippy-button purpose="secondary" icon-only @click=${this.#selectPrev} aria-label="">
           <clippy-icon slot="iconStart">${unsafeSVG(ChevronLeftIcon)}</clippy-icon>
-          <span class="sr-only">Vorige</span>
+          ${this.labelPrevious}
         </clippy-button>
         <select
+          id=${this.#id}
+          name=${this.name}
+          aria-controls=${this.#previewID}
           class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
           @change=${this.#handleSelectChange}
           @blur=${this.#handleSelectBlur}
@@ -142,9 +180,9 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
               </option>`,
           )}
         </select>
-        <clippy-button purpose="secondary" @click=${this.#selectNext}>
+        <clippy-button purpose="secondary" icon-only @click=${this.#selectNext}>
           <clippy-icon slot="iconEnd">${unsafeSVG(ChevronRightIcon)}</clippy-icon>
-          <span class="sr-only">Volgende</span>
+          ${this.labelNext}
         </clippy-button>
       </div>
     `;
