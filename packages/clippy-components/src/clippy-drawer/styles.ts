@@ -6,7 +6,7 @@ export default css`
       --clippy-drawer-max-inline-size: 24rem;
       --clippy-drawer-backdrop-min-size: var(--basis-pointer-target-min-inline-size, 44px);
       --ams-modal-dialog-max-block-size: none;
-      --ams-modal-dialog-medium-max-block-size: var(--ams-modal-dialog-max-block-size);
+      --ams-modal-dialog-vi-medium-max-block-size: var(--ams-modal-dialog-max-block-size);
       --ams-modal-dialog-inline-size: calc(100% - var(--clippy-drawer-backdrop-min-size));
       --ams-modal-dialog-medium-inline-size: var(--ams-modal-dialog-inline-size);
       --ams-modal-dialog-max-inline-size: var(--clippy-drawer-max-inline-size);

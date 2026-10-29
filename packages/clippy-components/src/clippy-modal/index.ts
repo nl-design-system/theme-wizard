@@ -10,8 +10,6 @@ import { property, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { amsModalDialogOverideStyles } from './styles';
 
-let dialogInstanceCounter = 0;
-
 const tag = 'clippy-modal';
 
 export const DIALOG_BUTTON_VALUES = {
@@ -53,7 +51,11 @@ export class ClippyModal extends LitElement {
   @query('dialog')
   readonly dialogElement!: HTMLDialogElement;
 
-  private readonly titleId = `clippy-modal-title-${++dialogInstanceCounter}`;
+  readonly #modalId = crypto.randomUUID();
+
+  private readonly modalId = `clippy-modal-${this.#modalId}`;
+  private readonly titleId = `clippy-modal-title-${this.#modalId}`;
+  private readonly formId = `clippy-modal-form-${this.#modalId}`;
 
   private previouslyFocusedElement: HTMLElement | null = null;
 
@@ -112,9 +114,24 @@ export class ClippyModal extends LitElement {
     return this.dialogElement?.returnValue ?? 'No return value.';
   }
 
+  #renderBody = () => {
+    return this.actions === 'none'
+      ? html`
+          <div class="ams-modal-dialog__body">
+            <slot></slot>
+          </div>
+        `
+      : html`
+          <form id=${this.formId} class="ams-modal-dialog__body" method="dialog" novalidate>
+            <slot></slot>
+          </form>
+        `;
+  };
+
   override render() {
     return html`
       <dialog
+        id=${this.modalId}
         class="ams-modal-dialog"
         closedby=${this.closedBy}
         aria-modal="true"
@@ -124,51 +141,51 @@ export class ClippyModal extends LitElement {
         @cancel=${this.onDialogCancel}
         ?open=${this.standardOpen}
       >
-        <form method="dialog" novalidate>
-          <header class="ams-modal-dialog__header">
-            <clippy-heading level="1" id=${this.titleId}>
-              <slot name="title">${this.title}</slot>
-            </clippy-heading>
-            <clippy-button
-              class="ams-modal-dialog__close-button"
-              icon-only
-              @click=${this.onCloseClick}
-              purpose="subtle"
-            >
-              <clippy-icon slot="iconStart">${unsafeSVG(CloseIcon)}</clippy-icon>
-              Sluiten
-            </clippy-button>
-          </header>
-          <div class="ams-modal-dialog__body">
-            <slot></slot>
-          </div>
-          ${
-            this.actions === 'none'
-              ? nothing
-              : html`
-                  <footer class="ams-modal-dialog__footer">
-                    ${
-                      this.actions === 'confirm' || this.actions === 'both'
-                        ? html`
-                            <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-                              ${this.confirmLabel}
-                            </button>
-                          `
-                        : nothing
-                    }
-                    ${
-                      this.actions === 'cancel' || this.actions === 'both'
-                        ? html`
-                            <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-                              ${this.cancelLabel}
-                            </button>
-                          `
-                        : nothing
-                    }
-                  </footer>
-                `
-          }
-        </form>
+        <header class="ams-modal-dialog__header">
+          <clippy-heading level="1" id=${this.titleId}>
+            <slot name="title">${this.title}</slot>
+          </clippy-heading>
+          <clippy-button class="ams-modal-dialog__close-button" icon-only @click=${this.onCloseClick} purpose="subtle">
+            <clippy-icon slot="iconStart">${unsafeSVG(CloseIcon)}</clippy-icon>
+            Sluiten
+          </clippy-button>
+        </header>
+
+        ${this.#renderBody()}
+        ${
+          this.actions === 'none'
+            ? nothing
+            : html`
+                <footer class="ams-modal-dialog__footer">
+                  ${
+                    this.actions === 'confirm' || this.actions === 'both'
+                      ? html`
+                          <button
+                            class="nl-button nl-button--primary"
+                            value=${DIALOG_BUTTON_VALUES.confirm}
+                            form=${this.formId}
+                          >
+                            ${this.confirmLabel}
+                          </button>
+                        `
+                      : nothing
+                  }
+                  ${
+                    this.actions === 'cancel' || this.actions === 'both'
+                      ? html`
+                          <button
+                            class="nl-button nl-button--secondary"
+                            value=${DIALOG_BUTTON_VALUES.cancel}
+                            form=${this.formId}
+                          >
+                            ${this.cancelLabel}
+                          </button>
+                        `
+                      : nothing
+                  }
+                </footer>
+              `
+        }
       </dialog>
     `;
   }
