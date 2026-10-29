@@ -1,7 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import dlv from 'dlv'
-import { components, isCandidateComponent } from '@/lib/components'
+import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
 import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
 
@@ -22,9 +22,9 @@ export function getStaticPaths() {
 
 const slug = Astro.params.slug as keyof typeof components
 const { title } = components[slug]
-const showDocsLink = isCandidateComponent(slug)
+const showDocsLink = components[slug].group === 'candidate'
 const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
-nlDesignSystemDocsUrl.pathname = slug
+nlDesignSystemDocsUrl.pathname = components[slug].slug
 const componentModulePromiseFn = components[slug].stories
 const componentModule = await componentModulePromiseFn()
 const { default: meta, ...storyExports } = componentModule

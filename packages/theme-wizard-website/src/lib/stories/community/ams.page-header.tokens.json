@@ -1,0 +1,18 @@
+{
+  "ams": {
+    "page-header": {
+      "background-color": {
+        "$type": "color"
+      },
+      "color": {
+        "$type": "color"
+      },
+      "padding-block": {
+        "$type": "dimension"
+      },
+      "padding-inline": {
+        "$type": "dimension"
+      }
+    }
+  }
+}
