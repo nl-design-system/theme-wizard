@@ -21,6 +21,8 @@ import {
   EXTENSION_REFERENCE_COUNT,
   addTokenCountExtensions,
   addTokenPathExtensions,
+  EXTENSION_TOKEN_PATH,
+  EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -44,7 +46,7 @@ export default class Theme {
   #tokens: DesignTokens = Object.create(null); // In practice this will be set via the this.tokens() setter in the constructor
   readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
-  #validationIssues: ValidationIssue[] = [];
+  #validationIssues: ValidationIssue[] | null = null; // null means not validated yet
 
   /**
    * Flatten a nested DesignTokens object into a flat map of token paths to DesignToken objects.
@@ -57,11 +59,20 @@ export default class Theme {
 
   /**
    * @param tokens Default token set for the theme, defaults to start tokens. Resetting a theme will revert to these tokens.
-   * @param stylesheet Stylesheet instance to carry over so that adopted stylesheets can be preserved across new Theme instances.
+   * @param source Theme to copy state from without re-running processors, validation or CSS generation (used by `clone()`).
    */
-  constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
+  constructor(tokens?: DesignTokens, source?: Theme) {
+    if (source) {
+      this.#defaults = source.#defaults;
+      this.#rule = source.#rule;
+      this.#stylesheet = source.#stylesheet;
+      this.#tokens = source.#tokens;
+      this.#modified = source.#modified;
+      this.#validationIssues = source.#validationIssues && [...source.#validationIssues];
+      return;
+    }
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
-    const [styleSheet, rule] = createStylesheet(stylesheet);
+    const [styleSheet, rule] = createStylesheet();
     this.#rule = rule;
     this.#stylesheet = styleSheet;
     this.#runThemeProcessors(this.#defaults);
@@ -72,13 +83,8 @@ export default class Theme {
    * Creates a new Theme instance with the same state, without re-running validation or CSS generation.
    * Use this instead of `new Theme()` when you need a new reference for Lit context change detection.
    */
-  clone(stylesheet = this.#stylesheet): Theme {
-    const cloned = new Theme(this.#defaults, stylesheet);
-    cloned.#tokens = this.#tokens;
-    cloned.#modified = this.#modified;
-    cloned.#validationIssues = [...this.#validationIssues];
-    cloned.toCSS();
-    return cloned;
+  clone(): Theme {
+    return new Theme(undefined, this);
   }
 
   get defaults() {
@@ -99,7 +105,7 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
-    this.#validateTheme(values);
+    this.#validationIssues = null;
     this.#tokens = values;
     this.toCSS();
   }
@@ -129,7 +135,9 @@ export default class Theme {
     addComponentContrastExtensions(tokens);
     addBasisContrastExtensions(tokens);
     resolveConfigRefs(tokens);
-    removeExtensions(tokens, { include: [EXTENSION_REFERENCED_AT, EXTENSION_REFERENCE_COUNT] });
+    removeExtensions(tokens, {
+      include: [EXTENSION_REFERENCED_AT, EXTENSION_REFERENCE_COUNT, EXTENSION_TOKEN_PATH, EXTENSION_USAGE_COUNT],
+    });
     addTokenCountExtensions(tokens);
     addTokenPathExtensions(tokens);
     return tokens;
@@ -170,11 +178,11 @@ export default class Theme {
   }
 
   issuesAt(path: string): ValidationIssue[] {
-    return this.#validationIssues.filter((issue) => issue.path.startsWith(path));
+    return this.issues.filter((issue) => issue.path.startsWith(path));
   }
 
   get errorCount(): number {
-    return this.#validationIssues.length;
+    return this.issues.length;
   }
 
   get groupedIssues(): GroupedIssues {
@@ -182,20 +190,18 @@ export default class Theme {
   }
 
   get issues(): ValidationIssue[] {
+    this.#validationIssues ??= Theme.#validateTheme(this.#tokens);
     return this.#validationIssues;
   }
 
-  #validateTheme(theme: DesignTokens): ValidationIssue[] {
+  static #validateTheme(theme: DesignTokens): ValidationIssue[] {
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
     if (result.success) {
-      this.#validationIssues = [];
       return [];
     }
 
-    const issues = (result.error.issues || []).map((issue) => new ValidationIssue(issue));
-    this.#validationIssues = issues;
-    return issues;
+    return (result.error.issues || []).map((issue) => new ValidationIssue(issue));
   }
 
   reset() {
