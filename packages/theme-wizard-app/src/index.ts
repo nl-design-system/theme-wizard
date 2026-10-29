@@ -23,6 +23,7 @@ export * from './components/wizard-step-form-sample';
 export * from './components/wizard-step-form-task-navigation';
 export * from './components/wizard-step-form-task-navigation-list';
 export * from './components/wizard-story-example';
+export * from './components/wizard-story-presets';
 export * from './components/wizard-story-matches';
 export * from './components/wizard-story-react';
 export * from './components/wizard-story-section';

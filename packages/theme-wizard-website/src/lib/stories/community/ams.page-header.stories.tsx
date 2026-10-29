@@ -36,7 +36,9 @@ const meta = {
   id: 'ams-page-header',
   component: PageHeader,
   parameters: {
-    css: [amsTokensCss, gridCss, headingCss, iconCss, linkListCss, logoCss, pageHeaderCss, proseCss, visuallyHiddenCss],
+    // Fallback for --ams-* tokens the wizard theme doesn't set; rendered above the theme providers
+    baseTheme: { className: 'ams-theme', css: amsTokensCss },
+    css: [gridCss, headingCss, iconCss, linkListCss, logoCss, pageHeaderCss, proseCss, visuallyHiddenCss],
     tokens,
   },
   title: 'Page Header (Amsterdam)',
@@ -107,10 +109,4 @@ export const DefaultPageHeader: Story = {
       </PageHeader.MenuLink>,
     ],
   },
-  // Amsterdam tokens are scoped to `.ams-theme`, the wizard theme doesn't provide them yet
-  render: (args) => (
-    <div className="ams-theme">
-      <PageHeader {...args} />
-    </div>
-  ),
 };

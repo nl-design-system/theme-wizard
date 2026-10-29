@@ -1,0 +1,15 @@
+<wizard-story-presets label="Voorinstelling"></wizard-story-presets>
+
+<script>
+  import type { WizardStoryPresets } from '@nl-design-system-community/theme-wizard-app';
+  import { THEME_PRESETS } from '@/lib/theme-presets';
+
+  // Hardcoded until we decide which components to preview on which token pages
+  const { default: componentMeta, DefaultPageHeader } = await import('@/lib/stories/community/ams.page-header.stories');
+
+  for (const element of document.querySelectorAll<WizardStoryPresets>('wizard-story-presets')) {
+    element.componentMeta = componentMeta;
+    element.story = DefaultPageHeader;
+    element.presets = THEME_PRESETS;
+  }
+</script>
