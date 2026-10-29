@@ -13,7 +13,7 @@ export function getStaticPaths() {
 }
 
 const namespace = getTokenNamespace(Astro.params.namespace);
-const { breadcrumbs, node, segments, tokenPath } = namespace.nav.resolveSlugPage(
+const { node, tokenPath } = namespace.nav.resolveSlugPage(
   namespace.getTree(),
   Astro.params.slug,
 );

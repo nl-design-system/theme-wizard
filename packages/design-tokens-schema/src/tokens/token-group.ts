@@ -113,7 +113,7 @@ export const getTokenGroupType = (tokenGroup: TokenGroup): TokenGroup['$type'] =
 };
 
 /**
- *
+ * Check if `tokenGroup` is a token group and all it's direct children are of type T
  */
 export const isTokenGroupOfType = <T extends TokenGroup['$type']>(
   tokenGroup: TokenGroup,

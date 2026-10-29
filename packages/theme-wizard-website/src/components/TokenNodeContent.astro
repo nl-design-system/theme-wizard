@@ -16,9 +16,15 @@ const { namespace, node, tokenPath } = Astro.props;
 <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
 
 {
-  node.isLeaf ? (
+  node.isLeaf && (
     <wizard-token-field path={tokenPath} />
-  ) : (
+  )
+}
+
+<wizard-token-preset-selector path={tokenPath}></wizard-token-preset-selector>
+
+{
+  !node.isLeaf && (
     <TokenLinkList namespace={namespace} nodes={node.children} />
   )
 }
