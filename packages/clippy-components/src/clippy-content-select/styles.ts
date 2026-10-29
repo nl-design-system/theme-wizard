@@ -26,10 +26,10 @@ export default css`
     --nl-button-secondary-border-color: var(--utrecht-select-border-color, var(--basis-form-control-border-color));
     --utrecht-select-max-inline-size: none;
 
-    flex-direction: column;
-    row-gap: var(--basis-space-row-lg);
     container-name: clippy-content-select;
     container-type: inline-size;
+    flex-direction: column;
+    row-gap: var(--basis-space-row-lg);
   }
 
   .clippy-content-select__label {
