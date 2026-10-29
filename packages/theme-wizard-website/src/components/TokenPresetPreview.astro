@@ -1,8 +1,19 @@
 <wizard-story-presets label="Voorinstelling"></wizard-story-presets>
 
 <script>
-  import type { WizardStoryPresets } from '@nl-design-system-community/theme-wizard-app';
-  import { THEME_PRESETS } from '@/lib/theme-presets';
+  import type { StoryPreset, WizardStoryPresets } from '@nl-design-system-community/theme-wizard-app';
+  import accent1Inverse from '@nl-design-system-community/theme-wizard-app/presets/ams.page-header/accent-1-inverse.json' with { type: 'json' };
+  import accent1 from '@nl-design-system-community/theme-wizard-app/presets/ams.page-header/accent-1.json' with { type: 'json' };
+  import accent2Inverse from '@nl-design-system-community/theme-wizard-app/presets/ams.page-header/accent-2-inverse.json' with { type: 'json' };
+  import accent2 from '@nl-design-system-community/theme-wizard-app/presets/ams.page-header/accent-2.json' with { type: 'json' };
+
+  const presets: StoryPreset[] = [
+    { label: 'Huidig thema', tokens: {}, value: 'current' },
+    { label: 'accent-1', tokens: accent1, value: 'accent-1' },
+    { label: 'accent-1-inverse', tokens: accent1Inverse, value: 'accent-1-inverse' },
+    { label: 'accent-2', tokens: accent2, value: 'accent-2' },
+    { label: 'accent-2-inverse', tokens: accent2Inverse, value: 'accent-2-inverse' },
+  ];
 
   // Hardcoded until we decide which components to preview on which token pages
   const { default: componentMeta, DefaultPageHeader } = await import('@/lib/stories/community/ams.page-header.stories');
@@ -10,6 +21,6 @@
   for (const element of document.querySelectorAll<WizardStoryPresets>('wizard-story-presets')) {
     element.componentMeta = componentMeta;
     element.story = DefaultPageHeader;
-    element.presets = THEME_PRESETS;
+    element.presets = presets;
   }
 </script>
