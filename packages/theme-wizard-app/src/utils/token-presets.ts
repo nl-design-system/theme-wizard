@@ -1,6 +1,6 @@
 import { extractRef, isRef } from '@nl-design-system-community/design-tokens-schema';
 
-export type TokenPreset = {
+type TokenPreset = {
   // Filename without extension, e.g. `accent-1-inverse`
   name: string;
   tokens: Record<string, unknown>;

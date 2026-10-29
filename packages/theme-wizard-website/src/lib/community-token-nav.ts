@@ -1,5 +1,6 @@
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
-import amsPageHeaderTokens from './stories/community/ams.page-header.tokens.json' with { type: 'json' };
+// Local stand-ins until these components ship their own token packages
+import amsPageHeaderTokens from './tokens/community/ams.page-header.tokens.json' with { type: 'json' };
 
 // Unlike `nl`, community tokens keep their organisation prefix as top-level key,
 // so URLs become /design-tokens/community/<organisation>/<slug>.

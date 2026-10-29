@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { isRef, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
-import { getStories } from './csf-utils';
+import { loadComponentStories, type ComponentStoriesRegistry } from './component-stories';
 
 export type MatchedToken = {
   // Path of the component's own token, e.g. `nl.link.hover.color`.
@@ -20,15 +20,7 @@ export type StoryMatch = {
   story: StoryObj<any>;
 };
 
-// Caller-supplied registry of which components exist and how to load their stories module —
-// callers own the actual story files, this module only knows how to match against them.
-export type ComponentStoriesRegistry = Record<
-  string,
-  {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    stories: () => Promise<{ default: Meta<any>; [key: string]: any }>;
-  }
->;
+export type { ComponentStoriesRegistry } from './component-stories';
 
 // A story with an editable token, plus the token's own paths (e.g. `nl.link.color`) —
 // everything derivable from the story modules alone, independent of any theme or groups.
@@ -57,33 +49,18 @@ function getEditableTokenPaths(editableTokens: unknown, path: TokenPath = []): s
   return Object.entries(editableTokens).flatMap(([key, value]) => getEditableTokenPaths(value, [...path, key]));
 }
 
-// Loads every component's stories module and extracts editableToken paths. Stories don't
-// change at runtime, so callers should call this once (e.g. whenever their component registry
-// is set) and reuse the result across theme/group changes, rather than reloading and re-walking
-// every story on every match run.
+// Picks every story with editable tokens and extracts their token paths. Story modules are loaded
+// once per registry (see `loadComponentStories`), so callers can call this whenever their registry is set.
 export async function prepareStoryCandidates(components: ComponentStoriesRegistry): Promise<StoryCandidate[]> {
-  const candidates: StoryCandidate[] = [];
+  const loadedComponents = await loadComponentStories(components);
 
-  await Promise.all(
-    Object.entries(components).map(async ([componentId, { stories }]) => {
-      const componentModule = await stories();
-      const { default: meta, ...storyExports } = componentModule;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const storyList = getStories(storyExports as unknown as Record<PropertyKey, StoryObj<any>>, meta);
-
-      for (const [id, story] of storyList) {
-        const editableTokens = story.parameters?.['editableTokens'];
-        if (!editableTokens) continue;
-
-        const tokenPaths = getEditableTokenPaths(editableTokens);
-        if (tokenPaths.length === 0) continue;
-
-        candidates.push({ id, componentId, meta, story, tokenPaths });
-      }
+  return loadedComponents.flatMap(({ componentId, meta, stories }) =>
+    stories.flatMap(([id, story]) => {
+      const editableTokens = story.parameters?.['editableTokens'];
+      const tokenPaths = editableTokens ? getEditableTokenPaths(editableTokens) : [];
+      return tokenPaths.length > 0 ? [{ id, componentId, meta, story, tokenPaths }] : [];
     }),
   );
-
-  return candidates;
 }
 
 // A group path is a dot-separated basis token path, e.g. `basis.color.accent-1` or

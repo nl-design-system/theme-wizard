@@ -5,9 +5,8 @@ import { SKIP, walkTokens } from '@nl-design-system-community/design-tokens-sche
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import '../wizard-story-example';
-import type { ComponentStoriesRegistry } from '../../utils/story-token-matches';
 import { t } from '../../i18n';
-import { getStories } from '../../utils/csf-utils';
+import { loadComponentStories, type ComponentStoriesRegistry } from '../../utils/component-stories';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { getRelevantPresetFolders, type TokenPresetFolder } from '../../utils/token-presets';
 import styles from './styles';
@@ -53,7 +52,7 @@ export class WizardTokensPresets extends LitElement {
 
   override hidden = true;
 
-  // Story modules don't change at runtime, so load them once per `components` assignment
+  // Stories that opted in to presets, derived once per `components` assignment
   #presetStories: PresetStory[] = [];
 
   // Guards against a slower, earlier load overwriting a newer one
@@ -72,27 +71,15 @@ export class WizardTokensPresets extends LitElement {
 
   async #loadPresetStories() {
     const run = ++this.#loadRun;
-    const presetStories: PresetStory[] = [];
-
-    await Promise.all(
-      Object.values(this.components).map(async ({ stories }) => {
-        const { default: meta, ...storyExports } = await stories();
-        const folder = meta.parameters?.['presets'];
-        if (typeof folder !== 'string') {
-          return;
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const [firstStory] = getStories(storyExports as Record<PropertyKey, StoryObj<any>>, meta);
-        if (firstStory) {
-          presetStories.push({ folder, meta, story: firstStory[1] });
-        }
-      }),
-    );
-
+    const loadedComponents = await loadComponentStories(this.components);
     if (run !== this.#loadRun) {
       return;
     }
-    this.#presetStories = presetStories;
+
+    this.#presetStories = loadedComponents.flatMap(({ meta, stories: [firstStory] }) => {
+      const folder = meta.parameters?.['presets'];
+      return typeof folder === 'string' && firstStory ? [{ folder, meta, story: firstStory[1] }] : [];
+    });
     this.#recomputeMatches();
   }
 

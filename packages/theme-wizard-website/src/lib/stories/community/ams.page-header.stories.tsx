@@ -10,7 +10,7 @@ import visuallyHiddenCss from '@amsterdam/design-system-css/dist/visually-hidden
 import { Grid, Heading, LinkList, PageHeader } from '@amsterdam/design-system-react';
 import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import amsTokensCss from '@amsterdam/design-system-tokens/dist/index.theme.css?inline';
-import tokens from './ams.page-header.tokens.json';
+import tokens from '../../tokens/community/ams.page-header.tokens.json';
 
 // copied from https://github.com/Amsterdam/design-system/blob/develop/storybook/src/components/PageHeader/content.ts
 const collapsibleMenuItems = [
