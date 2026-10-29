@@ -12,6 +12,8 @@ export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 export const createTokenTreeNav = (basePath: string, tokenPathPrefix: string | null) => {
   const hrefFor = (path: TokenPath) => `${basePath}/${path.join('/')}`;
 
+  const tokenPathFor = (path: TokenPath) => (tokenPathPrefix ? `${tokenPathPrefix}.${path.join('.')}` : path.join('.'));
+
   const toNavigationItems = (tree: TokenTreeNode[], currentPath: TokenPath): NavigationItems =>
     tree.map((node): NavigationItem => ({
       current: dequal(node.path, currentPath),
@@ -29,9 +31,9 @@ export const createTokenTreeNav = (basePath: string, tokenPathPrefix: string | n
       navigationItems: toNavigationItems(tree, segments),
       node: findTreeNode(tree, segments)!,
       segments,
-      tokenPath: tokenPathPrefix ? `${tokenPathPrefix}.${segments.join('.')}` : segments.join('.'),
+      tokenPath: tokenPathFor(segments),
     };
   };
 
-  return { getStaticSlugs, hrefFor, resolveSlugPage, toNavigationItems };
+  return { getStaticSlugs, hrefFor, resolveSlugPage, tokenPathFor, toNavigationItems };
 };
