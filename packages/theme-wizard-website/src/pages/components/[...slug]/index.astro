@@ -1,7 +1,7 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
 import dlv from 'dlv'
-import { components } from '@/lib/components'
+import { components, isCandidateComponent } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
 import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
 
@@ -22,6 +22,7 @@ export function getStaticPaths() {
 
 const slug = Astro.params.slug as keyof typeof components
 const { title } = components[slug]
+const showDocsLink = isCandidateComponent(slug)
 const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
 nlDesignSystemDocsUrl.pathname = slug
 const componentModulePromiseFn = components[slug].stories
@@ -73,9 +74,11 @@ const storiesWithTokens = stories.map(([id, story]) => {
 <MainLayout title={title} metaTitle={title} mainPath="/components" layoutPurpose="detail">
   <clippy-table-of-contents slot="aside" items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ label: story.name, href: `#${id}` })))}></clippy-table-of-contents>
 
-  <p class="nl-paragraph" slot="header">
-    Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
-  </p>
+  {showDocsLink && (
+    <p class="nl-paragraph" slot="header">
+      Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
+    </p>
+  )}
 
   <clippy-story-preview size="lg">
     <clippy-stack size="5xl">
