@@ -35,9 +35,12 @@ export class WizardStoryExample extends LitElement {
 
   readonly #baseThemeStyles = new StoryBaseThemeStyles();
 
+  protected override willUpdate() {
+    this.#baseThemeStyles.adopt(this.shadowRoot, getStoryBaseTheme(this.componentMeta));
+  }
+
   override render() {
     const baseTheme = getStoryBaseTheme(this.componentMeta);
-    this.#baseThemeStyles.adopt(this.shadowRoot, baseTheme);
 
     return html`
       <clippy-reset-theme>

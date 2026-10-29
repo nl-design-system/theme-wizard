@@ -3,6 +3,7 @@ import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import TokenNodeContent from '@/components/TokenNodeContent.astro';
 import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
 import { capitalize } from 'es-toolkit';
+import dlv from 'dlv';
 
 export function getStaticPaths() {
   return TOKEN_NAMESPACES.flatMap((namespace) =>
@@ -13,15 +14,16 @@ export function getStaticPaths() {
 }
 
 const namespace = getTokenNamespace(Astro.params.namespace);
-const { node, tokenPath } = namespace.nav.resolveSlugPage(
+const { node, segments, tokenPath } = namespace.nav.resolveSlugPage(
   namespace.getTree(),
   Astro.params.slug,
 );
+const deprecated = node.isLeaf ? dlv(namespace.getTokens(), segments.join('.'))?.$deprecated : undefined;
 ---
 
 <DesignTokensLayout
   title={capitalize(node.key)}
   metaTitle={`${node.key} - ${namespace.pageTitle}`}
 >
-  <TokenNodeContent namespace={namespace.id} node={node} tokenPath={tokenPath} />
+  <TokenNodeContent deprecated={deprecated} namespace={namespace.id} node={node} tokenPath={tokenPath} />
 </DesignTokensLayout>

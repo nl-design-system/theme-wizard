@@ -1,7 +1,7 @@
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
-import { getBasisTokenTree } from './basis-token-nav';
-import { getCommunityTokenTree } from './community-token-nav';
-import { getNlTokenTree } from './nl-token-nav';
+import { getBasisTokens, getBasisTokenTree } from './basis-token-nav';
+import { getCommunityTokens, getCommunityTokenTree } from './community-token-nav';
+import { getNlTokens, getNlTokenTree } from './nl-token-nav';
 import { createTokenTreeNav, DESIGN_TOKENS_BASE_URL } from './token-tree-nav';
 
 interface TokenNamespaceDefinition {
@@ -14,6 +14,8 @@ interface TokenNamespaceDefinition {
   // Document title and index breadcrumb
   pageTitle: string;
   getTree: () => TokenTreeNode[];
+  // Raw tokens the tree is built from, keyed like the tree, e.g. to read a token's `$deprecated`
+  getTokens: () => Record<string, unknown>;
   // Prepended to tree paths to form token paths; defaults to `id`, null to omit
   tokenPathPrefix?: string | null;
 }
@@ -22,6 +24,7 @@ interface TokenNamespaceDefinition {
 const DEFINITIONS = [
   {
     id: 'basis',
+    getTokens: getBasisTokens,
     getTree: getBasisTokenTree,
     heading: 'Basis tokens',
     label: 'Basis tokens',
@@ -29,6 +32,7 @@ const DEFINITIONS = [
   },
   {
     id: 'nl',
+    getTokens: getNlTokens,
     getTree: getNlTokenTree,
     heading: 'Candidate component tokens',
     label: 'Candidate components',
@@ -36,6 +40,7 @@ const DEFINITIONS = [
   },
   {
     id: 'community',
+    getTokens: getCommunityTokens,
     getTree: getCommunityTokenTree,
     heading: 'Community component tokens',
     label: 'Community components',

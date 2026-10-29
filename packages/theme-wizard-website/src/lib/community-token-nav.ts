@@ -10,4 +10,6 @@ const COMMUNITY_TOKENS: Record<string, unknown> = {
   },
 };
 
+export const getCommunityTokens = () => COMMUNITY_TOKENS;
+
 export const getCommunityTokenTree = () => buildTokenTree(COMMUNITY_TOKENS);

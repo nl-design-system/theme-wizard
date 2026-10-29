@@ -9,22 +9,33 @@ export type StoryBaseTheme = {
 export const getStoryBaseTheme = (componentMeta: unknown): StoryBaseTheme | undefined =>
   (componentMeta as { parameters?: { baseTheme?: StoryBaseTheme } } | undefined)?.parameters?.baseTheme;
 
-// Adopts a base theme's CSS into a shadow root, re-parsing only when the CSS changes
+// Parsed once per CSS string and shared by every story preview, e.g. Amsterdam's ~96KB token CSS
+const sharedStyleSheets = new Map<string, CSSStyleSheet>();
+
+const getSharedStyleSheet = (css: string) => {
+  let styleSheet = sharedStyleSheets.get(css);
+  if (!styleSheet) {
+    styleSheet = new CSSStyleSheet();
+    styleSheet.replaceSync(css);
+    sharedStyleSheets.set(css, styleSheet);
+  }
+  return styleSheet;
+};
+
+// Keeps a shadow root's adopted base theme stylesheet in sync with the current base theme
 export class StoryBaseThemeStyles {
-  readonly #styleSheet = new CSSStyleSheet();
-  #css: string | undefined;
+  #adoptedStyleSheet: CSSStyleSheet | undefined;
 
   adopt(shadowRoot: ShadowRoot | null, baseTheme: StoryBaseTheme | undefined) {
-    if (!shadowRoot) {
+    const styleSheet = baseTheme ? getSharedStyleSheet(baseTheme.css) : undefined;
+    if (!shadowRoot || styleSheet === this.#adoptedStyleSheet) {
       return;
     }
-    if (baseTheme?.css !== this.#css) {
-      this.#css = baseTheme?.css;
-      this.#styleSheet.replaceSync(this.#css ?? '');
-    }
-    if (!shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
-      shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, this.#styleSheet];
-    }
+    shadowRoot.adoptedStyleSheets = [
+      ...shadowRoot.adoptedStyleSheets.filter((adopted) => adopted !== this.#adoptedStyleSheet),
+      ...(styleSheet ? [styleSheet] : []),
+    ];
+    this.#adoptedStyleSheet = styleSheet;
   }
 }
 

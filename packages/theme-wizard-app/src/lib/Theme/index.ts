@@ -143,15 +143,25 @@ export default class Theme {
     this.tokens = tokens;
   }
 
-  // `type` is only needed for tokens the theme doesn't have yet, e.g. from a component preset
-  updateMany(values: { path: string; value: DesignToken['$value']; type?: string }[]) {
+  updateMany(values: { path: string; value: DesignToken['$value'] }[]) {
     const tokens = structuredClone(this.#tokens);
     this.#modified = true;
-    for (const { path, type, value } of values) {
+    for (const { path, value } of values) {
+      Theme.#updateAt(tokens, path, value);
+    }
+    this.#runThemeProcessors(tokens);
+    this.tokens = tokens;
+  }
+
+  // Like `updateMany`, but also adds tokens the theme doesn't have yet, e.g. from a component preset
+  applyTokens(values: Record<string, unknown>) {
+    const tokens = structuredClone(this.#tokens);
+    this.#modified = true;
+    for (const [path, token] of Object.entries(flattenTokens(values))) {
       if (dlv(tokens, path)) {
-        Theme.#updateAt(tokens, path, value);
-      } else if (type) {
-        dset(tokens, path, { $type: type, $value: value });
+        Theme.#updateAt(tokens, path, token.$value);
+      } else {
+        dset(tokens, path, structuredClone(token));
       }
     }
     this.#runThemeProcessors(tokens);
