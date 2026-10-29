@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
 import formLabelStyles from '@utrecht/form-label-css?inline';
 import selectStyles from '@utrecht/select-css?inline';
-import { html, unsafeCSS } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import '../clippy-button';
 import '../clippy-icon';
@@ -158,6 +158,7 @@ export class ClippyContentSelect<T extends Option = Option> extends FormElement<
             name=${this.name}
             aria-controls=${this.#previewID}
             class="clippy-content-select__select | utrecht-select utrecht-select--html-select"
+            disabled=${this.disabled || nothing}
             @change=${this.#handleSelectChange}
             @blur=${this.#handleSelectBlur}
             @focus=${this.#handleSelectFocus}
