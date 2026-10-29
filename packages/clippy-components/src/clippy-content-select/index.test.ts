@@ -1,15 +1,15 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyTokenPresetSelector } from './index';
+import { ClippyContentSelect } from './index';
 
-const tag = 'clippy-token-preset-selector';
+const tag = 'clippy-content-select';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyTokenPresetSelector;
+  let component: ClippyContentSelect;
 
   beforeEach(() => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    component = document.querySelector(tag) as ClippyTokenPresetSelector;
+    component = document.querySelector(tag) as ClippyContentSelect;
   });
 
   afterEach(() => {

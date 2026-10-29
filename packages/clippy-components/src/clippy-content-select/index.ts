@@ -17,25 +17,24 @@ import srOnly from '../lib/sr-only';
 import styles from './styles';
 import { Option } from './types';
 
-const tag = 'clippy-token-preset-selector';
-// const tag = 'clippy-content-select';
+const tag = 'clippy-content-select';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyTokenPresetSelector;
+    [tag]: ClippyContentSelect;
   }
 }
 
 /**
- * Clippy Token Preset Selector Component
+ * Clippy Content Select Component
  *
- * @cssprop --clippy-token-preset-selector-preview-space-block - Block space for the preview
- * @cssprop --clippy-token-preset-selector-preview-space-inline - Inline space for the preview
- * @cssprop --clippy-token-preset-selector-lg-preview-space-block - Block space for the preview when there is more space
- * @cssprop --clippy-token-preset-selector-lg-preview-space-inline - Inline space for the preview when there is more space
+ * @cssprop --clippy-content-select-preview-space-block - Block space for the preview
+ * @cssprop --clippy-content-select-preview-space-inline - Inline space for the preview
+ * @cssprop --clippy-content-select-lg-preview-space-block - Block space for the preview when there is more space
+ * @cssprop --clippy-content-select-lg-preview-space-inline - Inline space for the preview when there is more space
  */
 @safeCustomElement(tag)
-export class ClippyTokenPresetSelector<T extends Option = Option> extends FormElement<T['value']> {
+export class ClippyContentSelect<T extends Option = Option> extends FormElement<T['value']> {
   static override readonly styles = [unsafeCSS(selectStyles), unsafeCSS(formLabelStyles), styles, srOnly];
 
   #options: Map<T['label'], T> = new Map();
@@ -144,7 +143,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
     const populatedSlots = getPopulatedSlots(this);
 
     const labelClasses = {
-      'clippy-token-preset-selector__label': true,
+      'clippy-content-select__label': true,
       'sr-only': !populatedSlots['label'], // If there is no slotted label, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
       'utrecht-form-label': true,
     };
@@ -152,13 +151,13 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
       <label for="${this.#id}" class=${classMap(labelClasses)}>
         <slot name="label">${this.hiddenLabel || this.name}</slot>
       </label>
-      <div class="clippy-token-preset-selector__body">
-        <div class="clippy-token-preset-selector__wrap-controls">
+      <div class="clippy-content-select__body">
+        <div class="clippy-content-select__wrap-controls">
           <select
             id=${this.#id}
             name=${this.name}
             aria-controls=${this.#previewID}
-            class="clippy-token-preset-selector__select | utrecht-select utrecht-select--html-select"
+            class="clippy-content-select__select | utrecht-select utrecht-select--html-select"
             @change=${this.#handleSelectChange}
             @blur=${this.#handleSelectBlur}
             @focus=${this.#handleSelectFocus}
@@ -172,7 +171,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
           </select>
 
           <clippy-button
-            class="clippy-token-preset-selector__control-button clippy-token-preset-selector__control-button-previous"
+            class="clippy-content-select__control-button clippy-content-select__control-button-previous"
             purpose="secondary"
             icon-only
             @click=${this.#selectPrev}
@@ -183,7 +182,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
           </clippy-button>
 
           <clippy-button
-            class="clippy-token-preset-selector__control-button clippy-token-preset-selector__control-button-next"
+            class="clippy-content-select__control-button clippy-content-select__control-button-next"
             purpose="secondary"
             icon-only
             @click=${this.#selectNext}
@@ -194,7 +193,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
           </clippy-button>
         </div>
 
-        <div id=${this.#previewID} class="clippy-token-preset-selector__preview">
+        <div id=${this.#previewID} class="clippy-content-select__preview">
           <clippy-html-image>
             <slot></slot>
           </clippy-html-image>

@@ -6,20 +6,20 @@ export default css`
   }
 
   :host {
-    --_clippy-token-preset-selector-preview-space-block: var(
-      --clippy-token-preset-selector-preview-space-block,
+    --_clippy-content-select-preview-space-block: var(
+      --clippy-content-select-preview-space-block,
       var(--basis-space-block-2xl)
     );
-    --_clippy-token-preset-selector-preview-space-inline: var(
-      --clippy-token-preset-selector-preview-space-inline,
+    --_clippy-content-select-preview-space-inline: var(
+      --clippy-content-select-preview-space-inline,
       var(--basis-space-inline-xl)
     );
-    --_clippy-token-preset-selector-lg-preview-space-block: var(
-      --clippy-token-preset-selector-lg-preview-space-block,
+    --_clippy-content-select-lg-preview-space-block: var(
+      --clippy-content-select-lg-preview-space-block,
       var(--basis-space-block-5xl)
     );
-    --_clippy-token-preset-selector-lg-preview-space-inline: var(
-      --clippy-token-preset-selector-lg-preview-space-inline,
+    --_clippy-content-select-lg-preview-space-inline: var(
+      --clippy-content-select-lg-preview-space-inline,
       var(--basis-space-inline-3xl)
     );
     --nl-button-border-radius: var(--utrecht-select-border-radius, var(--basis-border-radius-none));
@@ -28,20 +28,20 @@ export default css`
 
     flex-direction: column;
     row-gap: var(--basis-space-row-lg);
-    container-name: clippy-token-preset-selector;
+    container-name: clippy-content-select;
     container-type: inline-size;
   }
 
-  .clippy-token-preset-selector__label {
+  .clippy-content-select__label {
     font-family: var(--basis-text-font-family-default);
   }
 
-  .clippy-token-preset-selector__body {
+  .clippy-content-select__body {
     display: flex;
     flex-direction: column;
   }
 
-  .clippy-token-preset-selector__preview {
+  .clippy-content-select__preview {
     background-color: var(--basis-color-default-bg-document);
     border-block-end-width: var(--basis-border-width-none);
     border-block-start-width: var(--utrecht-select-border-width);
@@ -49,26 +49,26 @@ export default css`
     border-inline-width: var(--utrecht-select-border-width);
     border-style: solid;
     display: grid;
-    padding-block: var(--_clippy-token-preset-selector-preview-space-block);
-    padding-inline: var(--_clippy-token-preset-selector-preview-space-inline);
+    padding-block: var(--_clippy-content-select-preview-space-block);
+    padding-inline: var(--_clippy-content-select-preview-space-inline);
 
-    @container clippy-token-preset-selector (inline-size >= 48rem) {
-      padding-block: var(--_clippy-token-preset-selector-lg-preview-space-block);
-      padding-inline: var(--_clippy-token-preset-selector-lg-preview-space-inline);
+    @container clippy-content-select (inline-size >= 48rem) {
+      padding-block: var(--_clippy-content-select-lg-preview-space-block);
+      padding-inline: var(--_clippy-content-select-lg-preview-space-inline);
     }
   }
 
-  .clippy-token-preset-selector__wrap-controls {
+  .clippy-content-select__wrap-controls {
     display: flex;
     order: 2;
   }
 
-  .clippy-token-preset-selector__select {
+  .clippy-content-select__select {
     border-inline: var(--basis-border-width-none);
     text-align: center;
   }
 
-  .clippy-token-preset-selector__control-button-previous {
+  .clippy-content-select__control-button-previous {
     order: -1;
   }
 `;

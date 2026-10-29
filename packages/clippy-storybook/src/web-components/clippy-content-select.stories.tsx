@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import '@nl-design-system-community/clippy-components/clippy-token-preset-selector';
-import { ClippyTokenPresetSelector } from '@nl-design-system-community/clippy-components/clippy-token-preset-selector';
+import '@nl-design-system-community/clippy-components/clippy-content-select';
+import { ClippyContentSelect } from '@nl-design-system-community/clippy-components/clippy-content-select';
+import { simple } from '@nl-design-system-community/clippy-components/src/clippy-content-select/fixtures.js';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-content-select/README.md?raw';
+import { type Options } from '@nl-design-system-community/clippy-components/src/clippy-content-select/types.js';
 import { simple as navigationSimple } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/fixtures.js';
 import { full as navigationFull } from '@nl-design-system-community/clippy-components/src/clippy-side-navigation/fixtures.js';
-import { simple } from '@nl-design-system-community/clippy-components/src/clippy-token-preset-selector/fixtures.js';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-token-preset-selector/README.md?raw';
-import { type Options } from '@nl-design-system-community/clippy-components/src/clippy-token-preset-selector/types.js';
 import { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import '@nl-design-system-community/clippy-components/clippy-page-header';
 import '@nl-design-system-community/clippy-components/clippy-navigation-bar';
@@ -48,10 +48,10 @@ const LiveUpdateDemo = ({ args }: { args: StoryArgs }) => {
   const { label, ...restArgs } = args;
 
   return React.createElement(
-    'clippy-token-preset-selector',
+    'clippy-content-select',
     {
       onChange: (e) => {
-        const element = e.target as ClippyTokenPresetSelector;
+        const element = e.target as ClippyContentSelect;
         setTheme(themes[element.value as string]);
       },
       ...restArgs,
@@ -70,7 +70,7 @@ const LiveUpdateDemo = ({ args }: { args: StoryArgs }) => {
 };
 
 const meta = {
-  id: 'clippy-token-preset-selector',
+  id: 'clippy-content-select',
   args: {
     name: 'default',
     options: simple,
@@ -84,7 +84,7 @@ const meta = {
   },
   render: (args: StoryArgs) => React.createElement(LiveUpdateDemo, { args }),
   tags: ['autodocs'],
-  title: 'Clippy/Design Tokens/Preset Selector ',
+  title: 'Clippy/Content Select',
 } satisfies Meta<StoryArgs>;
 
 export default meta;
