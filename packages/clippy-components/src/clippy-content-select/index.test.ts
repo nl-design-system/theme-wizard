@@ -510,7 +510,6 @@ describe(`<${tag}>`, () => {
       expect(slot).toBeTruthy();
 
       const assignedNodes = slot?.assignedNodes();
-      console.log('=== assignedNodes', assignedNodes);
       expect(assignedNodes).toHaveLength(1);
       expect((assignedNodes?.[0] as HTMLElement).tagName).toBe('IMG');
     });

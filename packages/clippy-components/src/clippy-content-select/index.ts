@@ -12,6 +12,7 @@ import '../clippy-button';
 import '../clippy-icon';
 import '../clippy-html-image';
 import { classMap } from 'lit/directives/class-map.js';
+import { map } from 'lit/directives/map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -163,11 +164,10 @@ export class ClippyContentSelect<T extends Option = Option> extends FormElement<
             @blur=${this.#handleSelectBlur}
             @focus=${this.#handleSelectFocus}
           >
-            ${Array.from(this.#options.values()).map(
+            ${map(
+              this.#options.values(),
               (option) =>
-                html`<option value=${option.value as string} ?selected=${option.value === this.value}>
-                  ${option.label}
-                </option>`,
+                html`<option value=${option.value} ?selected=${option.value === this.value}>${option.label}</option>`,
             )}
           </select>
 

@@ -19,6 +19,6 @@ export const getPopulatedSlots = (el: LitElement): Record<string, Element> => {
       ...acc,
       [child.slot]: child,
     }),
-    {},
+    Object.create(null),
   );
 };

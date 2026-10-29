@@ -30,7 +30,6 @@ export class ClippyThemeProvider extends LitElement {
     super.connectedCallback();
     this.#applyTheme();
     this.shadowRoot?.adoptedStyleSheets.push(this.#styleSheet);
-    console.log('this.shadowRoot?.adoptedStyleSheets', this.shadowRoot?.adoptedStyleSheets);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
@@ -50,9 +49,7 @@ export class ClippyThemeProvider extends LitElement {
   }
 
   #applyTheme(): void {
-    console.log('this.theme', this.theme);
     this.#styleSheet.replaceSync(createThemeStylesheet(this.theme ?? Object.create(null)));
-    console.log('this.#styleSheet', this.#styleSheet);
   }
 
   override render() {
