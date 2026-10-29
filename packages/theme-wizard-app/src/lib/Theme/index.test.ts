@@ -57,16 +57,16 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
-  it('can apply tokens, including tokens it does not have yet', () => {
+  it('can update many tokens, adding typed tokens it does not have yet', () => {
     const theme = new Theme();
-    theme.applyTokens({
-      ams: { 'page-header': { 'background-color': { $type: 'color', $value: '{basis.color.accent-1.bg-document}' } } },
-      basis: {
-        color: { 'accent-1': { 'color-hover': { $type: 'color', $value: '{basis.color.accent-1.bg-active}' } } },
-      },
-    });
+    theme.updateMany([
+      { path: 'ams.page-header.background-color', type: 'color', value: '{basis.color.accent-1.bg-document}' },
+      { path: 'basis.color.accent-1.color-hover', value: '{basis.color.accent-1.bg-active}' },
+      { path: 'ams.page-header.untyped', value: '{basis.color.accent-1.bg-active}' },
+    ]);
     expect(dlv(theme.tokens, 'ams.page-header.background-color.$value')).toBe('{basis.color.accent-1.bg-document}');
     expect(dlv(theme.tokens, 'basis.color.accent-1.color-hover.$value')).toBe('{basis.color.accent-1.bg-active}');
+    expect(dlv(theme.tokens, 'ams.page-header.untyped')).toBeUndefined();
     expect(theme.modified).toBe(true);
   });
 

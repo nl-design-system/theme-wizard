@@ -3,7 +3,8 @@ import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schem
 export const UPDATE_DESIGN_TOKENS_EVENT = 'update-design-tokens';
 
 export type UpdateDesignTokensDetail = {
-  tokens: { path: string; value: BaseDesignToken['$value'] }[];
+  // `type` is only needed for tokens the theme doesn't have yet
+  tokens: { path: string; value: BaseDesignToken['$value']; type?: string }[];
   /** Group-level $extensions to set alongside the token updates, e.g. the color-scale seed. */
   groupSeeds?: { groupPath: string; seed: unknown }[];
 };
@@ -17,11 +18,3 @@ export type SetThemeTokensDetail = {
 };
 
 export type SetThemeTokensEvent = CustomEvent<SetThemeTokensDetail>;
-
-export const APPLY_TOKEN_PRESET_EVENT = 'apply-token-preset';
-
-export type ApplyTokenPresetDetail = {
-  tokens: Record<string, unknown>;
-};
-
-export type ApplyTokenPresetEvent = CustomEvent<ApplyTokenPresetDetail>;

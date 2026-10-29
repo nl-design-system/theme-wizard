@@ -1,13 +1,14 @@
 import type { ClippyContentSelect } from '@nl-design-system-community/clippy-components/clippy-content-select';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-content-select';
+import { SKIP, walkTokens } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import '../wizard-story-example';
 import type { ComponentStoriesRegistry } from '../../utils/story-token-matches';
 import { t } from '../../i18n';
 import { getStories } from '../../utils/csf-utils';
-import { APPLY_TOKEN_PRESET_EVENT, type ApplyTokenPresetDetail } from '../../utils/events';
+import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { getRelevantPresetFolders, type TokenPresetFolder } from '../../utils/token-presets';
 import styles from './styles';
 
@@ -34,7 +35,7 @@ type PresetMatch = PresetStory & Pick<TokenPresetFolder, 'presets'>;
 
 /**
  * Renders a preset select with story preview for every component preset folder relevant to `path`.
- * Choosing a preset dispatches `apply-token-preset` so wizard-app applies it to the theme.
+ * Choosing a preset dispatches `update-design-tokens` so wizard-app applies it to the theme.
  */
 @customElement(tag)
 export class WizardTokensPresets extends LitElement {
@@ -112,11 +113,16 @@ export class WizardTokensPresets extends LitElement {
     if (!preset) {
       return;
     }
+    const tokens: UpdateDesignTokensDetail['tokens'] = [];
+    walkTokens(preset.tokens, (token, path) => {
+      tokens.push({ path: path.join('.'), type: token.$type, value: token.$value });
+      return SKIP;
+    });
     this.dispatchEvent(
-      new CustomEvent<ApplyTokenPresetDetail>(APPLY_TOKEN_PRESET_EVENT, {
+      new CustomEvent<UpdateDesignTokensDetail>(UPDATE_DESIGN_TOKENS_EVENT, {
         bubbles: true,
         composed: true,
-        detail: { tokens: preset.tokens },
+        detail: { tokens },
       }),
     );
   }
