@@ -14,6 +14,7 @@ const meta: Meta<typeof LinkComponent> = {
         component: description,
       },
     },
+    presets: 'nl.link',
     tokens,
   },
   title: 'Link',

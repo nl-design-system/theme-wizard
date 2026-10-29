@@ -11,8 +11,10 @@ import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import {
+  APPLY_TOKEN_PRESET_EVENT,
   SET_THEME_TOKENS_EVENT,
   UPDATE_DESIGN_TOKENS_EVENT,
+  type ApplyTokenPresetEvent,
   type SetThemeTokensEvent,
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
@@ -81,6 +83,7 @@ export class WizardApp extends LitElement {
 
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
+    this.addEventListener(APPLY_TOKEN_PRESET_EVENT, this.#handleApplyTokenPreset);
     this.addEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
@@ -90,6 +93,7 @@ export class WizardApp extends LitElement {
     super.disconnectedCallback();
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
+    this.removeEventListener(APPLY_TOKEN_PRESET_EVENT, this.#handleApplyTokenPreset);
     this.removeEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
@@ -110,6 +114,13 @@ export class WizardApp extends LitElement {
     for (const { groupPath, seed } of detail.groupSeeds ?? []) {
       this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, seed);
     }
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
+  };
+
+  readonly #handleApplyTokenPreset = (event: Event) => {
+    const { detail } = event as ApplyTokenPresetEvent;
+    this.theme.applyTokens(detail.tokens);
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
   };

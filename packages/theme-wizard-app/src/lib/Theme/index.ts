@@ -153,6 +153,21 @@ export default class Theme {
     this.tokens = tokens;
   }
 
+  // Like `updateMany`, but also adds tokens the theme doesn't have yet, e.g. from a component preset
+  applyTokens(values: Record<string, unknown>) {
+    const tokens = structuredClone(this.#tokens);
+    this.#modified = true;
+    for (const [path, token] of Object.entries(flattenTokens(values))) {
+      if (dlv(tokens, path)) {
+        Theme.#updateAt(tokens, path, token.$value);
+      } else {
+        dset(tokens, path, structuredClone(token));
+      }
+    }
+    this.#runThemeProcessors(tokens);
+    this.tokens = tokens;
+  }
+
   setGroupExtension(groupPath: string, extensionKey: string, value: unknown): void {
     const group = dlv(this.#tokens, groupPath);
     if (group && typeof group === 'object') {

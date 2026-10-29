@@ -39,6 +39,7 @@ const meta = {
     // Fallback for --ams-* tokens the wizard theme doesn't set; rendered above the theme providers
     baseTheme: { className: 'ams-theme', css: amsTokensCss },
     css: [gridCss, headingCss, iconCss, linkListCss, logoCss, pageHeaderCss, proseCss, visuallyHiddenCss],
+    presets: 'ams.page-header',
     tokens,
   },
   title: 'Page Header (Amsterdam)',

@@ -19,8 +19,18 @@ const { namespace, node, tokenPath } = Astro.props;
   node.isLeaf ? (
     <wizard-token-field path={tokenPath} />
   ) : (
+    <wizard-tokens-presets path={tokenPath}></wizard-tokens-presets>
     <TokenLinkList namespace={namespace} nodes={node.children} />
   )
 }
 
 {node.isLeaf && <TokenStoryMatches groups={tokenPath} />}
+
+<script>
+  import type { WizardTokensPresets } from '@nl-design-system-community/theme-wizard-app';
+  import { components } from '@/lib/components';
+
+  for (const element of document.querySelectorAll<WizardTokensPresets>('wizard-tokens-presets')) {
+    element.components = components;
+  }
+</script>
