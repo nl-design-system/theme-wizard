@@ -80,6 +80,12 @@ const meta = {
       description: {
         component: readme,
       },
+      source: {
+        code: `<clippy-content-select name="default" .options="\${myOptions}">
+  // content preview
+</clippy-content-select>`,
+        type: 'code',
+      },
     },
   },
   render: (args: StoryArgs) => React.createElement(LiveUpdateDemo, { args }),
@@ -102,6 +108,16 @@ export const PredefinedValue: Story = {
     options: simple,
     value: 'accent-2-default',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `<clippy-content-select name="predefined" value="accent-2-default" .options="\${myOptions}">
+  // content preview
+</clippy-content-select>`,
+        type: 'code',
+      },
+    },
+  },
 };
 
 export const Labeled: Story = {
@@ -110,5 +126,16 @@ export const Labeled: Story = {
     name: 'labeled',
     label: 'Label for input',
     options: simple,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `<clippy-content-select name="labeled" .options="\${myOptions}">
+  <span slot="label">Label for input</span>
+  // content preview
+</clippy-content-select>`,
+        type: 'code',
+      },
+    },
   },
 };
