@@ -1,3 +1,5 @@
+import { LitElement } from 'lit';
+
 export const isSlotEmpty = (slot: HTMLSlotElement): boolean => {
   const assigned = slot.assignedElements({ flatten: false });
   if (assigned.length === 0) return true;
@@ -9,4 +11,14 @@ export const isSlotEmpty = (slot: HTMLSlotElement): boolean => {
     }
     return false;
   });
+};
+
+export const getPopulatedSlots = (el: LitElement): Record<string, Element> => {
+  return Array.from(el.children).reduce(
+    (acc, child) => ({
+      ...acc,
+      [child.slot]: child,
+    }),
+    {},
+  );
 };
