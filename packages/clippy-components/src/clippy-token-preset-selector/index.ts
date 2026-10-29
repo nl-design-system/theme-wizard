@@ -1,16 +1,17 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import { FormElement } from '@src/lib/FormElement';
+import { getPopulatedSlots } from '@src/lib/slot';
 import ChevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
 import formLabelStyles from '@utrecht/form-label-css?inline';
 import selectStyles from '@utrecht/select-css?inline';
 import { html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import '../clippy-button';
 import '../clippy-icon';
 import '../clippy-html-image';
+import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -140,13 +141,7 @@ export class ClippyTokenPresetSelector<T extends Option = Option> extends FormEl
   }
 
   override render() {
-    const populatedSlots = Array.from(this.children).reduce(
-      (acc, child) => ({
-        ...acc,
-        [child.slot]: child,
-      }),
-      {} as Record<string, Element>,
-    );
+    const populatedSlots = getPopulatedSlots(this);
 
     const labelClasses = {
       'clippy-token-preset-selector__label': true,
