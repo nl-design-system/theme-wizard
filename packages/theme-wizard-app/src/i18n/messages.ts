@@ -375,6 +375,9 @@ export const en = {
       typography: 'Typography',
     },
   },
+  tokensPresets: {
+    placeholder: 'Choose a preset',
+  },
   tokenValidationForm: {
     downloadTokens: 'Download theme (JSON)',
     excludeParentKeys: {
@@ -929,6 +932,9 @@ export const nl = {
       fontSizes: 'Lettergroottes',
       typography: 'Typografie',
     },
+  },
+  tokensPresets: {
+    placeholder: 'Kies een voorinstelling',
   },
   tokenValidationForm: {
     downloadTokens: 'Download thema (JSON)',

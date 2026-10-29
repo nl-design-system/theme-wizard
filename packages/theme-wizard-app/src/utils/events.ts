@@ -17,3 +17,11 @@ export type SetThemeTokensDetail = {
 };
 
 export type SetThemeTokensEvent = CustomEvent<SetThemeTokensDetail>;
+
+export const APPLY_TOKEN_PRESET_EVENT = 'apply-token-preset';
+
+export type ApplyTokenPresetDetail = {
+  tokens: Record<string, unknown>;
+};
+
+export type ApplyTokenPresetEvent = CustomEvent<ApplyTokenPresetDetail>;

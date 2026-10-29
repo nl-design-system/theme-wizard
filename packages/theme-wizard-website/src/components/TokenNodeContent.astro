@@ -5,13 +5,18 @@ import type { TokenNamespaceId } from '@/lib/token-namespaces';
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 
 interface Props {
+  // A token's `$deprecated`: a message, or `true` without one
+  deprecated?: string | boolean;
   namespace: TokenNamespaceId;
   node: TokenTreeNode;
   tokenPath: string;
 }
 
-const { namespace, node, tokenPath } = Astro.props;
+const { deprecated, namespace, node, tokenPath } = Astro.props;
+const deprecationMessage = typeof deprecated === 'string' ? deprecated : 'Dit token is verouderd en kan in een toekomstige versie verdwijnen.';
 ---
+
+{deprecated && <utrecht-note purpose="warning">Verouderd: {deprecationMessage}</utrecht-note>}
 
 <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
 
@@ -19,8 +24,18 @@ const { namespace, node, tokenPath } = Astro.props;
   node.isLeaf ? (
     <wizard-token-field path={tokenPath} />
   ) : (
+    <wizard-tokens-presets path={tokenPath}></wizard-tokens-presets>
     <TokenLinkList namespace={namespace} nodes={node.children} />
   )
 }
 
 {node.isLeaf && <TokenStoryMatches groups={tokenPath} />}
+
+<script>
+  import type { WizardTokensPresets } from '@nl-design-system-community/theme-wizard-app';
+  import { components } from '@/lib/components';
+
+  for (const element of document.querySelectorAll<WizardTokensPresets>('wizard-tokens-presets')) {
+    element.components = components;
+  }
+</script>

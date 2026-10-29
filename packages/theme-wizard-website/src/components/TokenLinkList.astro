@@ -1,5 +1,5 @@
 ---
-import type { TokenNamespaceId } from '@/lib/token-namespaces';
+import { getTokenNamespace, type TokenNamespaceId } from '@/lib/token-namespaces';
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { capitalize } from 'es-toolkit';
 
@@ -9,14 +9,15 @@ interface Props {
 }
 
 const { namespace, nodes } = Astro.props;
+const { nav } = getTokenNamespace(namespace);
 ---
 
 <wizard-unstyled-list>
   {
     nodes.map((node) => (
       <li>
-        <wizard-link-to-token path={`${namespace}.${node.path.join('.')}`}>
-          <a slot="link" href={`/design-tokens/${namespace}/${node.path.join('/')}`}>
+        <wizard-link-to-token path={nav.tokenPathFor(node.path)}>
+          <a slot="link" href={nav.hrefFor(node.path)}>
             Bewerk '{node.key}'
           </a>
           {capitalize(node.key)}

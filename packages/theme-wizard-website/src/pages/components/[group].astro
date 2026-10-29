@@ -1,0 +1,29 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro"
+import { componentGroups } from '@/lib/components';
+import { getNavigationItems, getSubNavigationItems } from '@/navigation.config';
+
+export function getStaticPaths() {
+  return componentGroups.map(({ id }) => ({
+    params: { group: id }
+  }))
+}
+
+const { group } = Astro.params
+const { label } = componentGroups.find(({ id }) => id === group)!
+const mainPath = '/components';
+const navigationItems = getNavigationItems(Astro.url.pathname);
+const groupItems = getSubNavigationItems(getSubNavigationItems(navigationItems, mainPath), `${mainPath}/${group}`);
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-story-preview'
+</script>
+
+<MainLayout title={label} metaTitle={label} mainPath={mainPath}>
+  <clippy-story-preview size="lg">
+    <wizard-unstyled-list>
+      {groupItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+    </wizard-unstyled-list>
+  </clippy-story-preview>
+</MainLayout>

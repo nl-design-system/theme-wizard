@@ -30,5 +30,6 @@ const byTopLevelOrder = (a: TokenTreeNode, b: TokenTreeNode): number => {
   return indexOfA - indexOfB;
 };
 
-export const getBasisTokenTree = (): TokenTreeNode[] =>
-  buildTokenTree(basisTokens.basis as Record<string, unknown>).sort(byTopLevelOrder);
+export const getBasisTokens = () => basisTokens.basis as Record<string, unknown>;
+
+export const getBasisTokenTree = (): TokenTreeNode[] => buildTokenTree(getBasisTokens()).sort(byTopLevelOrder);
