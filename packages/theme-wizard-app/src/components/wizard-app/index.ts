@@ -3,6 +3,7 @@ import { provide } from '@lit/context';
 import { ClippyTokenCombobox } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { EXTENSION_COLORSCALE_SEED, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
+import { dequal } from 'dequal';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { StagedDesignToken } from '../../utils/types';
@@ -158,13 +159,19 @@ export class WizardApp extends LitElement {
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
+    let value;
     if (target instanceof ClippyTokenCombobox) {
-      this.theme.updateAt(target.name, target.value?.$value);
+      value = target.value?.$value;
     } else if (target instanceof WizardTokenInput) {
-      this.theme.updateAt(target.name, target.value);
+      value = target.value;
     } else {
       return;
     }
+    // Skip the costly update when the value did not actually change
+    if (dequal(this.theme.at(target.name)?.$value, value)) {
+      return;
+    }
+    this.theme.updateAt(target.name, value);
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
   };

@@ -13,7 +13,7 @@ describe('Scraper', () => {
 
     scraper.getCSS(new URL(targetURL));
 
-    expect(fetchSpy).toBeCalledWith(new URL(`${scraperURL}api/v1/css?url=${encodeURIComponent(targetURL)}`));
+    expect(fetchSpy).toHaveBeenCalledWith(new URL(`${scraperURL}api/v1/css?url=${encodeURIComponent(targetURL)}`));
   });
 
   it('can be invoked multiple times', () => {
@@ -24,6 +24,6 @@ describe('Scraper', () => {
     scraper.getCSS(new URL(targetURL));
     scraper.getCSS(new URL(targetURL));
 
-    expect(fetchSpy).toBeCalledWith(new URL(`${scraperURL}api/v1/css?url=${encodeURIComponent(targetURL)}`));
+    expect(fetchSpy).toHaveBeenCalledWith(new URL(`${scraperURL}api/v1/css?url=${encodeURIComponent(targetURL)}`));
   });
 });

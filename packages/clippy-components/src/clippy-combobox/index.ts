@@ -133,6 +133,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   /**
+   * Override this function to customize when a committed value counts as a change
+   */
+  isSameValue(a: T['value'] | null, b: T['value'] | null): boolean {
+    return dequal(a, b);
+  }
+
+  /**
    * Override this function to customize how the value is looked up based on the selected option
    */
   getOptionForValue(value: T['value'] | null): T | undefined {
@@ -204,14 +211,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.emit('focus');
   };
 
-  readonly #handleInput = (event: InputEvent) => {
+  readonly #handleInput = async (event: InputEvent) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
     this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
     if (this.query.length > 3) {
-      this.#addAdditionalOptions(this.query);
+      await this.#addAdditionalOptions(this.query);
     }
     this.emit('input');
   };
@@ -244,10 +251,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   };
 
-  #setActiveItem(index: number, open: boolean = false) {
+  async #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
     this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
     if (this.activeIndex > -1) {
+      // Options only render while open, so wait for the render before scrolling
+      await this.updateComplete;
       const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
       element?.scrollIntoView({
         behavior: 'smooth',
@@ -258,11 +267,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   #commit(value: T['value'] | null) {
-    if (!dequal(this.value, value)) {
+    // Close first, so the popover state is set before (potentially slow) change listeners run
+    this.open = false;
+    if (!this.isSameValue(this.value, value)) {
       this.value = value;
       this.emit('change');
     }
-    this.open = false;
   }
 
   #commitActiveItem(index: number) {
@@ -410,7 +420,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                 aria-haspopup="listbox"
                 aria-controls=${this.#listId}
                 aria-expanded=${this.open}
-                aria-activedescendant=${ifDefined(this.#getOptionId())}
+                aria-activedescendant=${ifDefined(this.open ? this.#getOptionId() : undefined)}
                 aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
                 aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
                 aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
@@ -432,7 +442,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             tabindex="-1"
           >
             <ul class="utrecht-listbox__list" role="none">
-              ${this.filteredOptions.map((option, index) => {
+              ${(this.open ? this.filteredOptions : []).map((option, index) => {
                 const active = index === this.activeIndex;
                 const selected = dequal(option, currentOption);
                 const interactionClasses = {

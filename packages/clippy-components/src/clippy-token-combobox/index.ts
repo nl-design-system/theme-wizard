@@ -130,6 +130,13 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     });
   }
 
+  /**
+   * @description only `$value` matters; `$extensions` etc. differ between the current token and the parsed query
+   */
+  override isSameValue(a: Option['value'] | null, b: Option['value'] | null): boolean {
+    return dequal(a?.$value, b?.$value);
+  }
+
   #getOptionForValue(value: Option['value'] | null): Option | undefined {
     const { $value } = value ?? {};
     return this.options.find((option) => dequal(option.value.$value, $value));
