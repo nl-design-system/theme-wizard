@@ -16,7 +16,7 @@ export default css`
     color: var(--basis-color-default-color-subtle);
   }
 
-  .utrecht-form-field__error-message {
+  .wizard-scraper__error {
     margin-block: var(--basis-space-block-md);
   }
 
