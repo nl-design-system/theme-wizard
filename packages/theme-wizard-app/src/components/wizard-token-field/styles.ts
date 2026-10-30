@@ -22,12 +22,19 @@ export default css`
     }
   }
 
-  .wizard-token-field {
-    border-inline-start: 3px solid transparent;
+  .wizard-token-field--invalid {
     padding-inline-start: var(--basis-space-inline-md);
+    border-inline-start-width: var(--basis-border-width-lg);
+    border-inline-start-style: solid;
+    border-inline-start-color: var(--basis-color-negative-color-default);
   }
 
-  .wizard-token-field--invalid {
-    border-inline-start-color: var(--basis-color-negative-color-default);
+  .wizard-token-field__label {
+    display: block;
+    margin-block-end: var(--basis-space-row-md);
+  }
+
+  .wizard-token-field__error {
+    margin-block-end: var(--basis-space-row-md);
   }
 `;

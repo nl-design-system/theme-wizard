@@ -1,11 +1,11 @@
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
+import formFieldErrorMessageStyles from '@nl-design-system-candidate/form-field-error-message-css/form-field-error-message.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import ArrowRight from '@tabler/icons/outline/arrow-right.svg?raw';
 import formFieldStyles from '@utrecht/form-field-css?inline';
-import formFieldErrorCss from '@utrecht/form-field-error-message-css?inline';
 import formLabelStyles from '@utrecht/form-label-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
@@ -35,7 +35,7 @@ export class WizardScraper extends LitElement {
     unsafeCSS(paragraphStyles),
     unsafeCSS(linkStyles),
     unsafeCSS(buttonStyles),
-    unsafeCSS(formFieldErrorCss),
+    unsafeCSS(formFieldErrorMessageStyles),
     styles,
   ];
 
@@ -105,9 +105,9 @@ export class WizardScraper extends LitElement {
     const loader2AriaHidden = this.#timerState === 'loader2' ? nothing : 'true';
     const errorMessage = isError
       ? html`
-          <utrecht-form-field-error-message id="scraper-error" class="utrecht-form-field__error-message">
-            <p class="nl-paragraph utrecht-form-field-error-message">${snapshot.context.error}</p>
-          </utrecht-form-field-error-message>
+          <div id="scraper-error" class="nl-form-field-error-message | wizard-scraper__error">
+            <div class="nl-form-field-error-message__content">${snapshot.context.error}</div>
+          </div>
         `
       : nothing;
 

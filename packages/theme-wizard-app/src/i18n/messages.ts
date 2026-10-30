@@ -403,8 +403,7 @@ export const en = {
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.fontSizeTooSmall', {
+          return html` ${t('validation.issue.fontSizeTooSmall', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -423,8 +422,7 @@ export const en = {
           ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
           ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.invalidContrastWith', {
+          return html` ${t('validation.issue.invalidContrastWith', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -451,8 +449,7 @@ export const en = {
           ${t('validation.issue.lineHeight', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.lineHeightTooSmall', {
+          return html` ${t('validation.issue.lineHeightTooSmall', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -468,8 +465,7 @@ export const en = {
             token: issue.referredToken,
           })}.`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.unexpectedUnit', {
+          return html` ${t('validation.issue.unexpectedUnit', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.`;
@@ -958,8 +954,7 @@ export const nl = {
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.fontSizeTooSmall', {
+          return html` ${t('validation.issue.fontSizeTooSmall', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -975,8 +970,7 @@ export const nl = {
             token: issue.referredToken,
           })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.invalidContrastWith', {
+          return html` ${t('validation.issue.invalidContrastWith', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -1003,8 +997,7 @@ export const nl = {
           ${t('validation.issue.lineHeight', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.lineHeightTooSmall', {
+          return html` ${t('validation.issue.lineHeightTooSmall', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -1020,8 +1013,7 @@ export const nl = {
             token: issue.referredToken,
           })}.`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.unexpectedUnit', {
+          return html` ${t('validation.issue.unexpectedUnit', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.`;

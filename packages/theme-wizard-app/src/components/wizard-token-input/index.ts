@@ -1,10 +1,11 @@
+import formFieldErrorMessageStyles from '@nl-design-system-candidate/form-field-error-message-css/form-field-error-message.css?inline';
 import {
   BaseDesignToken,
   ColorToken,
   DimensionToken,
   FontFamilyToken,
 } from '@nl-design-system-community/design-tokens-schema';
-import { html, nothing } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
@@ -30,7 +31,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
   #token: BaseDesignToken | null = null;
 
   static readonly formAssociated = true;
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(formFieldErrorMessageStyles), styles];
 
   static valueAsString(value: unknown) {
     switch (typeof value) {
@@ -83,8 +84,10 @@ export class WizardTokenInput extends WizardTokenNavigator {
     return html` <label for=${this.id}>${this.label}</label>
       ${this.errors.map(
         (error) =>
-          html`<div class="utrecht-form-field-error-message" id=${error.id}>
-            ${t(`validation.error.${error.code}.compact`, error)}
+          html`<div class="nl-form-field-error-message" id=${error.id}>
+            <div class="nl-form-field-error-message__content">
+              ${t(`validation.error.${error.code}.compact`, error)}
+            </div>
           </div>`,
       )}
       <textarea

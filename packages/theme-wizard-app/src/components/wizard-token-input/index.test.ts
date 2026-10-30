@@ -187,7 +187,7 @@ describe(`<${tag}>`, () => {
     it('renders error messages when errors are present', async () => {
       const element = await renderTokenInput({ errors: [baseError] });
 
-      const errorMessages = element.shadowRoot?.querySelectorAll('.utrecht-form-field-error-message');
+      const errorMessages = element.shadowRoot?.querySelectorAll('.nl-form-field-error-message');
       expect(errorMessages?.length).toBeGreaterThan(0);
     });
 
