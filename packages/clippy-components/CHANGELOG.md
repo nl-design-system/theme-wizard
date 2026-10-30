@@ -1,5 +1,15 @@
 # @nl-design-system-community/clippy-components
 
+## 3.8.0
+
+### Minor Changes
+
+- 451a7d9: Add `clippy-content-select` component
+
+### Patch Changes
+
+- 4cffa3c: Fix scrolling and overflow issues in `clippy-modal`
+
 ## 3.7.0
 
 ### Minor Changes

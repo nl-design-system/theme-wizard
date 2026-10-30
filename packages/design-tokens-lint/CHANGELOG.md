@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-lint
 
+## 1.1.0
+
+### Minor Changes
+
+- 481f96f: feat: support `--max-errors=<number>` option
+
 ## 1.0.3
 
 ### Patch Changes
