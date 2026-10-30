@@ -66,6 +66,19 @@ describe('Theme', () => {
     return expect(initialCSS).not.toMatch(updatedCSS);
   });
 
+  it('clones without resetting state or stylesheet', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const css = theme.css;
+    const cloned = theme.clone();
+    expect(cloned).not.toBe(theme);
+    expect(cloned.tokens).toBe(theme.tokens);
+    expect(cloned.modified).toBe(theme.modified);
+    expect(cloned.issues).toEqual(theme.issues);
+    expect(cloned.stylesheet).toBe(theme.stylesheet);
+    expect(cloned.css).toBe(css);
+  });
+
   it('has a different JSON output after token update', async () => {
     const theme = new Theme();
     const initialTokens = theme.toLegacyTokens();
