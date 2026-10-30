@@ -155,3 +155,60 @@ describe('--out', () => {
     await cleanup();
   });
 });
+
+describe('--max-errors', () => {
+  it('exits 0 and still prints issues when issue count is below the limit', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    const bad = structuredClone(startTokens) as Record<string, unknown>;
+    dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
+    await writeFile('tokens.json', JSON.stringify(bad));
+
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} --max-errors=2 tokens.json`);
+
+    expect(code).toBe(0);
+    expect(stderr.join(' ')).toContain('1 issue found');
+    expect(stdout).toEqual([]);
+
+    await cleanup();
+  });
+
+  it('exits 0 when issue count equals the limit', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    const bad = structuredClone(startTokens) as Record<string, unknown>;
+    dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
+    await writeFile('tokens.json', JSON.stringify(bad));
+
+    const { code, stderr } = await execute(nodeExec, `${srcIndex} --max-errors 1 tokens.json`);
+
+    expect(code).toBe(0);
+    expect(stderr.join(' ')).toContain('this.does.not.exist');
+
+    await cleanup();
+  });
+
+  it('exits 1 when issue count exceeds the limit', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    const bad = structuredClone(startTokens) as Record<string, unknown>;
+    dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
+    await writeFile('tokens.json', JSON.stringify(bad));
+
+    const { code, stderr } = await execute(nodeExec, `${srcIndex} --max-errors=0 tokens.json`);
+
+    expect(code).toBe(1);
+    expect(stderr.join(' ')).toContain('1 issue found');
+
+    await cleanup();
+  });
+
+  it.each(['-1', '1.5', 'abc'])('exits 1 for invalid value %s', async (value) => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    await writeFile('tokens.json', JSON.stringify(startTokens));
+
+    const { code, stderr } = await execute(nodeExec, `${srcIndex} --max-errors=${value} tokens.json`);
+
+    expect(code).toBe(1);
+    expect(stderr.join(' ')).toContain('--max-errors must be a non-negative integer');
+
+    await cleanup();
+  });
+});
