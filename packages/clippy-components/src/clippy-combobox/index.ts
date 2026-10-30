@@ -223,14 +223,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.emit('input');
   };
 
-  readonly #handleKeydown = ({ key }: KeyboardEvent) => {
+  readonly #handleKeydown = async ({ key }: KeyboardEvent) => {
     const index = this.activeIndex;
     const count = this.filteredOptions.length;
     switch (key) {
       case 'ArrowDown':
-        return this.#setActiveItem(index + 1, true);
+        return await this.#setActiveItem(index + 1, true);
       case 'ArrowUp':
-        return this.#setActiveItem(index - 1, true);
+        return await this.#setActiveItem(index - 1, true);
       case 'Enter':
         if (index > -1) {
           return this.#commitActiveItem(index);
@@ -241,11 +241,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         }
         return undefined;
       case 'Escape':
-        return this.#setActiveItem(-1);
+        return await this.#setActiveItem(-1);
       case 'Home':
-        return this.#setActiveItem(0);
+        return await this.#setActiveItem(0);
       case 'End':
-        return this.#setActiveItem(count - 1);
+        return await this.#setActiveItem(count - 1);
       default:
         return undefined;
     }
