@@ -28,6 +28,7 @@ ${styleText('bold', 'EXAMPLES')}
   design-tokens-lint base.json theme.json
   design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
   design-tokens-lint --out result.json tokens.json
+  design-tokens-lint --max-errors=5 tokens.json
   design-tokens-lint suggest-reuse tokens.json
   design-tokens-lint suggest-reuse tokens.json --fix
   design-tokens-lint suggest-reuse tokens.json --out candidates.json
@@ -37,6 +38,7 @@ ${styleText('bold', 'SUBCOMMANDS')}
 
 ${styleText('bold', 'OPTIONS')}
   --exclude-parent-keys   Exclude parent keys from validation
+  --max-errors <number>   Exit 0 when issue count is at most <number> (default: 0)
   --fix                   Apply reuse candidates (suggest-reuse only)
   --out, -o <file>        Write output to file
   --verbose               Print verbose output
@@ -53,6 +55,7 @@ const { positionals, values } = parseArgs({
     'exclude-parent-keys': { default: false, type: 'boolean' },
     fix: { default: false, type: 'boolean' },
     help: { default: false, short: 'h', type: 'boolean' },
+    'max-errors': { default: '0', type: 'string' },
     out: { short: 'o', type: 'string' },
     verbose: { default: false, type: 'boolean' },
     version: { default: false, short: 'V', type: 'boolean' },
@@ -77,6 +80,13 @@ if (files.length === 0) {
   process.exit(1);
 }
 
+const maxErrors = Number(values['max-errors']);
+
+if (!Number.isInteger(maxErrors) || maxErrors < 0) {
+  process.stderr.write(`Error: --max-errors must be a non-negative integer, got "${values['max-errors']}"\n`);
+  process.exit(1);
+}
+
 const debug = values['debug'];
 const verbose = values['verbose'];
 const outPath = values['out'];
@@ -85,5 +95,5 @@ const excludeParentKeys = values['exclude-parent-keys'];
 if (subcommand === 'suggest-reuse') {
   await suggestReuse(files, { debug, excludeParentKeys, fix: values['fix'], outPath, verbose });
 } else {
-  await lint(files, { debug, excludeParentKeys, outPath, verbose });
+  await lint(files, { debug, excludeParentKeys, maxErrors, outPath, verbose });
 }
