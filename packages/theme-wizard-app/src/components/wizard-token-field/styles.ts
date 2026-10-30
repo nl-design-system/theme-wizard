@@ -23,10 +23,10 @@ export default css`
   }
 
   .wizard-token-field--invalid {
-    padding-inline-start: var(--basis-space-inline-md);
-    border-inline-start-width: var(--basis-border-width-lg);
-    border-inline-start-style: solid;
     border-inline-start-color: var(--basis-color-negative-color-default);
+    border-inline-start-style: solid;
+    border-inline-start-width: var(--basis-border-width-lg);
+    padding-inline-start: var(--basis-space-inline-md);
   }
 
   .wizard-token-field__label {
