@@ -36,9 +36,7 @@ export * from './components/wizard-theme-reset-button';
 export * from './components/wizard-token-docs';
 export * from './components/wizard-token-table';
 export * from './components/wizard-token-field';
-export * from './components/wizard-token-input';
 export * from './components/wizard-token-minify-form';
-export * from './components/wizard-token-navigator';
 export * from './components/wizard-token-output';
 export * from './components/wizard-token-sample';
 export * from './components/wizard-token-upload-form';
@@ -47,7 +45,6 @@ export * from './components/wizard-token-value';
 export * from './components/wizard-tokens-download';
 export * from './components/wizard-tokens-reuse-form';
 export * from './components/wizard-unstyled-list';
-export * from './components/wizard-validation-issues-alert';
 
 export * from './utils/index';
 export * from './lib/Theme/lib';
