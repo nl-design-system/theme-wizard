@@ -6,7 +6,7 @@ import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/desig
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
 
-type PageType = 'leaf' | 'branch' | 'basisColorBranch';
+type AstroPageFragment = 'leaf' | 'branch' | 'basisColorBranch';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 
@@ -31,12 +31,18 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
     };
   };
 
-  const getStaticPaths = ({ fragment, tree }: { fragment: PageType; tree: TokenTreeNode[] }) =>
+  const getStaticPaths = ({
+    astroPageFragment,
+    tree,
+  }: {
+    astroPageFragment: AstroPageFragment;
+    tree: TokenTreeNode[];
+  }) =>
     flattenTreePaths(tree)
       .map((path) => {
         const slug = path.join('/');
         const pageData = resolveSlugPage(tree, slug);
-        let type: PageType = 'branch';
+        let type: AstroPageFragment = 'branch';
 
         if (pageData.node.isLeaf) {
           type = 'leaf';
@@ -45,7 +51,7 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
         }
 
         return {
-          params: { [fragment]: slug, namespace },
+          params: { [astroPageFragment]: slug, namespace },
           props: {
             namespace,
             pageData,

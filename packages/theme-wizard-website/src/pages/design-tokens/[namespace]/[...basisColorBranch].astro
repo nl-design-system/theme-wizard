@@ -5,11 +5,10 @@ import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
 import { capitalize } from 'es-toolkit';
 
 export function getStaticPaths() {
-  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), fragment: 'basisColorBranch'}));
+  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), astroPageFragment: 'basisColorBranch'}));
 }
 
 const { node, tokenPath } = Astro.props.pageData;
-// TODO: move this to getStaticPaths, we want all data in the Astro object
 const namespace = getTokenNamespace(Astro.props.namespace);
 ---
 
