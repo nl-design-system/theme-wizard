@@ -1,7 +1,6 @@
 import type { TemplateResult } from 'lit';
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { html } from 'lit';
-import type { TokenLinkRenderer } from './types';
 import ValidationIssue from '../lib/ValidationIssue';
 import { t } from './';
 
@@ -395,91 +394,46 @@ export const en = {
   validation: {
     error: {
       [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.fontSizeTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
-          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.fontSizeTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Font size too small',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.fontSizeTooSmall', { token: issue.referredToken })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
-        label: 'Font size too small',
       },
 
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.invalidContrastWith', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
-          ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
-          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.invalidContrastWith', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Insufficient contrast',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.
           ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
           ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}.`;
         },
-        label: 'Insufficient contrast',
       },
       [ERROR_CODES.INVALID_REF]: {
-        compact(issue: ValidationIssue): TemplateResult {
-          return html`<p>Invalid reference: ${issue.path}</p>`;
-        },
-        detailed(issue: ValidationIssue): TemplateResult {
+        label: 'Invalid reference',
+        message(issue: ValidationIssue): TemplateResult {
           return html`<p>${issue.path}</p>`;
         },
-        label: 'Invalid reference',
       },
       [ERROR_CODES.LINE_HEIGHT_TOO_SMALL]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.lineHeightTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
-          ${t('validation.issue.lineHeight', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.lineHeightTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Line height too small',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.lineHeightTooSmall', { token: issue.referredToken })}.
           ${t('validation.issue.lineHeight', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
-        label: 'Lettergrootte te klein',
       },
       [ERROR_CODES.UNEXPECTED_UNIT]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.unexpectedUnit', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.unexpectedUnit', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.`;
-        },
         label: 'Unexpected unit.',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.unexpectedUnit', { token: issue.referredToken })}.`;
+        },
       },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
-      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      fontSizeTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`
           <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
             View guidelines
@@ -487,18 +441,16 @@ export const en = {
         `;
         if (!token) return html`Font size is too small. ${guidelinesLink}`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Font size is too small in ${tokenLink}. ${guidelinesLink}`;
+        return html`Font size is too small in <strong>${token}</strong>. ${guidelinesLink}`;
       },
       fontSizeValue: 'Font size: {{value}}',
-      invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      invalidContrastWith: ({ token }: { token: string }) => {
         if (!token) return html`Insufficient contrast`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Insufficient contrast with ${tokenLink}`;
+        return html`Insufficient contrast with <strong>${token}</strong>`;
       },
       lineHeight: 'Line height: {{value}}',
-      lineHeightTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      lineHeightTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`
           <a
             href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
@@ -509,15 +461,10 @@ export const en = {
         `;
         if (!token) return html`Line height too small. ${guidelinesLink}`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Line height too small in ${tokenLink}. ${guidelinesLink}`;
+        return html`Line height too small in <strong>${token}</strong>. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Required minimum: <strong>${value}</strong>`,
       unexpectedUnit: 'Unexpected unit. Use a plain number instead.',
-    },
-    title: 'Theme validation errors',
-    token_link: {
-      aria_label: 'Jump to {{token}}',
     },
   },
   wizard: {
@@ -950,88 +897,45 @@ export const nl = {
   validation: {
     error: {
       [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.fontSizeTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
-          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.fontSizeTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Lettergrootte te klein',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.fontSizeTooSmall', { token: issue.referredToken })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
-        label: 'Lettergrootte te klein',
       },
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.invalidContrastWith', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.invalidContrastWith', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Onvoldoende contrast',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.
           ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'nl') })}.
           ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}.`;
         },
-        label: 'Onvoldoende contrast',
       },
       [ERROR_CODES.INVALID_REF]: {
-        compact(issue: ValidationIssue): TemplateResult {
-          return html`<p>Ongeldige referentie: ${issue.path}</p>`;
-        },
-        detailed(issue: ValidationIssue): TemplateResult {
+        label: 'Ongeldige referentie',
+        message(issue: ValidationIssue): TemplateResult {
           return html`<p>${issue.path}</p>`;
         },
-        label: 'Ongeldige referentie',
       },
       [ERROR_CODES.LINE_HEIGHT_TOO_SMALL]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.lineHeightTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
-          ${t('validation.issue.lineHeight', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.lineHeightTooSmall', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.
+        label: 'Regelafstand te klein',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.lineHeightTooSmall', { token: issue.referredToken })}.
           ${t('validation.issue.lineHeight', { value: issue.actual })}.
           ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
-        label: 'Lettergrootte te klein',
       },
       [ERROR_CODES.UNEXPECTED_UNIT]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
-          html`${t('validation.issue.unexpectedUnit', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.`,
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${issue.path}:
-          ${t('validation.issue.unexpectedUnit', {
-            context: issue.renderTokenLink,
-            token: issue.referredToken,
-          })}.`;
-        },
         label: 'Onverwachte eenheid',
+        message: (issue: ValidationIssue): TemplateResult => {
+          return html` ${t('validation.issue.unexpectedUnit', { token: issue.referredToken })}.`;
+        },
       },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
-      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      fontSizeTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`<a
           href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte"
           target="_blank"
@@ -1039,18 +943,16 @@ export const nl = {
         >`;
         if (!token) return html`Lettergrootte is te klein. ${guidelinesLink}`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Lettergrootte is te klein in ${tokenLink}. ${guidelinesLink}`;
+        return html`Lettergrootte is te klein in <strong>${token}</strong>. ${guidelinesLink}`;
       },
       fontSizeValue: 'Lettergrootte: {{value}}',
-      invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      invalidContrastWith: ({ token }: { token: string }) => {
         if (!token) return html`Onvoldoende contrast`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Onvoldoende contrast met ${tokenLink}`;
+        return html`Onvoldoende contrast met <strong>${token}</strong>`;
       },
       lineHeight: 'Regelafstand: {{value}}',
-      lineHeightTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+      lineHeightTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`<a
           href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
           target="_blank"
@@ -1058,15 +960,10 @@ export const nl = {
         >`;
         if (!token) return html`Regelafstand is te klein. ${guidelinesLink}`;
 
-        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Regelafstand is te klein in ${tokenLink}. ${guidelinesLink}`;
+        return html`Regelafstand is te klein in <strong>${token}</strong>. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Minimaal vereist: <strong>${value}</strong>`,
       unexpectedUnit: 'Onverwachte eenheid. Gebruik alleen nummers',
-    },
-    title: 'Thema validatie fouten',
-    token_link: {
-      aria_label: 'Spring naar {{token}}',
     },
   },
   wizard: {
