@@ -157,7 +157,7 @@ test.describe('stories', () => {
 
   test.describe('validations', () => {
     test.describe('color contrast', () => {
-      const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
+      const ERROR_MESSAGE = /^Onvoldoende contrast met nl\.code-block\.background-color\. Contrast: /;
 
       test('shows validation warning when bg+color tokens have insufficient contrast - basis tokens', async ({
         page,
@@ -200,7 +200,7 @@ test.describe('stories', () => {
 
     test.describe('font-size', () => {
       const ERROR_MESSAGE =
-        'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem';
+        'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem.';
 
       test('shows min-font-size validation', async ({ page }) => {
         const input = page.getByLabel('nl.code-block.font-size');
@@ -226,7 +226,8 @@ test.describe('stories', () => {
 
     test.describe('line-height', () => {
       test('shows min-line-height validation', async ({ page }) => {
-        const ERROR_MESSAGE = 'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1';
+        const ERROR_MESSAGE =
+          'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1.';
         const input = page.getByLabel('nl.code-block.line-height');
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
