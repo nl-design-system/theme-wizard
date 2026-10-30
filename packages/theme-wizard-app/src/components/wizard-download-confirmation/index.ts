@@ -54,7 +54,7 @@ export class WizardDownloadConfirmation extends LitElement {
                       <li>
                         <b>${error.path}</b>:
                         <br />
-                        ${t(`validation.error.${error.code}.detailed`, {
+                        ${t(`validation.error.${error.code}.message`, {
                           ...error,
                         })}
                       </li>

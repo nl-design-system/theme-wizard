@@ -3,9 +3,7 @@ import { removeExtensions } from '@nl-design-system-community/design-tokens-sche
 import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import '../wizard-layout';
-import '../wizard-token-field';
 import '../wizard-download-confirmation';
-import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';

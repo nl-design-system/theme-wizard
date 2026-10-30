@@ -4,14 +4,13 @@ import formFieldErrorMessageCss from '@nl-design-system-candidate/form-field-err
 import { type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { type BaseDesignToken, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
-import { type PropertyValues, html, nothing, unsafeCSS } from 'lit';
+import { type PropertyValues, LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import type Theme from '../../lib/Theme';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { WizardTokenNavigator } from '../wizard-token-navigator';
 import { getOptionsFor } from './reference-options';
 import styles from './styles';
 
@@ -25,7 +24,7 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardTokenField extends WizardTokenNavigator {
+export class WizardTokenField extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
@@ -80,7 +79,7 @@ export class WizardTokenField extends WizardTokenNavigator {
             this.#hasErrors
               ? html`<div slot="error" class="nl-form-field-error-message | wizard-token-field__error">
                   <div class="nl-form-field-error-message__content">
-                    ${t(`validation.error.${this.pathErrors[0].code}.detailed`, this.pathErrors[0])}
+                    ${t(`validation.error.${this.pathErrors[0].code}.message`, this.pathErrors[0])}
                   </div>
                 </div>`
               : nothing
