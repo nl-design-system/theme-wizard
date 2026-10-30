@@ -59,7 +59,7 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
           },
         };
       })
-      .filter(({ props }) => props.type === fragment);
+      .filter(({ props }) => props.type === astroPageFragment);
 
   return { getStaticPaths, hrefFor, resolveSlugPage, toNavigationItems };
 };
