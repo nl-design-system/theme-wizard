@@ -1,0 +1,25 @@
+---
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
+import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+import { capitalize } from 'es-toolkit';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+
+export function getStaticPaths() {
+  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), fragment: 'leaf'}));
+}
+
+const { node, tokenPath } = Astro.props.pageData;
+// TODO: move this to getStaticPaths, we want all data in the Astro object
+const namespace = getTokenNamespace(Astro.props.namespace);
+---
+
+<DesignTokensLayout
+  title={capitalize(node.key)}
+  metaTitle={`${node.key} - ${namespace.pageTitle}`}
+>
+  <mark>leaf</mark>
+  <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+
+  <wizard-token-field path={tokenPath} />
+  <TokenStoryMatches groups={tokenPath} />
+</DesignTokensLayout>

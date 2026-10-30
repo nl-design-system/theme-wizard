@@ -1,0 +1,22 @@
+---
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
+import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+import { capitalize } from 'es-toolkit';
+import TokenLinkList from '@/components/TokenLinkList.astro';
+
+export function getStaticPaths() {
+  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), fragment: 'branch'}));
+}
+
+const { node } = Astro.props.pageData;
+// TODO: move this to getStaticPaths, we want all data in the Astro object
+const namespace = getTokenNamespace(Astro.props.namespace);
+---
+
+<DesignTokensLayout
+  title={capitalize(node.key)}
+  metaTitle={`${node.key} - ${namespace.pageTitle}`}
+>
+  <mark>branch</mark>
+  <TokenLinkList namespace={namespace.id} nodes={node.children} />
+</DesignTokensLayout>
