@@ -6,6 +6,7 @@ export * from './components/wizard-color-system-preview';
 export * from './components/wizard-container';
 export * from './components/wizard-download-confirmation';
 export * from './components/wizard-download-link';
+export * from './components/wizard-form-colorscale';
 export * from './components/wizard-form-field-checkbox';
 export * from './components/wizard-layout';
 export * from './components/wizard-link-to-token';

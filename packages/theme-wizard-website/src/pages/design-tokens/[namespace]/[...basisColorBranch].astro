@@ -17,5 +17,8 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   metaTitle={`${node.key} - ${namespace.pageTitle}`}
 >
   <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+
+  <wizard-form-colorscale path={tokenPath}></wizard-form-colorscale>
+
   <TokenLinkList namespace={namespace.id} nodes={node.children} />
 </DesignTokensLayout>
