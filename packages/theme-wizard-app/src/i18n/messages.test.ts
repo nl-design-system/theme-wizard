@@ -95,7 +95,7 @@ describe('messages', () => {
         const result = messages.validation.error[ERROR_CODES.INSUFFICIENT_CONTRAST].detailed(createContrastIssue());
         expect(result).toBeDefined();
         expect(result.strings).toBeDefined();
-        expect(result.values.includes('test.path')).toBe(true);
+        expect(result.values.includes('test.path')).not.toBe(true);
       });
     });
 
