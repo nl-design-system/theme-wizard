@@ -30,28 +30,4 @@ export default css`
   .wizard-token-field--invalid {
     border-inline-start-color: var(--basis-color-negative-color-default);
   }
-
-  .theme-error {
-    text-decoration: wavy underline;
-    text-decoration-color: var(--basis-color-negative-color-default);
-  }
-
-  /* Acts as the label */
-  p {
-    margin-block: 0;
-  }
-
-  ul {
-    margin-block: 0;
-    margin-inline-start: 0;
-    padding-inline-start: var(--basis-space-inline-md);
-  }
-
-  li {
-    list-style-type: none;
-
-    &:not(:last-child) {
-      margin-block-end: var(--basis-space-block-sm);
-    }
-  }
 `;

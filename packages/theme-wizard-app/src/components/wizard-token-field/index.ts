@@ -39,7 +39,6 @@ export class WizardTokenField extends WizardTokenNavigator {
   private readonly theme!: Theme;
   @property() label: string = '';
   @property() path: string = '';
-  @property({ type: Number }) depth = 0;
   #options: Option[] = [];
 
   @state() get token() {
@@ -49,8 +48,6 @@ export class WizardTokenField extends WizardTokenNavigator {
   @state() get options() {
     return this.#options;
   }
-
-  static readonly maxDepth = 3;
 
   static override readonly styles = [unsafeCSS(codeCss), styles];
 
@@ -107,97 +104,44 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   get #hasErrors(): boolean {
-    return this.pathErrors.length > 0 || this.#hasNestedErrors;
-  }
-
-  get #hasNestedErrors(): boolean {
-    if (!this.path) {
-      return this.theme.issues.length > 0;
-    }
-
-    return this.theme.issues.some((error) => error.path.startsWith(this.path + '.'));
+    return this.pathErrors.length > 0;
   }
 
   protected get pathErrors(): ValidationIssue[] {
     return this.theme.issuesAt(this.path);
   }
 
-  get entries() {
-    return this.token ? WizardTokenField.entries(this.token) : [];
-  }
-
-  get type() {
-    switch (this.token?.$type) {
-      case 'color':
-        return 'color';
-      case 'dimension':
-        return 'dimension';
-      case 'lineHeight':
-      case 'number':
-        return 'number';
-      case 'fontFamily':
-      case 'fontFamilies':
-        return 'fontFamily';
-      default:
-        return undefined;
-    }
-  }
-
   get value() {
     return this.token?.$value;
   }
 
-  renderField(type: NonNullable<typeof this.type>, label: string) {
-    // TODO: better a11y for combobox, move label and errors into the combobox itself rather than relying on visual proximity.
-    return html`<clippy-token-combobox
-      name=${this.path}
-      hidden-label=${label}
-      type=${type}
-      .invalid=${this.#hasErrors}
-      .value=${this.token}
-      .options=${this.options}
-    >
-      <span slot="label">${label}</span>
-      ${
-        this.#hasErrors && this.pathErrors.length > 0
-          ? html`<div slot="error" class="utrecht-form-field-error-message">
-              ${t(`validation.error.${this.pathErrors[0].code}.compact`, this.pathErrors[0])}
-            </div>`
-          : nothing
-      }
-    </clippy-token-combobox>`;
-  }
-
   override render() {
-    if (this.depth > WizardTokenField.maxDepth) return nothing;
-    const type = this.type;
+    const { token } = this;
+    if (!isTokenLike(token)) {
+      return nothing;
+    }
     const label = this.label || `${this.path.split('.').at(-1)}`;
 
     return html`
-      <div
-        class="wizard-token-field ${classMap({ 'wizard-token-field--invalid': this.#hasErrors && type !== undefined })}"
-      >
-        ${
-          type
-            ? this.renderField(type, label)
-            : html`<utrecht-paragraph class=${classMap({ 'theme-error': this.#hasErrors })}>${label}</utrecht-paragraph>
-                <ul>
-                  ${this.entries.map(([key]) => {
-                    const path = `${this.path}.${key}`;
-                    const depth = this.depth + 1;
-                    return html`
-                      <li key=${key}>
-                        <wizard-token-field path=${path} depth=${depth}></wizard-token-field>
-                      </li>
-                    `;
-                  })}
-                </ul>`
-        }
+      <div class="wizard-token-field ${classMap({ 'wizard-token-field--invalid': this.#hasErrors })}">
+        <clippy-token-combobox
+          name=${this.path}
+          hidden-label=${label}
+          type=${token.$type}
+          .invalid=${this.#hasErrors}
+          .value=${token}
+          .options=${this.options}
+        >
+          <span slot="label">${label}</span>
+          ${
+            this.#hasErrors
+              ? html`<div slot="error" class="utrecht-form-field-error-message">
+                  ${t(`validation.error.${this.pathErrors[0].code}.compact`, this.pathErrors[0])}
+                </div>`
+              : nothing
+          }
+        </clippy-token-combobox>
       </div>
     `;
-  }
-
-  static entries(token: Token) {
-    return Object.entries(token).filter((entry): entry is [string, Token] => !entry[0].startsWith('$'));
   }
 }
