@@ -17,6 +17,5 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   title={capitalize(node.key)}
   metaTitle={`${node.key} - ${namespace.pageTitle}`}
 >
-  <mark>branch</mark>
   <TokenLinkList namespace={namespace.id} nodes={node.children} />
 </DesignTokensLayout>
