@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@vitest/coverage-v8": "5.0.3",
+    "@vitest/coverage-v8": "5.0.5",
     "premove": "4.0.0",
     "publint": "0.3.25",
     "typescript": "6.0.3",
@@ -51,9 +51,9 @@
   },
   "dependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
-    "@projectwallace/css-design-tokens": "0.11.11",
-    "@projectwallace/css-parser": "0.18.8",
-    "linkedom": "0.18.13",
-    "zod": "4.6.5"
+    "@projectwallace/css-design-tokens": "0.11.13",
+    "@projectwallace/css-parser": "0.19.3",
+    "linkedom": "0.18.14",
+    "zod": "4.6.7"
   }
 }
