@@ -58,7 +58,7 @@
     "@nl-design-system-candidate/button-css": "2.0.0",
     "@nl-design-system-candidate/code-css": "4.0.0",
     "@nl-design-system-candidate/data-badge-css": "1.0.5",
-    "@nl-design-system-candidate/link-css": "2.0.3",
+    "@nl-design-system-candidate/link-css": "3.0.0",
     "@nl-design-system-candidate/paragraph-css": "3.0.0",
     "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/color-scale-generator": "workspace:*",
