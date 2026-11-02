@@ -1,15 +1,13 @@
 import { consume } from '@lit/context';
 import { removeExtensions } from '@nl-design-system-community/design-tokens-schema';
+import '@nl-design-system-community/clippy-components/clippy-button';
 import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
-import '../wizard-layout';
 import '../wizard-download-confirmation';
-import '../wizard-scraper';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
-import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';

@@ -1,5 +1,6 @@
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import '../wizard-scraper-loader';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import formFieldErrorMessageStyles from '@nl-design-system-candidate/form-field-error-message-css/form-field-error-message.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';

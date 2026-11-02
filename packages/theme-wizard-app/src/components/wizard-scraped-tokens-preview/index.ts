@@ -3,6 +3,7 @@ import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
@@ -21,6 +22,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import { dimensionToPx } from '../../utils/token-utils';
+import '../wizard-table-scroller';
 import styles from './styles';
 
 const tag = 'wizard-scraped-tokens-preview';
