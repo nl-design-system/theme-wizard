@@ -68,8 +68,8 @@
     "@utrecht/web-component-library-stencil": "5.0.0",
     "clsx": "2.1.1",
     "lit": "3.3.3",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
