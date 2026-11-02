@@ -119,8 +119,8 @@ importers:
         specifier: 4.3.0
         version: 4.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-tokens':
         specifier: 1.0.0
         version: 1.0.0
@@ -310,8 +310,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -614,8 +614,8 @@ importers:
         specifier: 1.1.6
         version: 1.1.6
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/code-css':
         specifier: 3.0.0
         version: 3.0.0
@@ -835,8 +835,8 @@ importers:
         specifier: 4.3.0
         version: 4.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -962,8 +962,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -2404,8 +2404,8 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@nl-design-system-candidate/button-css@1.1.0':
-    resolution: {integrity: sha512-w0JLQyiPL9UrfRwzu3Mq2EWbYvAJbolepeFH4ggyBFXoYm9RMWX6vWb/8Oj999GzAF6N77LlES5jUnaR3BJ7Yw==}
+  '@nl-design-system-candidate/button-css@2.0.0':
+    resolution: {integrity: sha512-puG1A5YET0y2acDOaPml59p4oo7+rQz69gPss3AX3wgNwzNn3r/sZTSpmiC+spOwBP+kvdMp19cyKcOkEhiorw==}
 
   '@nl-design-system-candidate/button-react@1.1.0':
     resolution: {integrity: sha512-Zi2QGpAq6/AWkL0hf9BNcNp8AQUV5yyDcKw7WDBuZ3W0ci/EF46ZfvntTbbBpHX09lYqS6F4Vf7hPGh1BdGxTg==}
@@ -9437,7 +9437,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@nl-design-system-candidate/button-css@1.1.0': {}
+  '@nl-design-system-candidate/button-css@2.0.0': {}
 
   '@nl-design-system-candidate/button-react@1.1.0(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
