@@ -971,8 +971,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       '@nl-design-system-candidate/code-block-css':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/code-block-react':
         specifier: 1.4.0
         version: 1.4.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -2418,6 +2418,9 @@ packages:
 
   '@nl-design-system-candidate/code-block-css@1.2.0':
     resolution: {integrity: sha512-oem6db9bdWyllcCJ1WNEuLQfx9uF9yZAsbmzMYs7YF448EYhhEnEXEqfjtkUrLwuly3OEnThI28g69IXpigx/g==}
+
+  '@nl-design-system-candidate/code-block-css@2.0.0':
+    resolution: {integrity: sha512-dqehHw3uvk2BIQreIb+U+cZsZ5jSxwTI7OUVYgph5iZ7JPj1LmTrOURnDvKazfHHB1qKYTQ0XRisncJC8x2QGw==}
 
   '@nl-design-system-candidate/code-block-react@1.4.0':
     resolution: {integrity: sha512-SU2IEPGu3ZV1gzHgYnYYfHAtyuiMTpK4NkFcFMUkQVuHvwbS0jevspFk3fvkxcYfVOg3ctduFVevtC+detmrvg==}
@@ -9451,6 +9454,8 @@ snapshots:
   '@nl-design-system-candidate/button-tokens@1.0.0': {}
 
   '@nl-design-system-candidate/code-block-css@1.2.0': {}
+
+  '@nl-design-system-candidate/code-block-css@2.0.0': {}
 
   '@nl-design-system-candidate/code-block-react@1.4.0(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
