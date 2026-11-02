@@ -644,8 +644,8 @@ importers:
         specifier: 9.0.0
         version: 9.0.0
       '@nl-design-system-unstable/documentation':
-        specifier: 1.12.0
-        version: 1.12.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 9.1.0
         version: 9.1.0
@@ -2566,8 +2566,8 @@ packages:
   '@nl-design-system-unstable/basis-design-tokens@3.1.1':
     resolution: {integrity: sha512-eENh3scHg7ZXGERZy9SL7wdVi56sg1gqnSEAhC2QpWf60pd5p3FClPoQTI4/hISFnpFKvlHLsl4xJgjT/gLsmg==}
 
-  '@nl-design-system-unstable/documentation@1.12.0':
-    resolution: {integrity: sha512-2OFx0uiYpPySJGHZGMLbxv9LmAxd6Ql7uM6xrHolbEUaxJFeQZWA2ydsa7ZxfTIF1rM23dzlroLw9yTFQSUE7A==}
+  '@nl-design-system-unstable/documentation@2.0.0':
+    resolution: {integrity: sha512-HSgHnZohAYqlOXnSL0HHQRdEfqa+6ZaskNAR/UQzvtkPvTM55c8fnCxQ7TIedZ6y66yyB2SMfb+LIUSU6+obQw==}
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
@@ -9566,7 +9566,7 @@ snapshots:
 
   '@nl-design-system-unstable/basis-design-tokens@3.1.1': {}
 
-  '@nl-design-system-unstable/documentation@1.12.0': {}
+  '@nl-design-system-unstable/documentation@2.0.0': {}
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
 
