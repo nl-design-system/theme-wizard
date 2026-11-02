@@ -55,8 +55,8 @@
   },
   "dependencies": {
     "@lit/context": "1.1.6",
-    "@nl-design-system-candidate/button-css": "1.1.0",
-    "@nl-design-system-candidate/code-css": "3.0.0",
+    "@nl-design-system-candidate/button-css": "2.0.0",
+    "@nl-design-system-candidate/code-css": "4.0.0",
     "@nl-design-system-candidate/data-badge-css": "1.0.5",
     "@nl-design-system-candidate/link-css": "2.0.3",
     "@nl-design-system-candidate/paragraph-css": "3.0.0",
