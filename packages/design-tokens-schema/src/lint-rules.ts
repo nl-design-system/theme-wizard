@@ -16,8 +16,11 @@ export type LintRule = (typeof LINT_RULES)[keyof typeof LINT_RULES];
 
 export const LINT_RULE_NAMES: LintRule[] = Object.values(LINT_RULES);
 
-/** `true` ignores all rules, an object ignores only the rules set to `true` */
-export type LintIgnoreExtension = boolean | Partial<Record<LintRule, boolean>>;
+/** A reason (non-empty string) documents why a rule is ignored, like `$deprecated` */
+type LintIgnoreValue = boolean | string;
+
+/** `true` or a reason ignores all rules, an object ignores only the rules set to `true` or a reason */
+export type LintIgnoreExtension = LintIgnoreValue | Partial<Record<LintRule, LintIgnoreValue>>;
 
 declare module './extensions' {
   interface ExtensionTypeMap {
@@ -25,13 +28,17 @@ declare module './extensions' {
   }
 }
 
+const isIgnoreValue = (value: unknown): boolean => {
+  return value === true || (typeof value === 'string' && value.length > 0);
+};
+
 export const isLintRuleIgnored = (token: unknown, rule: LintRule): boolean => {
   if (!isValueObject(token)) {
     return false;
   }
   const ignore = getExtension(token, EXTENSION_LINT_IGNORE);
-  if (ignore === true) {
+  if (isIgnoreValue(ignore)) {
     return true;
   }
-  return isValueObject(ignore) && ignore[rule] === true;
+  return isValueObject(ignore) && isIgnoreValue(ignore[rule]);
 };

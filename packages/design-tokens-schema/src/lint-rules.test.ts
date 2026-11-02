@@ -57,8 +57,23 @@ describe('isLintRuleIgnored', () => {
     }
   });
 
+  it.each(LINT_RULE_NAMES)('ignores "%s" when the extension is a reason', (rule) => {
+    expect(isLintRuleIgnored(createToken('this is a magic token'), rule)).toBe(true);
+  });
+
+  it.each(LINT_RULE_NAMES)('ignores "%s" when the extension has a reason for that rule', (rule) => {
+    expect(isLintRuleIgnored(createToken({ [rule]: 'this is a magic token' }), rule)).toBe(true);
+  });
+
+  it.each(LINT_RULE_NAMES)('does not ignore "%s" when only other rules have a reason', (rule) => {
+    const otherRules = Object.fromEntries(
+      LINT_RULE_NAMES.filter((otherRule) => otherRule !== rule).map((otherRule) => [otherRule, 'reason']),
+    );
+    expect(isLintRuleIgnored(createToken(otherRules), rule)).toBe(false);
+  });
+
   it.each([
-    ['a string', 'true'],
+    ['an empty string', ''],
     ['a number', 1],
     ['null', null],
     ['an array', ['min-font-size']],
@@ -70,10 +85,10 @@ describe('isLintRuleIgnored', () => {
   });
 
   it.each([
-    ['a string', 'yes'],
+    ['an empty string', ''],
     ['a number', 1],
     ['null', null],
-  ])('only accepts `true` as rule value, not %s', (_, value) => {
+  ])('only accepts `true` or a reason as rule value, not %s', (_, value) => {
     expect(isLintRuleIgnored(createToken({ [LINT_RULES.MIN_FONT_SIZE]: value }), LINT_RULES.MIN_FONT_SIZE)).toBe(false);
   });
 

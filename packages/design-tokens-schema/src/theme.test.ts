@@ -1516,6 +1516,8 @@ describe('lint-ignore extension', () => {
       ['true', true],
       ['{ [rule]: true }', { [rule]: true }],
       ['{ [rule]: true, [otherRule]: false }', { [otherRule]: false, [rule]: true }],
+      ['a reason', 'this is a magic token'],
+      ['{ [rule]: reason }', { [rule]: 'this is a magic token' }],
     ])('is not reported when the extension is %s', (_, value) => {
       expect(getErrorCodes(createConfig(lintIgnore(value)))).not.toContain(errorCode);
     });
@@ -1525,7 +1527,9 @@ describe('lint-ignore extension', () => {
       ['{ [rule]: false }', { [rule]: false }],
       ['{ [otherRule]: true }', { [otherRule]: true }],
       ['{}', {}],
-      ['a string', rule],
+      ['an empty string', ''],
+      ['{ [rule]: empty string }', { [rule]: '' }],
+      ['{ [otherRule]: reason }', { [otherRule]: 'this is a magic token' }],
     ])('is still reported when the extension is %s', (_, value) => {
       expect(getErrorCodes(createConfig(lintIgnore(value)))).toContain(errorCode);
     });
