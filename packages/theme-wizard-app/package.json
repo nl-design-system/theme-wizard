@@ -93,7 +93,7 @@
   },
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@projectwallace/css-parser": "0.18.8",
+    "@projectwallace/css-parser": "0.19.3",
     "@storybook/react-vite": "10.6.3",
     "@types/dlv": "1.1.5",
     "@types/react": "19.3.0",

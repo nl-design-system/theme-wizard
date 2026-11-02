@@ -179,8 +179,8 @@ importers:
         specifier: 0.0.1
         version: 0.0.1
       '@projectwallace/css-parser':
-        specifier: 0.18.8
-        version: 0.18.8
+        specifier: 0.19.3
+        version: 0.19.3
       '@tabler/icons':
         specifier: 3.48.0
         version: 3.48.0
@@ -434,11 +434,11 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@projectwallace/css-design-tokens':
-        specifier: 0.11.11
-        version: 0.11.11
+        specifier: 0.11.13
+        version: 0.11.13
       '@projectwallace/css-parser':
-        specifier: 0.18.8
-        version: 0.18.8
+        specifier: 0.19.3
+        version: 0.19.3
       linkedom:
         specifier: 0.18.13
         version: 0.18.13
@@ -547,8 +547,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       '@projectwallace/css-parser':
-        specifier: 0.18.8
-        version: 0.18.8
+        specifier: 0.19.3
+        version: 0.19.3
       colorjs.io:
         specifier: 0.7.1
         version: 0.7.1
@@ -723,8 +723,8 @@ importers:
         specifier: workspace:*
         version: link:../vite-plugin-terse-log
       '@projectwallace/css-parser':
-        specifier: 0.18.8
-        version: 0.18.8
+        specifier: 0.19.3
+        version: 0.19.3
       '@storybook/react-vite':
         specifier: 10.6.3
         version: 10.6.3(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@10.6.5(@types/react@19.3.0)(prettier@3.9.9)(react@19.3.1))(supports-color@10.2.2)(typescript@6.0.3)(vite@8.3.2(@types/node@26.4.1)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.1))
@@ -1581,6 +1581,9 @@ packages:
 
   '@colordx/core@5.7.0':
     resolution: {integrity: sha512-Qbms38g1xs+4c6bNjIpgDGUVGVG25MtZxMNUs+kbmmeoFuaR/wuiKtu1wAOhtVPQShqE/p8F+uFQpoZiTR+1Jw==}
+
+  '@colordx/core@7.3.0':
+    resolution: {integrity: sha512-LVzTTPhX7wpy7TkGjouA9zbbCBIw92RGm7ZQqSKFE0oYE3sMx2FGXz90eVpgw7k/+wrrY+qJ86nHXifZWMS5jA==}
 
   '@csstools/css-calc@3.4.3':
     resolution: {integrity: sha512-iex20d8CHVkyvg6B7UKV7uHnI2Bqo9g+EFfT9E0y+GvTvhZ/DwONJ+9aKb1dlqm0ZiGsL5RXjp0fCoJYnkeDjA==}
@@ -3079,16 +3082,20 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@projectwallace/css-analyzer@9.9.3':
-    resolution: {integrity: sha512-qyoW3eRPHgQvJGhLCCaypG/YuCPF+lrCIHtCjRxwG6HNWk+BMvFJ7qzTicBIkehfSJFQXrT+T4mvBpZmUgzlDg==}
+  '@projectwallace/color-sorter@9.0.0':
+    resolution: {integrity: sha512-yBHv8jSNWUG4KF/G+3AgA4dCR3M/KPSQ4xCTQTZMo2Gq3p0+9mCwavHVp3nJfUGpCFCgojcF3BbS+v8erYAYwg==}
+    engines: {node: '>=18.0.0'}
+
+  '@projectwallace/css-analyzer@9.9.5':
+    resolution: {integrity: sha512-HtEWI5G/flzuoptALwvx66N4Vkq+SR2W019VI1R5RIX7MOuEOjuIIx2OKC3S9NAZAKbiopKp88ZLqy5ymmaAIg==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
 
-  '@projectwallace/css-design-tokens@0.11.11':
-    resolution: {integrity: sha512-P226v+nVncSsk2mCrLqqudFpW9ljKigp/XTmJzdg3Hujz9//dUaLmCCwB6Z7vA76PsbNiz1X6JqakqiZe1jKXA==}
+  '@projectwallace/css-design-tokens@0.11.13':
+    resolution: {integrity: sha512-pDEMV+WcIr/tMCKV4sQtbVnBc6XEbZKiOzHbRLbNLio2E3Zdk+9XWMI2H+RN2nwFJQm84bJ/3+vdRTE6Q73khg==}
     engines: {node: '>=22', pnpm: '>=11.1.0'}
 
-  '@projectwallace/css-parser@0.18.8':
-    resolution: {integrity: sha512-yjXsE/7XZOQdh5lX/y6Vy1k8dldDl4KCGSZXWfN+7nZxIHC123d55gGCx4srU/FE8ACJAtx70WIKCNclFG2iLA==}
+  '@projectwallace/css-parser@0.19.3':
+    resolution: {integrity: sha512-bK6pbuWMXGbrUru4a/nu9h/6SrSPPtUg5VU0bXYqG7hnp4+8d8PeF21T3gU+Lf5I8+jVakDggBoZHxeSRx2HjQ==}
     engines: {pnpm: '>=11.0.0'}
 
   '@projectwallace/css-time-sort@3.1.1':
@@ -8680,6 +8687,8 @@ snapshots:
 
   '@colordx/core@5.7.0': {}
 
+  '@colordx/core@7.3.0': {}
+
   '@csstools/css-calc@3.4.3(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
     dependencies:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
@@ -9867,19 +9876,23 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@projectwallace/css-analyzer@9.9.3':
+  '@projectwallace/color-sorter@9.0.0':
     dependencies:
-      '@projectwallace/css-parser': 0.18.8
+      '@colordx/core': 7.3.0
 
-  '@projectwallace/css-design-tokens@0.11.11':
+  '@projectwallace/css-analyzer@9.9.5':
     dependencies:
-      '@colordx/core': 5.7.0
-      '@projectwallace/css-analyzer': 9.9.3
-      '@projectwallace/css-parser': 0.18.8
+      '@projectwallace/css-parser': 0.19.3
+
+  '@projectwallace/css-design-tokens@0.11.13':
+    dependencies:
+      '@colordx/core': 7.3.0
+      '@projectwallace/color-sorter': 9.0.0
+      '@projectwallace/css-analyzer': 9.9.5
+      '@projectwallace/css-parser': 0.19.3
       '@projectwallace/css-time-sort': 3.1.1
-      color-sorter: 8.0.2
 
-  '@projectwallace/css-parser@0.18.8': {}
+  '@projectwallace/css-parser@0.19.3': {}
 
   '@projectwallace/css-time-sort@3.1.1': {}
 
