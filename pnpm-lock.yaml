@@ -164,8 +164,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-tokens':
         specifier: 1.1.3
         version: 1.1.3
@@ -319,8 +319,8 @@ importers:
         specifier: 1.3.2
         version: 1.3.2(@babel/runtime@7.29.7)(react@19.3.1)
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -626,8 +626,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -856,8 +856,8 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.3.1)
@@ -1055,8 +1055,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.3.1)
@@ -2527,8 +2527,8 @@ packages:
   '@nl-design-system-candidate/number-badge-tokens@2.0.3':
     resolution: {integrity: sha512-LfJVX9ha486SMJ7laHy/yRy31mDdJHS5r8bczsuR4afll5F6xiwvhyxeJlzGv4z/Gsdoub3SWiz3apVObYJErg==}
 
-  '@nl-design-system-candidate/paragraph-css@2.1.3':
-    resolution: {integrity: sha512-f3GHiSpisUZAcn4gSNpSX2C3Mhl7y9dg1TfTe+jGMtHAqau/tztrtE3H27FlwrZeVEtsUtvssRCYUA3UO/GDpQ==}
+  '@nl-design-system-candidate/paragraph-css@3.0.0':
+    resolution: {integrity: sha512-muu7/dFpaq99nsfNGvcQrXM+A19q2aOQC4fkMFkKep+U/jcJr2pl84hIFYtI5MBasdDGSiMCtnx0FTEhUvioNA==}
 
   '@nl-design-system-candidate/paragraph-react@2.2.2':
     resolution: {integrity: sha512-naW+drAzlq7HPaZmhdYdgFbR06dyuB63KGg83CRDqjbCVJ40uJzLh/56hgyYzUoRrQe9m5aXZ744uFojJYngug==}
@@ -9533,7 +9533,7 @@ snapshots:
 
   '@nl-design-system-candidate/number-badge-tokens@2.0.3': {}
 
-  '@nl-design-system-candidate/paragraph-css@2.1.3': {}
+  '@nl-design-system-candidate/paragraph-css@3.0.0': {}
 
   '@nl-design-system-candidate/paragraph-react@2.2.2(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
