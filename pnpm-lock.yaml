@@ -1034,8 +1034,8 @@ importers:
         specifier: 3.0.3
         version: 3.0.3
       '@nl-design-system-candidate/mark-css':
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/mark-docs':
         specifier: 1.2.1
         version: 1.2.1
@@ -2503,8 +2503,8 @@ packages:
   '@nl-design-system-candidate/link-tokens@3.0.3':
     resolution: {integrity: sha512-4CS7pyfBpCwCY9u2C1QbQg/sYBLcruB7ZHCprUCJR11NyjcdXGYVnxxnOU+uko/G7UZ6Vuy66bALIbro7Iy+aw==}
 
-  '@nl-design-system-candidate/mark-css@1.0.5':
-    resolution: {integrity: sha512-QIoqT5Rv27VaQc/HnCjw2kfb9wCt37Sb5O7geHysZfaSsAIMZx22lZ2Fzs2vUSxO7pdMT9MidKpipwWrusZ+5g==}
+  '@nl-design-system-candidate/mark-css@2.0.0':
+    resolution: {integrity: sha512-8H7Zl9NVH0veLkvqSChGtApKG4PAnpg2ybn2PVITJPHgiJ90C2ZR0qslLQa23BmKi+zVPnc28cK0p32+Zbt5CA==}
 
   '@nl-design-system-candidate/mark-docs@1.2.1':
     resolution: {integrity: sha512-Zk5rUbmEHrGlSTKTIJjXzQdfCNfDdeA0pGD7Vk8ixOeBom3IM4h6yiGNEV5bhuQostFIL6gHOXZ+OMc3L4nMvQ==}
@@ -9518,7 +9518,7 @@ snapshots:
 
   '@nl-design-system-candidate/link-tokens@3.0.3': {}
 
-  '@nl-design-system-candidate/mark-css@1.0.5': {}
+  '@nl-design-system-candidate/mark-css@2.0.0': {}
 
   '@nl-design-system-candidate/mark-docs@1.2.1': {}
 
