@@ -42,7 +42,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@amsterdam/design-system-css": "4.4.0",
+    "@amsterdam/design-system-css": "4.5.0",
     "@gemeente-denhaag/iconbutton": "3.2.3",
     "@gemeente-denhaag/side-navigation": "4.3.0",
     "@nl-design-system-candidate/button-css": "2.0.0",
@@ -65,8 +65,8 @@
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-navigation-bar-css": "0.0.1",
-    "@projectwallace/css-parser": "0.18.8",
-    "@tabler/icons": "3.48.0",
+    "@projectwallace/css-parser": "0.19.3",
+    "@tabler/icons": "3.50.0",
     "@utrecht/breadcrumb-nav-css": "3.0.1",
     "@utrecht/combobox-css": "3.0.1",
     "@utrecht/customizable-text-input-css": "1.0.1",
@@ -85,20 +85,20 @@
     "memoize": "11.0.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "style-dictionary": "5.6.0"
+    "style-dictionary": "5.7.1"
   },
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@vitest/browser-playwright": "5.0.3",
-    "@vitest/coverage-v8": "5.0.3",
-    "playwright": "1.63.0",
+    "@vitest/browser-playwright": "5.0.5",
+    "@vitest/coverage-v8": "5.0.5",
+    "playwright": "1.64.1",
     "postcss-lit": "1.4.1",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vite": "8.3.2",
+    "vite": "8.3.5",
     "vite-plugin-dts": "5.1.2",
-    "vitest": "5.0.3"
+    "vitest": "5.0.5"
   }
 }
