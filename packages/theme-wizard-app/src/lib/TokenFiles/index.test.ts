@@ -53,5 +53,6 @@ describe('parseThemePreset', () => {
     expect(result.error.some((issue) => 'ERROR_CODE' in issue && issue.ERROR_CODE === ERROR_CODES.INVALID_REF)).toBe(
       true,
     );
+    expect(result.data).toBeDefined();
   });
 });

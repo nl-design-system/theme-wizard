@@ -22,7 +22,12 @@ export type ThemePresetResult =
       softIssues: $ZodIssue[];
       uploadedTokenCount: number;
     }
-  | { success: false; error: $ZodIssue[] };
+  | {
+      success: false;
+      error: $ZodIssue[];
+      /** Preprocessed theme (extensions added, legacy tokens upgraded) despite the hard issues, for callers that want to proceed anyway. */
+      data: Theme;
+    };
 
 export async function readTokenFiles(files: File[], shouldExcludeParentKeys: boolean) {
   const fileTexts = await Promise.all(files.map((file) => file.text()));
@@ -75,7 +80,7 @@ export async function parseThemePreset(files: File[], shouldExcludeParentKeys: b
     (issue) => !SOFT_ERROR_CODES.has((issue as ThemeValidationIssue).ERROR_CODE ?? ''),
   );
   if (hardIssues.length > 0) {
-    return { error: hardIssues, success: false };
+    return { data: preprocessThemeStrict(merged) as Theme, error: hardIssues, success: false };
   }
 
   // Only soft issues remain, so shape/refs/types already passed. `safeParse` withholds
