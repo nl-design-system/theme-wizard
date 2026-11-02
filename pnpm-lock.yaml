@@ -623,8 +623,8 @@ importers:
         specifier: 1.0.5
         version: 1.0.5
       '@nl-design-system-candidate/link-css':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-css':
         specifier: 3.0.0
         version: 3.0.0
@@ -847,8 +847,8 @@ importers:
         specifier: 1.1.7
         version: 1.1.7(@babel/runtime@7.29.7)(react@19.3.1)
       '@nl-design-system-candidate/link-css':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/link-react':
         specifier: 1.1.8
         version: 1.1.8(@babel/runtime@7.29.7)(react@19.3.1)
@@ -1022,8 +1022,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       '@nl-design-system-candidate/link-css':
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/link-docs':
         specifier: 1.2.1
         version: 1.2.1
@@ -2484,9 +2484,6 @@ packages:
 
   '@nl-design-system-candidate/heading-tokens@1.1.2':
     resolution: {integrity: sha512-9A7V/k2JyQ6It6JBViu2h06uN7IbMZ6//hdkznJxc9w7qVJjlx+5sIewgEs/8kkFAlSCMBrgNRkqZsQZaRPTRg==}
-
-  '@nl-design-system-candidate/link-css@2.0.3':
-    resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
 
   '@nl-design-system-candidate/link-css@3.0.0':
     resolution: {integrity: sha512-M5J3edajdsGfcFOYuqx7tHoC0seCHqnFwh3ak6P8MAo20/OLA1Eod7lTQmoIvXzswyD6TiZp0qjLvGpwfHLqmg==}
@@ -9503,8 +9500,6 @@ snapshots:
       react: 19.3.1
 
   '@nl-design-system-candidate/heading-tokens@1.1.2': {}
-
-  '@nl-design-system-candidate/link-css@2.0.3': {}
 
   '@nl-design-system-candidate/link-css@3.0.0': {}
 
