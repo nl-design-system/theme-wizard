@@ -119,8 +119,8 @@ importers:
         specifier: 4.3.0
         version: 4.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-tokens':
         specifier: 1.0.0
         version: 1.0.0
@@ -128,14 +128,14 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-css':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 4.0.0
+        version: 4.0.0
       '@nl-design-system-candidate/code-tokens':
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-candidate/color-sample-css':
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 1.0.6
+        version: 1.0.6
       '@nl-design-system-candidate/color-sample-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -146,8 +146,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/heading-css':
-        specifier: 1.1.3
-        version: 1.1.3
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/heading-tokens':
         specifier: 1.1.2
         version: 1.1.2
@@ -164,8 +164,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-tokens':
         specifier: 1.1.3
         version: 1.1.3
@@ -310,8 +310,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -319,8 +319,8 @@ importers:
         specifier: 1.3.2
         version: 1.3.2(@babel/runtime@7.29.7)(react@19.3.1)
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -614,11 +614,11 @@ importers:
         specifier: 1.1.6
         version: 1.1.6
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/code-css':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 4.0.0
+        version: 4.0.0
       '@nl-design-system-candidate/data-badge-css':
         specifier: 1.0.5
         version: 1.0.5
@@ -626,8 +626,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -835,14 +835,14 @@ importers:
         specifier: 4.3.0
         version: 4.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
       '@nl-design-system-candidate/heading-css':
-        specifier: 1.1.3
-        version: 1.1.3
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/heading-react':
         specifier: 1.1.7
         version: 1.1.7(@babel/runtime@7.29.7)(react@19.3.1)
@@ -856,8 +856,8 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.3.1)
@@ -962,8 +962,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@nl-design-system-candidate/button-css':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
         version: 1.1.0(@babel/runtime@7.29.7)(react@19.3.1)
@@ -980,8 +980,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-css':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 4.0.0
+        version: 4.0.0
       '@nl-design-system-candidate/code-docs':
         specifier: 1.1.2
         version: 1.1.2
@@ -992,8 +992,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-candidate/color-sample-css':
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 1.0.6
+        version: 1.0.6
       '@nl-design-system-candidate/color-sample-docs':
         specifier: 1.2.2
         version: 1.2.2
@@ -1013,8 +1013,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/heading-css':
-        specifier: 1.1.3
-        version: 1.1.3
+        specifier: 2.0.0
+        version: 2.0.0
       '@nl-design-system-candidate/heading-react':
         specifier: 1.1.7
         version: 1.1.7(@babel/runtime@7.29.7)(react@19.3.1)
@@ -1055,8 +1055,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.3.1)
@@ -2404,8 +2404,8 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@nl-design-system-candidate/button-css@1.1.0':
-    resolution: {integrity: sha512-w0JLQyiPL9UrfRwzu3Mq2EWbYvAJbolepeFH4ggyBFXoYm9RMWX6vWb/8Oj999GzAF6N77LlES5jUnaR3BJ7Yw==}
+  '@nl-design-system-candidate/button-css@2.0.0':
+    resolution: {integrity: sha512-puG1A5YET0y2acDOaPml59p4oo7+rQz69gPss3AX3wgNwzNn3r/sZTSpmiC+spOwBP+kvdMp19cyKcOkEhiorw==}
 
   '@nl-design-system-candidate/button-react@1.1.0':
     resolution: {integrity: sha512-Zi2QGpAq6/AWkL0hf9BNcNp8AQUV5yyDcKw7WDBuZ3W0ci/EF46ZfvntTbbBpHX09lYqS6F4Vf7hPGh1BdGxTg==}
@@ -2431,6 +2431,9 @@ packages:
   '@nl-design-system-candidate/code-css@3.0.0':
     resolution: {integrity: sha512-W+7AG3fyNN1IPpaCf0fFAgTqHW59DKfrY055tzlwmQ/TmZK3oOJ3hvAvjh/esRhz9KxsQpVlGxVasCXwIP8aAg==}
 
+  '@nl-design-system-candidate/code-css@4.0.0':
+    resolution: {integrity: sha512-Ulh4lyXE/cArt3M1Y9fazCyizEvsYvj0AbtrbmSttTzLs7UgwIyzRRJ9edfQoSmuqIoxwcE76djV6eFplSWuDQ==}
+
   '@nl-design-system-candidate/code-docs@1.1.2':
     resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
 
@@ -2443,8 +2446,8 @@ packages:
   '@nl-design-system-candidate/code-tokens@3.0.0':
     resolution: {integrity: sha512-uPjCHB5mvFMFXDjxjAhWk9zmPxdDdRrrza2vUROmB8jSszxP/37f2tPMqEa+F/ugZTyBOt9AYWk/feBfOruhmQ==}
 
-  '@nl-design-system-candidate/color-sample-css@1.0.5':
-    resolution: {integrity: sha512-ork71HMKs0Maiqd6bhYB1YNxFcHpxKUWp6Pi2GoEQZuo9zobSI750ja8Qi8g1NIExVIlCAm3rSjdiIHZXNeolg==}
+  '@nl-design-system-candidate/color-sample-css@1.0.6':
+    resolution: {integrity: sha512-N4ssqbrkLmvWqLlbNfoMk/7fmBxvQ6fGfRLpH+7LjQJFwFA+RISSP7qKVXIRaZ+6/bq/lD3bJKfzQZAIcDRYiA==}
 
   '@nl-design-system-candidate/color-sample-docs@1.2.2':
     resolution: {integrity: sha512-x0iLLaB8RQKXbBi+2/HA49+DGZx0cznofKr9GTB6OQ1lO4CD8AaSNzs1su+VscdRma1OFE9Zp5JRyLICVNWpQg==}
@@ -2470,8 +2473,8 @@ packages:
   '@nl-design-system-candidate/data-badge-tokens@2.0.3':
     resolution: {integrity: sha512-W2SB4PTND45OEJeXLSeYjA+RT2cyLRFXKcZu1rDTh5Q3n6EED65HsocFmOu6uRK7pAb6WwU6W14X4EAD47QOUA==}
 
-  '@nl-design-system-candidate/heading-css@1.1.3':
-    resolution: {integrity: sha512-s4ERGrHcsBkZlCc+qz8+XDB5rCpxvkxwxI2bg4OB2GDS0DU5LzjNMWhsV1I8IPOboTvWMabvrsscxVuj5Bijuw==}
+  '@nl-design-system-candidate/heading-css@2.0.0':
+    resolution: {integrity: sha512-z3SJ/wMwHkgM8RxULs5xVDEomCLM2kG6otDlLaPHBLJ3cF5ps2lC0JjvDHU2Vfz1ZHUozzb4eG4XntmRbsrXZQ==}
 
   '@nl-design-system-candidate/heading-react@1.1.7':
     resolution: {integrity: sha512-Gvubqw8jrNj0cX5n8fY/xb/iwilvLpaDQ2aUWcGgh+y38YJDOqvckG32LHtmLTUOW+Q6Zl1g5yZ6zvX/af/UYQ==}
@@ -2527,8 +2530,8 @@ packages:
   '@nl-design-system-candidate/number-badge-tokens@2.0.3':
     resolution: {integrity: sha512-LfJVX9ha486SMJ7laHy/yRy31mDdJHS5r8bczsuR4afll5F6xiwvhyxeJlzGv4z/Gsdoub3SWiz3apVObYJErg==}
 
-  '@nl-design-system-candidate/paragraph-css@2.1.3':
-    resolution: {integrity: sha512-f3GHiSpisUZAcn4gSNpSX2C3Mhl7y9dg1TfTe+jGMtHAqau/tztrtE3H27FlwrZeVEtsUtvssRCYUA3UO/GDpQ==}
+  '@nl-design-system-candidate/paragraph-css@3.0.0':
+    resolution: {integrity: sha512-muu7/dFpaq99nsfNGvcQrXM+A19q2aOQC4fkMFkKep+U/jcJr2pl84hIFYtI5MBasdDGSiMCtnx0FTEhUvioNA==}
 
   '@nl-design-system-candidate/paragraph-react@2.2.2':
     resolution: {integrity: sha512-naW+drAzlq7HPaZmhdYdgFbR06dyuB63KGg83CRDqjbCVJ40uJzLh/56hgyYzUoRrQe9m5aXZ744uFojJYngug==}
@@ -9437,7 +9440,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@nl-design-system-candidate/button-css@1.1.0': {}
+  '@nl-design-system-candidate/button-css@2.0.0': {}
 
   '@nl-design-system-candidate/button-react@1.1.0(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
@@ -9460,6 +9463,8 @@ snapshots:
 
   '@nl-design-system-candidate/code-css@3.0.0': {}
 
+  '@nl-design-system-candidate/code-css@4.0.0': {}
+
   '@nl-design-system-candidate/code-docs@1.1.2': {}
 
   '@nl-design-system-candidate/code-react@2.0.0(@babel/runtime@7.29.7)(react@19.3.1)':
@@ -9470,7 +9475,7 @@ snapshots:
 
   '@nl-design-system-candidate/code-tokens@3.0.0': {}
 
-  '@nl-design-system-candidate/color-sample-css@1.0.5': {}
+  '@nl-design-system-candidate/color-sample-css@1.0.6': {}
 
   '@nl-design-system-candidate/color-sample-docs@1.2.2': {}
 
@@ -9490,7 +9495,7 @@ snapshots:
 
   '@nl-design-system-candidate/data-badge-tokens@2.0.3': {}
 
-  '@nl-design-system-candidate/heading-css@1.1.3': {}
+  '@nl-design-system-candidate/heading-css@2.0.0': {}
 
   '@nl-design-system-candidate/heading-react@1.1.7(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
@@ -9533,7 +9538,7 @@ snapshots:
 
   '@nl-design-system-candidate/number-badge-tokens@2.0.3': {}
 
-  '@nl-design-system-candidate/paragraph-css@2.1.3': {}
+  '@nl-design-system-candidate/paragraph-css@3.0.0': {}
 
   '@nl-design-system-candidate/paragraph-react@2.2.2(@babel/runtime@7.29.7)(react@19.3.1)':
     dependencies:
