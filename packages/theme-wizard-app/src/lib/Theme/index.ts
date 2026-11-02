@@ -161,6 +161,11 @@ export default class Theme {
     this.tokens = tokens;
   }
 
+  // Replaces all tokens with external input (upload, storage), running the processors the setter skips.
+  load(tokens: DesignTokens) {
+    this.tokens = this.#runThemeProcessors(structuredClone(tokens));
+  }
+
   setGroupExtension(groupPath: string, extensionKey: string, value: unknown): void {
     const group = dlv(this.#tokens, groupPath);
     if (group && typeof group === 'object') {
