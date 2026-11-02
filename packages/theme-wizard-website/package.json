@@ -52,7 +52,7 @@
     "@nl-design-system-candidate/link-docs": "1.2.1",
     "@nl-design-system-candidate/link-react": "1.1.8",
     "@nl-design-system-candidate/link-tokens": "3.0.3",
-    "@nl-design-system-candidate/mark-css": "1.0.5",
+    "@nl-design-system-candidate/mark-css": "2.0.0",
     "@nl-design-system-candidate/mark-docs": "1.2.1",
     "@nl-design-system-candidate/mark-react": "1.1.7",
     "@nl-design-system-candidate/mark-tokens": "2.0.3",
