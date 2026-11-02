@@ -649,6 +649,9 @@ importers:
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 9.1.0
         version: 9.1.0
+      '@projectwallace/color-sorter':
+        specifier: 9.0.0
+        version: 9.0.0
       '@tabler/icons':
         specifier: 3.48.0
         version: 3.48.0
@@ -685,9 +688,6 @@ importers:
       '@vanillawc/wc-markdown':
         specifier: 1.6.11
         version: 1.6.11
-      color-sorter:
-        specifier: 8.0.2
-        version: 8.0.2
       colorjs.io:
         specifier: 0.7.1
         version: 0.7.1
@@ -1578,9 +1578,6 @@ packages:
   '@clack/prompts@1.7.0':
     resolution: {integrity: sha512-y7/yvZ2TPAnR9+jnc00klvNNLkJiXFFrQA/hlLCcxA9a2A4zQIOimyFQ9XfwYKiGD1fb5GY8vbKIIgO8d5Tb2A==}
     engines: {node: '>= 20.12.0'}
-
-  '@colordx/core@5.7.0':
-    resolution: {integrity: sha512-Qbms38g1xs+4c6bNjIpgDGUVGVG25MtZxMNUs+kbmmeoFuaR/wuiKtu1wAOhtVPQShqE/p8F+uFQpoZiTR+1Jw==}
 
   '@colordx/core@7.3.0':
     resolution: {integrity: sha512-LVzTTPhX7wpy7TkGjouA9zbbCBIw92RGm7ZQqSKFE0oYE3sMx2FGXz90eVpgw7k/+wrrY+qJ86nHXifZWMS5jA==}
@@ -4703,10 +4700,6 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
-
-  color-sorter@8.0.2:
-    resolution: {integrity: sha512-6PVyJu6ufP/Buv4I5NhSjKzH0mWe0wJjPOQWIM98lC+XPtNK9NWWoP0DqQxVOTjLI2gK5lceYDhjnugo3byUZA==}
-    engines: {node: '>=18.0.0'}
 
   colord@2.10.0:
     resolution: {integrity: sha512-AidJptpBJmjTclAp9BkLwJi0T93fo5epJnbaZslpg6QVzpHjAiveF55mE9AcUJiGMqRHgMDY8soMsQtuNYMHfw==}
@@ -8685,8 +8678,6 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@colordx/core@5.7.0': {}
-
   '@colordx/core@7.3.0': {}
 
   '@csstools/css-calc@3.4.3(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
@@ -11965,10 +11956,6 @@ snapshots:
   color-name@1.1.3: {}
 
   color-name@1.1.4: {}
-
-  color-sorter@8.0.2:
-    dependencies:
-      '@colordx/core': 5.7.0
 
   colord@2.10.0: {}
 
