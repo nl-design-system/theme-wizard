@@ -8,6 +8,7 @@ import dlv from 'dlv';
 import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
+import { EXTENSION_LINT_IGNORE, LINT_RULE_NAMES, LINT_RULES, type LintRule } from './lint-rules';
 import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
   type Theme,
@@ -1362,6 +1363,252 @@ describe('validate token sub-type extension', () => {
         path: ['nl', 'test', 'token', '$extensions', EXTENSION_TOKEN_SUBTYPE],
       },
     ]);
+  });
+});
+
+describe('lint-ignore extension', () => {
+  const lintIgnore = (value: unknown) => ({ [EXTENSION_LINT_IGNORE]: value });
+
+  const getErrorCodes = (config: unknown) => {
+    const result = StrictThemeSchema.safeParse(config);
+    return (result.error?.issues ?? []).map((issue) => (issue as ThemeValidationIssue).ERROR_CODE);
+  };
+
+  const smallFontSize = (extensions?: Record<string, unknown>) =>
+    createToken('dimension', { unit: 'px', value: 12 }, extensions);
+
+  it('does not report a token when the extension is `true`', () => {
+    const config = {
+      brand: brandConfig,
+      test: { button: { 'font-size': { '2xs': smallFontSize(lintIgnore(true)) } } },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('does not report a token that ignores the min-font-size rule', () => {
+    const config = {
+      brand: brandConfig,
+      test: { button: { 'font-size': { '2xs': smallFontSize(lintIgnore({ 'min-font-size': true })) } } },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('flags a token that only ignores an unrelated rule', () => {
+    const config = {
+      brand: brandConfig,
+      test: { button: { 'font-size': { '2xs': smallFontSize(lintIgnore({ 'min-line-height': true })) } } },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      expect.objectContaining({
+        ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+        path: ['test', 'button', 'font-size', '2xs', '$value'],
+      }),
+    ]);
+  });
+
+  type RuleCase = {
+    rule: LintRule;
+    description: string;
+    errorCode: string;
+    createConfig: (extensions: Record<string, unknown>) => Record<string, unknown>;
+  };
+
+  const ruleCases: RuleCase[] = [
+    {
+      createConfig: (extensions) => {
+        const config = {};
+        dset(config, 'nl.button.font-size', smallFontSize(extensions));
+        return config;
+      },
+      description: 'font-size too small (modern syntax)',
+      errorCode: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+      rule: LINT_RULES.MIN_FONT_SIZE,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = { basis: getBasis() };
+        dset(config, 'basis.text.font-size.md', createToken('fontSize', '10px', extensions));
+        return config;
+      },
+      description: 'font-size too small (legacy syntax)',
+      errorCode: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+      rule: LINT_RULES.MIN_FONT_SIZE,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = { basis: getBasis() };
+        dset(config, 'basis.text.line-height.md', createToken('lineHeight', '20px', extensions));
+        return config;
+      },
+      description: 'line-height with a unit',
+      errorCode: ERROR_CODES.UNEXPECTED_UNIT,
+      rule: LINT_RULES.UNITLESS_LINE_HEIGHT,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = { basis: getBasis() };
+        dset(config, 'basis.text.line-height.md', createToken('number', 1, extensions));
+        return config;
+      },
+      description: 'line-height too small',
+      errorCode: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+      rule: LINT_RULES.MIN_LINE_HEIGHT,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = {};
+        dset(config, 'nl.paragraph.lead.font-size', createDimension(16, 'px'));
+        dset(config, 'nl.paragraph.lead.line-height', createToken('dimension', { unit: 'px', value: 16 }, extensions));
+        return config;
+      },
+      description: 'line-height too small relative to its font-size',
+      errorCode: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+      rule: LINT_RULES.MIN_LINE_HEIGHT,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = {};
+        dset(config, 'clippy.button.color', createToken('color', parseColor('#ccc'), extensions));
+        dset(config, 'clippy.button.background-color', createToken('color', parseColor('#fff'), extensions));
+        return config;
+      },
+      description: 'insufficient contrast',
+      errorCode: ERROR_CODES.INSUFFICIENT_CONTRAST,
+      rule: LINT_RULES.MIN_CONTRAST,
+    },
+    {
+      createConfig: (extensions) => {
+        const config = {};
+        dset(
+          config,
+          'nl.test.token',
+          createToken(
+            'color',
+            { colorSpace: 'srgb', components: [0, 0, 0] },
+            { [EXTENSION_TOKEN_SUBTYPE]: 'font-size', ...extensions },
+          ),
+        );
+        return config;
+      },
+      description: 'invalid token sub-type',
+      errorCode: ERROR_CODES.INVALID_TOKEN_SUBTYPE,
+      rule: LINT_RULES.VALID_TOKEN_SUBTYPE,
+    },
+  ];
+
+  it('covers every lint rule', () => {
+    const coveredRules = new Set(ruleCases.map(({ rule }) => rule));
+    expect([...coveredRules].sort()).toEqual([...LINT_RULE_NAMES].sort());
+  });
+
+  describe.each(ruleCases)('$rule: $description', ({ createConfig, errorCode, rule }) => {
+    const otherRule = LINT_RULE_NAMES.find((name) => name !== rule)!;
+
+    it('is reported without the extension', () => {
+      expect(getErrorCodes(createConfig({}))).toContain(errorCode);
+    });
+
+    it.each([
+      ['true', true],
+      ['{ [rule]: true }', { [rule]: true }],
+      ['{ [rule]: true, [otherRule]: false }', { [otherRule]: false, [rule]: true }],
+    ])('is not reported when the extension is %s', (_, value) => {
+      expect(getErrorCodes(createConfig(lintIgnore(value)))).not.toContain(errorCode);
+    });
+
+    it.each([
+      ['false', false],
+      ['{ [rule]: false }', { [rule]: false }],
+      ['{ [otherRule]: true }', { [otherRule]: true }],
+      ['{}', {}],
+      ['a string', rule],
+    ])('is still reported when the extension is %s', (_, value) => {
+      expect(getErrorCodes(createConfig(lintIgnore(value)))).toContain(errorCode);
+    });
+  });
+
+  it('passes validation when all issues of a token are ignored', () => {
+    const config = {};
+    dset(config, 'nl.paragraph.lead.font-size', smallFontSize(lintIgnore(true)));
+    dset(
+      config,
+      'nl.paragraph.lead.line-height',
+      createToken('dimension', { unit: 'px', value: 12 }, lintIgnore(true)),
+    );
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+  });
+
+  it('only suppresses the ignored rule when a token has multiple issues', () => {
+    const config = {};
+    dset(config, 'nl.paragraph.lead.font-size', createDimension(16, 'px'));
+    dset(
+      config,
+      'nl.paragraph.lead.line-height',
+      createToken('dimension', { unit: 'px', value: 16 }, lintIgnore({ 'min-line-height': true })),
+    );
+    expect(getErrorCodes(config)).toEqual([ERROR_CODES.UNEXPECTED_UNIT]);
+  });
+
+  it('does not suppress issues on sibling tokens', () => {
+    const config = {};
+    dset(config, 'nl.button.font-size', smallFontSize(lintIgnore(true)));
+    dset(config, 'nl.link.font-size', smallFontSize());
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues).toEqual([
+      expect.objectContaining({
+        ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+        path: ['nl', 'link', 'font-size', '$value'],
+      }),
+    ]);
+  });
+
+  it('does not inherit the extension from a parent group', () => {
+    const config = {};
+    dset(config, 'nl.button.$extensions', lintIgnore(true));
+    dset(config, 'nl.button.font-size', smallFontSize());
+    expect(getErrorCodes(config)).toEqual([ERROR_CODES.FONT_SIZE_TOO_SMALL]);
+  });
+
+  it('suppresses contrast issues per token', () => {
+    const config = {};
+    dset(config, 'clippy.button.color', createToken('color', parseColor('#ccc'), lintIgnore({ 'min-contrast': true })));
+    dset(config, 'clippy.button.background-color', createToken('color', parseColor('#fff')));
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues).toEqual([
+      expect.objectContaining({
+        ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
+        path: ['clippy', 'button', 'background-color', '$value'],
+      }),
+    ]);
+  });
+
+  it('suppresses min-line-height on the line-height token, not the font-size token', () => {
+    const config = {};
+    dset(config, 'nl.paragraph.lead.font-size', createToken('dimension', { unit: 'px', value: 16 }, lintIgnore(true)));
+    dset(config, 'nl.paragraph.lead.line-height', createDimension(16, 'px'));
+    expect(getErrorCodes(config)).toContain(ERROR_CODES.LINE_HEIGHT_TOO_SMALL);
+  });
+
+  it('never suppresses invalid refs', () => {
+    const config = {};
+    dset(config, 'nl.button.color', createToken('color', '{does.not.exist}', lintIgnore(true)));
+    expect(getErrorCodes(config)).toContain(ERROR_CODES.INVALID_REF);
+  });
+
+  it('keeps the extension in the parsed output', () => {
+    const config = {};
+    dset(config, 'nl.button.font-size', smallFontSize(lintIgnore({ 'min-font-size': true })));
+    const result = StrictThemeSchema.safeParse(config);
+    expect(dlv(result.data, ['nl', 'button', 'font-size', '$extensions', EXTENSION_LINT_IGNORE])).toEqual({
+      'min-font-size': true,
+    });
   });
 });
 

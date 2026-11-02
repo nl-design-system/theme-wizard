@@ -24,6 +24,7 @@ import {
   COLOR_KEYS,
 } from './basis-tokens';
 import { getExtension, setExtension } from './extensions';
+import { LINT_RULES, isLintRuleIgnored } from './lint-rules';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
@@ -385,23 +386,27 @@ export const StrictThemeSchema = z
         const tokenBPath = tokenBPathRaw ? extractRef(tokenBPathRaw) : undefined;
 
         if (contrast < expectedRatio) {
-          ctx.addIssue(
-            createContrastIssue({
-              actual: contrast,
-              minimum: expectedRatio,
-              path: [...path, '$value'],
-              tokens: tokenBPath ? [tokenAPath, tokenBPath] : [tokenAPath],
-            }),
-          );
+          if (!isLintRuleIgnored(token, LINT_RULES.MIN_CONTRAST)) {
+            ctx.addIssue(
+              createContrastIssue({
+                actual: contrast,
+                minimum: expectedRatio,
+                path: [...path, '$value'],
+                tokens: tokenBPath ? [tokenAPath, tokenBPath] : [tokenAPath],
+              }),
+            );
+          }
 
-          ctx.addIssue(
-            createContrastIssue({
-              actual: contrast,
-              minimum: expectedRatio,
-              path: [...(tokenBPath?.split('.') || []), '$value'],
-              tokens: tokenBPath ? [tokenBPath, tokenAPath] : [tokenAPath],
-            }),
-          );
+          if (!isLintRuleIgnored(tokenBPath ? dlv(root, tokenBPath) : undefined, LINT_RULES.MIN_CONTRAST)) {
+            ctx.addIssue(
+              createContrastIssue({
+                actual: contrast,
+                minimum: expectedRatio,
+                path: [...(tokenBPath?.split('.') || []), '$value'],
+                tokens: tokenBPath ? [tokenBPath, tokenAPath] : [tokenAPath],
+              }),
+            );
+          }
         }
       }
     });
@@ -412,6 +417,9 @@ export const StrictThemeSchema = z
       if (getTokenSubtype(token) !== 'font-size') return;
       // Do not attempt to process refs
       if (isRef(token.$value)) return;
+      if (isLintRuleIgnored(token, LINT_RULES.MIN_FONT_SIZE)) {
+        return;
+      }
 
       if (isValueObject(token.$value) && !validateFontSize(token.$value)) {
         const actual = `${token.$value.value}${token.$value.unit}`;
@@ -434,13 +442,17 @@ export const StrictThemeSchema = z
       if (isRef(token.$value)) return;
 
       if (typeof token.$value === 'number') {
-        if (!validateMinLineHeight(token.$value)) {
+        if (!validateMinLineHeight(token.$value) && !isLintRuleIgnored(token, LINT_RULES.MIN_LINE_HEIGHT)) {
           const issue = createMinLineHeightIssue({
             actual: token.$value,
             path: [...path, '$value'],
           });
           ctx.addIssue(issue);
         }
+        return;
+      }
+
+      if (isLintRuleIgnored(token, LINT_RULES.UNITLESS_LINE_HEIGHT)) {
         return;
       }
 
@@ -458,6 +470,10 @@ export const StrictThemeSchema = z
     for (const [fontSizePath, lineHeightPath] of ALL_LINE_HEIGHT_FONT_SIZE_PAIRS) {
       const fontSizeToken = dlv(root, fontSizePath);
       const lineHeightToken = dlv(root, lineHeightPath);
+
+      if (isLintRuleIgnored(lineHeightToken, LINT_RULES.MIN_LINE_HEIGHT)) {
+        continue;
+      }
 
       if (fontSizeToken?.$type === 'dimension' && lineHeightToken?.$type === 'dimension') {
         // Make sure we work with actual values, not references
@@ -488,7 +504,7 @@ export const StrictThemeSchema = z
 
     // Validation 6: a sub-type extension (if set) must be valid for the token's $type
     walkTokens(root, (token, path) => {
-      if (!hasInvalidSubtype(token)) {
+      if (!hasInvalidSubtype(token) || isLintRuleIgnored(token, LINT_RULES.VALID_TOKEN_SUBTYPE)) {
         return;
       }
 
