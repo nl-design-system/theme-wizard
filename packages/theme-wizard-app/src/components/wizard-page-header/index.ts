@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-export const defaultNavigationItems: NavigationItems = [
+const defaultNavigationItems: NavigationItems = [
   { href: '/wizard', label: t('nav.wizard') as string },
   { href: '/design-tokens', label: t('nav.identity') as string },
   { href: '/components', label: t('nav.components') as string },
