@@ -11,8 +11,8 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import { getExtension, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
+import { color_group as colorGroupName, convert as convertColor } from '@projectwallace/color-sorter';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
 import Color from 'colorjs.io';
 import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';

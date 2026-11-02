@@ -65,7 +65,7 @@
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-navigation-bar-css": "0.0.1",
-    "@projectwallace/css-parser": "0.18.8",
+    "@projectwallace/css-parser": "0.19.3",
     "@tabler/icons": "3.48.0",
     "@utrecht/breadcrumb-nav-css": "3.0.1",
     "@utrecht/combobox-css": "3.0.1",
