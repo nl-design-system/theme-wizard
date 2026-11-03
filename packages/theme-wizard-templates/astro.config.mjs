@@ -14,5 +14,8 @@ export default defineConfig({
     define: {
       __STANDALONE_PACKAGE__: true, // for building templates as standalone website
     },
+    resolve: {
+      noExternal: true,
+    },
   },
 });
