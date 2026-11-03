@@ -22,6 +22,7 @@ export default css`
     --clippy-page-layout-content-inline-padding: var(--basis-space-inline-xl); /* [2] */
 
     background-color: var(--clippy-page-layout-background-color, var(--basis-color-default-bg-document));
+    /* stylelint-disable-next-line projectwallace/no-unused-container-names */
     container-name: clippy-page-layout;
     container-type: inline-size;
     display: grid;

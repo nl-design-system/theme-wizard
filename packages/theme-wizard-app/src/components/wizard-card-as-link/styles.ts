@@ -29,7 +29,9 @@ export default css`
   .wizard-card-as-link__footer {
     color: var(--basis-color-default-color-subtle);
     display: inline-flex;
-    transition: translate 100ms ease-out;
+    transition-duration: 100ms;
+    transition-property: translate;
+    transition-timing-function: ease-out;
 
     @media not (prefers-reduced-motion: reduce) {
       :host(:hover) & {

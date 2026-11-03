@@ -28,6 +28,9 @@ importers:
       '@nl-design-system/eslint-config':
         specifier: 2.4.0
         version: 2.4.0(eslint@10.14.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
+      '@projectwallace/stylelint-plugin':
+        specifier: 0.7.2
+        version: 0.7.2(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
       '@stylistic/eslint-plugin':
         specifier: 5.10.0
         version: 5.10.0(eslint@10.14.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -3115,6 +3118,12 @@ packages:
   '@projectwallace/css-time-sort@3.1.1':
     resolution: {integrity: sha512-0fVzVSQ3vwypAnxLtfgpd8TZrtkGp/D20V1/DzJbo3cEaSDibgBG3C/sVabzQzjfnbi3pUmhw/FduIvq+DD3Kg==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
+
+  '@projectwallace/stylelint-plugin@0.7.2':
+    resolution: {integrity: sha512-WmLnyqWnhj1vQ78EafVWOumvYsrP0I4lVcdli4yZz1HW2ta7o65CdOcPoFM8TaAUKYaf0v/dgwXUQLSMXyBt+Q==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      stylelint: ^16.0.0 || ^17.0.0
 
   '@publint/pack@0.1.7':
     resolution: {integrity: sha512-4EDEmvxWtgsCnnVeBvtFIFZtUhPPt1+bA9JrSwU4Sa//6oKtzCSlGGXYJr44OD9aGISymbieJ4mCKHUygUDU+g==}
@@ -9926,6 +9935,12 @@ snapshots:
   '@projectwallace/css-parser@0.19.3': {}
 
   '@projectwallace/css-time-sort@3.1.1': {}
+
+  '@projectwallace/stylelint-plugin@0.7.2(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))':
+    dependencies:
+      '@projectwallace/css-analyzer': 9.9.5
+      '@projectwallace/css-parser': 0.19.3
+      stylelint: 17.16.0(supports-color@10.2.2)(typescript@6.0.3)
 
   '@publint/pack@0.1.7':
     dependencies:
