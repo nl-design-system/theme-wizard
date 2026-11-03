@@ -204,5 +204,3 @@ export function mergeCustomNavigation(
 
   return clonedNav;
 }
-
-console.log('customNavigationConfigBasis', customNavigationConfigBasis);
