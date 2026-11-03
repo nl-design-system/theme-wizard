@@ -42,7 +42,7 @@ export class WizardApp extends LitElement {
   readonly #themeStorage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#themeStorage.getJSON();
-      this.theme.tokens = tokens;
+      this.theme.load(tokens);
       this.#forceUpdateTokens();
     },
     prefix: 'theme-wizard',
@@ -71,7 +71,7 @@ export class WizardApp extends LitElement {
 
     const previousThemeTokens = this.#themeStorage.getJSON();
     if (previousThemeTokens) {
-      this.theme.tokens = previousThemeTokens;
+      this.theme.load(previousThemeTokens);
     }
 
     const previousScrapedTokens = this.#scrapedTokensStorage.getJSON();
@@ -139,7 +139,7 @@ export class WizardApp extends LitElement {
 
   readonly #handleSetThemeTokens = (event: Event) => {
     const { detail } = event as SetThemeTokensEvent;
-    this.theme.tokens = detail.tokens;
+    this.theme.load(detail.tokens);
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
     this.dispatchEvent(new Event('theme-upload'));
