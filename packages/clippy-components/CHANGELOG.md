@@ -1,5 +1,13 @@
 # @nl-design-system-community/clippy-components
 
+## 3.8.1
+
+### Patch Changes
+
+- 07b5365: make sure colors are always rendered in the correct order for clippy-token-table-color
+- Updated dependencies [d43a2b9]
+  - @nl-design-system-community/design-tokens-schema@2.6.0
+
 ## 3.8.0
 
 ### Minor Changes

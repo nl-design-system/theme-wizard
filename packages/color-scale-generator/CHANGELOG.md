@@ -1,5 +1,12 @@
 # @nl-design-system-community/color-scale-generator
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [d43a2b9]
+  - @nl-design-system-community/design-tokens-schema@2.6.0
+
 ## 1.0.3
 
 ### Patch Changes

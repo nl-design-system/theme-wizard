@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.6.0
+
+### Minor Changes
+
+- d43a2b9: feat: allow linting to ignore specific or all rules on a token
+
 ## 2.5.0
 
 ### Minor Changes

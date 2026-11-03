@@ -1,5 +1,16 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.3.2
+
+### Patch Changes
+
+- Updated dependencies [07b5365]
+- Updated dependencies [d43a2b9]
+  - @nl-design-system-community/clippy-components@3.8.1
+  - @nl-design-system-community/design-tokens-schema@2.6.0
+  - @nl-design-system-community/color-scale-generator@1.0.4
+  - @nl-design-system-community/css-scraper@1.2.5
+
 ## 2.3.1
 
 ### Patch Changes
