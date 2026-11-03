@@ -56,6 +56,7 @@ export default defineConfig({
         '@': srcDir,
         '@templates': templatesSrc,
       },
+      noExternal: [/^@nl-design-system-candidate\//], // React packages import CSS, which Node cannot load
     },
     server: {
       fs: {

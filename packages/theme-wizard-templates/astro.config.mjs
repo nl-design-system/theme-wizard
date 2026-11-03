@@ -15,7 +15,7 @@ export default defineConfig({
       __STANDALONE_PACKAGE__: true, // for building templates as standalone website
     },
     resolve: {
-      noExternal: true,
+      noExternal: [/^@nl-design-system-candidate\//], // React packages import CSS, which Node cannot load
     },
   },
 });
