@@ -2,7 +2,7 @@ import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import '@nl-design-system-community/clippy-components/clippy-toggletip';
+import '@nl-design-system-community/clippy-components/clippy-token-table';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { TokenGroup, TokenPath } from '@nl-design-system-community/design-tokens-schema';

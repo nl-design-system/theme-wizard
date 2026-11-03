@@ -8,9 +8,14 @@ import {
   TOKENS,
   type TokenName,
 } from '@nl-design-system-community/color-scale-generator';
+import '@nl-design-system-community/clippy-components/clippy-button';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-option';
+import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-theme-provider';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   BaseDesignToken,
   getExtension,

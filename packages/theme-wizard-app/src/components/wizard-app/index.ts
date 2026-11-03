@@ -18,7 +18,6 @@ import {
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
 import { WizardScraper } from '../wizard-scraper';
-import { WizardTokenInput } from '../wizard-token-input';
 import componentStyles from './styles';
 
 const tag = 'theme-wizard-app';
@@ -162,8 +161,6 @@ export class WizardApp extends LitElement {
     let value;
     if (target instanceof ClippyTokenCombobox) {
       value = target.value?.$value;
-    } else if (target instanceof WizardTokenInput) {
-      value = target.value;
     } else {
       return;
     }

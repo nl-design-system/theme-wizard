@@ -1,7 +1,4 @@
-import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import '@nl-design-system-community/clippy-components/clippy-toggletip';
-import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import '@nl-design-system-community/clippy-components/clippy-token-table';
 import type { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { consume } from '@lit/context';

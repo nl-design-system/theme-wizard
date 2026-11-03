@@ -1,7 +1,5 @@
 import '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import { consume } from '@lit/context';
-import '../wizard-table-scroller';
-
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
 import { TokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';

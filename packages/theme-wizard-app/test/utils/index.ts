@@ -1,10 +1,7 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
-import type { TokenLinkRenderer } from '../../src/i18n/types';
 import type ValidationIssue from '../../src/lib/ValidationIssue';
 
-type ContrastIssue = ValidationIssue & { renderTokenLink?: TokenLinkRenderer };
-
-export const createContrastIssue = (overrides: Partial<ContrastIssue> = {}): ContrastIssue => ({
+export const createContrastIssue = (overrides: Partial<ValidationIssue> = {}): ValidationIssue => ({
   id: 'test.path-error-insufficient_contrast',
   actual: 2.5,
   code: ERROR_CODES.INSUFFICIENT_CONTRAST,
