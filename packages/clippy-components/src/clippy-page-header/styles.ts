@@ -90,7 +90,9 @@ export default css`
     }
 
     .clippy-page-header__group {
-      flex: 0 1 auto;
+      flex-basis: auto;
+      flex-grow: 0;
+      flex-shrink: 1;
     }
 
     .clippy-page-header__group--start {

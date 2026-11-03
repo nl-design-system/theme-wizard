@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-selector-complexity */
   :host(:not([hidden])) {
     display: block;
   }
