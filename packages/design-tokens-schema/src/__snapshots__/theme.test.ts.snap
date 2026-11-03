@@ -55012,6 +55012,19 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "$value": "{basis.form-control.hover.color}",
         },
       },
+      "icon": {
+        "size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
+        },
+      },
       "invalid": {
         "background-color": {
           "$extensions": {
@@ -55590,7 +55603,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration-line": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "outline-offset": {
@@ -55746,7 +55759,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -56468,7 +56481,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
               },
             },
             "$type": "shadow",
-            "$value": "None",
+            "$value": "none",
           },
           "color": {
             "$extensions": {
@@ -57773,7 +57786,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration-line": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "line-height": {
@@ -58073,7 +58086,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -73170,7 +73183,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "transition": {
           "$type": "other",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "expand-separator": {
@@ -73471,7 +73484,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "mobile": {
         "display": {
           "$type": "other",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "row-gap": {
@@ -80819,7 +80832,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -81983,7 +81996,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "color": {
@@ -82069,7 +82082,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "hover": {
@@ -82091,7 +82104,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "icon": {
@@ -83087,7 +83100,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "hover": {
@@ -83227,7 +83240,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "link-icon": {
@@ -84222,7 +84235,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             "nl.nldesignsystem.token-subtype": "size",
           },
           "$type": "dimension",
-          "$value": "None",
+          "$value": "none",
         },
         "pre-header": {
           "padding-block-end": {
@@ -86063,7 +86076,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "background-color": {
@@ -86219,7 +86232,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "focus-visible": {
@@ -86278,7 +86291,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "font-weight": {
@@ -86343,7 +86356,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "min-block-size": {
@@ -86469,7 +86482,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "background-color": {
@@ -86604,7 +86617,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "focus-visible": {
@@ -86663,7 +86676,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "font-weight": {
@@ -86728,7 +86741,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "icon": {
@@ -91568,7 +91581,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "color": {
@@ -91674,7 +91687,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "hover": {
@@ -91696,7 +91709,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "text-decoration": {
@@ -97446,7 +97459,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "focus-visible": {
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -97473,7 +97486,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -97592,7 +97605,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "margin-block-end": {
@@ -100068,7 +100081,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "text-transform": {
           "$type": "textCase",
-          "$value": "None",
+          "$value": "none",
         },
       },
     },
@@ -101663,7 +101676,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "focus-visible": {
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "min-block-size": {
@@ -102504,7 +102517,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "text-transform": {
         "$type": "textCase",
-        "$value": "None",
+        "$value": "none",
       },
       "valid": {
         "background-color": {
@@ -103732,6 +103745,19 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           "$value": "{basis.form-control.hover.color}",
         },
       },
+      "icon": {
+        "size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
+        },
+      },
       "invalid": {
         "background-color": {
           "$extensions": {
@@ -104287,7 +104313,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration-line": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "outline-offset": {
@@ -104440,7 +104466,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -105162,7 +105188,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
               },
             },
             "$type": "shadow",
-            "$value": "None",
+            "$value": "none",
           },
           "color": {
             "$extensions": {
@@ -106467,7 +106493,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration-line": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "line-height": {
@@ -106767,7 +106793,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -122062,7 +122088,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "transition": {
           "$type": "other",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "expand-separator": {
@@ -122363,7 +122389,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "mobile": {
         "display": {
           "$type": "other",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "row-gap": {
@@ -128725,7 +128751,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -129820,7 +129846,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "color": {
@@ -129906,7 +129932,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "hover": {
@@ -129928,7 +129954,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "icon": {
@@ -130861,7 +130887,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "hover": {
@@ -131001,7 +131027,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "link-icon": {
@@ -131870,7 +131896,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             "nl.nldesignsystem.token-subtype": "size",
           },
           "$type": "dimension",
-          "$value": "None",
+          "$value": "none",
         },
         "pre-header": {
           "padding-block-end": {
@@ -133617,7 +133643,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "background-color": {
@@ -133751,7 +133777,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "focus-visible": {
@@ -133810,7 +133836,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "font-weight": {
@@ -133875,7 +133901,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "min-block-size": {
@@ -134001,7 +134027,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "background-color": {
@@ -134135,7 +134161,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "focus-visible": {
@@ -134194,7 +134220,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "font-weight": {
@@ -134259,7 +134285,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "icon": {
@@ -138650,7 +138676,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "color": {
@@ -138756,7 +138782,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "hover": {
@@ -138778,7 +138804,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "None",
+            "$value": "none",
           },
         },
         "text-decoration": {
@@ -144229,7 +144255,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "focus-visible": {
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -144256,7 +144282,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
@@ -144372,7 +144398,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "margin-block-end": {
@@ -146497,7 +146523,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "text-transform": {
           "$type": "textCase",
-          "$value": "None",
+          "$value": "none",
         },
       },
     },
@@ -148044,7 +148070,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "focus-visible": {
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "None",
+          "$value": "none",
         },
       },
       "min-block-size": {
@@ -148695,7 +148721,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "text-transform": {
         "$type": "textCase",
-        "$value": "None",
+        "$value": "none",
       },
       "valid": {
         "background-color": {
@@ -149877,6 +149903,19 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
           "$type": "color",
           "$value": "{basis.form-control.hover.color}",
+        },
+      },
+      "icon": {
+        "size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
         },
       },
       "invalid": {
