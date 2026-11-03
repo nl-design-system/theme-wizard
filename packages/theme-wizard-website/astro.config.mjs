@@ -56,6 +56,7 @@ export default defineConfig({
         '@': srcDir,
         '@templates': templatesSrc,
       },
+      external: ['@babel/runtime'], // CJS helpers of the packages above, not hoisted by pnpm
       noExternal: [/^@nl-design-system-candidate\//], // React packages import CSS, which Node cannot load
     },
     server: {
