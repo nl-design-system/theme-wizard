@@ -122,18 +122,18 @@
     "at-rule-empty-line-before": null,
     "rule-empty-line-before": null,
     "property-no-vendor-prefix": null,
+    "value-no-vendor-prefix": null,
+    "no-unknown-custom-properties": null,
+    "max-nesting-depth": 2,
 
     "projectwallace/max-average-declarations-per-rule": 9,
-    "no-unknown-custom-properties": null,
     "projectwallace/no-unused-custom-properties": null,
     "projectwallace/no-property-shorthand": [
       true,
       { "ignore": ["single-value", "grid-area", "grid-column", "outline", "/border-*/", "text-decoration"] }
     ],
     "projectwallace/max-declarations-per-rule": 20,
-    "max-nesting-depth": 2,
     "projectwallace/no-duplicate-custom-properties": null,
-    "value-no-vendor-prefix": null,
     "projectwallace/max-average-selector-complexity": 4
   }
 }
