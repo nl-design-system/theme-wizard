@@ -1,10 +1,9 @@
-import '../wizard-step-form-task-navigation';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { stepsStorage } from '../../utils/wizard-steps-storage';
+import '../wizard-step-form-task-navigation';
 
 const STEPS = [
   {

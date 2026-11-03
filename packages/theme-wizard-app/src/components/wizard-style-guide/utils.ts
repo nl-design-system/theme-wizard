@@ -1,9 +1,10 @@
 import type { TokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';
-import '@nl-design-system-community/clippy-components/clippy-color-sample';
-import '@nl-design-system-community/clippy-components/clippy-modal';
-import '@nl-design-system-community/clippy-components/clippy-heading';
-import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
-import { ThemeLike, BaseDesignToken, TokenPath, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
+import {
+  type ThemeLike,
+  type BaseDesignToken,
+  type TokenPath,
+  isTokenLike,
+} from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 
 const getTokensByPath = ({ basePath, tokens }: { tokens: ThemeLike; basePath: TokenPath }): BaseDesignToken[] => {

@@ -79,6 +79,37 @@ describe(`<${tag}>`, () => {
     });
   });
 
+  it('maps tokens to columns by name, regardless of input order', async () => {
+    const [group] = tokenCollection;
+    const shuffled = [{ ...group, tokens: group.tokens.toReversed() }];
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(shuffled)}></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    const columnNames = [...component.shadowRoot.querySelectorAll('th[scope="col"]')].map((header) =>
+      header.textContent.replace(/\s+/g, '').replace(/^background-/, 'bg-'),
+    );
+    const cellPaths = [...component.shadowRoot.querySelectorAll('tbody tr:first-child td')].map((cell) =>
+      cell.querySelector('.sr-only')?.textContent.split('.').at(-1),
+    );
+    expect(cellPaths).toEqual(columnNames);
+  });
+
+  it('renders an empty cell when a token is missing', async () => {
+    const [group] = tokenCollection;
+    const incomplete = [
+      { ...group, tokens: group.tokens.filter((token) => !JSON.stringify(token).includes('.bg-subtle"')) },
+    ];
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(incomplete)}></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    const cells = component.shadowRoot.querySelectorAll('tbody tr:first-child td');
+    expect(cells).toHaveLength(14);
+    expect(cells[1].querySelector('clippy-color-sample')).toBeNull();
+    expect(cells[2].querySelector('.sr-only')?.textContent).toBe('basis.color.default.bg-default');
+  });
+
   it.each(labels)('the %s is displayed correctly', async (label) => {
     document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)} ${label}="${label} label"></${tag}>`;
     const component = getComponent();

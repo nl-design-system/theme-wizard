@@ -18,7 +18,6 @@ import {
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
 import { WizardScraper } from '../wizard-scraper';
-import { WizardTokenInput } from '../wizard-token-input';
 import componentStyles from './styles';
 
 const tag = 'theme-wizard-app';
@@ -43,7 +42,7 @@ export class WizardApp extends LitElement {
   readonly #themeStorage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#themeStorage.getJSON();
-      this.theme.tokens = tokens;
+      this.theme.load(tokens);
       this.#forceUpdateTokens();
     },
     prefix: 'theme-wizard',
@@ -72,7 +71,7 @@ export class WizardApp extends LitElement {
 
     const previousThemeTokens = this.#themeStorage.getJSON();
     if (previousThemeTokens) {
-      this.theme.tokens = previousThemeTokens;
+      this.theme.load(previousThemeTokens);
     }
 
     const previousScrapedTokens = this.#scrapedTokensStorage.getJSON();
@@ -140,7 +139,7 @@ export class WizardApp extends LitElement {
 
   readonly #handleSetThemeTokens = (event: Event) => {
     const { detail } = event as SetThemeTokensEvent;
-    this.theme.tokens = detail.tokens;
+    this.theme.load(detail.tokens);
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
     this.dispatchEvent(new Event('theme-upload'));
@@ -162,8 +161,6 @@ export class WizardApp extends LitElement {
     let value;
     if (target instanceof ClippyTokenCombobox) {
       value = target.value?.$value;
-    } else if (target instanceof WizardTokenInput) {
-      value = target.value;
     } else {
       return;
     }

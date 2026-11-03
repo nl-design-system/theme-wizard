@@ -3,6 +3,8 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import { generateScale, profileForName } from '@nl-design-system-community/color-scale-generator';
+import '@nl-design-system-community/clippy-components/clippy-button';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {

@@ -10,13 +10,13 @@ export default css`
   }
 
   .utrecht-form-field__description {
-    --utrecht-form-field-description-margin-block-end: var(--basis-space-row-2xl);
+    --utrecht-form-field-description-margin-block-end: var(--basis-space-row-sm);
     --utrecht-form-field-description-margin-block-start: var(--basis-space-row-sm);
 
     color: var(--basis-color-default-color-subtle);
   }
 
-  .utrecht-form-field__error-message {
+  .wizard-scraper__error {
     margin-block: var(--basis-space-block-md);
   }
 

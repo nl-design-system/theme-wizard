@@ -49,6 +49,17 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('adds token path extensions when loading tokens', () => {
+    const theme = new Theme();
+    const strippedTokens = JSON.parse(
+      JSON.stringify(theme.tokens, (key, value) => (key === '$extensions' ? undefined : value)),
+    );
+    theme.load(strippedTokens);
+    expect(dlv(theme.tokens, 'basis.color.default.bg-document.$extensions')).toMatchObject({
+      'nl.nldesignsystem.path': 'basis.color.default.bg-document',
+    });
+  });
+
   it('can update token at a specific path', async () => {
     const theme = new Theme();
     const initialTokens = structuredClone(theme.tokens);

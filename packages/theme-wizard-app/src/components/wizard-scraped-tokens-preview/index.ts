@@ -3,6 +3,7 @@ import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
@@ -11,8 +12,8 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import { getExtension, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
+import { color_group as colorGroupName, convert as convertColor } from '@projectwallace/color-sorter';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
 import Color from 'colorjs.io';
 import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
@@ -21,6 +22,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import { dimensionToPx } from '../../utils/token-utils';
+import '../wizard-table-scroller';
 import styles from './styles';
 
 const tag = 'wizard-scraped-tokens-preview';
