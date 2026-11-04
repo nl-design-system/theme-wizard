@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
-const { version } = JSON.parse(readFileSync('./package.json', 'utf8'));
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const deps = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
 
 export default defineConfig({
   build: {
@@ -12,7 +13,7 @@ export default defineConfig({
     },
     minify: false,
     rollupOptions: {
-      external: [/^node:/, '@nl-design-system-community/design-tokens-schema'],
+      external: (id) => id.startsWith('node:') || deps.some((dep) => id === dep || id.startsWith(`${dep}/`)),
       output: {
         banner: '#!/usr/bin/env node',
         entryFileNames: '[name].js',
@@ -22,6 +23,6 @@ export default defineConfig({
   define: {
     // We *could* import package.json in our module, but then Vite
     // inlines all of package.json. Using `define` we only get what we need.
-    __VERSION__: JSON.stringify(version),
+    __VERSION__: JSON.stringify(pkg.version),
   },
 });
