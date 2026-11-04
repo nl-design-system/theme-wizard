@@ -1,5 +1,13 @@
 # @nl-design-system-community/clippy-components
 
+## 3.8.2
+
+### Patch Changes
+
+- 650f8ca: Stop bundling JavaScript dependencies, so they can be shared with other packages. css-scraper and design-tokens-schema are now also marked as side-effect free and publish one file per module, so unused code can be tree-shaken
+- Updated dependencies [650f8ca]
+  - @nl-design-system-community/design-tokens-schema@2.6.1
+
 ## 3.8.1
 
 ### Patch Changes
