@@ -1,6 +1,7 @@
 import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import type { NavigationItem } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { klona } from 'klona/json';
 import { TOKEN_NAMESPACES, type TokenNamespaceId } from './token-namespaces';
 import { DESIGN_TOKENS_BASE_URL } from './token-tree-nav';
 
@@ -9,31 +10,26 @@ export interface CurrentDesignTokenPage {
   segments: TokenPath;
 }
 
-interface TokenNavigationItem extends NavigationItem {
-  groups?: string[];
-}
-
-type TokenNavigationItems = TokenNavigationItem[];
-
-interface CustomNavigationConfigItem extends TokenNavigationItem {
+interface CustomNavigationConfigItem extends NavigationItem {
   insertAt: string;
+  groups: string[];
 }
 
 export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   {
-    groups: [`${DESIGN_TOKENS_BASE_URL}/basis/color/default`, `${DESIGN_TOKENS_BASE_URL}/basis/color/default-inverse`],
+    groups: ['basis.color.default', 'basis.color.default-inverse'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/default-group`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
     label: 'Standaard',
   },
   {
     groups: [
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-1`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-1-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-2`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-2-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-3`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/accent-3-inverse`,
+      'basis.color.accent-1',
+      'basis.color.accent-1-inverse',
+      'basis.color.accent-2',
+      'basis.color.accent-2-inverse',
+      'basis.color.accent-3',
+      'basis.color.accent-3-inverse',
     ],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/accent`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
@@ -41,10 +37,10 @@ export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   },
   {
     groups: [
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/action-1`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/action-1-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/action-2`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/action-2-inverse`,
+      'basis.color.action-1',
+      'basis.color.action-1-inverse',
+      'basis.color.action-2',
+      'basis.color.action-2-inverse',
     ],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/action`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
@@ -52,14 +48,14 @@ export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   },
   {
     groups: [
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/info`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/info-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/positive`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/positive-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/negative`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/negative-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/warning`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/warning-inverse`,
+      'basis.color.info',
+      'basis.color.info-inverse',
+      'basis.color.positive',
+      'basis.color.positive-inverse',
+      'basis.color.negative',
+      'basis.color.negative-inverse',
+      'basis.color.warning',
+      'basis.color.warning-inverse',
     ],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/signal`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
@@ -67,13 +63,13 @@ export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   },
   {
     groups: [
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/disabled`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/disabled-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/highlight`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/highlight-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/selected`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/selected-inverse`,
-      `${DESIGN_TOKENS_BASE_URL}/basis/color/transparent`,
+      'basis.color.disabled',
+      'basis.color.disabled-inverse',
+      'basis.color.highlight',
+      'basis.color.highlight-inverse',
+      'basis.color.selected',
+      'basis.color.selected-inverse',
+      'basis.color.transparent',
     ],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/misc`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
@@ -149,15 +145,7 @@ export function mergeCustomNavigation(
   sourceNav: NavigationItems,
   customConfig: CustomNavigationConfigItem[],
 ): NavigationItems {
-  // Deep clone the source navigation to avoid mutating the original
-  const deepClone = (items: NavigationItems): NavigationItems => {
-    return items.map((item) => ({
-      ...item,
-      items: item.items ? deepClone(item.items) : undefined,
-    }));
-  };
-
-  const clonedNav = deepClone(sourceNav);
+  const clonedNav = klona(sourceNav);
 
   // Process in reverse order so that unshift maintains configuration order
   for (let i = customConfig.length - 1; i >= 0; i--) {
@@ -176,7 +164,10 @@ export function mergeCustomNavigation(
     };
 
     // Collect and move all group items
-    for (const groupHref of groups) {
+    for (const path of groups) {
+      // convert the token path to a href so we can find it in the navTree
+      const groupHref = `${DESIGN_TOKENS_BASE_URL}/${path.replaceAll('.', '/')}`;
+
       // Find the node to move
       const groupResult = findNodeByHref(clonedNav, groupHref);
       if (!groupResult.node || !groupResult.parentItemsArray) {
