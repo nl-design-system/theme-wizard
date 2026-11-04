@@ -1,7 +1,6 @@
 import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import type { NavigationItem } from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
-import { klona } from 'klona/json';
 import { TOKEN_NAMESPACES, type TokenNamespaceId } from './token-namespaces';
 import { DESIGN_TOKENS_BASE_URL } from './token-tree-nav';
 
@@ -227,30 +226,26 @@ export function mergeCustomNavigation(
   sourceNav: NavigationItems,
   customConfig: CustomNavigationConfigItem[],
 ): NavigationItems {
-  const clonedNav = klona(sourceNav);
-
   // Process in reverse order so that unshift maintains configuration order
-  for (let i = customConfig.length - 1; i >= 0; i--) {
-    const configItem = customConfig[i];
-
+  customConfig.reverse().forEach((configItem) => {
     // Find where to insert the new item
-    const insertResult = findNodeByHref(clonedNav, configItem.insertAt);
+    const insertResult = findNodeByHref(sourceNav, configItem.insertAt);
     if (!insertResult.node) {
-      continue; // Skip if insertAt not found
+      return; // Skip if insertAt not found
     }
 
     // Collect all items that should be grouped under the new item
-    const groupedItems = collectGroupedItems(clonedNav, configItem.groups);
+    const groupedItems = collectGroupedItems(sourceNav, configItem.groups);
 
     // Create the new navigation item
     const newItem = createNavigationItem(configItem, groupedItems);
     if (!newItem) {
-      continue; // Skip if we couldn't create a valid item
+      return; // Skip if we couldn't create a valid item
     }
 
     // Insert the new item at the beginning
     insertItemAtBeginning(insertResult.node, newItem);
-  }
+  });
 
-  return clonedNav;
+  return sourceNav;
 }
