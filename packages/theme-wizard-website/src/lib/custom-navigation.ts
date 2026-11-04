@@ -5,7 +5,7 @@ import type {
 
 export interface CustomNavigationConfigItem extends NavigationItem {
   insertAt: string;
-  groups: string[];
+  groups?: string[];
   hideSubItems: boolean;
 }
 
@@ -72,9 +72,7 @@ function createNavigationItem(
   configItem: CustomNavigationConfigItem,
   groupedItems: NavigationItem[],
 ): NavigationItem | null {
-  // Strip out the custom config properties
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { groups: _groups, hideSubItems: _hideSubItems, insertAt: _insertAt, ...navigationItem } = configItem;
+  const navigationItem = cleanupConfigItem(configItem);
 
   const newItem: NavigationItem = {
     ...navigationItem,
@@ -106,13 +104,24 @@ function collectGroupedItems(navTree: NavigationItems, groupPaths: string[], bas
 }
 
 /**
- * Insert a new navigation item at the beginning of a target node's items.
+ * Append a new navigation item to a target node's items.
  */
-function insertItemAtBeginning(parentNode: NavigationItem, newItem: NavigationItem): void {
+function appendItem(parentNode: NavigationItem, newItem: NavigationItem): void {
   if (!parentNode.items) {
     parentNode.items = [];
   }
-  parentNode.items!.unshift(newItem);
+  parentNode.items!.push(newItem);
+}
+
+/**
+ * Strip custom config properties from a CustomNavigationConfigItem,
+ * returning only the standard NavigationItem properties.
+ */
+function cleanupConfigItem(configItem: CustomNavigationConfigItem): NavigationItem {
+  // Strip out the custom config properties
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { groups: _groups, hideSubItems: _hideSubItems, insertAt: _insertAt, ...navigationItem } = configItem;
+  return navigationItem;
 }
 
 /**
@@ -135,7 +144,8 @@ export function setHideUntilCurrent(item: NavigationItem, value: boolean): void 
  * - Items from customNavigationConfig are inserted at the point where `insertAt` matches a node's href
  * - Items referenced in `groups` are moved from their original location to the new item's `items` array
  * - Missing references (insertAt or groups) are silently skipped
- * - New items are added at the beginning, in configuration order
+ * - New items and groups are added in configuration order
+ * - When merging with an existing item (same href), custom config properties take precedence
  *
  * @param sourceNav - The navigation tree from getDesignTokensNavItems
  * @param customConfig - The custom navigation configuration
@@ -146,30 +156,55 @@ export function mergeCustomNavigation(
   customConfig: CustomNavigationConfigItem[],
   baseUrl: string,
 ): NavigationItems {
-  // Process in reverse order so that unshift maintains configuration order
-  customConfig.reverse().forEach((configItem) => {
+  // Process in forward order to maintain configuration order with push
+  customConfig.forEach((configItem) => {
     // Find where to insert the new item
     const insertResult = findNodeByHref(sourceNav, configItem.insertAt);
     if (!insertResult.node) {
       return; // Skip if insertAt not found
     }
 
+    const parentNode = insertResult.node;
+    const parentItems = parentNode.items || [];
+
+    // Check if there's already an item with the same href at this level
+    const existingItem = parentItems.find((item) => item.href === configItem.href);
+
+    // Filter groups only if we're merging and groups are present
+    let groupsToCollect = configItem.groups || [];
+    if (existingItem && configItem.groups) {
+      const existingGroupHrefs = new Set((existingItem.items || []).map((item) => item.href));
+      groupsToCollect = configItem.groups.filter((groupPath) => {
+        const groupHref = tokenPathToHref(baseUrl, groupPath);
+        return !existingGroupHrefs.has(groupHref);
+      });
+    }
+
     // Collect all items that should be grouped under the new item
-    const groupedItems = collectGroupedItems(sourceNav, configItem.groups, baseUrl);
+    const groupedItems = collectGroupedItems(sourceNav, groupsToCollect, baseUrl);
 
     // Set hideUntilCurrent: true on all grouped items and their child items recursively
     groupedItems.forEach((item) => {
       setHideUntilCurrent(item, configItem.hideSubItems);
     });
 
-    // Create the new navigation item
-    const newItem = createNavigationItem(configItem, groupedItems);
-    if (!newItem) {
-      return; // Skip if we couldn't create a valid item
-    }
+    if (existingItem) {
+      // Merge into existing item - custom config properties take precedence
+      const navigationItem = cleanupConfigItem(configItem);
+      Object.assign(existingItem, navigationItem);
 
-    // Insert the new item at the beginning
-    insertItemAtBeginning(insertResult.node, newItem);
+      if (!existingItem.items) {
+        existingItem.items = [];
+      }
+      existingItem.items.push(...groupedItems);
+    } else {
+      // Create and insert new item
+      const newItem = createNavigationItem(configItem, groupedItems);
+      if (!newItem) {
+        return; // Skip if we couldn't create a valid item
+      }
+      appendItem(parentNode, newItem);
+    }
   });
 
   return sourceNav;

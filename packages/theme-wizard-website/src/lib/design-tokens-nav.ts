@@ -11,6 +11,12 @@ export interface CurrentDesignTokenPage {
 
 export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   {
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
+    label: 'Kleur',
+  },
+  {
     groups: ['basis.color.default', 'basis.color.default-inverse'],
     hideSubItems: true,
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/default-group`,
@@ -72,6 +78,49 @@ export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
     hideSubItems: false,
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/misc`,
     insertAt: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
+    label: 'Overig',
+  },
+  {
+    groups: ['basis.border-radius', 'basis.border-width', 'basis.box-shadow'],
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/border`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
+    label: 'Randen en lijnen',
+  },
+  {
+    groups: [
+      'basis.space.block',
+      'basis.space.inline',
+      'basis.space.column',
+      'basis.space.row',
+      'basis.space.text',
+      'basis.space.none',
+    ],
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/space`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
+    label: 'Witruimte',
+  },
+  {
+    groups: ['basis.heading'],
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/text`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
+    label: 'Typografie',
+  },
+  {
+    groups: ['basis.pointer-target'],
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/size`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
+    label: 'Grootte',
+  },
+
+  {
+    groups: ['basis.focus', 'basis.action', 'basis.page', 'basis.form-control'],
+    hideSubItems: false,
+    href: `${DESIGN_TOKENS_BASE_URL}/basis/misc`,
+    insertAt: `${DESIGN_TOKENS_BASE_URL}/basis`,
     label: 'Overig',
   },
 ];
