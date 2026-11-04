@@ -82,7 +82,7 @@ export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
 // other sections' trees render fully but with nothing marked current.
 // The `basis` token tree needs some custom items and structure to make it easier to work with so
 // we merge a custom navigation structure with the basis token tree.
-export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): TokenNavigationItems => {
+export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): NavigationItems => {
   const tokenNavigationTree = TOKEN_NAMESPACES.map((namespace) => ({
     current: current?.namespace === namespace.id && current.segments.length === 0,
     href: namespace.href,
@@ -130,12 +130,94 @@ function findNodeByHref(
 }
 
 /**
+ * Convert a token path (e.g., "basis.color.accent-1") to a design tokens href.
+ */
+function tokenPathToHref(tokenPath: string): string {
+  return `${DESIGN_TOKENS_BASE_URL}/${tokenPath.replaceAll('.', '/')}`;
+}
+
+/**
+ * Remove a node from its parent's items array by reference.
+ * Also cleans up empty items arrays on the parent.
+ */
+function removeNodeFromParent(node: NavigationItem, parentItemsArray: NavigationItems, parent?: NavigationItem): void {
+  const index = parentItemsArray.indexOf(node);
+  if (index !== -1) {
+    parentItemsArray.splice(index, 1);
+    // Clean up empty items arrays
+    if (parent && parentItemsArray.length === 0) {
+      delete parent.items;
+    }
+  }
+}
+
+/**
+ * Ensure a navigation item has an items array, creating one if it doesn't exist.
+ */
+function ensureItemsArray(node: NavigationItem): NavigationItems {
+  if (!node.items) {
+    node.items = [];
+  }
+  return node.items;
+}
+
+/**
+ * Create a NavigationItem from a CustomNavigationConfigItem.
+ * Strips out the custom config properties (groups, insertAt) to create a standard NavigationItem.
+ */
+function createNavigationItem(
+  configItem: CustomNavigationConfigItem,
+  groupedItems: NavigationItem[],
+): NavigationItem | null {
+  // Strip out the custom config properties
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { groups: _groups, insertAt: _insertAt, ...navigationItem } = configItem;
+
+  const newItem: NavigationItem = {
+    ...navigationItem,
+    items: groupedItems.length > 0 ? groupedItems : undefined,
+  };
+
+  return newItem;
+}
+
+/**
+ * Collect all nodes referenced by group paths from the navigation tree.
+ * Each found node is removed from its original location.
+ */
+function collectGroupedItems(navTree: NavigationItems, groupPaths: string[]): NavigationItem[] {
+  const collected: NavigationItem[] = [];
+
+  for (const path of groupPaths) {
+    const groupHref = tokenPathToHref(path);
+    const result = findNodeByHref(navTree, groupHref);
+
+    if (result.node && result.parentItemsArray) {
+      removeNodeFromParent(result.node, result.parentItemsArray, result.parent);
+      collected.push(result.node);
+    }
+    // Silently skip if group href not found
+  }
+
+  return collected;
+}
+
+/**
+ * Insert a new navigation item at the beginning of a target node's items.
+ */
+function insertItemAtBeginning(parentNode: NavigationItem, newItem: NavigationItem): void {
+  ensureItemsArray(parentNode);
+  parentNode.items!.unshift(newItem);
+}
+
+/**
  * Merge custom navigation config into the design tokens navigation tree.
  *
  * Rules:
  * - Items from customNavigationConfig are inserted at the point where `insertAt` matches a node's href
  * - Items referenced in `groups` are moved from their original location to the new item's `items` array
  * - Missing references (insertAt or groups) are silently skipped
+ * - New items are added at the beginning, in configuration order
  *
  * @param sourceNav - The navigation tree from getDesignTokensNavItems
  * @param customConfig - The custom navigation configuration
@@ -149,58 +231,25 @@ export function mergeCustomNavigation(
 
   // Process in reverse order so that unshift maintains configuration order
   for (let i = customConfig.length - 1; i >= 0; i--) {
-    const { groups = [], insertAt, ...navigationItem } = customConfig[i];
+    const configItem = customConfig[i];
 
-    // Find the insertion point parent
-    const insertResult = findNodeByHref(clonedNav, insertAt);
+    // Find where to insert the new item
+    const insertResult = findNodeByHref(clonedNav, configItem.insertAt);
     if (!insertResult.node) {
       continue; // Skip if insertAt not found
     }
 
+    // Collect all items that should be grouped under the new item
+    const groupedItems = collectGroupedItems(clonedNav, configItem.groups);
+
     // Create the new navigation item
-    const newItem: NavigationItem = {
-      ...navigationItem,
-      items: [],
-    };
-
-    // Collect and move all group items
-    for (const path of groups) {
-      // convert the token path to a href so we can find it in the navTree
-      const groupHref = `${DESIGN_TOKENS_BASE_URL}/${path.replaceAll('.', '/')}`;
-
-      // Find the node to move
-      const groupResult = findNodeByHref(clonedNav, groupHref);
-      if (!groupResult.node || !groupResult.parentItemsArray) {
-        continue; // Skip if group href not found
-      }
-
-      // Remove from original location
-      const index = groupResult.parentItemsArray.indexOf(groupResult.node);
-      if (index !== -1) {
-        groupResult.parentItemsArray.splice(index, 1);
-        // Clean up empty items arrays
-        if (groupResult.parent && groupResult.parentItemsArray.length === 0) {
-          delete groupResult.parent.items;
-        }
-      }
-
-      // Add to new item's items
-      if (newItem.items) {
-        newItem.items.push(groupResult.node);
-      }
+    const newItem = createNavigationItem(configItem, groupedItems);
+    if (!newItem) {
+      continue; // Skip if we couldn't create a valid item
     }
 
-    // If no groups were found, still insert the item but without items array
-    if (newItem?.items?.length === 0) {
-      delete newItem.items;
-    }
-
-    // Insert the new item at the beginning of the insertion point's items
-    const targetNode = insertResult.node;
-    if (!targetNode.items) {
-      targetNode.items = [];
-    }
-    targetNode.items.unshift(newItem);
+    // Insert the new item at the beginning
+    insertItemAtBeginning(insertResult.node, newItem);
   }
 
   return clonedNav;
