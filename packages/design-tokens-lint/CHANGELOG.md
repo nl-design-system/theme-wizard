@@ -1,5 +1,12 @@
 # @nl-design-system-community/design-tokens-lint
 
+## 1.1.2
+
+### Patch Changes
+
+- Updated dependencies [650f8ca]
+  - @nl-design-system-community/design-tokens-schema@2.6.1
+
 ## 1.1.1
 
 ### Patch Changes
