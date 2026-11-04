@@ -6,6 +6,7 @@ import type {
 export interface CustomNavigationConfigItem extends NavigationItem {
   insertAt: string;
   groups: string[];
+  hideSubItems: boolean;
 }
 
 /**
@@ -73,7 +74,7 @@ function createNavigationItem(
 ): NavigationItem | null {
   // Strip out the custom config properties
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { groups: _groups, insertAt: _insertAt, ...navigationItem } = configItem;
+  const { groups: _groups, hideSubItems: _hideSubItems, insertAt: _insertAt, ...navigationItem } = configItem;
 
   const newItem: NavigationItem = {
     ...navigationItem,
@@ -158,7 +159,7 @@ export function mergeCustomNavigation(
 
     // Set hideUntilCurrent: true on all grouped items and their child items recursively
     groupedItems.forEach((item) => {
-      setHideUntilCurrent(item, true);
+      setHideUntilCurrent(item, configItem.hideSubItems);
     });
 
     // Create the new navigation item
