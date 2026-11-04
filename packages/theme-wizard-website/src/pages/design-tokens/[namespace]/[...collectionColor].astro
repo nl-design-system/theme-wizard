@@ -22,7 +22,7 @@ export function getStaticPaths() {
     })
 }
 
-const { label,  } = Astro.props.pageData;
+const { label, groups } = Astro.props.pageData;
 const namespace = getTokenNamespace(Astro.props.namespace);
 ---
 
@@ -31,4 +31,19 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   metaTitle={`${label} - ${namespace.pageTitle}`}
 >
   <mark>Color collection</mark>
+
+  <wizard-unstyled-list>
+    {
+      groups.map((group) => (
+        <li>
+          <wizard-link-to-token path={group}>
+            <a slot="link" href={`/design-tokens/${group.replaceAll('.', '/')}`}>
+              group
+            </a>
+            {capitalize(group)}
+          </wizard-link-to-token>
+        </li>
+      ))
+    }
+  </wizard-unstyled-list>
 </DesignTokensLayout>
