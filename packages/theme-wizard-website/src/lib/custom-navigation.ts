@@ -115,6 +115,19 @@ function insertItemAtBeginning(parentNode: NavigationItem, newItem: NavigationIt
 }
 
 /**
+ * Recursively set hideUntilCurrent on a navigation item and all its children.
+ *
+ * @param item - The navigation item to update
+ * @param value - The value to set for hideUntilCurrent
+ */
+export function setHideUntilCurrent(item: NavigationItem, value: boolean): void {
+  item.hideUntilCurrent = value;
+  if (item.items) {
+    item.items.forEach((child) => setHideUntilCurrent(child, value));
+  }
+}
+
+/**
  * Merge custom navigation config into the design tokens navigation tree.
  *
  * Rules:
@@ -142,6 +155,11 @@ export function mergeCustomNavigation(
 
     // Collect all items that should be grouped under the new item
     const groupedItems = collectGroupedItems(sourceNav, configItem.groups, baseUrl);
+
+    // Set hideUntilCurrent: true on all grouped items and their child items recursively
+    groupedItems.forEach((item) => {
+      setHideUntilCurrent(item, true);
+    });
 
     // Create the new navigation item
     const newItem = createNavigationItem(configItem, groupedItems);

@@ -34,7 +34,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 
   <wizard-unstyled-list>
     {
-      groups.map((group) => (
+      groups.filter(group => !group.includes('-inverse')).map((group) => (
         <li>
           <wizard-link-to-token path={group}>
             <a slot="link" href={`/design-tokens/${group.replaceAll('.', '/')}`}>

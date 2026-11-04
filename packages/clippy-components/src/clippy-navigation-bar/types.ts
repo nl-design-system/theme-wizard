@@ -6,6 +6,7 @@ export interface NavigationItem extends SelectedHTMLAnchorElementProps {
   label: string;
   current?: boolean;
   items?: NavigationItem[];
+  hideUntilCurrent?: boolean;
 }
 
 export type NavigationItems = NavigationItem[];
