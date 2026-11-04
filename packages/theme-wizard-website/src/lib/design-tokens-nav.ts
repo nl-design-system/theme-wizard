@@ -9,26 +9,17 @@ export interface CurrentDesignTokenPage {
   segments: TokenPath;
 }
 
-// Same sidebar everywhere under /design-tokens: one top-level group per namespace, each nesting
-// its own tree. Only the section matching `current.namespace` gets its current-page markers; the
-// other sections' trees render fully but with nothing marked current.
-export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): NavigationItems =>
-  TOKEN_NAMESPACES.map((namespace) => ({
-    current: current?.namespace === namespace.id && current.segments.length === 0,
-    href: namespace.href,
-    items: namespace.nav.toNavigationItems(
-      namespace.getTree(),
-      current?.namespace === namespace.id ? current.segments : [],
-    ),
-    label: namespace.label,
-  }));
-
-interface ExtendedNavigationItem extends NavigationItem {
+interface TokenNavigationItem extends NavigationItem {
   groups?: string[];
+}
+
+type TokenNavigationItems = TokenNavigationItem[];
+
+interface CustomNavigationConfigItem extends TokenNavigationItem {
   insertAt: string;
 }
 
-export const customNavigationConfigBasis: ExtendedNavigationItem[] = [
+export const customNavigationConfigBasis: CustomNavigationConfigItem[] = [
   {
     groups: [`${DESIGN_TOKENS_BASE_URL}/basis/color/default`, `${DESIGN_TOKENS_BASE_URL}/basis/color/default-inverse`],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color/default-group`,
@@ -90,13 +81,32 @@ export const customNavigationConfigBasis: ExtendedNavigationItem[] = [
   },
 ];
 
+// Same sidebar everywhere under /design-tokens: one top-level group per namespace, each nesting
+// its own tree. Only the section matching `current.namespace` gets its current-page markers; the
+// other sections' trees render fully but with nothing marked current.
+// The `basis` token tree needs some custom items and structure to make it easier to work with so
+// we merge a custom navigation structure with the basis token tree.
+export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): TokenNavigationItems => {
+  const tokenNavigationTree = TOKEN_NAMESPACES.map((namespace) => ({
+    current: current?.namespace === namespace.id && current.segments.length === 0,
+    href: namespace.href,
+    items: namespace.nav.toNavigationItems(
+      namespace.getTree(),
+      current?.namespace === namespace.id ? current.segments : [],
+    ),
+    label: namespace.label,
+  }));
+
+  return mergeCustomNavigation(tokenNavigationTree, customNavigationConfigBasis);
+};
+
 /**
  * Result of finding a node in the navigation tree
  */
 interface FindResult {
-  node: NavigationItem | null;
-  parent: NavigationItem | null;
-  parentItemsArray: NavigationItems | null;
+  node?: NavigationItem;
+  parent?: NavigationItem;
+  parentItemsArray?: NavigationItems;
 }
 
 /**
@@ -106,8 +116,8 @@ interface FindResult {
 function findNodeByHref(
   items: NavigationItems,
   targetHref: string,
-  parent: NavigationItem | null = null,
-  parentItemsArray: NavigationItems | null = null,
+  parent?: NavigationItem,
+  parentItemsArray?: NavigationItems,
 ): FindResult {
   for (const item of items) {
     if (item.href === targetHref) {
@@ -120,7 +130,7 @@ function findNodeByHref(
       }
     }
   }
-  return { node: null, parent: null, parentItemsArray: null };
+  return {};
 }
 
 /**
@@ -137,7 +147,7 @@ function findNodeByHref(
  */
 export function mergeCustomNavigation(
   sourceNav: NavigationItems,
-  customConfig: ExtendedNavigationItem[],
+  customConfig: CustomNavigationConfigItem[],
 ): NavigationItems {
   // Deep clone the source navigation to avoid mutating the original
   const deepClone = (items: NavigationItems): NavigationItems => {
@@ -190,7 +200,7 @@ export function mergeCustomNavigation(
     }
 
     // If no groups were found, still insert the item but without items array
-    if (newItem.items && newItem.items.length === 0) {
+    if (newItem?.items?.length === 0) {
       delete newItem.items;
     }
 

@@ -1,11 +1,9 @@
 import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import { componentsNavigationItems } from '@/lib/components';
-import { customNavigationConfigBasis, getDesignTokensNavItems, mergeCustomNavigation } from '@/lib/design-tokens-nav';
+import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
 import { DESIGN_TOKENS_BASE_URL } from '@/lib/token-tree-nav';
 
 const designTokensNavItems = getDesignTokensNavItems();
-
-const newDesignTokensNavItems = mergeCustomNavigation(designTokensNavItems, customNavigationConfigBasis);
 
 const styleGuideItems: NavigationItems = [
   { href: '/style-guide/color-system', label: 'Kleur systeem' },
@@ -17,7 +15,7 @@ const styleGuideItems: NavigationItems = [
 
 const navigationItems: NavigationItems = [
   { href: '/wizard', label: 'Start' },
-  { href: DESIGN_TOKENS_BASE_URL, items: newDesignTokensNavItems, label: 'Huisstijl' },
+  { href: DESIGN_TOKENS_BASE_URL, items: designTokensNavItems, label: 'Huisstijl' },
   { href: '/components', items: componentsNavigationItems, label: 'Componenten' },
   { href: '/style-guide', items: styleGuideItems, label: 'Stijlgids' },
   { href: '/publish-tokens', label: 'Publiceren' },
