@@ -3,7 +3,18 @@ import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import { TOKEN_NAMESPACES } from '@/lib/token-namespaces';
 ---
 
-<DesignTokensLayout title="Design tokens" metaTitle="Design tokens">
+<DesignTokensLayout title="Huisstijl" metaTitle="Huisstijl">
+
+  <clippy-heading level=2>Goed bezig!</clippy-heading>
+  <p class="nl-paragraph">Je hebt de eerste keuzes voor het thema gemaakt. Nu kun je...</p>
+  <ul>
+    <li>De huisstijl verfijnen of aanpassen.</li>
+    <li>Componenten bekijken & verfijnen</li>
+    <li>De huisstijl verfijnen of aanpassen.</li>
+    <li>Stijlgids bekijken van je thema</li>
+  </ul>
+
+  <clippy-heading level=2>Jouw huisstijl verfijnen</clippy-heading>
   <wizard-unstyled-list>
     {
       TOKEN_NAMESPACES.map((namespace) => (
