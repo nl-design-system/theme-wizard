@@ -47,7 +47,7 @@ function collectGroupedItems(navTree: NavigationItems, groupPaths: string[], bas
     const node = findNodeByHref(navTree, groupHref);
     if (node) {
       // Create a deep copy to avoid modifying the original
-      collected.push(JSON.parse(JSON.stringify(node)));
+      collected.push(structuredClone(node));
     }
   }
 
@@ -71,6 +71,7 @@ export function setHideUntilCurrent(item: NavigationItem, value: boolean): void 
  * Recursively merge items from tokenNavigationTree into customNavigationConfigNewBasis.
  * For each item with a `groups` property, find the corresponding items in the token tree
  * and populate its `items` property.
+ * For leaf items (no items, no groups), copy child items from matching token tree node.
  */
 export function addTokenGroupsToNavigation(
   config: NavigationConfigItem[],
@@ -96,6 +97,14 @@ export function addTokenGroupsToNavigation(
       }
 
       newItem.items = groupedItems;
+    }
+    // If item has no items and no groups, try to copy items from matching token tree node
+    else if (!configItem.items && !newItem.items) {
+      const matchingTokenNode = findNodeByHref(tokenNavTree, newItem.href);
+      if (matchingTokenNode?.items) {
+        // Deep copy the items to avoid modifying the original
+        newItem.items = structuredClone(matchingTokenNode.items);
+      }
     }
 
     // Recursively process nested items
