@@ -7,6 +7,8 @@ export interface CustomNavigationConfigItem extends NavigationItem {
   insertAt: string;
   groups?: string[];
   hideSubItems: boolean;
+  items?: CustomNavigationConfigItem[];
+  astroFragment?: string;
 }
 
 /**
