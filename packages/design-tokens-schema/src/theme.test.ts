@@ -416,7 +416,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "basis.color.default.color-document" (#cccccc) and "basis.color.default.bg-subtle" (#ffffff): expected at least 4.5:1, received 1.6:1',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),
@@ -426,7 +427,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "basis.color.default.bg-subtle" (#ffffff) and "basis.color.default.color-document" (#cccccc): expected at least 4.5:1, received 1.6:1',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.bg-subtle.$value'.split('.'),
@@ -466,7 +468,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "basis.color.default.color-document" (#cccccc) and "basis.color.default.bg-subtle" (#ffffff): expected at least 4.5:1, received 1.6:1',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),
@@ -476,7 +479,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "basis.color.default.bg-subtle" (#ffffff) and "basis.color.default.color-document" (#cccccc): expected at least 4.5:1, received 1.6:1',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.bg-subtle.$value'.split('.'),
@@ -532,7 +536,8 @@ describe('validating color contrast', () => {
         actual: 1.6059285649300712,
         code: 'too_small',
         ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
+        message:
+          'Insufficient contrast between "clippy.button.color" (#cccccc) and "clippy.button.background-color" (#ffffff): expected at least 4.5:1, received 1.6:1',
         minimum: 4.5,
         origin: 'number',
         path: 'clippy.button.color.$value'.split('.'),
@@ -542,7 +547,8 @@ describe('validating color contrast', () => {
         actual: 1.6059285649300712,
         code: 'too_small',
         ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
+        message:
+          'Insufficient contrast between "clippy.button.background-color" (#ffffff) and "clippy.button.color" (#cccccc): expected at least 4.5:1, received 1.6:1',
         minimum: 4.5,
         origin: 'number',
         path: 'clippy.button.background-color.$value'.split('.'),
@@ -581,7 +587,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "clippy.button.disabled.color" (#cccccc) and "clippy.button.disabled.background-color" (#ffffff): expected at least 3:1, received 1.6:1',
           minimum: 3,
           origin: 'number',
           path: 'clippy.button.disabled.color.$value'.split('.'),
@@ -591,7 +598,8 @@ describe('validating color contrast', () => {
           actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
+          message:
+            'Insufficient contrast between "clippy.button.disabled.background-color" (#ffffff) and "clippy.button.disabled.color" (#cccccc): expected at least 3:1, received 1.6:1',
           minimum: 3,
           origin: 'number',
           path: 'clippy.button.disabled.background-color.$value'.split('.'),

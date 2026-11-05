@@ -390,6 +390,7 @@ export const StrictThemeSchema = z
             ctx.addIssue(
               createContrastIssue({
                 actual: contrast,
+                colors: [baseColor, compareColor],
                 minimum: expectedRatio,
                 path: [...path, '$value'],
                 tokens: tokenBPath ? [tokenAPath, tokenBPath] : [tokenAPath],
@@ -401,6 +402,7 @@ export const StrictThemeSchema = z
             ctx.addIssue(
               createContrastIssue({
                 actual: contrast,
+                colors: [compareColor, baseColor],
                 minimum: expectedRatio,
                 path: [...(tokenBPath?.split('.') || []), '$value'],
                 tokens: tokenBPath ? [tokenBPath, tokenAPath] : [tokenAPath],
