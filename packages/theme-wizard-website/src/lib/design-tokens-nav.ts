@@ -81,7 +81,13 @@ export const customNavigationConfigNewBasis: NavigationConfigItem[] = [
     label: 'Kleur',
   },
   {
-    groups: ['basis.text.font-family', 'basis.text.font-size', 'basis.text.font-weight', 'basis.text.line-height'],
+    groups: [
+      'basis.text.font-family',
+      'basis.text.font-size',
+      'basis.text.font-weight',
+      'basis.text.line-height',
+      'basis.heading',
+    ],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/text`,
     label: 'Typography',
   },
@@ -89,7 +95,6 @@ export const customNavigationConfigNewBasis: NavigationConfigItem[] = [
     groups: [
       'basis.space.block',
       'basis.space.inline',
-      'basis.space.block',
       'basis.space.row',
       'basis.space.column',
       'basis.space.text',
@@ -103,6 +108,7 @@ export const customNavigationConfigNewBasis: NavigationConfigItem[] = [
     label: 'Grootte',
   },
   {
+    groups: ['basis.border-width', 'basis.border-radius', 'basis.box-shadow'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/border`,
     label: 'Randen en lijnen',
   },
