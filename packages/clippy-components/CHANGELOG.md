@@ -1,5 +1,12 @@
 # @nl-design-system-community/clippy-components
 
+## 3.8.3
+
+### Patch Changes
+
+- Updated dependencies [b77322a]
+  - @nl-design-system-community/design-tokens-schema@2.7.0
+
 ## 3.8.2
 
 ### Patch Changes
