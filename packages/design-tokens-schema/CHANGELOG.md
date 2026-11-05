@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.7.0
+
+### Minor Changes
+
+- b77322a: feat: improve error message when contrast is too low
+
 ## 2.6.1
 
 ### Patch Changes
