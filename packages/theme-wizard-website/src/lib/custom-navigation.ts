@@ -1,7 +1,4 @@
-import type {
-  NavigationItem,
-  NavigationItems,
-} from '@nl-design-system-community/clippy-components/src/clippy-navigation-bar/types.js';
+import type { NavigationItem, NavigationItems } from '../types/navigation';
 
 export interface NavigationConfigItem extends NavigationItem {
   groups?: string[];

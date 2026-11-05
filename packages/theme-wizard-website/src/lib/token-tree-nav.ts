@@ -1,10 +1,7 @@
-import type {
-  NavigationItem,
-  NavigationItems,
-} from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
+import type { NavigationItem, NavigationItems } from '../types/navigation';
 
 type AstroPageFragment = 'leaf' | 'branch' | 'basisColorBranch';
 
@@ -19,6 +16,10 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
       href: hrefFor(node.path),
       items: node.children.length > 0 ? toNavigationItems(node.children, currentPath) : undefined,
       label: node.key,
+      metaData: {
+        astroFragment: node.isLeaf ? 'leaf' : 'branch',
+        tokenPath: node.path,
+      },
     }));
 
   const resolveSlugPage = (tree: TokenTreeNode[], slugParam: string) => {

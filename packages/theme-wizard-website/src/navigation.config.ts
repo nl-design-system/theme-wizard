@@ -1,7 +1,7 @@
-import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import { componentsNavigationItems } from '@/lib/components';
 import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
 import { DESIGN_TOKENS_BASE_URL } from '@/lib/token-tree-nav';
+import type { NavigationItems } from './types/navigation';
 
 const designTokensNavItems = getDesignTokensNavItems();
 

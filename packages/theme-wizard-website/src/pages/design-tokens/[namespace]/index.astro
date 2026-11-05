@@ -14,5 +14,6 @@ const namespace = getTokenNamespace(Astro.params.namespace);
   title={namespace.heading}
   metaTitle={namespace.pageTitle}
 >
+  <mark>Namespace index</mark>
   <TokenLinkList namespace={namespace.id} nodes={namespace.getTree()} />
 </DesignTokensLayout>

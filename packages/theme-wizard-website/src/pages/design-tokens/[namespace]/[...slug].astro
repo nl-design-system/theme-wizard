@@ -1,0 +1,16 @@
+---
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
+import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens-nav';
+
+
+export function getStaticPaths() {
+  return getStaticPathsDesignTokens('slug');
+}
+---
+
+<DesignTokensLayout
+  title="todo"
+  metaTitle="todo"
+>
+  <mark>slug</mark>
+</DesignTokensLayout>
