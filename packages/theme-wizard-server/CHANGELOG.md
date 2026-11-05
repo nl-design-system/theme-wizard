@@ -1,5 +1,12 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.2.9
+
+### Patch Changes
+
+- Updated dependencies [650f8ca]
+  - @nl-design-system-community/css-scraper@1.2.6
+
 ## 1.2.8
 
 ### Patch Changes

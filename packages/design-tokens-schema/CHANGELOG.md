@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.6.1
+
+### Patch Changes
+
+- 650f8ca: Stop bundling JavaScript dependencies, so they can be shared with other packages. css-scraper and design-tokens-schema are now also marked as side-effect free and publish one file per module, so unused code can be tree-shaken
+
 ## 2.6.0
 
 ### Minor Changes

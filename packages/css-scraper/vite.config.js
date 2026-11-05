@@ -1,7 +1,11 @@
 import { terseLog } from '@nl-design-system-community/vite-plugin-terse-log';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import dts from 'unplugin-dts/vite';
 import { defineConfig } from 'vite';
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const deps = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
 
 export default defineConfig({
   build: {
@@ -13,13 +17,13 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: [
-        '@nl-design-system-community/design-tokens-schema',
-        '@projectwallace/css-design-tokens',
-        '@projectwallace/css-parser',
-        'linkedom',
-        'zod',
-      ],
+      external: (id) => deps.some((dep) => id === dep || id.startsWith(`${dep}/`)),
+      output: {
+        // Keep one file per module so consumers can tree-shake unused ones
+        entryFileNames: '[name].js',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+      },
     },
   },
   plugins: [terseLog(), dts()],

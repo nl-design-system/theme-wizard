@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/css-scraper",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": "Community for NL Design System",
   "description": "CSS Scraper",
   "license": "EUPL-1.2",
@@ -9,12 +9,13 @@
     "nl-design-system"
   ],
   "type": "module",
-  "module": "./dist/css-scraper.js",
+  "sideEffects": false,
+  "module": "./dist/get-css.js",
   "types": "./dist/get-css.d.ts",
   "exports": {
     ".": {
       "types": "./dist/get-css.d.ts",
-      "import": "./dist/css-scraper.js"
+      "import": "./dist/get-css.js"
     }
   },
   "files": [
