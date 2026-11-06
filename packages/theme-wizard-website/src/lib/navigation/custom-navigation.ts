@@ -57,7 +57,7 @@ function collectGroupedItems(navTree: NavigationItems, groupPaths: string[], bas
  * @param item - The navigation item to update
  * @param value - The value to set for hideUntilCurrent
  */
-export function setHideUntilCurrent(item: NavigationItem, value: boolean): void {
+function setHideUntilCurrent(item: NavigationItem, value: boolean): void {
   item.hideUntilCurrent = value;
   if (item.items) {
     item.items.forEach((child) => setHideUntilCurrent(child, value));

@@ -9,7 +9,7 @@ export interface CurrentDesignTokenPage {
   segments: TokenPath;
 }
 
-export const customNavigationConfigBasis: NavigationConfigItem[] = [
+const customNavigationConfigBasis: NavigationConfigItem[] = [
   {
     href: `${DESIGN_TOKENS_BASE_URL}/basis/color`,
     items: [
@@ -94,13 +94,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     },
   },
   {
-    groups: [
-      'basis.text.font-family',
-      'basis.text.font-size',
-      'basis.text.font-weight',
-      'basis.text.line-height',
-      'basis.heading',
-    ],
+    groups: ['basis.heading'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/text`,
     label: 'Typography',
     metaData: {
