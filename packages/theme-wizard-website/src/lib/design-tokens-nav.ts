@@ -26,7 +26,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
         href: `${DESIGN_TOKENS_BASE_URL}/basis/color/accent`,
         label: 'Accent',
         metaData: {
-          astroFragment: 'colorCollection',
+          astroPageFragment: 'colorCollection',
         },
       },
       {
@@ -35,7 +35,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
         href: `${DESIGN_TOKENS_BASE_URL}/basis/color/default-group`,
         label: 'Standaard',
         metaData: {
-          astroFragment: 'colorCollection',
+          astroPageFragment: 'colorCollection',
         },
       },
       {
@@ -49,7 +49,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
         href: `${DESIGN_TOKENS_BASE_URL}/basis/color/action`,
         label: 'Interactie',
         metaData: {
-          astroFragment: 'colorCollection',
+          astroPageFragment: 'colorCollection',
         },
       },
       {
@@ -67,7 +67,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
         href: `${DESIGN_TOKENS_BASE_URL}/basis/color/signal`,
         label: 'Signaal',
         metaData: {
-          astroFragment: 'colorCollection',
+          astroPageFragment: 'colorCollection',
         },
       },
       {
@@ -84,13 +84,13 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
         href: `${DESIGN_TOKENS_BASE_URL}/basis/color/misc`,
         label: 'Overig',
         metaData: {
-          astroFragment: 'slug',
+          astroPageFragment: 'slug',
         },
       },
     ],
     label: 'Kleur',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
   {
@@ -104,7 +104,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     href: `${DESIGN_TOKENS_BASE_URL}/basis/text`,
     label: 'Typography',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
   {
@@ -119,14 +119,14 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     href: `${DESIGN_TOKENS_BASE_URL}/basis/space`,
     label: 'Ruimte',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
   {
     href: `${DESIGN_TOKENS_BASE_URL}/basis/size`,
     label: 'Grootte',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
   {
@@ -134,14 +134,14 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     href: `${DESIGN_TOKENS_BASE_URL}/basis/border`,
     label: 'Randen en lijnen',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
   {
     href: `${DESIGN_TOKENS_BASE_URL}/basis/misc`,
     label: 'Overig',
     metaData: {
-      astroFragment: 'slug',
+      astroPageFragment: 'slug',
     },
   },
 ];
@@ -186,7 +186,7 @@ const flattenNavigation = (navigation: NavigationItems): NavigationItems => {
   });
 };
 
-export const getStaticPaths = (astroFragment: string) => {
+export const getStaticPaths = (astroPageFragment: string) => {
   const designTokenNavigation = getDesignTokensNavItems();
 
   // flatten navigation, for easy access to all pages
@@ -194,22 +194,17 @@ export const getStaticPaths = (astroFragment: string) => {
 
   // generate staticPaths
   return flattenedNavigation
-    .filter((page) => page?.metaData?.astroFragment === astroFragment)
+    .filter((page) => page?.metaData?.astroPageFragment === astroPageFragment)
     .map((page) => {
       const fragments = page.href.split('/');
       fragments.shift();
       const namespace = fragments[1];
 
-      const pageData = {
-        ...page,
-        // items: page.items,
-      };
-
       return {
-        params: { namespace, [page?.metaData?.astroFragment || 'slug']: fragments.slice(2).join('/') },
+        params: { namespace, [page?.metaData?.astroPageFragment || 'slug']: fragments.slice(2).join('/') },
         props: {
           namespace,
-          pageData,
+          pageData: page,
         },
       };
     });

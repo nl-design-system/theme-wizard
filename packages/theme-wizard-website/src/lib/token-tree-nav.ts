@@ -1,9 +1,7 @@
 import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
-import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
+import { findTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
 import type { NavigationItem, NavigationItems } from '../types/navigation';
-
-type AstroPageFragment = 'leaf' | 'branch' | 'basisColorBranch';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 
@@ -17,7 +15,12 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
       items: node.children.length > 0 ? toNavigationItems(node.children, currentPath) : undefined,
       label: node.key,
       metaData: {
-        astroFragment: node.isLeaf ? 'leaf' : 'branch',
+        astroPageFragment:
+          node.path[0] === 'color' && node.path.length === 2 && node.path[1] !== 'transparent'
+            ? 'colorBranch'
+            : node.isLeaf
+              ? 'leaf'
+              : 'branch',
         tokenPath: node.path,
       },
     }));
@@ -32,35 +35,5 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
     };
   };
 
-  const getStaticPaths = ({
-    astroPageFragment,
-    tree,
-  }: {
-    astroPageFragment: AstroPageFragment;
-    tree: TokenTreeNode[];
-  }) =>
-    flattenTreePaths(tree)
-      .map((path) => {
-        const slug = path.join('/');
-        const pageData = resolveSlugPage(tree, slug);
-        let type: AstroPageFragment = 'branch';
-
-        if (pageData.node.isLeaf) {
-          type = 'leaf';
-        } else if (path[0] === 'color' && path.length === 2 && path[1] !== 'transparent') {
-          type = 'basisColorBranch';
-        }
-
-        return {
-          params: { [astroPageFragment]: slug, namespace },
-          props: {
-            namespace,
-            pageData,
-            type,
-          },
-        };
-      })
-      .filter(({ props }) => props.type === astroPageFragment);
-
-  return { getStaticPaths, hrefFor, resolveSlugPage, toNavigationItems };
+  return { hrefFor, resolveSlugPage, toNavigationItems };
 };

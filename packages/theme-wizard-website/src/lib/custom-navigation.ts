@@ -3,7 +3,7 @@ import type { NavigationItem, NavigationItems } from '../types/navigation';
 export interface NavigationConfigItem extends NavigationItem {
   groups?: string[];
   hideSubItems?: boolean;
-  astroFragment?: string;
+  astroPageFragment?: string;
   items?: NavigationConfigItem[];
 }
 
