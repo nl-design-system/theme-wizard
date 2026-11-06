@@ -1,23 +1,26 @@
 ---
-import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
-import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
-import { capitalize } from 'es-toolkit';
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
+import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
+import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
+import { capitalize } from 'es-toolkit';
 
 export function getStaticPaths() {
-  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), astroPageFragment: 'leaf'}));
+  return getStaticPathsDesignTokens('leaf');
 }
 
-const { node, tokenPath } = Astro.props.pageData;
+const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
+const tokenPath = pageData?.metaData?.tokenPath ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`: undefined;
 ---
 
 <DesignTokensLayout
-  title={capitalize(node.key)}
-  metaTitle={`${node.key} - ${namespace.pageTitle}`}
+  title={capitalize(pageData.label)}
+  metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
 >
-  <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
-
-  <wizard-token-field path={tokenPath} />
-  <TokenStoryMatches groups={tokenPath} />
+  {tokenPath ?
+    <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+    <wizard-token-field path={tokenPath} />
+    <TokenStoryMatches groups={tokenPath} />
+  : null}
 </DesignTokensLayout>
