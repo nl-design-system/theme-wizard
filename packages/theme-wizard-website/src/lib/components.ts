@@ -1,4 +1,4 @@
-import type { NavigationItems } from '../types/navigation';
+import type { NavigationItems } from '@/types';
 
 const COMPONENTS_BASE_PATH = '/components';
 

@@ -1,4 +1,4 @@
-import type { NavigationItem, NavigationItems } from '../types/navigation';
+import type { NavigationItem, NavigationItems } from '@/types';
 
 export interface NavigationConfigItem extends NavigationItem {
   groups?: string[];

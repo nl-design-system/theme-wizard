@@ -1,7 +1,7 @@
+import type { NavigationItems } from '@/types';
 import { componentsNavigationItems } from '@/lib/components';
 import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
 import { DESIGN_TOKENS_BASE_URL } from '@/lib/token-tree-nav';
-import type { NavigationItems } from './types/navigation';
 
 const designTokensNavItems = getDesignTokensNavItems();
 

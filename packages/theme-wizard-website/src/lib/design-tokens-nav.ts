@@ -1,5 +1,5 @@
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
-import type { NavigationItems } from '../types/navigation';
+import type { NavigationItems } from '@/types';
 import { addTokenGroupsToNavigation, type NavigationConfigItem } from './custom-navigation';
 import { TOKEN_NAMESPACES, type TokenNamespaceId } from './token-namespaces';
 import { DESIGN_TOKENS_BASE_URL } from './token-tree-nav';

@@ -2,7 +2,7 @@ import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/desig
 import { findTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
 import { capitalize } from 'es-toolkit';
-import type { NavigationItem, NavigationItems } from '../types/navigation';
+import type { NavigationItem, NavigationItems } from '@/types';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 
