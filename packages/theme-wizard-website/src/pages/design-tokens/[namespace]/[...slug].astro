@@ -1,7 +1,7 @@
 ---
 import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
-import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens-nav';
-import { getTokenNamespace } from '@/lib/token-namespaces';
+import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
+import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
 import { capitalize } from 'es-toolkit';
 
 
@@ -19,9 +19,9 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   {pageData.items ?
     <wizard-unstyled-list>
       {
-        pageData.items.filter(item => item.metaData?.tokenPath).map((item) => (
+        pageData.items.map((item) => (
           <li>
-            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
+            <wizard-link-to-token path={item.metaData.tokenPath ? `${namespace.id}.${item.metaData.tokenPath.join('.')}`: undefined}>
               <a slot="link" href={item.href}>
                 group
               </a>
