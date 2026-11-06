@@ -96,7 +96,7 @@ const customNavigationConfigBasis: NavigationConfigItem[] = [
   {
     groups: ['basis.heading'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/text`,
-    label: 'Typography',
+    label: 'Typografie',
     metaData: {
       astroPageFragment: 'slug',
     },
