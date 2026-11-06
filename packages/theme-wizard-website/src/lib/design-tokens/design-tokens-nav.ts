@@ -151,7 +151,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
 // other sections' trees render fully but with nothing marked current.
 // The `basis` token tree uses customNavigationConfigBasis as its structure.
 export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): NavigationItems => {
-  const tokenNavigationTree = TOKEN_NAMESPACES.map((namespace) => ({
+  const tokenNavigationTree: NavigationItems = TOKEN_NAMESPACES.map((namespace) => ({
     current: current?.namespace === namespace.id && current.segments.length === 0,
     href: namespace.href,
     items: namespace.nav.toNavigationItems(
