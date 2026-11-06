@@ -108,14 +108,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     },
   },
   {
-    groups: [
-      'basis.space.block',
-      'basis.space.inline',
-      'basis.space.row',
-      'basis.space.column',
-      'basis.space.text',
-      'basis.space.none',
-    ],
+    groups: ['basis.space.none'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/space`,
     label: 'Ruimte',
     metaData: {
@@ -123,6 +116,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     },
   },
   {
+    groups: ['basis.pointer-target', 'basis.page'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/size`,
     label: 'Grootte',
     metaData: {
@@ -138,6 +132,7 @@ export const customNavigationConfigBasis: NavigationConfigItem[] = [
     },
   },
   {
+    groups: ['basis.form-control', 'basis.focus', 'basis.action', 'basis.action'],
     href: `${DESIGN_TOKENS_BASE_URL}/basis/misc`,
     label: 'Overig',
     metaData: {

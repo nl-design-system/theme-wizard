@@ -67,7 +67,9 @@ export function setHideUntilCurrent(item: NavigationItem, value: boolean): void 
 /**
  * Recursively merge items from tokenNavigationTree into customNavigationConfigNewBasis.
  * For each item with a `groups` property, find the corresponding items in the token tree
- * and populate its `items` property.
+ * and populate its `items` property. If a matching node exists in the token tree with the
+ * same href and has existing sub-items, those are merged with the grouped items (with
+ * token tree items filtered out if they have the same href as any grouped item).
  * For leaf items (no items, no groups), copy child items from matching token tree node.
  */
 export function addTokenGroupsToNavigation(
@@ -86,14 +88,27 @@ export function addTokenGroupsToNavigation(
     if (configItem.groups && configItem.groups.length > 0) {
       const groupedItems = collectGroupedItems(tokenNavTree, configItem.groups, baseUrl);
 
-      // Set hideUntilCurrent on all grouped items if specified
-      if (configItem.hideSubItems) {
-        groupedItems.forEach((groupedItem) => {
-          setHideUntilCurrent(groupedItem, true);
-        });
+      // Check if there's a matching node in tokenNavTree with the same href
+      const matchingTokenNode = findNodeByHref(tokenNavTree, newItem.href);
+
+      if (matchingTokenNode?.items) {
+        // Filter out token tree items that have the same href as any grouped item
+        const groupedHrefs = new Set(groupedItems.map((item) => item.href));
+        const filteredTokenItems = structuredClone(
+          matchingTokenNode.items.filter((tokenItem) => !groupedHrefs.has(tokenItem.href)),
+        );
+        // Merge filtered token items with grouped items
+        newItem.items = [...filteredTokenItems, ...groupedItems];
+      } else {
+        newItem.items = groupedItems;
       }
 
-      newItem.items = groupedItems;
+      // Set hideUntilCurrent on all items if specified
+      if (configItem.hideSubItems && newItem.items) {
+        newItem.items.forEach((child) => {
+          setHideUntilCurrent(child, true);
+        });
+      }
     }
     // If item has no items and no groups, try to copy items from matching token tree node
     else if (!configItem.items && !newItem.items) {
