@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { isRef, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { isRef, isValueToken, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 import { getStories } from './csf-utils';
 
@@ -42,15 +42,13 @@ export type StoryCandidate = {
   tokenPaths: string[];
 };
 
-// `editableTokens` leaves are informal `{ $value: ... }` placeholders (no `$type`), so this
-// can't reuse design-tokens-schema's stricter `isTokenLike`/`walkTokens` — a leaf here is any
-// plain object carrying a `$value` key, full stop.
+// `editableTokens` leaves are informal `{ $value: ... }` placeholders (no `$type`)
 function getEditableTokenPaths(editableTokens: unknown, path: TokenPath = []): string[] {
   if (typeof editableTokens !== 'object' || editableTokens === null) {
     return [];
   }
 
-  if (Object.hasOwn(editableTokens, '$value')) {
+  if (isValueToken(editableTokens)) {
     return [path.join('.')];
   }
 
