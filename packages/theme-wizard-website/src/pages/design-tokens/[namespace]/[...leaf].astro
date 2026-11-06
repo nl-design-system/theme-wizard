@@ -18,12 +18,9 @@ const tokenPath = pageData?.metaData?.tokenPath ? `${namespace.id}.${pageData.me
   title={capitalize(pageData.label)}
   metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
 >
-  <mark>leaf</mark>
-
   {tokenPath ?
     <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
     <wizard-token-field path={tokenPath} />
     <TokenStoryMatches groups={tokenPath} />
   : null}
-
 </DesignTokensLayout>

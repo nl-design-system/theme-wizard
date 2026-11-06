@@ -15,8 +15,6 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   title={pageData.label}
   metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
 >
-  <mark>branch</mark>
-
   {pageData.items ?
     <wizard-unstyled-list>
       {

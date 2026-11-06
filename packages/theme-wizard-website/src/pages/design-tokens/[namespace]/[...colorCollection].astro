@@ -16,9 +16,8 @@ const namespace = getTokenNamespace(Astro.props.namespace);
   title={pageData.label}
   metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
 >
-  <mark>colorCollection</mark>
-
-  <wizard-unstyled-list>
+  {pageData.items ?
+    <wizard-unstyled-list>
       {
         pageData.items.filter(item => !item.href.includes('-inverse') && item.metaData.tokenPath).map((item) => (
           <li>
@@ -32,4 +31,5 @@ const namespace = getTokenNamespace(Astro.props.namespace);
         ))
       }
     </wizard-unstyled-list>
+  : null}
 </DesignTokensLayout>
