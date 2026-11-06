@@ -1,6 +1,7 @@
 import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { findTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
+import { capitalize } from 'es-toolkit';
 import type { NavigationItem, NavigationItems } from '../types/navigation';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
@@ -13,7 +14,7 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
       current: dequal(node.path, currentPath),
       href: hrefFor(node.path),
       items: node.children.length > 0 ? toNavigationItems(node.children, currentPath) : undefined,
-      label: node.key,
+      label: capitalize(node.key),
       metaData: {
         astroPageFragment:
           node.path[0] === 'color' && node.path.length === 2 && node.path[1] !== 'transparent'
