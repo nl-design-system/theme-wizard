@@ -34,17 +34,17 @@ export default css`
 
   /* Overlap the adjacent borders so they form a single divider. */
   ::slotted([slot='end']) {
+    --_clippy-split-button-end-border-width: var(--nl-button-primary-border-width, 1px);
     --nl-button-border-radius: 0 var(--clippy-split-button-border-radius) var(--clippy-split-button-border-radius) 0;
 
-    margin-inline-start: calc(-1 * var(--nl-button-primary-border-width, 1px));
+    margin-inline-start: calc(-1 * var(--_clippy-split-button-end-border-width));
   }
 
   ::slotted([slot='end'][purpose='secondary']) {
-    margin-inline-start: calc(-1 * var(--nl-button-secondary-border-width, 1px));
+    --_clippy-split-button-end-border-width: var(--nl-button-secondary-border-width, 1px);
   }
 
-  ::slotted([slot='start']:is(:hover, :focus-within)),
-  ::slotted([slot='end']:is(:hover, :focus-within)) {
+  ::slotted(:is([slot='start'], [slot='end']):is(:hover, :focus-within)) {
     position: relative;
     z-index: 1;
   }
