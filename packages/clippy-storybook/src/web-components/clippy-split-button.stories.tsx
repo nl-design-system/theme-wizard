@@ -4,7 +4,7 @@ import '@nl-design-system-community/clippy-components/clippy-icon';
 import '@nl-design-system-community/clippy-components/clippy-split-button';
 import '@nl-design-system-candidate/button-css/button.css';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-split-button/README.md?raw';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Purpose = 'primary' | 'secondary';
 
@@ -32,7 +32,17 @@ const menuItemStyle = {
 } as React.CSSProperties;
 
 const SplitButtonDemo = ({ args }: { args: StoryArgs }) => {
-  const [open, setOpen] = useState(args.open);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLUListElement>(null);
+  const wasOpenRef = useRef(false);
+
+  useEffect(() => {
+    const menu = menuRef.current!;
+    const onToggle = (event: Event) => setOpen((event as ToggleEvent).newState === 'open');
+    menu.addEventListener('toggle', onToggle);
+    if (args.open) menu.showPopover();
+    return () => menu.removeEventListener('toggle', onToggle);
+  }, [args.open]);
 
   return React.createElement(
     'clippy-split-button',
@@ -45,7 +55,12 @@ const SplitButtonDemo = ({ args }: { args: StoryArgs }) => {
         disabled: args.endDisabled,
         expanded: open || undefined,
         'icon-only': true,
-        onClick: () => !args.endDisabled && setOpen(!open),
+        onClick: () => {
+          if (!args.endDisabled && !wasOpenRef.current) menuRef.current?.showPopover();
+        },
+        onPointerDown: () => {
+          wasOpenRef.current = menuRef.current?.matches(':popover-open') ?? false;
+        },
         purpose: args.endPurpose,
         slot: 'end',
       },
@@ -54,17 +69,16 @@ const SplitButtonDemo = ({ args }: { args: StoryArgs }) => {
     ),
     React.createElement(
       'ul',
-      { id: 'split-button-menu', hidden: !open, role: 'menu', slot: 'menu' },
+      { id: 'split-button-menu', popover: 'auto', ref: menuRef, slot: 'menu' },
       args.menuItems.map((item) =>
         React.createElement(
           'li',
-          { key: item, role: 'none' },
+          { key: item },
           React.createElement(
             'button',
             {
               className: 'nl-button nl-button--subtle',
-              onClick: () => setOpen(false),
-              role: 'menuitem',
+              onClick: () => menuRef.current?.hidePopover(),
               style: menuItemStyle,
               type: 'button',
             },
@@ -117,8 +131,8 @@ const meta = {
     <clippy-icon slot="iconStart"><svg>…</svg></clippy-icon>
     Primary
   </clippy-button>
-  <ul slot="menu" id="menu" role="menu" hidden>
-    <li role="none"><button class="nl-button nl-button--subtle" role="menuitem">Action one</button></li>
+  <ul slot="menu" id="menu" popover>
+    <li><button class="nl-button nl-button--subtle" type="button">Action one</button></li>
   </ul>
 </clippy-split-button>`,
         type: 'code',

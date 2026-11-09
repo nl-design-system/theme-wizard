@@ -18,9 +18,9 @@ describe(`<${tag}>`, () => {
       <${tag} style="--nl-button-border-radius: 8px; --nl-button-primary-border-width: 1px; --nl-button-secondary-border-width: 1px; --basis-color-action-1-border-subtle: #dbb8e6">
         <clippy-button slot="start" purpose="${startPurpose}">Primary</clippy-button>
         <clippy-button slot="end" purpose="${endPurpose}" icon-only>Secondary</clippy-button>
-        <ul slot="menu" role="menu">
-          <li role="none"><button role="menuitem">Action one</button></li>
-          <li role="none"><button role="menuitem">Action two</button></li>
+        <ul slot="menu" popover>
+          <li><button type="button">Action one</button></li>
+          <li><button type="button">Action two</button></li>
         </ul>
       </${tag}>
     `;
@@ -72,8 +72,8 @@ describe(`<${tag}>`, () => {
       const assigned = getSlot('menu').assignedElements();
 
       expect(assigned).toHaveLength(1);
-      expect(assigned[0].getAttribute('role')).toBe('menu');
-      expect(assigned[0].querySelectorAll('[role="menuitem"]')).toHaveLength(2);
+      expect(assigned[0].hasAttribute('popover')).toBe(true);
+      expect(assigned[0].querySelectorAll('button')).toHaveLength(2);
     });
 
     it('renders without a menu', () => {
@@ -119,7 +119,9 @@ describe(`<${tag}>`, () => {
     });
 
     it('anchors the menu below the buttons', () => {
-      const menu = component.querySelector('[slot="menu"]')!.getBoundingClientRect();
+      const popover = component.querySelector<HTMLElement>('[slot="menu"]')!;
+      popover.showPopover();
+      const menu = popover.getBoundingClientRect();
       const buttons = component.getBoundingClientRect();
 
       expect(menu.top).toBe(buttons.bottom);

@@ -4,7 +4,7 @@ Joins a button at the start and a button at the end, which opens a menu or is a 
 
 The slotted buttons are expected to render an `nl-button` (such as `<clippy-button>`), which reads its corners from `--nl-button-border-radius`. The split button overrides that per button with the theme's own value, also in right-to-left layouts.
 
-The menu is anchored to the buttons with [CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning): it opens below them, aligned to the start, and is at least as wide as them. When there is no room, it flips to the other side. Opening and closing the menu, and keyboard handling inside it, are up to the application.
+The menu is anchored to the buttons with [CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning): it opens below them, aligned to the start, and is at least as wide as them. When there is no room, it flips to the other side. Make the menu a `popover` and open it from the end button with `showPopover()`: the browser closes it on Escape or a click outside, and keeping `expanded` on the end button in sync is up to the application.
 
 ## Usage
 
@@ -15,13 +15,13 @@ import '@nl-design-system-community/clippy-components/clippy-split-button';
 ```html
 <clippy-split-button>
   <clippy-button slot="start" purpose="primary">Primary</clippy-button>
-  <clippy-button slot="end" purpose="primary" icon-only expanded controls="split-button-menu">
+  <clippy-button slot="end" purpose="primary" icon-only controls="split-button-menu">
     <clippy-icon slot="iconStart"><svg>…</svg></clippy-icon>
     Primary
   </clippy-button>
-  <ul slot="menu" id="split-button-menu" role="menu">
-    <li role="none">
-      <button class="nl-button nl-button--subtle menu-item" type="button" role="menuitem">Action one</button>
+  <ul slot="menu" id="split-button-menu" popover>
+    <li>
+      <button class="nl-button nl-button--subtle menu-item" type="button">Action one</button>
     </li>
   </ul>
 </clippy-split-button>
@@ -45,7 +45,7 @@ The split button can only style the menu itself, not its items. Style the items 
 | ------- | ---------------------------------------------------------------------------------------- |
 | `start` | The main action                                                                          |
 | `end`   | The button at the end, an icon-only `clippy-button` that opens a menu or a second action |
-| `menu`  | Optional menu the end button opens, typically a `<ul role="menu">`; hide when closed     |
+| `menu`  | Optional menu the end button opens, typically a `<ul popover>`                           |
 
 ## CSS Custom Properties
 

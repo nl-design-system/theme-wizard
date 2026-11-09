@@ -17,7 +17,7 @@ declare global {
  *
  * @slot start - The main action.
  * @slot end - The button at the end, an icon-only `clippy-button` that opens a menu or a second action.
- * @slot menu - Optional menu the end button opens, typically a `<ul role="menu">`.
+ * @slot menu - Optional menu the end button opens, typically a `<ul popover>`.
  *
  * @cssprop --clippy-split-button-divider-color - Line between a `purpose="primary"` start button and the end one.
  * @cssprop --clippy-split-button-divider-width - Width of that line.
