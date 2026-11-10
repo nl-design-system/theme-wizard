@@ -18,6 +18,8 @@ const tokenPath = pageData?.metaData?.tokenPath
 <DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
   {tokenPath ? <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs> : null}
 
+  <wizard-form-colorscale path={tokenPath}></wizard-form-colorscale>
+
   {pageData.items ? (
     <wizard-unstyled-list>
       {pageData.items
