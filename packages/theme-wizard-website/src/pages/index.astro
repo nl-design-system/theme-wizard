@@ -1,41 +1,53 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react'
+import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react';
 
 export const items = [
   {
     title: 'Met de huisstijl van een website',
-    linkLabel: 'Navigeer naar \'Huisstijl ophalen\'',
+    linkLabel: "Navigeer naar 'Huisstijl ophalen'",
     description: 'Jij vult een URL in. Wij halen de huisstijl op.',
     href: '/scrape-tokens',
-    icon: IconLink
+    icon: IconLink,
   },
   {
     title: 'Met het Start thema',
-    linkLabel: 'Navigeer naar \'Start\'',
+    linkLabel: "Navigeer naar 'Start'",
     description: 'Begin met het Start thema en pas aan waar nodig.',
     href: '/wizard',
-    icon: IconFileSpark
+    icon: IconFileSpark,
   },
   {
     title: 'Met een eigen thema',
-    linkLabel: 'Navigeer naar \'Thema uploaden\'',
+    linkLabel: "Navigeer naar 'Thema uploaden'",
     description: 'Upload je JSON bestand',
     href: '/upload-tokens',
     icon: IconFileCode,
-  }
-]
+  },
+];
 ---
 
-<MainLayout title="Hoe wil je starten?" metaTitle="Theme Wizard" layoutSize="xs" layoutBlockAlignment="center" skipMetaTitleSuffix>
+<MainLayout
+  title="Hoe wil je starten?"
+  metaTitle="Theme Wizard"
+  layoutSize="xs"
+  layoutBlockAlignment="center"
+  skipMetaTitleSuffix
+>
   <clippy-story-preview size="lg">
     <clippy-stack size="lg">
-      {items.map(link => (
+      {items.map((link) => (
         <wizard-card-as-link>
-          <a href={link.href} slot="link">{link.linkLabel}</a>
+          <a href={link.href} slot="link">
+            {link.linkLabel}
+          </a>
           <link.icon slot="pre-header" aria-hidden="true" />
-          <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
-          <p class="nl-paragraph" slot="body">{link.description}</p>
+          <clippy-heading level="2" slot="header">
+            {link.title}
+          </clippy-heading>
+          <p class="nl-paragraph" slot="body">
+            {link.description}
+          </p>
         </wizard-card-as-link>
       ))}
     </clippy-stack>
@@ -43,7 +55,7 @@ export const items = [
 </MainLayout>
 
 <script>
-  import '@nl-design-system-community/clippy-components/clippy-heading'
-  import '@nl-design-system-community/clippy-components/clippy-stack'
-  import '@nl-design-system-community/clippy-components/clippy-story-preview'
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>

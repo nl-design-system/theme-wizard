@@ -1,4 +1,4 @@
-import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
+import type { NavigationItems } from '@/types';
 
 const COMPONENTS_BASE_PATH = '/components';
 

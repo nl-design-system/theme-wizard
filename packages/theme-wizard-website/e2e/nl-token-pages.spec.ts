@@ -25,7 +25,7 @@ CASES.forEach(({ segments, title }) => {
     test('shows a breadcrumb matching the URL', async ({ nlTokenPage }) => {
       const expectedCrumbs = ['Huisstijl', 'Candidate components', ...segments.slice(0, -1)];
 
-      await expect(nlTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs);
+      await expect(nlTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs, { ignoreCase: true });
       await expect(nlTokenPage.currentBreadcrumbLink).toHaveText(title, { ignoreCase: true });
     });
 
@@ -41,20 +41,20 @@ test.describe('sidebar navigation collapse state', () => {
     await nlTokenPage.goto(['heading', 'level-1', 'color']);
 
     // The whole ancestor chain down to the current leaf is expanded and visible.
-    await expect(nlTokenPage.sidebarLink('heading')).toBeVisible();
-    await expect(nlTokenPage.sidebarLink('level-1')).toBeVisible();
-    await expect(nlTokenPage.sidebarLink('color')).toBeVisible();
+    await expect(nlTokenPage.sidebarLink('Heading')).toBeVisible();
+    await expect(nlTokenPage.sidebarLink('Level-1')).toBeVisible();
+    await expect(nlTokenPage.sidebarLink('Color')).toBeVisible();
 
     // An unrelated top-level component stays visible itself...
-    await expect(nlTokenPage.sidebarLink('data-badge')).toBeVisible();
+    await expect(nlTokenPage.sidebarLink('Data-badge')).toBeVisible();
     // ...but its children are not rendered, since that branch is collapsed.
-    await expect(nlTokenPage.sidebar.getByRole('link', { name: 'background-color', exact: true })).toHaveCount(0);
+    await expect(nlTokenPage.sidebar.getByRole('link', { name: 'Background-color', exact: true })).toHaveCount(0);
   });
 
   test('expands a branch page to show its own children', async ({ nlTokenPage }) => {
     await nlTokenPage.goto(['data-badge']);
 
-    await expect(nlTokenPage.sidebarLink('background-color')).toBeVisible();
+    await expect(nlTokenPage.sidebarLink('Background-color')).toBeVisible();
   });
 });
 

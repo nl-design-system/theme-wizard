@@ -3,14 +3,13 @@ import MainLayout from '../layouts/MainLayout.astro';
 ---
 
 <MainLayout title="Publiceer je thema" metaTitle="Publiceer thema" layoutSize="xs" layoutBlockAlignment="center">
-  <p class="nl-paragraph nl-paragraph--lead" slot="header">Download hier je thema.</p>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">
+    Download hier je thema.
+  </p>
   <clippy-story-preview size="lg">
     <clippy-stack size="lg">
       <wizard-tokens-download></wizard-tokens-download>
-      <wizard-download-link
-        filename="theme-wizard-tokens.css"
-        content-type="text/css"
-      >
+      <wizard-download-link filename="theme-wizard-tokens.css" content-type="text/css">
         Thema downloaden (CSS)
       </wizard-download-link>
       <wizard-theme-reset-button></wizard-theme-reset-button>
@@ -19,8 +18,8 @@ import MainLayout from '../layouts/MainLayout.astro';
 </MainLayout>
 
 <script>
-  import type { WizardApp, WizardDownloadLink } from '@nl-design-system-community/theme-wizard-app'
-  const app = document.querySelector('theme-wizard-app') as WizardApp
-  const cssButton = document.querySelector('wizard-download-link') as WizardDownloadLink
-  cssButton.content = app.theme.css
+  import type { WizardApp, WizardDownloadLink } from '@nl-design-system-community/theme-wizard-app';
+  const app = document.querySelector('theme-wizard-app') as WizardApp;
+  const cssButton = document.querySelector('wizard-download-link') as WizardDownloadLink;
+  cssButton.content = app.theme.css;
 </script>

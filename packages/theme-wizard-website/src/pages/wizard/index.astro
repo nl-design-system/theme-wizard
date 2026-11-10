@@ -17,10 +17,14 @@ const backLink =
 </script>
 
 <WizardLayout title="Maak de eerste keuzes voor je thema" backLink={backLink}>
-  <p class="nl-paragraph nl-paragraph--lead" slot="header">Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.</p>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">
+    Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.
+  </p>
   <nav aria-labelledby="wizard-nav-title">
     <clippy-stack size="3xl">
-      <clippy-heading level="2" id="wizard-nav-title">Maak stapsgewijs keuzes</clippy-heading>
+      <clippy-heading level="2" id="wizard-nav-title">
+        Maak stapsgewijs keuzes
+      </clippy-heading>
       <wizard-step-form-task-navigation-list></wizard-step-form-task-navigation-list>
     </clippy-stack>
   </nav>

@@ -48,6 +48,7 @@
     "npm-package-json-lint": "11.0.1",
     "postcss": "8.5.32",
     "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
     "stylelint": "17.16.0",
     "stylelint-config-astro": "2.0.0",
     "stylelint-config-standard-scss": "17.0.0",

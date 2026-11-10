@@ -1,5 +1,35 @@
 # @nl-design-system-community/clippy-components
 
+## 3.9.0
+
+### Minor Changes
+
+- d293cfd: `clippy-side-navigation` now supports `hideUntilCurrent` where subitems are hidden until atleast one of the nested subitems is the current page.
+- 3bcc4e7: feat(clippy-components): clippy-split-button
+
+## 3.8.3
+
+### Patch Changes
+
+- Updated dependencies [b77322a]
+  - @nl-design-system-community/design-tokens-schema@2.7.0
+
+## 3.8.2
+
+### Patch Changes
+
+- 650f8ca: Stop bundling JavaScript dependencies, so they can be shared with other packages. css-scraper and design-tokens-schema are now also marked as side-effect free and publish one file per module, so unused code can be tree-shaken
+- Updated dependencies [650f8ca]
+  - @nl-design-system-community/design-tokens-schema@2.6.1
+
+## 3.8.1
+
+### Patch Changes
+
+- 07b5365: make sure colors are always rendered in the correct order for clippy-token-table-color
+- Updated dependencies [d43a2b9]
+  - @nl-design-system-community/design-tokens-schema@2.6.0
+
 ## 3.8.0
 
 ### Minor Changes

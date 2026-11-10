@@ -3,8 +3,8 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import { capitalize } from 'es-toolkit/string';
 
-const scale = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'] as const
-const concepts = ['inline', 'block', 'text', 'column', 'row']
+const scale = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'] as const;
+const concepts = ['inline', 'block', 'text', 'column', 'row'];
 ---
 
 <script>
@@ -15,10 +15,13 @@ const concepts = ['inline', 'block', 'text', 'column', 'row']
 </script>
 
 <MainLayout title="Spacing systeem" metaTitle="Spacing systeem" layoutPurpose="detail" mainPath="/style-guide">
-  <clippy-table-of-contents slot="aside" items={JSON.stringify(concepts.map(concept => ({label: capitalize(concept), href: `#${concept}`})))}></clippy-table-of-contents>
+  <clippy-table-of-contents
+    slot="aside"
+    items={JSON.stringify(concepts.map((concept) => ({ label: capitalize(concept), href: `#${concept}` })))}
+  ></clippy-table-of-contents>
 
   <clippy-stack size="5xl">
-    {concepts.map(concept => (
+    {concepts.map((concept) => (
       <section class="wizard-anchor" id={concept}>
         <clippy-stack size="xl">
           <wizard-token-docs groups={`basis.space.${concept}`} heading-level="2"></wizard-token-docs>

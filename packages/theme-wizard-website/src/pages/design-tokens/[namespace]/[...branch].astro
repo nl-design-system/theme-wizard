@@ -1,20 +1,31 @@
 ---
 import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
-import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
+import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
 import { capitalize } from 'es-toolkit';
-import TokenLinkList from '@/components/TokenLinkList.astro';
 
 export function getStaticPaths() {
-  return TOKEN_NAMESPACES.flatMap((namespace) => namespace.nav.getStaticPaths({tree: namespace.getTree(), astroPageFragment: 'branch'}));
+  return getStaticPathsDesignTokens('branch');
 }
-
-const { node } = Astro.props.pageData;
+const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
 ---
 
-<DesignTokensLayout
-  title={capitalize(node.key)}
-  metaTitle={`${node.key} - ${namespace.pageTitle}`}
->
-  <TokenLinkList namespace={namespace.id} nodes={node.children} />
+<DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+  {pageData.items ? (
+    <wizard-unstyled-list>
+      {pageData.items
+        .filter((item) => item.metaData?.tokenPath)
+        .map((item) => (
+          <li>
+            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
+              <a slot="link" href={item.href}>
+                Navigeer naar {item.label}
+              </a>
+              {capitalize(item.label)}
+            </wizard-link-to-token>
+          </li>
+        ))}
+    </wizard-unstyled-list>
+  ) : null}
 </DesignTokensLayout>
