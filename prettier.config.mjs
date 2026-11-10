@@ -2,6 +2,7 @@
  * @type {import('prettier').Config}
  */
 export default {
+  plugins: ['prettier-plugin-astro'],
   // Use a printWith of 120 characters which is different from the default 80
   printWidth: 120,
   // Use single quotes (') instead of the default double quotes ("), but see below.
@@ -22,6 +23,19 @@ export default {
       options: {
         // Use double quotes (")
         singleQuote: false,
+      },
+    },
+    {
+      files: '*.astro',
+      options: {
+        parser: 'astro',
+      },
+    },
+    {
+      // match pnpm CLI-driven changes behavior
+      files: ['pnpm-workspace.yaml'],
+      options: {
+        singleQuote: true,
       },
     },
   ],
