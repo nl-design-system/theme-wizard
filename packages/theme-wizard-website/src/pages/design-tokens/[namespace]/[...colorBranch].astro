@@ -28,7 +28,7 @@ const tokenPath = pageData?.metaData?.tokenPath ? `${namespace.id}.${pageData.me
           <li>
             <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
               <a slot="link" href={item.href}>
-                group
+                Navigeer naar {item.label}
               </a>
               {capitalize(item.label)}
             </wizard-link-to-token>

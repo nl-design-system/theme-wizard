@@ -188,12 +188,11 @@ export const getStaticPaths = (astroPageFragment: string) => {
   return flattenedNavigation
     .filter((page) => page?.metaData?.astroPageFragment === astroPageFragment)
     .map((page) => {
-      const fragments = page.href.split('/');
-      fragments.shift();
-      const namespace = fragments[1];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [_root, _toplevel, namespace, ...fragments] = page.href.split('/');
 
       return {
-        params: { namespace, [page?.metaData?.astroPageFragment || 'slug']: fragments.slice(2).join('/') },
+        params: { namespace, [page?.metaData?.astroPageFragment || 'slug']: fragments.join('/') },
         props: {
           namespace,
           pageData: page,

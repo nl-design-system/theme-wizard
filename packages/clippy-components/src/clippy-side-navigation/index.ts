@@ -117,7 +117,6 @@ export class ClippySideNavigation extends LitElement {
       return nothing;
     }
 
-    const hasSubItems = (item.items?.length ?? 0) > 0;
     const isOpen = this.expandedItems.has(item);
     const hasRenderableSubItems = this.#hasRenderableSubItems(item);
 
@@ -135,7 +134,7 @@ export class ClippySideNavigation extends LitElement {
             ${item.label}
           </a>
           ${
-            hasSubItems && hasRenderableSubItems
+            hasRenderableSubItems
               ? html`
                   <span class="denhaag-side-navigation__expand-separator"></span>
                   <button
@@ -153,7 +152,7 @@ export class ClippySideNavigation extends LitElement {
           }
         </span>
         ${
-          hasSubItems && isOpen
+          hasRenderableSubItems && isOpen
             ? html`
                 <ul class="denhaag-side-navigation__list">
                   ${map(item.items!, (child) => this.#renderItem(child))}
