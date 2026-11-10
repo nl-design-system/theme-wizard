@@ -1,5 +1,12 @@
 # @nl-design-system-community/clippy-components
 
+## 3.9.0
+
+### Minor Changes
+
+- d293cfd: `clippy-side-navigation` now supports `hideUntilCurrent` where subitems are hidden until atleast one of the nested subitems is the current page.
+- 3bcc4e7: feat(clippy-components): clippy-split-button
+
 ## 3.8.3
 
 ### Patch Changes
