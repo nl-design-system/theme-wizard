@@ -112,8 +112,10 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
-  override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
-    this.#options = value.map(({ label, value }) => {
+  override set options(
+    value: Array<{ description: Option['description']; label: Option['label']; value: Option['value'] }>,
+  ) {
+    this.#options = value.map(({ description, label, value }) => {
       let color = undefined;
       if (this.type === 'color') {
         if (isRef(value?.$value)) {
@@ -124,6 +126,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       }
       return {
         color: color ?? undefined,
+        description,
         label,
         value,
       };
