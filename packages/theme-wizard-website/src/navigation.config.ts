@@ -1,8 +1,10 @@
-import type { NavigationItems } from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
+import type { NavigationItems } from '@/types';
 import { componentsNavigationItems } from '@/lib/components';
-import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
-import { DESIGN_TOKENS_BASE_URL } from '@/lib/token-tree-nav';
+import { getDesignTokensNavItems } from '@/lib/design-tokens/design-tokens-nav';
+import { DESIGN_TOKENS_BASE_URL } from '@/lib/design-tokens/token-tree-nav';
+
 const designTokensNavItems = getDesignTokensNavItems();
+
 const styleGuideItems: NavigationItems = [
   { href: '/style-guide/color-system', label: 'Kleur systeem' },
   { href: '/style-guide/typography-system', label: 'Typografie systeem' },
