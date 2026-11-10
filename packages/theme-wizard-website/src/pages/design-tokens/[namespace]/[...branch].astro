@@ -11,14 +11,12 @@ const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
 ---
 
-<DesignTokensLayout
-  title={pageData.label}
-  metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
->
-  {pageData.items ?
+<DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+  {pageData.items ? (
     <wizard-unstyled-list>
-      {
-        pageData.items.filter(item => item.metaData?.tokenPath).map((item) => (
+      {pageData.items
+        .filter((item) => item.metaData?.tokenPath)
+        .map((item) => (
           <li>
             <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
               <a slot="link" href={item.href}>
@@ -27,8 +25,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
               {capitalize(item.label)}
             </wizard-link-to-token>
           </li>
-        ))
-      }
+        ))}
     </wizard-unstyled-list>
-  : null}
+  ) : null}
 </DesignTokensLayout>

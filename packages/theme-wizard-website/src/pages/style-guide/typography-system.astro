@@ -5,26 +5,26 @@ import { capitalize } from 'es-toolkit/string';
 
 const SECTIONS = [
   {
-    name: "Lettertype",
+    name: 'Lettertype',
     id: 'font-family',
     tokens: ['default', 'monospace'],
   },
   {
-    name: "Lettergewicht",
+    name: 'Lettergewicht',
     id: 'font-weight',
     tokens: ['default', 'bold'],
   },
   {
-    name: "Lettergrootte",
+    name: 'Lettergrootte',
     id: 'font-size',
     tokens: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
   },
   {
-    name: "Regelafstand",
+    name: 'Regelafstand',
     id: 'line-height',
     tokens: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
   },
-]
+];
 ---
 
 <script>
@@ -35,10 +35,13 @@ const SECTIONS = [
 </script>
 
 <MainLayout title="Typografie systeem" metaTitle="Typografie systeem" layoutPurpose="detail" mainPath="/style-guide">
-  <clippy-table-of-contents slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-contents>
+  <clippy-table-of-contents
+    slot="aside"
+    items={JSON.stringify(SECTIONS.map((section) => ({ label: section.name, href: `#${section.id}` })))}
+  ></clippy-table-of-contents>
 
   <clippy-stack size="5xl">
-    {SECTIONS.map(section => (
+    {SECTIONS.map((section) => (
       <section class="wizard-anchor" id={section.id}>
         <clippy-stack size="xl">
           {['line-height', 'font-size'].includes(section.id) ? (
@@ -53,7 +56,10 @@ const SECTIONS = [
                   {['line-height', 'font-size'].includes(section.id) ? (
                     <clippy-heading level="3">{capitalize(token)}</clippy-heading>
                   ) : (
-                    <wizard-token-docs groups={`basis.text.${section.id}.${token}`} heading-level="3"></wizard-token-docs>
+                    <wizard-token-docs
+                      groups={`basis.text.${section.id}.${token}`}
+                      heading-level="3"
+                    ></wizard-token-docs>
                   )}
                   <wizard-token-table groups={`basis.text.${section.id}.${token}`}></wizard-token-table>
                   <TokenStoryMatches groups={`basis.text.${section.id}.${token}`} />

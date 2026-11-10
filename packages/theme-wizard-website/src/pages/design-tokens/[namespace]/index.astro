@@ -14,24 +14,21 @@ const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.params?.namespace);
 ---
 
-<DesignTokensLayout
-  title={namespace.heading}
-  metaTitle={namespace.pageTitle}
->
-  {pageData.items ?
+<DesignTokensLayout title={namespace.heading} metaTitle={namespace.pageTitle}>
+  {pageData.items ? (
     <wizard-unstyled-list>
-      {
-        pageData.items.map((item) => (
-          <li>
-            <wizard-link-to-token path={item.metaData.tokenPath ? `${namespace.id}.${item.metaData.tokenPath.join('.')}`: undefined}>
-              <a slot="link" href={item.href}>
-                Navigeer naar {item.label}
-              </a>
-              {capitalize(item.label)}
-            </wizard-link-to-token>
-          </li>
-        ))
-      }
+      {pageData.items.map((item) => (
+        <li>
+          <wizard-link-to-token
+            path={item.metaData.tokenPath ? `${namespace.id}.${item.metaData.tokenPath.join('.')}` : undefined}
+          >
+            <a slot="link" href={item.href}>
+              Navigeer naar {item.label}
+            </a>
+            {capitalize(item.label)}
+          </wizard-link-to-token>
+        </li>
+      ))}
     </wizard-unstyled-list>
-  : null}
+  ) : null}
 </DesignTokensLayout>
