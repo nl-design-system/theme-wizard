@@ -11,16 +11,17 @@ export function getStaticPaths() {
 
 const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
-const tokenPath = pageData?.metaData?.tokenPath ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`: undefined;
+const tokenPath = pageData?.metaData?.tokenPath
+  ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`
+  : undefined;
 ---
 
-<DesignTokensLayout
-  title={capitalize(pageData.label)}
-  metaTitle={`${pageData.label} - ${namespace.pageTitle}`}
->
-  {tokenPath ?
-    <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
-    <wizard-token-field path={tokenPath} />
-    <TokenStoryMatches groups={tokenPath} />
-  : null}
+<DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+  {tokenPath ? (
+    <>
+      <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+      <wizard-token-field path={tokenPath} />
+      <TokenStoryMatches groups={tokenPath} />
+    </>
+  ) : null}
 </DesignTokensLayout>

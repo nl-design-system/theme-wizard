@@ -9,9 +9,9 @@ import MainLayout from '../layouts/MainLayout.astro';
 </MainLayout>
 
 <script>
-  import { navigate } from "astro:transitions/client"
+  import { navigate } from 'astro:transitions/client';
 
   document.querySelector('theme-wizard-app')?.addEventListener('theme-upload', () => {
-    navigate('/design-tokens/basis')
-  })
+    navigate('/design-tokens/basis');
+  });
 </script>

@@ -1,8 +1,8 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import dlv from 'dlv'
-import { components, isCandidateComponent } from '@/lib/components'
-import { Traverse } from 'neotraverse/modern'
+import dlv from 'dlv';
+import { components, isCandidateComponent } from '@/lib/components';
+import { Traverse } from 'neotraverse/modern';
 import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
 
 type StoryObject = {
@@ -15,54 +15,53 @@ type StoryObject = {
 };
 
 export function getStaticPaths() {
-  return Object.keys(components).map(slug => ({
-    params: { slug }
-  }))
+  return Object.keys(components).map((slug) => ({
+    params: { slug },
+  }));
 }
 
-const slug = Astro.params.slug as keyof typeof components
-const { title } = components[slug]
-const showDocsLink = isCandidateComponent(slug)
-const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
-nlDesignSystemDocsUrl.pathname = slug
-const componentModulePromiseFn = components[slug].stories
-const componentModule = await componentModulePromiseFn()
-const { default: meta, ...storyExports } = componentModule
-const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta)
-const storyIds = stories.map(([id]) => id)
+const slug = Astro.params.slug as keyof typeof components;
+const { title } = components[slug];
+const showDocsLink = isCandidateComponent(slug);
+const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl');
+nlDesignSystemDocsUrl.pathname = slug;
+const componentModulePromiseFn = components[slug].stories;
+const componentModule = await componentModulePromiseFn();
+const { default: meta, ...storyExports } = componentModule;
+const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta);
+const storyIds = stories.map(([id]) => id);
 
 function getTokenLeaves(tokenObj: any) {
-  const leaves: {path: PropertyKey[], value: any}[] = [];
+  const leaves: { path: PropertyKey[]; value: any }[] = [];
   new Traverse(tokenObj).forEach((ctx, node) => {
     if (ctx.isLeaf) {
-      const pathWithoutValue = ctx.path.slice(0, -1)
+      const pathWithoutValue = ctx.path.slice(0, -1);
       leaves.push({
         path: pathWithoutValue,
-        value: node
-      })
+        value: node,
+      });
     }
   });
   return leaves;
 }
 
 const storiesWithTokens = stories.map(([id, story]) => {
-  const storyTokens = (story as any).parameters?.editableTokens
-  return ({
+  const storyTokens = (story as any).parameters?.editableTokens;
+  return {
     id,
     story,
     tokens: storyTokens
-      ? getTokenLeaves(storyTokens).map(leaf => {
-        const token = dlv(componentModule.default.parameters?.tokens, leaf.path.join('.'))
-        return {
-          ...leaf,
-          token
-        }
-      })
-      : []
-  })
-})
+      ? getTokenLeaves(storyTokens).map((leaf) => {
+          const token = dlv(componentModule.default.parameters?.tokens, leaf.path.join('.'));
+          return {
+            ...leaf,
+            token,
+          };
+        })
+      : [],
+  };
+});
 ---
-
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
@@ -72,17 +71,24 @@ const storiesWithTokens = stories.map(([id, story]) => {
 </script>
 
 <MainLayout title={title} metaTitle={title} mainPath="/components" layoutPurpose="detail">
-  <clippy-table-of-contents slot="aside" items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ label: story.name, href: `#${id}` })))}></clippy-table-of-contents>
+  <clippy-table-of-contents
+    slot="aside"
+    items={JSON.stringify(storiesWithTokens.map(({ story, id }) => ({ label: story.name, href: `#${id}` })))}
+  ></clippy-table-of-contents>
 
   {showDocsLink && (
     <p class="nl-paragraph" slot="header">
-      Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
+      Bekijk de component-documentatie op{' '}
+      <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">
+        nldesignsystem.nl
+      </a>
+      .
     </p>
   )}
 
   <clippy-story-preview size="lg">
     <clippy-stack size="5xl">
-      {storiesWithTokens.map(({id, story, tokens}) => (
+      {storiesWithTokens.map(({ id, story, tokens }) => (
         <section id={id} class="wizard-anchor">
           <clippy-stack size="2xl">
             <clippy-heading level="2">{story.name}</clippy-heading>
@@ -113,7 +119,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
   const container = document.getElementById('story-container');
   const storyIds = JSON.parse(container!.dataset.storyIds || '[]');
   // Assertion here is type-safe because that's taken care of by Astro in the top of this file
-  const componentId = container?.dataset.componentId! as keyof typeof components
+  const componentId = container?.dataset.componentId! as keyof typeof components;
 
   initStories(componentId, storyIds);
 </script>

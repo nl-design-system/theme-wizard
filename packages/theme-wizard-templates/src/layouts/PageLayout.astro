@@ -7,7 +7,7 @@ export interface Props {
   sideNav?: boolean;
   title?: string;
   description?: string;
-  cookieBanner?: boolean
+  cookieBanner?: boolean;
 }
 
 const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
@@ -20,12 +20,16 @@ const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
 
     <template-page-header>
       <template-link href="/" slot="logo">
-        <span id=":r0:" hidden="">homepage</span>
+        <span id=":r0:" hidden="">
+          homepage
+        </span>
         <img src={logo.src} alt="Gemeente Voorbeeld" />
       </template-link>
 
       <!-- Menu items -->
-      <template-link href="#" slot="menu-links">Contact</template-link>
+      <template-link href="#" slot="menu-links">
+        Contact
+      </template-link>
 
       <template-link href="#" slot="menu-links">
         Jeroen van Drouwen
@@ -50,7 +54,8 @@ const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
 
     <utrecht-breadcrumb-nav
       json='[{"href":"/templates/my-environment/overview","title":"Mijn omgeving"},{"href":"#","title":"Gemeente Voorbeeld"}]'
-      lang="nl-NL"></utrecht-breadcrumb-nav>
+      lang="nl-NL"
+    ></utrecht-breadcrumb-nav>
 
     <div class="layout-main">
       {sideNav && <template-side-nav> </template-side-nav>}
@@ -66,7 +71,9 @@ const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
       <div class="footer-grid">
         <div>
           <utrecht-link href="/">
-            <span id=":r0:" hidden="">homepage</span>
+            <span id=":r0:" hidden="">
+              homepage
+            </span>
             <img src={logo.src} alt="Gemeente Voorbeeld" />
           </utrecht-link>
 
@@ -86,10 +93,7 @@ const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
         </div>
 
         <div>
-          <template-link-list
-            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"},  {"href":"/templates/cookies", "text":"Cookies"}]'
-          >
-          </template-link-list>
+          <template-link-list link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"},  {"href":"/templates/cookies", "text":"Cookies"}]'></template-link-list>
         </div>
       </div>
     </utrecht-page-footer>
