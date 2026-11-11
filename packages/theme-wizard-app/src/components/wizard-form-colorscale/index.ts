@@ -13,12 +13,14 @@ import {
   stringifyToken,
   type BaseDesignToken,
 } from '@nl-design-system-community/design-tokens-schema';
+import { capitalize } from 'es-toolkit';
 import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { describeColor } from '../../lib/ColorDescription';
 import { getColorScaleParams, INVERSE_SUFFIX } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
@@ -116,8 +118,9 @@ export class WizardFormColorscale extends LitElement {
   #tokensToOptions = () => {
     this.options = this._tokens.map((token) => {
       const color = stringifyToken(token);
+
       return {
-        description: 'TODO: description',
+        description: capitalize(describeColor(color, (key) => t(key) as string)),
         label: color,
         value: token,
       };
@@ -187,6 +190,7 @@ export class WizardFormColorscale extends LitElement {
 
     const renderedLabel = label || this.path;
 
+    // TODO: resolve value als het een reference is, zet EXTENSION_RESOLVED_AS?
     const resolvedValueToken: ColorTokenType | undefined = this.selectedColorValue
       ? { $type: 'color', $value: this.selectedColorValue }
       : undefined;
@@ -203,7 +207,6 @@ export class WizardFormColorscale extends LitElement {
             .options=${this.options}
             @change=${this.#handleColorChange}
           >
-            <span slot="label" class="wizard-token-field__label">${renderedLabel}</span>
           </clippy-token-combobox>
 
           <div class="utrecht-action-group utrecht-action-group--row">
