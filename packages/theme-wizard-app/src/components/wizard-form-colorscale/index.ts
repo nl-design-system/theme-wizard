@@ -1,17 +1,29 @@
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import { consume } from '@lit/context';
-import { type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
+import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
-import { stringifyToken, type BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
-import { LitElement, PropertyValues, html, nothing } from 'lit';
+import { generateScale, TOKENS } from '@nl-design-system-community/color-scale-generator';
+import {
+  type ColorToken as ColorTokenType,
+  ColorValue,
+  EXTENSION_COLORSCALE_SEED,
+  getExtension,
+  stringifyColor,
+  stringifyToken,
+  type BaseDesignToken,
+} from '@nl-design-system-community/design-tokens-schema';
+import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { getColorScaleParams, INVERSE_SUFFIX } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { StagedDesignToken } from '../../utils';
+import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { hasChangedProperty } from '../../utils/lit';
 import styles from './styles';
 
@@ -25,9 +37,10 @@ declare global {
 
 @safeCustomElement(tag)
 export class WizardFormColorscale extends LitElement {
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(buttonCss), styles];
 
   @state() private options: Option[] = [];
+  @state() private selectedColorValue: ColorTokenType['$value'] | undefined = undefined;
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -64,7 +77,40 @@ export class WizardFormColorscale extends LitElement {
 
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    console.log('submit:', event);
+    if (!(event.target instanceof HTMLFormElement) || !this.selectedColorValue) {
+      return;
+    }
+
+    // TODO: color-default for regular, bg-default for inverse?
+    const scaleParams = getColorScaleParams(`${this.path}.color-default`);
+    if (!scaleParams) {
+      return;
+    }
+
+    const { profile, regularAnchor, regularGroupPath } = scaleParams;
+    const seed = stringifyColor(this.selectedColorValue);
+    const regular = generateScale(seed, { anchor: regularAnchor, contrast: { enforce: true }, profile }).data;
+
+    // TODO: do something with inverse
+
+    const detail = {
+      groupSeeds: [
+        {
+          groupPath: regularGroupPath,
+          seed,
+        },
+      ],
+      tokens: TOKENS.flatMap((tokenName) => [{ path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] }]),
+    };
+
+    // Emit custom event that lets Theme do updateMany()
+    event.target.dispatchEvent(
+      new CustomEvent<UpdateDesignTokensDetail>(UPDATE_DESIGN_TOKENS_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail,
+      }),
+    );
   }
 
   #tokensToOptions = () => {
@@ -78,22 +124,54 @@ export class WizardFormColorscale extends LitElement {
     });
   };
 
+  get #seedColor(): ColorValue | undefined {
+    const isInverse = this.path.endsWith(INVERSE_SUFFIX);
+    const seedColor = getExtension(this.tokenAt, EXTENSION_COLORSCALE_SEED);
+    const fallBackToken: BaseDesignToken = isInverse
+      ? (this.tokenAt?.['bg-default'] as BaseDesignToken)
+      : (this.tokenAt?.['color-default'] as BaseDesignToken);
+    if (seedColor && typeof seedColor === 'object' && 'colorSpace' in seedColor) {
+      return seedColor as ColorValue;
+    } else {
+      return fallBackToken.$value as ColorTokenType['$value'];
+    }
+  }
+
   protected override willUpdate(changed: PropertyValues) {
     if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
       return;
     }
 
     const { tokens } = getRelevantTokens(this.theme, this.scrapedTokens, this.type, this.subType);
-
     this._tokens = sortTokensForPath(tokens, this.path, this.theme);
-
     this.#tokensToOptions();
+  }
+
+  protected override firstUpdated() {
+    // Get initial seed color
+    const seedColor = this.#seedColor;
+    if (seedColor) {
+      this.selectedColorValue = seedColor;
+    }
   }
 
   // @TODO: fix
   get #hasErrors(): boolean {
     return false;
   }
+
+  #handleColorChange = (event: Event) => {
+    const target = event.target;
+    if (target instanceof ClippyTokenCombobox && target.value) {
+      const rawSelectedToken = target.value;
+
+      if (rawSelectedToken.$value === this.selectedColorValue) return;
+
+      this.selectedColorValue = rawSelectedToken.$value;
+      if (!this.isConnected) return;
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    }
+  };
 
   override render() {
     const { label, tokenAt, tokens } = this;
@@ -107,31 +185,25 @@ export class WizardFormColorscale extends LitElement {
       return html`<p class="nl-paragraph">${t('wizard.stepForm.noRecommendations')}</p>`;
     }
 
-    const renderedLabel = this.label || this.path;
+    const renderedLabel = label || this.path;
+
+    const resolvedValueToken: ColorTokenType | undefined = this.selectedColorValue
+      ? { $type: 'color', $value: this.selectedColorValue }
+      : undefined;
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
         <clippy-stack size="4xl">
-          <mark>Wizard form colorscale: ${this.path}</mark>
-
           <clippy-token-combobox
             name=${this.path}
             hidden-label=${renderedLabel}
             type="color"
             .invalid=${this.#hasErrors}
-            .value=${this.options[0].value}
+            .value=${resolvedValueToken}
             .options=${this.options}
+            @change=${this.#handleColorChange}
           >
-            <span slot="label" class="wizard-token-field__label">${label}</span>
-            ${
-              this.#hasErrors
-                ? html`<div slot="error" class="nl-form-field-error-message | wizard-token-field__error">
-                    <div class="nl-form-field-error-message__content">
-                      ${t(`validation.error.${this.pathErrors[0].code}.message`, this.pathErrors[0])}
-                    </div>
-                  </div>`
-                : nothing
-            }
+            <span slot="label" class="wizard-token-field__label">${renderedLabel}</span>
           </clippy-token-combobox>
 
           <div class="utrecht-action-group utrecht-action-group--row">

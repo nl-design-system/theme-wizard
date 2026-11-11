@@ -13,12 +13,19 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 const tokenPath = pageData?.metaData?.tokenPath
   ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`
   : undefined;
+const tokenPathInverse = pageData?.metaData?.tokenPath
+  ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}-inverse`
+  : undefined;
 ---
 
 <DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
-  {tokenPath ? <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs> : null}
-
-  <wizard-form-colorscale path={tokenPath}></wizard-form-colorscale>
+  {tokenPath ? (
+    <>
+      <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
+      <wizard-form-colorscale path={tokenPath}></wizard-form-colorscale>
+      <wizard-color-system-preview groups={`${tokenPath}, ${tokenPathInverse}`}></wizard-color-system-preview>
+    </>
+  ) : null}
 
   {pageData.items ? (
     <wizard-unstyled-list>
@@ -37,3 +44,7 @@ const tokenPath = pageData?.metaData?.tokenPath
     </wizard-unstyled-list>
   ) : null}
 </DesignTokensLayout>
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+</script>
