@@ -62,9 +62,6 @@ export class WizardFormColorscale extends LitElement {
 
   @property() label: string = '';
 
-  @property({ type: String })
-  subType: string = '';
-
   private _tokens: BaseDesignToken[] = [];
 
   get tokenAt() {
@@ -145,11 +142,11 @@ export class WizardFormColorscale extends LitElement {
   // #createTokenValue (color: ColorValue)
 
   protected override willUpdate(changed: PropertyValues) {
-    if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
+    if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'theme'])) {
       return;
     }
 
-    const { tokens } = getRelevantTokens(this.theme, this.scrapedTokens, this.type, this.subType);
+    const { tokens } = getRelevantTokens(this.theme, this.scrapedTokens, this.type);
     this._tokens = sortTokensForPath(tokens, this.path, this.theme);
     this.#tokensToOptions();
   }
@@ -196,16 +193,16 @@ export class WizardFormColorscale extends LitElement {
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
-        <clippy-stack size="4xl">
+        <clippy-stack size="3xl">
           <clippy-token-combobox
             name=${this.path}
-            hidden-label=${renderedLabel}
             type="color"
             .invalid=${this.#hasErrors}
             .value=${this.selectedColorToken}
             .options=${this.options}
             @change=${this.#handleColorChange}
           >
+            <span slot="label">${renderedLabel}</span>
           </clippy-token-combobox>
 
           <div class="utrecht-action-group utrecht-action-group--row">
