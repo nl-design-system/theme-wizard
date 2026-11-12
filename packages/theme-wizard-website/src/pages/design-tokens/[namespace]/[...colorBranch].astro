@@ -12,28 +12,40 @@ export function getStaticPaths() {
 
 const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
-const tokenPath = pageData?.metaData?.tokenPath
-  ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`
-  : undefined;
-const tokenPathInverse = pageData?.metaData?.tokenPath
-  ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}-inverse`
-  : undefined;
+
+const segments: TokenPath = pageData?.metaData?.tokenPath || [];
+const tokenPaths = segments.length
+  ? segments.some((seg) => seg.includes('-inverse'))
+    ? [`${namespace.id}.${segments.join('.')}`]
+    : [`${namespace.id}.${segments.join('.')}`, `${namespace.id}.${segments.join('.')}-inverse`]
+  : [];
 
 /**
  * Determine profile based on tokenPath:
  * find the first profile name that matches the start of any tokenPath item
  */
-const tokenPathItems: TokenPath = pageData?.metaData?.tokenPath || [];
 const profile: ProfileName =
-  PROFILES.find((profile) => tokenPathItems.some((segment) => segment.startsWith(profile))) || 'neutral';
+  PROFILES.find((profile) => segments.some((segment) => segment.startsWith(profile))) || 'neutral';
 ---
 
 <DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
-  {tokenPath ? (
+  {tokenPaths.length > 0 ? (
     <>
-      <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
-      <wizard-form-colorscale path={tokenPath} profile={profile}></wizard-form-colorscale>
-      <wizard-color-system-preview groups={`${tokenPath}, ${tokenPathInverse}`}></wizard-color-system-preview>
+      <clippy-stack size="xl">
+        <wizard-token-docs groups={tokenPaths[0]} heading-level="none"></wizard-token-docs>
+
+        <p class="nl-paragraph">
+          Selecteer een ‘base color’. Op basis van die kleur wordt er een toegankelijk keurenpalet berekend. Je kunt
+          specifieke kleuren uit het palet overschrijven als dat nodig is.
+        </p>
+
+        <wizard-form-colorscale path={tokenPaths[0]} profile={profile} label="Base color"></wizard-form-colorscale>
+      </clippy-stack>
+
+      <clippy-stack>
+        <clippy-heading level="2">Kleurenpalet</clippy-heading>
+        <wizard-color-system-preview groups={tokenPaths.join(', ')}></wizard-color-system-preview>
+      </clippy-stack>
     </>
   ) : null}
 
