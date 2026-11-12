@@ -1,4 +1,3 @@
-import '@nl-design-system-community/clippy-components/clippy-stack';
 import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
@@ -14,7 +13,7 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import { capitalize } from 'es-toolkit';
 import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
@@ -42,6 +41,9 @@ export class WizardFormColorscale extends LitElement {
 
   @state() private options: Option[] = [];
   @state() private selectedColorToken: ColorToken | undefined = undefined;
+
+  @query('form')
+  private form!: HTMLFormElement;
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -89,15 +91,29 @@ export class WizardFormColorscale extends LitElement {
       profile: this.profile as ProfileName,
     }).data;
 
-    // TODO: do something with inverse
+    const inversedPath = `${this.path}-inverse`;
+    const inversed = generateScale(stringifyToken(seedToken), {
+      anchor: 'auto',
+      contrast: { enforce: true },
+      inverse: true,
+      profile: this.profile as ProfileName,
+    }).data;
+
     const detail = {
       groupSeeds: [
         {
           groupPath: this.path,
           seed: seedToken.$value,
         },
+        {
+          groupPath: inversedPath,
+          seed: seedToken.$value,
+        },
       ],
-      tokens: TOKENS.flatMap((tokenName) => [{ path: `${this.path}.${tokenName}`, value: regular[tokenName] }]),
+      tokens: TOKENS.flatMap((tokenName) => [
+        { path: `${this.path}.${tokenName}`, value: regular[tokenName] },
+        { path: `${inversedPath}.${tokenName}`, value: inversed[tokenName] },
+      ]),
     };
 
     // Emit custom event that lets Theme do updateMany()
@@ -174,6 +190,10 @@ export class WizardFormColorscale extends LitElement {
       this.selectedColorToken = rawSelectedToken;
       if (!this.isConnected) return;
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      if (this.form) {
+        this.form.requestSubmit();
+      }
     }
   };
 
@@ -193,25 +213,16 @@ export class WizardFormColorscale extends LitElement {
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
-        <clippy-stack size="3xl">
-          <clippy-token-combobox
-            name=${this.path}
-            type="color"
-            .invalid=${this.#hasErrors}
-            .value=${this.selectedColorToken}
-            .options=${this.options}
-            @change=${this.#handleColorChange}
-          >
-            <span slot="label">${renderedLabel}</span>
-          </clippy-token-combobox>
-
-          <div class="utrecht-action-group utrecht-action-group--row">
-            <button class="nl-button nl-button--primary" type="submit">${t('save')}</button>
-            <a href="#" class="nl-button nl-button--secondary">
-              <span class="nl-button__label">${t('cancel')}</span>
-            </a>
-          </div>
-        </clippy-stack>
+        <clippy-token-combobox
+          name=${this.path}
+          type="color"
+          .invalid=${this.#hasErrors}
+          .value=${this.selectedColorToken}
+          .options=${this.options}
+          @change=${this.#handleColorChange}
+        >
+          <span slot="label">${renderedLabel}</span>
+        </clippy-token-combobox>
       </form>
     `;
   }

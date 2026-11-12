@@ -15,9 +15,10 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 
 const segments: TokenPath = pageData?.metaData?.tokenPath || [];
 const tokenPaths = segments.length
-  ? segments.some((seg) => seg.includes('-inverse'))
-    ? [`${namespace.id}.${segments.join('.')}`]
-    : [`${namespace.id}.${segments.join('.')}`, `${namespace.id}.${segments.join('.')}-inverse`]
+  ? [
+      `${namespace.id}.${segments.join('.').replace(/-inverse$/, '')}`,
+      `${namespace.id}.${segments.join('.').replace(/-inverse$/, '')}-inverse`,
+    ]
   : [];
 
 /**
@@ -69,4 +70,5 @@ const profile: ProfileName =
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
 </script>
