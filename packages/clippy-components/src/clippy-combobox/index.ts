@@ -3,6 +3,7 @@ import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 import ZoomIcon from '@tabler/icons/outline/zoom.svg?raw';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import utrechtCustomizableTextInputStyles from '@utrecht/customizable-text-input-css?inline';
+import formLabelStyles from '@utrecht/form-label-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
@@ -16,8 +17,8 @@ import memoize from 'memoize';
 import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only';
-import styles from './styles';
 import './../clippy-icon';
+import styles from './styles';
 
 type Option = {
   label: string;
@@ -70,6 +71,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     unsafeCSS(listboxStyles),
     unsafeCSS(textboxStyles),
     unsafeCSS(utrechtCustomizableTextInputStyles),
+    unsafeCSS(formLabelStyles),
     styles,
     srOnly,
   ];
@@ -340,6 +342,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const labelClasses = {
       'clippy-combobox__label': true,
       'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+      'utrecht-form-label': true,
     };
     const popoverClasses = {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
