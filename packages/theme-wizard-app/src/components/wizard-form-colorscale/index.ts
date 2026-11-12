@@ -5,13 +5,12 @@ import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/cl
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import { generateScale, TOKENS } from '@nl-design-system-community/color-scale-generator';
 import {
-  type ColorToken as ColorTokenType,
-  ColorValue,
+  type ColorToken,
   EXTENSION_COLORSCALE_SEED,
   getExtension,
-  stringifyColor,
   stringifyToken,
   type BaseDesignToken,
+  ColorValueSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import { capitalize } from 'es-toolkit';
 import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
@@ -21,7 +20,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { describeColor } from '../../lib/ColorDescription';
-import { getColorScaleParams, INVERSE_SUFFIX } from '../../lib/ColorScale';
+import { INVERSE_SUFFIX, type ProfileName } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { StagedDesignToken } from '../../utils';
@@ -42,7 +41,7 @@ export class WizardFormColorscale extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCss), styles];
 
   @state() private options: Option[] = [];
-  @state() private selectedColorValue: ColorTokenType['$value'] | undefined = undefined;
+  @state() private selectedColorToken: ColorToken | undefined = undefined;
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -56,7 +55,10 @@ export class WizardFormColorscale extends LitElement {
   returnUrl: string = '';
 
   @property({ type: String })
-  path: string = '';
+  path: ProfileName = 'neutral';
+
+  @property({ type: String })
+  profile: string = '';
 
   @property() label: string = '';
 
@@ -79,30 +81,26 @@ export class WizardFormColorscale extends LitElement {
 
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    if (!(event.target instanceof HTMLFormElement) || !this.selectedColorValue) {
+    if (!(event.target instanceof HTMLFormElement) || !this.selectedColorToken) {
       return;
     }
 
-    // TODO: color-default for regular, bg-default for inverse?
-    const scaleParams = getColorScaleParams(`${this.path}.color-default`);
-    if (!scaleParams) {
-      return;
-    }
-
-    const { profile, regularAnchor, regularGroupPath } = scaleParams;
-    const seed = stringifyColor(this.selectedColorValue);
-    const regular = generateScale(seed, { anchor: regularAnchor, contrast: { enforce: true }, profile }).data;
+    const seedToken = this.selectedColorToken;
+    const regular = generateScale(stringifyToken(seedToken), {
+      anchor: 'auto',
+      contrast: { enforce: true },
+      profile: this.profile as ProfileName,
+    }).data;
 
     // TODO: do something with inverse
-
     const detail = {
       groupSeeds: [
         {
-          groupPath: regularGroupPath,
-          seed,
+          groupPath: this.path,
+          seed: seedToken.$value,
         },
       ],
-      tokens: TOKENS.flatMap((tokenName) => [{ path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] }]),
+      tokens: TOKENS.flatMap((tokenName) => [{ path: `${this.path}.${tokenName}`, value: regular[tokenName] }]),
     };
 
     // Emit custom event that lets Theme do updateMany()
@@ -127,18 +125,24 @@ export class WizardFormColorscale extends LitElement {
     });
   };
 
-  get #seedColor(): ColorValue | undefined {
+  get #seedColorToken(): ColorToken | undefined {
     const isInverse = this.path.endsWith(INVERSE_SUFFIX);
     const seedColor = getExtension(this.tokenAt, EXTENSION_COLORSCALE_SEED);
-    const fallBackToken: BaseDesignToken = isInverse
-      ? (this.tokenAt?.['bg-default'] as BaseDesignToken)
-      : (this.tokenAt?.['color-default'] as BaseDesignToken);
-    if (seedColor && typeof seedColor === 'object' && 'colorSpace' in seedColor) {
-      return seedColor as ColorValue;
+    const parsedSeed = ColorValueSchema.safeParse(seedColor);
+    if (parsedSeed.success) {
+      return {
+        $type: 'color',
+        $value: parsedSeed.data,
+      };
     } else {
-      return fallBackToken.$value as ColorTokenType['$value'];
+      const fallBackToken = isInverse
+        ? (this.tokenAt?.['bg-default'] as ColorToken)
+        : (this.tokenAt?.['color-default'] as ColorToken);
+      return fallBackToken;
     }
   }
+
+  // #createTokenValue (color: ColorValue)
 
   protected override willUpdate(changed: PropertyValues) {
     if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
@@ -152,9 +156,9 @@ export class WizardFormColorscale extends LitElement {
 
   protected override firstUpdated() {
     // Get initial seed color
-    const seedColor = this.#seedColor;
-    if (seedColor) {
-      this.selectedColorValue = seedColor;
+    const seedColorToken = this.#seedColorToken;
+    if (seedColorToken) {
+      this.selectedColorToken = seedColorToken;
     }
   }
 
@@ -166,11 +170,11 @@ export class WizardFormColorscale extends LitElement {
   #handleColorChange = (event: Event) => {
     const target = event.target;
     if (target instanceof ClippyTokenCombobox && target.value) {
-      const rawSelectedToken = target.value;
+      const rawSelectedToken = target.value as ColorToken;
 
-      if (rawSelectedToken.$value === this.selectedColorValue) return;
+      if (rawSelectedToken === this.selectedColorToken) return;
 
-      this.selectedColorValue = rawSelectedToken.$value;
+      this.selectedColorToken = rawSelectedToken;
       if (!this.isConnected) return;
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
@@ -190,11 +194,6 @@ export class WizardFormColorscale extends LitElement {
 
     const renderedLabel = label || this.path;
 
-    // TODO: resolve value als het een reference is, zet EXTENSION_RESOLVED_AS?
-    const resolvedValueToken: ColorTokenType | undefined = this.selectedColorValue
-      ? { $type: 'color', $value: this.selectedColorValue }
-      : undefined;
-
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
         <clippy-stack size="4xl">
@@ -203,7 +202,7 @@ export class WizardFormColorscale extends LitElement {
             hidden-label=${renderedLabel}
             type="color"
             .invalid=${this.#hasErrors}
-            .value=${resolvedValueToken}
+            .value=${this.selectedColorToken}
             .options=${this.options}
             @change=${this.#handleColorChange}
           >
