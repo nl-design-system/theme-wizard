@@ -20,7 +20,7 @@ import { customElement } from 'lit/decorators.js';
 import type { StagedDesignToken } from '../../utils';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
-import PersistentStorage from '../../lib/PersistentStorage';
+import { STAGE_SCRAPED_TOKEN_EVENT, type StageScrapedTokenDetail } from '../../utils/events';
 import { dimensionToPx } from '../../utils/token-utils';
 import '../wizard-table-scroller';
 import styles from './styles';
@@ -44,9 +44,6 @@ export class WizardScrapedTokensPreview extends LitElement {
     unsafeCSS(srOnlyStyles),
   ];
 
-  // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
-  readonly #scrapedTokensStorage = new PersistentStorage({ prefix: 'scraped-tokens' });
-
   @consume({ context: scrapedTokensContext, subscribe: true })
   scrapedTokens: StagedDesignToken[] = [];
 
@@ -54,15 +51,11 @@ export class WizardScrapedTokensPreview extends LitElement {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
 
-    const isStaged = Boolean(target.checked);
-
-    // TODO: this shouldn't write to storage directly but call enable/disable on a tokenStore
-    this.#scrapedTokensStorage.setJSON(
-      this.scrapedTokens.map((token) => {
-        if (getExtension(token, EXTENSION_TOKEN_ID) === target.id) {
-          token.$extensions[EXTENSION_TOKEN_STAGED] = isStaged;
-        }
-        return token;
+    this.dispatchEvent(
+      new CustomEvent<StageScrapedTokenDetail>(STAGE_SCRAPED_TOKEN_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail: { id: target.id, staged: target.checked },
       }),
     );
   };
