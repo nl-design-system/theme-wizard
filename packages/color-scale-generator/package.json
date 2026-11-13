@@ -24,7 +24,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "vite build --watch --mode development",
+    "dev": "vite build --watch --mode development --emptyOutDir false",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "build": "pnpm run type-check && vite build && publint",
