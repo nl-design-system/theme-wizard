@@ -54,13 +54,10 @@ export class WizardFormColorscale extends LitElement {
   private readonly scrapedTokens!: StagedDesignToken[];
 
   @property({ type: String })
-  returnUrl: string = '';
+  path: string = '';
 
   @property({ type: String })
-  path: ProfileName = 'neutral';
-
-  @property({ type: String })
-  profile: string = '';
+  profile: ProfileName = 'neutral';
 
   @property() label: string = '';
 
@@ -175,11 +172,6 @@ export class WizardFormColorscale extends LitElement {
     }
   }
 
-  // @TODO: fix
-  get #hasErrors(): boolean {
-    return false;
-  }
-
   #handleColorChange = (event: Event) => {
     const target = event.target;
     if (target instanceof ClippyTokenCombobox && target.value) {
@@ -198,14 +190,14 @@ export class WizardFormColorscale extends LitElement {
   };
 
   override render() {
-    const { label, tokenAt, tokens } = this;
-    const tokenCount = tokens.length;
+    const { label, tokenAt } = this;
+    const optionCount = this.options.length;
 
     if (!tokenAt) {
-      return html`${t('wizard.stepForm.errorNoToken', { path: this.path })}`;
+      return html`<p class="nl-paragraph">${t('wizard.stepForm.errorNoToken', { path: this.path })}</p>`;
     }
 
-    if (tokenCount === 0) {
+    if (optionCount === 0) {
       return html`<p class="nl-paragraph">${t('wizard.stepForm.noRecommendations')}</p>`;
     }
 
@@ -216,7 +208,6 @@ export class WizardFormColorscale extends LitElement {
         <clippy-token-combobox
           name=${this.path}
           type="color"
-          .invalid=${this.#hasErrors}
           .value=${this.selectedColorToken}
           .options=${this.options}
           @change=${this.#handleColorChange}
