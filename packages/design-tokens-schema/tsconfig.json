@@ -10,7 +10,7 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
     "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,
