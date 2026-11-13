@@ -184,6 +184,7 @@ export const en = {
     value: 'Value',
   },
   themePresetForm: {
+    acceptWithErrors: 'Use theme anyway',
     confirm: 'Continue with this theme',
     submit: 'Use theme',
     summary: {
@@ -639,6 +640,7 @@ export const nl = {
     value: 'Waarde',
   },
   themePresetForm: {
+    acceptWithErrors: 'Thema toch gebruiken',
     confirm: 'Doorgaan met dit thema',
     submit: 'Thema gebruiken',
     summary: {

@@ -116,7 +116,10 @@ export class WizardTokenUploadForm extends LitElement {
             label=${t('tokenValidationForm.excludeParentKeys.label')}
           ></wizard-form-field-checkbox>
 
-          <button class="nl-button nl-button--primary" type="submit">${this.submitLabel}</button>
+          <div class="wizard-token-upload-form__actions">
+            <button class="nl-button nl-button--primary" type="submit">${this.submitLabel}</button>
+            <slot name="actions"></slot>
+          </div>
         </clippy-stack>
       </form>
     `;
