@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import '.';
 import { WizardColorDescription } from '.';
 import i18n from '../../i18n';
 
