@@ -1,5 +1,11 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.2.11
+
+### Patch Changes
+
+- @nl-design-system-community/css-scraper@1.2.8
+
 ## 1.2.10
 
 ### Patch Changes
