@@ -13,10 +13,13 @@ import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import {
   SET_THEME_TOKENS_EVENT,
+  STEPS_COMPLETED_EVENT,
   UPDATE_DESIGN_TOKENS_EVENT,
   type SetThemeTokensEvent,
+  type StepsCompletedEvent,
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
+import { markStepsComplete, stepsStorage } from '../../utils/wizard-steps-storage';
 import { WizardScraper } from '../wizard-scraper';
 import componentStyles from './styles';
 
@@ -82,6 +85,7 @@ export class WizardApp extends LitElement {
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.addEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
+    this.addEventListener(STEPS_COMPLETED_EVENT, this.#handleStepsCompleted);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
@@ -91,6 +95,7 @@ export class WizardApp extends LitElement {
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.removeEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
+    this.removeEventListener(STEPS_COMPLETED_EVENT, this.#handleStepsCompleted);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -145,10 +150,18 @@ export class WizardApp extends LitElement {
     this.dispatchEvent(new Event('theme-upload'));
   };
 
+  readonly #handleStepsCompleted = (event: Event) => {
+    const { detail } = event as StepsCompletedEvent;
+    markStepsComplete(detail.paths);
+  };
+
   readonly #handleReset = () => {
     this.theme.reset();
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
+    this.scrapedTokens = [];
+    this.#scrapedTokensStorage.removeJSON();
+    stepsStorage.removeJSON();
   };
 
   /**
