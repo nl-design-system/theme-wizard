@@ -2,7 +2,7 @@ import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
-import { generateScale, TOKENS } from '@nl-design-system-community/color-scale-generator';
+import { generateScale, PROFILES, TOKENS, type ProfileName } from '@nl-design-system-community/color-scale-generator';
 import {
   type ColorToken,
   EXTENSION_COLORSCALE_SEED,
@@ -19,7 +19,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { describeColor } from '../../lib/ColorDescription';
-import { INVERSE_SUFFIX, PROFILES, type ProfileName } from '../../lib/ColorScale';
+import { INVERSE_SUFFIX } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { StagedDesignToken } from '../../utils';

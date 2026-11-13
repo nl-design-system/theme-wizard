@@ -308,8 +308,8 @@ describe(`<${tag}>`, () => {
     });
 
     it('can be set via attribute', async () => {
-      const el = await mount('test.path', 'accent-1');
-      expect(el.profile).toBe('accent-1');
+      const el = await mount('test.path', 'accent');
+      expect(el.profile).toBe('accent');
     });
   });
 
