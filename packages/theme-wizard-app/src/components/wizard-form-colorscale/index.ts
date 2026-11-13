@@ -19,7 +19,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { describeColor } from '../../lib/ColorDescription';
-import { INVERSE_SUFFIX, type ProfileName } from '../../lib/ColorScale';
+import { INVERSE_SUFFIX, PROFILES, type ProfileName } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { StagedDesignToken } from '../../utils';
@@ -56,7 +56,18 @@ export class WizardFormColorscale extends LitElement {
   @property({ type: String })
   path: string = '';
 
-  @property({ type: String })
+  @property({
+    converter: {
+      fromAttribute: (value: string | null): ProfileName | undefined => {
+        if (PROFILES.includes(value as ProfileName)) {
+          return value as ProfileName;
+        }
+        console.warn(`Invalid profile "${value}".`);
+        return 'neutral';
+      },
+    },
+    type: String,
+  })
   profile: ProfileName = 'neutral';
 
   @property() label: string = '';
