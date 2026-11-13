@@ -1,5 +1,15 @@
 # @nl-design-system-community/clippy-components
 
+## 3.9.1
+
+### Patch Changes
+
+- 99fb095: `clippy-combobox` now has a styled label
+  `color-scale-generator` now also has an action profile, and exports the profiles
+  Add a `wizard-form-colorscale` to `theme-wizard-app`.
+- Updated dependencies [243fe80]
+  - @nl-design-system-community/design-tokens-schema@2.8.0
+
 ## 3.9.0
 
 ### Minor Changes
