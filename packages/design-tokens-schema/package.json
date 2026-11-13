@@ -32,7 +32,7 @@
   },
   "scripts": {
     "test": "vitest",
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --emptyOutDir false",
     "test-coverage": "vitest run --coverage",
     "build": "vite build",
     "clean": "premove dist/"
