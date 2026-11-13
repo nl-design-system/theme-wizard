@@ -21,6 +21,5 @@ export class PublishPage {
   async reset() {
     await this.page.getByRole('button', { name: 'Begin opnieuw' }).click();
     await this.page.getByRole('dialog').getByRole('button', { name: 'Opnieuw beginnen' }).click();
-    await expect(this.downloadJsonButton).toBeDisabled();
   }
 }

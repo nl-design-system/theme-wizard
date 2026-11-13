@@ -36,11 +36,15 @@ import { t } from '../../i18n';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
-import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
+import {
+  STEPS_COMPLETED_EVENT,
+  UPDATE_DESIGN_TOKENS_EVENT,
+  type StepsCompletedDetail,
+  type UpdateDesignTokensDetail,
+} from '../../utils/events';
 import { hasChangedProperty } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
 import '../wizard-color-description';
-import { markStepComplete } from '../../utils/wizard-steps-storage';
 import '../wizard-step-form-sample';
 import styles from './styles';
 
@@ -195,7 +199,7 @@ export class WizardStepForm extends LitElement {
     }
     const formData = new FormData(event.target);
 
-    // Keep submitted paths separate from the possibly-expanded token list below (for markStepComplete).
+    // Keep submitted paths separate from the possibly-expanded token list below (for completed steps).
     const selections = Array.from(formData.entries()).flatMap(([path, value]) => {
       if (typeof value !== 'string' || value === '') {
         return [];
@@ -249,9 +253,13 @@ export class WizardStepForm extends LitElement {
       }),
     );
 
-    for (const { path } of selections) {
-      markStepComplete(path);
-    }
+    event.target.dispatchEvent(
+      new CustomEvent<StepsCompletedDetail>(STEPS_COMPLETED_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail: { paths: selections.map(({ path }) => path) },
+      }),
+    );
 
     // Redirect after submission
     if (this.returnUrl) {

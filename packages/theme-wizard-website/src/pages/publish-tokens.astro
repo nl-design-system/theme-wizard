@@ -19,7 +19,13 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <script>
   import type { WizardApp, WizardDownloadLink } from '@nl-design-system-community/theme-wizard-app';
+  import { navigate } from 'astro:transitions/client';
+
   const app = document.querySelector('theme-wizard-app') as WizardApp;
   const cssButton = document.querySelector('wizard-download-link') as WizardDownloadLink;
   cssButton.content = app.theme.css;
+
+  app.addEventListener('theme-reset', () => {
+    navigate('/');
+  });
 </script>
