@@ -36,3 +36,5 @@ export type DurationWithRef = z.infer<typeof DurationWithRefSchema>;
 
 export const DurationTokenSchema = z.union([ModernDurationTokenSchema, DurationWithRefSchema]);
 export type DurationToken = z.infer<typeof DurationTokenSchema>;
+
+export const stringifyDuration = (value: ModernDurationValue): string => `${value.value}${value.unit}`;

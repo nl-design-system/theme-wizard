@@ -35,7 +35,9 @@
     "dev": "vite build --watch --emptyOutDir false",
     "test-coverage": "vitest run --coverage",
     "build": "vite build",
-    "clean": "premove dist/"
+    "clean": "premove dist/",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
+    "type-check": "tsc --noEmit --project tsconfig.json"
   },
   "devDependencies": {
     "@nl-design-system-community/ma-design-tokens": "9.1.0",
