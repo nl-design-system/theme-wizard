@@ -1,4 +1,9 @@
-import { profileForName, TOKENS, type TokenName } from '@nl-design-system-community/color-scale-generator';
+import {
+  profileForName,
+  TOKENS,
+  type TokenName,
+  type ProfileName,
+} from '@nl-design-system-community/color-scale-generator';
 export { type ProfileName } from '@nl-design-system-community/color-scale-generator';
 export const INVERSE_SUFFIX = '-inverse';
 
