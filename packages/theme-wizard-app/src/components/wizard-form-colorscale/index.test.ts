@@ -1,7 +1,13 @@
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
-import { type ColorToken, type BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  type ColorToken,
+  type BaseDesignToken,
+  EXTENSION_TOKEN_STAGED,
+} from '@nl-design-system-community/design-tokens-schema';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { WizardFormColorscale } from '.';
+import type Theme from '../../lib/Theme';
+import type { StagedDesignToken } from '../../utils';
 import { t } from '../../i18n';
 import { INVERSE_SUFFIX } from '../../lib/ColorScale';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
@@ -26,19 +32,20 @@ const createMockTheme = (tokens: Record<string, unknown> = {}) => ({
 });
 
 // Helper to create mock scraped tokens with the required staged extension
-const createStagedToken = (token: BaseDesignToken, path: string) => ({
-  ...token,
-  $extensions: {
-    'nl-design-system-community:staged': true,
-  },
-  path,
-});
+const createStagedToken = (token: BaseDesignToken, path: string) =>
+  ({
+    ...token,
+    $extensions: {
+      [EXTENSION_TOKEN_STAGED]: true,
+    },
+    path,
+  }) as unknown as StagedDesignToken;
 
 const mount = async (
   path: string = '',
   profile: string = 'neutral',
   label: string = '',
-  scrapedTokens: unknown[] = [],
+  scrapedTokens: StagedDesignToken[] = [],
   themeTokens: Record<string, unknown> = {},
 ) => {
   const attrs = [path ? `path="${path}"` : '', profile ? `profile="${profile}"` : '', label ? `label="${label}"` : '']
@@ -49,8 +56,8 @@ const mount = async (
   const el = document.querySelector(tag) as WizardFormColorscale;
 
   // Mock the consumed contexts
-  el.scrapedTokens = scrapedTokens as never;
-  el.theme = createMockTheme(themeTokens) as never;
+  (el as unknown as { scrapedTokens: StagedDesignToken[] }).scrapedTokens = scrapedTokens;
+  (el as unknown as { theme: Theme }).theme = createMockTheme(themeTokens) as unknown as Theme;
 
   await el.updateComplete;
   return el;
@@ -102,7 +109,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('renders a form with clippy-token-combobox', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
@@ -121,7 +128,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('uses the path as label when no label property is set', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
@@ -136,7 +143,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('uses the label property when set', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
@@ -151,7 +158,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('sets combobox name to the path', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
@@ -166,7 +173,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('sets combobox type to color', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
@@ -246,7 +253,7 @@ describe(`<${tag}>`, () => {
     });
 
     it('dispatches update-design-tokens event with correct data on form submit', async () => {
-      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')] as never;
+      const stagedTokens = [createStagedToken(mockColorToken1, 'test.path.color-default')];
       const themeTokens = {
         'test.path': {
           $type: 'color',
