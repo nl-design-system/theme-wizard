@@ -7,7 +7,7 @@ export interface ColorScaleParams {
   regularGroupPath: string;
   /** e.g. `basis.color.accent-1-inverse` */
   inverseGroupPath: string;
-  profile: ReturnType<typeof profileForName>;
+  profile: ProfileName;
   /** Anchor for generating the regular scale. */
   regularAnchor: TokenName | undefined;
   /** Anchor for generating the inverse scale. */
