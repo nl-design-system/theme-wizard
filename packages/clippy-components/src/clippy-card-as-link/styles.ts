@@ -4,6 +4,7 @@ import { css, unsafeCSS } from 'lit';
 export const focusVisibleAttribute = 'link-focus-visible';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-selector-complexity */
   :host {
     position: relative;
 

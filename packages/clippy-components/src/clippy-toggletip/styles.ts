@@ -32,10 +32,7 @@ export default css`
 
   .clippy-toggletip__popup {
     background-color: var(--clippy-toggletip-background-color);
-    border-end-end-radius: var(--clippy-toggletip-border-radius);
-    border-end-start-radius: var(--clippy-toggletip-border-radius);
-    border-start-end-radius: var(--clippy-toggletip-border-radius);
-    border-start-start-radius: var(--clippy-toggletip-border-radius);
+    border-radius: var(--clippy-toggletip-border-radius);
     color: var(--clippy-toggletip-color);
     font-size: var(--clippy-toggletip-font-size);
     inline-size: max-content;
@@ -47,9 +44,9 @@ export default css`
     padding-inline: var(--clippy-toggletip-padding-inline);
     pointer-events: none;
     position: absolute;
-    transition:
-      opacity 120ms ease,
-      visibility 120ms ease;
+    transition-duration: 120ms;
+    transition-property: opacity, visibility;
+    transition-timing-function: ease;
     visibility: hidden;
     z-index: var(--clippy-toggletip-z-index);
   }

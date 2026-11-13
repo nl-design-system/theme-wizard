@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-declarations-per-rule */
   /* stylelint-disable selector-class-pattern */
   .sr-only {
     block-size: 1px;

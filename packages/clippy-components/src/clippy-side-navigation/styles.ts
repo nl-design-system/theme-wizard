@@ -99,7 +99,9 @@ export default css`
     svg {
       block-size: var(--basis-size-icon-md);
       inline-size: var(--basis-size-icon-md);
-      transition: transform 250ms ease-in-out;
+      transition-duration: 250ms;
+      transition-property: transform;
+      transition-timing-function: ease-in-out;
     }
   }
 
