@@ -27,9 +27,11 @@ const tokenPaths = segments.length
  */
 const profile: ProfileName =
   PROFILES.find((profile) => segments.some((segment) => segment.startsWith(profile))) || 'neutral';
+
+const title = capitalize(pageData.label.replace(/-inverse$/, ''));
 ---
 
-<DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+<DesignTokensLayout title={capitalize(title)} metaTitle={`${title} - ${namespace.pageTitle}`}>
   {tokenPaths.length > 0 ? (
     <>
       <clippy-stack size="xl">
