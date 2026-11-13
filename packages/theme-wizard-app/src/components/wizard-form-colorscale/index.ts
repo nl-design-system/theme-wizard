@@ -82,14 +82,15 @@ export class WizardFormColorscale extends LitElement {
     }
 
     const seedToken = this.selectedColorToken;
-    const regular = generateScale(stringifyToken(seedToken), {
+    const stringifiedSeed = stringifyToken(seedToken);
+    const regular = generateScale(stringifiedSeed, {
       anchor: 'auto',
       contrast: { enforce: true },
       profile: this.profile as ProfileName,
     }).data;
 
     const inversedPath = `${this.path}-inverse`;
-    const inversed = generateScale(stringifyToken(seedToken), {
+    const inversed = generateScale(stringifiedSeed, {
       anchor: 'auto',
       contrast: { enforce: true },
       inverse: true,
