@@ -1,25 +1,31 @@
-import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { provide } from '@lit/context';
 import { ClippyTokenCombobox } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
-import { EXTENSION_COLORSCALE_SEED, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
+import { EXTENSION_TOKEN_ID, type ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
+import {
+  EXTENSION_COLORSCALE_SEED,
+  EXTENSION_TOKEN_STAGED,
+  getExtension,
+} from '@nl-design-system-community/design-tokens-schema';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { dequal } from 'dequal';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { StagedDesignToken } from '../../utils/types';
+import { completedStepsContext } from '../../contexts/completed-steps';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import {
   SET_THEME_TOKENS_EVENT,
+  STAGE_SCRAPED_TOKEN_EVENT,
   STEPS_COMPLETED_EVENT,
   UPDATE_DESIGN_TOKENS_EVENT,
   type SetThemeTokensEvent,
+  type StageScrapedTokenEvent,
   type StepsCompletedEvent,
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
-import { markStepsComplete, stepsStorage } from '../../utils/wizard-steps-storage';
 import { WizardScraper } from '../wizard-scraper';
 import componentStyles from './styles';
 
@@ -68,6 +74,17 @@ export class WizardApp extends LitElement {
   @state()
   scrapedTokens: StagedDesignToken[] = [];
 
+  readonly #completedStepsStorage = new PersistentStorage({
+    onChange: () => {
+      this.completedSteps = this.#completedStepsStorage.getJSON() ?? [];
+    },
+    prefix: 'wizard-steps',
+  });
+
+  @provide({ context: completedStepsContext })
+  @state()
+  completedSteps: string[] = [];
+
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
@@ -82,10 +99,16 @@ export class WizardApp extends LitElement {
       this.scrapedTokens = previousScrapedTokens;
     }
 
+    const previousCompletedSteps = this.#completedStepsStorage.getJSON();
+    if (Array.isArray(previousCompletedSteps)) {
+      this.completedSteps = previousCompletedSteps;
+    }
+
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.addEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.addEventListener(STEPS_COMPLETED_EVENT, this.#handleStepsCompleted);
+    this.addEventListener(STAGE_SCRAPED_TOKEN_EVENT, this.#handleStageScrapedToken);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
@@ -96,6 +119,7 @@ export class WizardApp extends LitElement {
     this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.removeEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.removeEventListener(STEPS_COMPLETED_EVENT, this.#handleStepsCompleted);
+    this.removeEventListener(STAGE_SCRAPED_TOKEN_EVENT, this.#handleStageScrapedToken);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -142,6 +166,17 @@ export class WizardApp extends LitElement {
     this.dispatchEvent(new Event('scrape-success'));
   };
 
+  readonly #handleStageScrapedToken = (event: Event) => {
+    const { detail } = event as StageScrapedTokenEvent;
+    this.scrapedTokens = this.scrapedTokens.map((token) => {
+      if (getExtension(token, EXTENSION_TOKEN_ID) !== detail.id) {
+        return token;
+      }
+      return { ...token, $extensions: { ...token.$extensions, [EXTENSION_TOKEN_STAGED]: detail.staged } };
+    });
+    this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
+  };
+
   readonly #handleSetThemeTokens = (event: Event) => {
     const { detail } = event as SetThemeTokensEvent;
     this.theme.load(detail.tokens);
@@ -152,7 +187,12 @@ export class WizardApp extends LitElement {
 
   readonly #handleStepsCompleted = (event: Event) => {
     const { detail } = event as StepsCompletedEvent;
-    markStepsComplete(detail.paths);
+    const completedSteps = [...new Set([...this.completedSteps, ...detail.paths])];
+    if (completedSteps.length === this.completedSteps.length) {
+      return;
+    }
+    this.completedSteps = completedSteps;
+    this.#completedStepsStorage.setJSON(this.completedSteps);
   };
 
   readonly #handleReset = () => {
@@ -161,7 +201,9 @@ export class WizardApp extends LitElement {
     this.#themeStorage.setJSON(this.theme.tokens);
     this.scrapedTokens = [];
     this.#scrapedTokensStorage.removeJSON();
-    stepsStorage.removeJSON();
+    this.completedSteps = [];
+    this.#completedStepsStorage.removeJSON();
+    this.dispatchEvent(new Event('theme-reset'));
   };
 
   /**

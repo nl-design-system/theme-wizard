@@ -1,5 +1,15 @@
+import type { Page } from '@playwright/test';
 import type { WizardStepFormPage } from './pages/WizardStepFormPage';
 import { test, expect } from './fixtures/fixtures';
+import { storageStatePath } from './project-setup';
+
+const SCRAPED_TOKENS_KEY = 'v0:scraped-tokens:JSON:_';
+const COMPLETED_STEPS_KEY = 'v0:wizard-steps:JSON:_';
+
+async function getStoredJSON(page: Page, key: string) {
+  const value = await page.evaluate((storageKey) => localStorage.getItem(storageKey), key);
+  return value === null ? null : JSON.parse(value);
+}
 
 // Only changes typography — never trips a validation error, so the confirmation modal stays out of these tests.
 const BODY_FONT_STEP = '/wizard/basis-text-font-family-default';
@@ -102,9 +112,11 @@ test.describe('Download JSON', () => {
       expect(download.suggestedFilename()).toBe('tokens.json');
     });
 
-    test('Button becomes inactive after "Reset tokens" is clicked', async ({ publishPage }) => {
+    test('Button becomes inactive after "Reset tokens" is clicked', async ({ page, publishPage }) => {
       await publishPage.goto();
       await publishPage.reset();
+      await expect(page).toHaveURL('/');
+      await publishPage.goto();
       await expect(publishPage.downloadJsonButton).toBeDisabled();
     });
 
@@ -123,6 +135,34 @@ test.describe('Download JSON', () => {
       await page.reload();
       await expect(publishPage.downloadJsonButton).toBeEnabled();
     });
+  });
+});
+
+test.describe('Reset theme', () => {
+  // Start with scraped tokens in storage so we can verify they get cleared.
+  test.use({ storageState: storageStatePath });
+
+  test.beforeEach(async ({ wizardStepFormPage }) => {
+    await wizardStepFormPage.goto(BODY_FONT_STEP);
+    await selectLastOption(wizardStepFormPage);
+  });
+
+  test('clears stored scraped tokens and completed steps', async ({ page, publishPage }) => {
+    await publishPage.goto();
+    expect(await getStoredJSON(page, SCRAPED_TOKENS_KEY)).not.toBeNull();
+    expect(await getStoredJSON(page, COMPLETED_STEPS_KEY)).toContain('basis.text.font-family.default');
+
+    await publishPage.reset();
+    await expect(page).toHaveURL('/');
+
+    expect(await getStoredJSON(page, SCRAPED_TOKENS_KEY)).toBeNull();
+    expect(await getStoredJSON(page, COMPLETED_STEPS_KEY)).toBeNull();
+  });
+
+  test('redirects to the start page', async ({ page, publishPage }) => {
+    await publishPage.goto();
+    await publishPage.reset();
+    await expect(page).toHaveURL('/');
   });
 });
 

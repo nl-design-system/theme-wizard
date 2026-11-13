@@ -18,6 +18,15 @@ export type StepsCompletedDetail = {
 
 export type StepsCompletedEvent = CustomEvent<StepsCompletedDetail>;
 
+export const STAGE_SCRAPED_TOKEN_EVENT = 'stage-scraped-token';
+
+export type StageScrapedTokenDetail = {
+  id: string;
+  staged: boolean;
+};
+
+export type StageScrapedTokenEvent = CustomEvent<StageScrapedTokenDetail>;
+
 export const SET_THEME_TOKENS_EVENT = 'set-theme-tokens';
 
 export type SetThemeTokensDetail = {

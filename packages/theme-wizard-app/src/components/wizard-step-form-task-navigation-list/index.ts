@@ -1,8 +1,9 @@
+import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { stepsStorage } from '../../utils/wizard-steps-storage';
+import { customElement } from 'lit/decorators.js';
+import { completedStepsContext } from '../../contexts/completed-steps';
 import '../wizard-step-form-task-navigation';
 
 const STEPS = [
@@ -69,17 +70,11 @@ declare global {
 @customElement(tag)
 export class WizardStepFormTaskNavigationList extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCss)];
-  @state() private completedPaths: Set<string> = new Set();
-
-  override connectedCallback() {
-    super.connectedCallback();
-    const stored = stepsStorage.getJSON();
-    if (Array.isArray(stored)) {
-      this.completedPaths = new Set(stored);
-    }
-  }
+  @consume({ context: completedStepsContext, subscribe: true })
+  completedSteps: string[] = [];
 
   override render() {
+    const completedPaths = new Set(this.completedSteps);
     return html`
       <clippy-stack size="3xl">
         <div>
@@ -88,7 +83,7 @@ export class WizardStepFormTaskNavigationList extends LitElement {
             return html`
               <wizard-step-form-task-navigation
                 href=${href}
-                ?done=${this.completedPaths.has(step.path)}
+                ?done=${completedPaths.has(step.path)}
                 icon=${step.icon}
                 label=${step.label}
               ></wizard-step-form-task-navigation>
@@ -96,7 +91,7 @@ export class WizardStepFormTaskNavigationList extends LitElement {
           })}
         </div>
         ${
-          this.completedPaths.size > 0
+          completedPaths.size > 0
             ? html`
                 <div class="utrecht-action-group utrecht-action-group--row">
                   <a href="/design-tokens/basis" class="nl-button nl-button--primary">
