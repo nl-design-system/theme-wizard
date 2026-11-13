@@ -1,5 +1,14 @@
 import { expect, test } from './fixtures/fixtures';
 
+const COLORBRANCH_CASES: { segments: string[]; breadcrumbSegments: string[]; title: string }[] = [
+  { breadcrumbSegments: ['kleur', 'accent', 'accent-1'], segments: ['color', 'accent-1'], title: 'Accent-1' },
+  {
+    breadcrumbSegments: ['kleur', 'accent', 'accent-1-inverse'],
+    segments: ['color', 'accent-1-inverse'],
+    title: 'Accent-1',
+  },
+];
+
 const CASES: { segments: string[]; breadcrumbSegments: string[]; title: string }[] = [
   { breadcrumbSegments: ['kleur'], segments: ['color'], title: 'Kleur' },
   { breadcrumbSegments: ['kleur', 'standaard', 'default'], segments: ['color', 'default'], title: 'Default' },
@@ -14,8 +23,10 @@ const CASES: { segments: string[]; breadcrumbSegments: string[]; title: string }
     segments: ['text', 'font-family', 'default'],
     title: 'Default',
   },
+  ...COLORBRANCH_CASES,
 ];
 
+// Default basic tests
 CASES.forEach(({ breadcrumbSegments, segments, title }) => {
   test.describe(`/design-tokens/basis/${segments.join('/')}`, () => {
     test.beforeEach(async ({ basisTokenPage }) => {
@@ -35,12 +46,36 @@ CASES.forEach(({ breadcrumbSegments, segments, title }) => {
       const expectedCrumbs = ['Huisstijl', 'Basis tokens', ...breadcrumbSegments.slice(0, -1)];
 
       await expect(basisTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs, { ignoreCase: true });
-      await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(title, { ignoreCase: true });
+      await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(breadcrumbSegments.slice(-1), { ignoreCase: true });
     });
 
     test('sidebar has the matching link selected', async ({ basisTokenPage }) => {
       await expect(basisTokenPage.selectedSidebarLink).toBeVisible();
-      await expect(basisTokenPage.selectedSidebarLink).toHaveText(title, { ignoreCase: true });
+      await expect(basisTokenPage.selectedSidebarLink).toHaveText(breadcrumbSegments.slice(-1), { ignoreCase: true });
+    });
+  });
+});
+
+COLORBRANCH_CASES.forEach(({ segments }) => {
+  test.describe(`/design-tokens/basis/${segments.join('/')}`, () => {
+    test.beforeEach(async ({ basisTokenPage }) => {
+      await basisTokenPage.goto(segments);
+    });
+
+    test('has an input to set the Base color', async ({ page }) => {
+      await expect(page.getByRole('combobox', { name: 'Base color' })).toBeVisible();
+    });
+
+    test('has a color table with the base colorscale and the -inverse colorscale', async ({ page }) => {
+      const table = page.getByRole('table');
+      await expect(table).toBeVisible();
+
+      const headers = table.locator('tbody tr th[scope="row"]');
+      await expect(headers).toHaveCount(2);
+
+      const lastSegment = segments.at(-1)?.replace(/-inverse$/, '') as string;
+      await expect(headers.nth(0)).toHaveText(lastSegment);
+      await expect(headers.nth(1)).toHaveText(`${lastSegment}-inverse`);
     });
   });
 });

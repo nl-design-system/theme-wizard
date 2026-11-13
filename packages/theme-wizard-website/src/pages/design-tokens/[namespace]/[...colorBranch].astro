@@ -3,6 +3,8 @@ import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
 import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
 import { capitalize } from 'es-toolkit';
+import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { type ProfileName, PROFILES } from '@nl-design-system-community/color-scale-generator';
 
 export function getStaticPaths() {
   return getStaticPathsDesignTokens('colorBranch');
@@ -10,13 +12,45 @@ export function getStaticPaths() {
 
 const { pageData } = Astro.props;
 const namespace = getTokenNamespace(Astro.props.namespace);
-const tokenPath = pageData?.metaData?.tokenPath
-  ? `${namespace.id}.${pageData.metaData.tokenPath.join('.')}`
-  : undefined;
+
+const segments: TokenPath = pageData?.metaData?.tokenPath || [];
+const tokenPaths = segments.length
+  ? [
+      `${namespace.id}.${segments.join('.').replace(/-inverse$/, '')}`,
+      `${namespace.id}.${segments.join('.').replace(/-inverse$/, '')}-inverse`,
+    ]
+  : [];
+
+/**
+ * Determine profile based on tokenPath:
+ * find the first profile name that matches the start of any tokenPath item
+ */
+const profile: ProfileName =
+  PROFILES.find((profile) => segments.some((segment) => segment.startsWith(profile))) || 'neutral';
+
+const title = capitalize(pageData.label.replace(/-inverse$/, ''));
 ---
 
-<DesignTokensLayout title={capitalize(pageData.label)} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
-  {tokenPath ? <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs> : null}
+<DesignTokensLayout title={capitalize(title)} metaTitle={`${title} - ${namespace.pageTitle}`}>
+  {tokenPaths.length > 0 ? (
+    <>
+      <clippy-stack size="xl">
+        <wizard-token-docs groups={tokenPaths[0]} heading-level="none"></wizard-token-docs>
+
+        <p class="nl-paragraph">
+          Selecteer een ‘base color’. Op basis van die kleur wordt er een toegankelijk keurenpalet berekend. Je kunt
+          specifieke kleuren uit het palet overschrijven als dat nodig is.
+        </p>
+
+        <wizard-form-colorscale path={tokenPaths[0]} profile={profile} label="Base color"></wizard-form-colorscale>
+      </clippy-stack>
+
+      <clippy-stack>
+        <clippy-heading level="2">Kleurenpalet</clippy-heading>
+        <wizard-color-system-preview groups={tokenPaths.join(', ')}></wizard-color-system-preview>
+      </clippy-stack>
+    </>
+  ) : null}
 
   {pageData.items ? (
     <wizard-unstyled-list>
@@ -35,3 +69,8 @@ const tokenPath = pageData?.metaData?.tokenPath
     </wizard-unstyled-list>
   ) : null}
 </DesignTokensLayout>
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+</script>

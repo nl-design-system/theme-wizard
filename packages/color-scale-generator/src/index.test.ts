@@ -11,7 +11,7 @@ describe('index exports', () => {
     expect(ColorScaleGenerator.relativeLuminance).toBeTypeOf('function');
     expect(ColorScaleGenerator.TOKENS).toHaveLength(14);
     expect(Object.keys(ColorScaleGenerator.MASKS).sort()).toEqual(
-      ['accent', 'disabled', 'highlight', 'negative', 'neutral', 'positive', 'warning'].sort(),
+      ['accent', 'action', 'disabled', 'highlight', 'negative', 'neutral', 'positive', 'warning'].sort(),
     );
   });
 
