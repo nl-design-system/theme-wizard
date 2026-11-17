@@ -20,7 +20,7 @@ const tag = 'clippy-html-image';
 export class ClippyHtmlImage extends LitElement {
   static override readonly styles = [styles];
 
-  @property({ type: Boolean })
+  @property({ attribute: 'forced-color-adjust', type: Boolean })
   forcedColorAdjust = false;
 
   @state() private hasLabelSlot = false;
