@@ -38,13 +38,18 @@ describe('presetMatchesPath', () => {
 describe('TOKEN_PRESET_FOLDERS', () => {
   it('groups preset files by folder', () => {
     const folders = TOKEN_PRESET_FOLDERS.map(({ folder }) => folder);
-    expect(folders).toEqual(expect.arrayContaining(['nl.link']));
+    expect(folders).toEqual(expect.arrayContaining(['nl.button', 'nl.link']));
   });
 });
 
 describe('getRelevantPresetFolders', () => {
-  it('returns only folders with a matching preset', () => {
+  it('returns every folder with a matching preset', () => {
     const folders = getRelevantPresetFolders('basis.color.action-2').map(({ folder }) => folder);
-    expect(folders).toEqual(['nl.link']);
+    expect(folders).toEqual(expect.arrayContaining(['nl.button', 'nl.link']));
+  });
+
+  it('returns only folders with a matching preset', () => {
+    const folders = getRelevantPresetFolders('basis.color.action-2-inverse').map(({ folder }) => folder);
+    expect(folders).toEqual(['nl.button']);
   });
 });

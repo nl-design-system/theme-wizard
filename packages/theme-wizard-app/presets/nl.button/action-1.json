@@ -1,0 +1,48 @@
+{
+  "nl": {
+    "button": {
+      "primary": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.bg-default}"
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.border-default}"
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-default}"
+        },
+        "hover": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.bg-hover}"
+          },
+          "border-color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.border-hover}"
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-hover}"
+          }
+        },
+        "active": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.bg-active}"
+          },
+          "border-color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.border-active}"
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-active}"
+          }
+        }
+      }
+    }
+  }
+}
