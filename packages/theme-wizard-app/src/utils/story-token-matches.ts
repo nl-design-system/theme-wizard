@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { isRef, isValueToken, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
-import { loadComponentStories, type ComponentStoriesRegistry } from './component-stories';
+import { loadComponentStories, type ComponentStoriesRegistry, type LoadedComponent } from './component-stories';
 
 export type MatchedToken = {
   // Path of the component's own token, e.g. `nl.link.hover.color`.
@@ -10,14 +9,10 @@ export type MatchedToken = {
   ref: string;
 };
 
-export type StoryMatch = {
-  componentId: string;
+export type StoryMatch = Pick<LoadedComponent, 'componentId' | 'meta'> & {
   id: string;
   matchedTokens: MatchedToken[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: Meta<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  story: StoryObj<any>;
+  story: LoadedComponent['stories'][number][1];
 };
 
 export type { ComponentStoriesRegistry } from './component-stories';

@@ -1,5 +1,4 @@
 import type { ClippyContentSelect } from '@nl-design-system-community/clippy-components/clippy-content-select';
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { consume } from '@lit/context';
 import { arrayFromTokenList } from '@nl-design-system-community/clippy-components/lib/converters';
 import '@nl-design-system-community/clippy-components/clippy-content-select';
@@ -7,9 +6,10 @@ import { dset } from 'dset';
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
+import type { StoryMatch } from '../../utils/story-token-matches';
 import { themeContext } from '../../contexts/theme';
-import { t } from '../../i18n';
 import '../wizard-story-example';
+import { t } from '../../i18n';
 import { flattenTokens } from '../../lib/Theme/lib';
 import { loadComponentStories, type ComponentStoriesRegistry } from '../../utils/component-stories';
 import { APPLY_TOKEN_PRESET_EVENT, type ApplyTokenPresetDetail } from '../../utils/events';
@@ -26,13 +26,9 @@ declare global {
 
 const PLACEHOLDER_VALUE = '';
 
-type PresetStory = {
+type PresetStory = Pick<StoryMatch, 'meta' | 'story'> & {
   // Value of the story meta's `parameters.presets`, e.g. `nl.link`
   folder: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: Meta<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  story: StoryObj<any>;
 };
 
 type PresetMatch = PresetStory & Pick<TokenPresetFolder, 'presets'>;

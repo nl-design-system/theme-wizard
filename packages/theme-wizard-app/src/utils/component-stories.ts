@@ -6,17 +6,14 @@ import { getStories } from './csf-utils';
 export type ComponentStoriesRegistry = Record<
   string,
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    stories: () => Promise<{ default: Meta<any>; [key: string]: any }>;
+    stories: () => Promise<{ default: Meta; [key: string]: unknown }>;
   }
 >;
 
 export type LoadedComponent = {
   componentId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: Meta<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stories: [id: string, story: StoryObj<any>][];
+  meta: Meta;
+  stories: [id: string, story: StoryObj][];
 };
 
 const loadedRegistries = new WeakMap<ComponentStoriesRegistry, Promise<LoadedComponent[]>>();
@@ -28,8 +25,7 @@ export const loadComponentStories = (components: ComponentStoriesRegistry): Prom
     loaded = Promise.all(
       Object.entries(components).map(async ([componentId, { stories }]) => {
         const { default: meta, ...storyExports } = await stories();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return { componentId, meta, stories: getStories(storyExports as Record<PropertyKey, StoryObj<any>>, meta) };
+        return { componentId, meta, stories: getStories(storyExports as Record<PropertyKey, StoryObj>, meta) };
       }),
     );
     loadedRegistries.set(components, loaded);
