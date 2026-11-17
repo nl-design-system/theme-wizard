@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-html-image/README.md?raw';
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
@@ -66,8 +67,7 @@ const meta: Meta<HTMLImageStoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component:
-          '`<clippy-html-image>` is een web component om voorbeeld-HTML te renderen als een `figure` element. Het component ondersteunt een `label` slot om de afbeelding een toegankelijk label te geven, een `forcedColorAdjust` property voor kleurenaanpassing, en een `color-scheme` property voor het instellen van het kleurenschema.',
+        component: readme,
       },
     },
   },
