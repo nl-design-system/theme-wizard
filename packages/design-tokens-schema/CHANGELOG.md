@@ -1,5 +1,23 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.7.0
+
+### Minor Changes
+
+- b77322a: feat: improve error message when contrast is too low
+
+## 2.6.1
+
+### Patch Changes
+
+- 650f8ca: Stop bundling JavaScript dependencies, so they can be shared with other packages. css-scraper and design-tokens-schema are now also marked as side-effect free and publish one file per module, so unused code can be tree-shaken
+
+## 2.6.0
+
+### Minor Changes
+
+- d43a2b9: feat: allow linting to ignore specific or all rules on a token
+
 ## 2.5.0
 
 ### Minor Changes

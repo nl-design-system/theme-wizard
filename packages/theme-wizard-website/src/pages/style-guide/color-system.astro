@@ -4,40 +4,44 @@ import MainLayout from '@/layouts/MainLayout.astro';
 
 const SECTIONS = [
   {
-    name: "Huisstijl",
+    name: 'Huisstijl',
     id: 'huisstijl',
     tokens: {
-      groups: "basis.color.default, basis.color.accent-1, basis.color.accent-2, basis.color.accent-3",
-      redundant: "basis.color.accent-2, basis.color.accent-3",
-      matches: "basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse"
-    }
+      groups: 'basis.color.default, basis.color.accent-1, basis.color.accent-2, basis.color.accent-3',
+      redundant: 'basis.color.accent-2, basis.color.accent-3',
+      matches:
+        'basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse',
+    },
   },
   {
-    name: "Interactie",
+    name: 'Interactie',
     id: 'interactie',
     tokens: {
-      groups: "basis.color.action-1, basis.color.action-2, basis.color.disabled",
-      redundant: "basis.color.action-2",
-      matches: "basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse"
-    }
+      groups: 'basis.color.action-1, basis.color.action-2, basis.color.disabled',
+      redundant: 'basis.color.action-2',
+      matches:
+        'basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse',
+    },
   },
   {
-    name: "Signaal",
+    name: 'Signaal',
     id: 'signaal',
     tokens: {
-      groups: "basis.color.info, basis.color.positive, basis.color.negative, basis.color.warning",
-      matches: "basis.color.info, basis.color.info-inverse, basis.color.positive, basis.color.positive-inverse, basis.color.negative, basis.color.negative-inverse, basis.color.warning, basis.color.warning-inverse"
-    }
+      groups: 'basis.color.info, basis.color.positive, basis.color.negative, basis.color.warning',
+      matches:
+        'basis.color.info, basis.color.info-inverse, basis.color.positive, basis.color.positive-inverse, basis.color.negative, basis.color.negative-inverse, basis.color.warning, basis.color.warning-inverse',
+    },
   },
   {
-    name: "Overig",
+    name: 'Overig',
     id: 'overig',
     tokens: {
-      groups: "basis.color.highlight, basis.color.selected",
-      matches: "basis.color.highlight, basis.color.highlight-inverse, basis.color.selected, basis.color.selected-inverse"
-    }
-  }
-]
+      groups: 'basis.color.highlight, basis.color.selected',
+      matches:
+        'basis.color.highlight, basis.color.highlight-inverse, basis.color.selected, basis.color.selected-inverse',
+    },
+  },
+];
 ---
 
 <script>
@@ -48,19 +52,29 @@ const SECTIONS = [
 </script>
 
 <MainLayout title="Kleur systeem" metaTitle="Kleur systeem" layoutPurpose="detail" mainPath="/style-guide">
-  <clippy-table-of-contents slot="aside" items={JSON.stringify(SECTIONS.map(section => ({label: section.name, href: `#${section.id}`})))}></clippy-table-of-contents>
+  <clippy-table-of-contents
+    slot="aside"
+    items={JSON.stringify(SECTIONS.map((section) => ({ label: section.name, href: `#${section.id}` })))}
+  ></clippy-table-of-contents>
 
   <clippy-stack size="5xl">
-    {SECTIONS.map(section => (
+    {SECTIONS.map((section) => (
       <section class="wizard-anchor" id={section.id}>
         <clippy-stack size="xl">
           <clippy-heading level="2">{section.name}</clippy-heading>
 
           <clippy-story-preview>
             <clippy-stack size="4xl">
-              <wizard-token-docs groups={section.tokens.groups} skip-redundant-groups={section.tokens.redundant} heading-level="3"></wizard-token-docs>
-              <wizard-color-system-preview groups={section.tokens.groups} skip-redundant-groups={section.tokens.redundant} ></wizard-color-system-preview>
-              <TokenStoryMatches groups={section.tokens.matches}  />
+              <wizard-token-docs
+                groups={section.tokens.groups}
+                skip-redundant-groups={section.tokens.redundant}
+                heading-level="3"
+              ></wizard-token-docs>
+              <wizard-color-system-preview
+                groups={section.tokens.groups}
+                skip-redundant-groups={section.tokens.redundant}
+              ></wizard-color-system-preview>
+              <TokenStoryMatches groups={section.tokens.matches} />
             </clippy-stack>
           </clippy-story-preview>
         </clippy-stack>

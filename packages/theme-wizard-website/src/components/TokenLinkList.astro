@@ -1,5 +1,5 @@
 ---
-import { getTokenNamespace, type TokenNamespaceId } from '@/lib/token-namespaces';
+import { getTokenNamespace, type TokenNamespaceId } from '@/lib/design-tokens/token-namespaces';
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { capitalize } from 'es-toolkit';
 
@@ -13,16 +13,14 @@ const { nav } = getTokenNamespace(namespace);
 ---
 
 <wizard-unstyled-list>
-  {
-    nodes.map((node) => (
-      <li>
-        <wizard-link-to-token path={nav.tokenPathFor(node.path)}>
-          <a slot="link" href={nav.hrefFor(node.path)}>
-            Bewerk '{node.key}'
-          </a>
-          {capitalize(node.key)}
-        </wizard-link-to-token>
-      </li>
-    ))
-  }
+  {nodes.map((node) => (
+    <li>
+      <wizard-link-to-token path={nav.tokenPathFor(node.path)}>
+        <a slot="link" href={nav.hrefFor(node.path)}>
+          Bewerk '{node.key}'
+        </a>
+        {capitalize(node.key)}
+      </wizard-link-to-token>
+    </li>
+  ))}
 </wizard-unstyled-list>

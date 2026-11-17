@@ -44,21 +44,19 @@ const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
 
 <CollageLayout>
   <div class="clippy-template-color-swatch-grid">
-    {
-      Object.entries(colorTokensByScale).map(([scale, references]) => {
-        const rowLabel = scale.replaceAll('-', ' ');
+    {Object.entries(colorTokensByScale).map(([scale, references]) => {
+      const rowLabel = scale.replaceAll('-', ' ');
 
-        return (
-          <section class="clippy-template-color-swatch-grid__row">
-            <h3 class="clippy-template-color-swatch-grid__label">{rowLabel}</h3>
-            <div class="clippy-template-color-swatch-grid__swatches">
-              {references.map((reference) => (
-                <template-color-swatch reference={reference} />
-              ))}
-            </div>
-          </section>
-        );
-      })
-    }
+      return (
+        <section class="clippy-template-color-swatch-grid__row">
+          <h3 class="clippy-template-color-swatch-grid__label">{rowLabel}</h3>
+          <div class="clippy-template-color-swatch-grid__swatches">
+            {references.map((reference) => (
+              <template-color-swatch reference={reference} />
+            ))}
+          </div>
+        </section>
+      );
+    })}
   </div>
 </CollageLayout>

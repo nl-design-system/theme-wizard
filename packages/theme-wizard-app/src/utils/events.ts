@@ -10,6 +10,23 @@ export type UpdateDesignTokensDetail = {
 
 export type SubmitSaveTokenFormEvent = CustomEvent<UpdateDesignTokensDetail>;
 
+export const STEPS_COMPLETED_EVENT = 'steps-completed';
+
+export type StepsCompletedDetail = {
+  paths: string[];
+};
+
+export type StepsCompletedEvent = CustomEvent<StepsCompletedDetail>;
+
+export const STAGE_SCRAPED_TOKEN_EVENT = 'stage-scraped-token';
+
+export type StageScrapedTokenDetail = {
+  id: string;
+  staged: boolean;
+};
+
+export type StageScrapedTokenEvent = CustomEvent<StageScrapedTokenDetail>;
+
 export const SET_THEME_TOKENS_EVENT = 'set-theme-tokens';
 
 export type SetThemeTokensDetail = {

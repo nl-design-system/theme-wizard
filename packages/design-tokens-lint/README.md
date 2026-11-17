@@ -44,15 +44,24 @@ Write output to file instead of stderr/stdout. This works for both successful an
 design-tokens-lint --out result.json src/tokens.json
 ```
 
+### Allow a maximum number of errors
+
+Exit with code `0` when the number of issues is smaller than or equal to `<number>`. Issues are still printed. Defaults to `0`.
+
+```shell
+design-tokens-lint --max-errors=5 src/tokens.json
+```
+
 ## Options
 
-| Option                  | Description                         |
-| ----------------------- | ----------------------------------- |
-| `--exclude-parent-keys` | Exclude parent keys from validation |
-| `--out`, `-o <file>`    | Write output JSON to file           |
-| `--verbose`             | Print step-by-step progress         |
-| `--debug`               | Print intermediate JSON output      |
-| `--help`, `-h`          | Show help                           |
+| Option                  | Description                                                  |
+| ----------------------- | ------------------------------------------------------------ |
+| `--exclude-parent-keys` | Exclude parent keys from validation                          |
+| `--max-errors <number>` | Exit 0 when issue count is at most `<number>` (default: `0`) |
+| `--out`, `-o <file>`    | Write output JSON to file                                    |
+| `--verbose`             | Print step-by-step progress                                  |
+| `--debug`               | Print intermediate JSON output                               |
+| `--help`, `-h`          | Show help                                                    |
 
 ## License
 

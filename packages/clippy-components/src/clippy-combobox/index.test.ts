@@ -152,7 +152,7 @@ describe(`<${tag}>`, () => {
       .then(() => userEvent.keyboard(`${OBJ_OPTIONS[0].label[0]}{Enter}`))
       .then(() => userEvent.keyboard('{ArrowDown}'))
       .then(() => userEvent.keyboard('{Tab}'));
-    expect(listener).toBeCalled();
+    expect(listener).toHaveBeenCalled();
   });
 
   it('allows other no values than supplied options when `allow` attribute is not set', async () => {

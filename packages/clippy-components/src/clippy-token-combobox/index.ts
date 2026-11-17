@@ -112,8 +112,8 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
-  override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
-    this.#options = value.map(({ label, value }) => {
+  override set options(value: Array<Pick<Option, 'description' | 'label' | 'value'>>) {
+    this.#options = value.map(({ description, label, value }) => {
       let color = undefined;
       if (this.type === 'color') {
         if (isRef(value?.$value)) {
@@ -124,10 +124,18 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       }
       return {
         color: color ?? undefined,
+        description,
         label,
         value,
       };
     });
+  }
+
+  /**
+   * @description only `$value` matters; `$extensions` etc. differ between the current token and the parsed query
+   */
+  override isSameValue(a: Option['value'] | null, b: Option['value'] | null): boolean {
+    return dequal(a?.$value, b?.$value);
   }
 
   #getOptionForValue(value: Option['value'] | null): Option | undefined {

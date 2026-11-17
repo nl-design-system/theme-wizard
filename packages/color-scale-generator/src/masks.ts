@@ -22,7 +22,18 @@ export const TOKENS = [
 ] as const;
 
 export type TokenName = (typeof TOKENS)[number];
-export type ProfileName = 'neutral' | 'accent' | 'negative' | 'positive' | 'warning' | 'highlight' | 'disabled';
+
+export const PROFILES = [
+  'neutral',
+  'accent',
+  'action',
+  'negative',
+  'positive',
+  'warning',
+  'highlight',
+  'disabled',
+] as const;
+export type ProfileName = (typeof PROFILES)[number];
 
 export interface Mask {
   seedSlot: TokenName;
@@ -41,25 +52,27 @@ export interface ProfileMasks {
   inverse: Mask;
 }
 
-export const MASKS: Record<ProfileName, ProfileMasks> = {
-  accent: {
-    inverse: {
-      C: [0.5966, 0.4942, 0.9301, 1.0, 0.892, 0.9918, 0.2624, 0.2078, 0.1505, 0.0, 0.0, 0.0, 0.2921, 0.0],
-      H: [-1.76, -2.83, -1.4, 0.0, -0.03, 0.22, -3.92, -5.87, -6.94, 0.0, 0.0, 0.0, -5.49, 0.0],
-      L: [0.261, 0.2244, 0.4675, 0.4189, 0.3653, 0.402, 0.8351, 0.8696, 0.9046, 1.0, 1.0, 1.0, 0.8181, 1.0],
-      peakC: 0.1462,
-      seedSlot: 'bg-hover',
-    },
-    regular: {
-      C: [0.0117, 0.0351, 0.0662, 0.0945, 0.1219, 0.2921, 0.6481, 0.7045, 0.7703, 0.9301, 1.0, 0.892, 0.871, 0.4942],
-      H: [0.0, 0.0, -4.36, -9.2, -3.83, -5.49, -3.91, -3.96, -3.5, -1.4, 0.0, -0.03, -2.46, -2.83],
-      L: [
-        0.9906, 0.9747, 0.9561, 0.9394, 0.9214, 0.8181, 0.6198, 0.5869, 0.5515, 0.4675, 0.4189, 0.3653, 0.5011, 0.2244,
-      ],
-      peakC: 0.1462,
-      seedSlot: 'color-hover',
-    },
+// Accent and action are the same mask
+const ACCENT_MASK: ProfileMasks = {
+  inverse: {
+    C: [0.5966, 0.4942, 0.9301, 1.0, 0.892, 0.9918, 0.2624, 0.2078, 0.1505, 0.0, 0.0, 0.0, 0.2921, 0.0],
+    H: [-1.76, -2.83, -1.4, 0.0, -0.03, 0.22, -3.92, -5.87, -6.94, 0.0, 0.0, 0.0, -5.49, 0.0],
+    L: [0.261, 0.2244, 0.4675, 0.4189, 0.3653, 0.402, 0.8351, 0.8696, 0.9046, 1.0, 1.0, 1.0, 0.8181, 1.0],
+    peakC: 0.1462,
+    seedSlot: 'bg-hover',
   },
+  regular: {
+    C: [0.0117, 0.0351, 0.0662, 0.0945, 0.1219, 0.2921, 0.6481, 0.7045, 0.7703, 0.9301, 1.0, 0.892, 0.871, 0.4942],
+    H: [0.0, 0.0, -4.36, -9.2, -3.83, -5.49, -3.91, -3.96, -3.5, -1.4, 0.0, -0.03, -2.46, -2.83],
+    L: [0.9906, 0.9747, 0.9561, 0.9394, 0.9214, 0.8181, 0.6198, 0.5869, 0.5515, 0.4675, 0.4189, 0.3653, 0.5011, 0.2244],
+    peakC: 0.1462,
+    seedSlot: 'color-hover',
+  },
+};
+
+export const MASKS: Record<ProfileName, ProfileMasks> = {
+  accent: ACCENT_MASK,
+  action: ACCENT_MASK,
   disabled: {
     inverse: {
       C: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],

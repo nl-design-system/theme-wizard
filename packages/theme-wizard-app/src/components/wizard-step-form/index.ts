@@ -2,15 +2,15 @@ import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
-import {
-  generateScale,
-  profileForName,
-  TOKENS,
-  type TokenName,
-} from '@nl-design-system-community/color-scale-generator';
+import { generateScale, TOKENS } from '@nl-design-system-community/color-scale-generator';
+import '@nl-design-system-community/clippy-components/clippy-button';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-option';
+import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-theme-provider';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   BaseDesignToken,
   getExtension,
@@ -28,14 +28,19 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { getColorScaleParams } from '../../lib/ColorScale';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
-import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
+import {
+  STEPS_COMPLETED_EVENT,
+  UPDATE_DESIGN_TOKENS_EVENT,
+  type StepsCompletedDetail,
+  type UpdateDesignTokensDetail,
+} from '../../utils/events';
 import { hasChangedProperty } from '../../utils/lit';
-import { type StagedDesignToken } from '../../utils/types';
 import '../wizard-color-description';
-import { markStepComplete } from '../../utils/wizard-steps-storage';
+import { type StagedDesignToken } from '../../utils/types';
 import '../wizard-step-form-sample';
 import styles from './styles';
 
@@ -44,54 +49,6 @@ export type { SubmitSaveTokenFormEvent } from '../../utils/events';
 
 const tokenEquals = (a: BaseDesignToken, b: BaseDesignToken): boolean => {
   return dequal(a.$value, b.$value) && a.$type === b.$type;
-};
-
-const INVERSE_SUFFIX = '-inverse';
-
-interface ColorScaleParams {
-  /** e.g. `basis.color.accent-1` */
-  regularGroupPath: string;
-  /** e.g. `basis.color.accent-1-inverse` */
-  inverseGroupPath: string;
-  profile: ReturnType<typeof profileForName>;
-  /** Anchor for generating the regular scale. */
-  regularAnchor: TokenName | undefined;
-  /** Anchor for generating the inverse scale. */
-  inverseAnchor: TokenName | undefined;
-}
-
-/** Qualifies only when path's last segment is one of the 14 canonical slot names. */
-const getColorScaleParams = (path: string): ColorScaleParams | undefined => {
-  const segments = path.split('.');
-  const slot = segments.at(-1);
-  const group = segments.at(-2);
-
-  if (!slot || !group || !TOKENS.includes(slot as TokenName)) {
-    return undefined;
-  }
-
-  const prefix = segments.slice(0, -2);
-  const isInverse = group.endsWith(INVERSE_SUFFIX);
-  const groupBase = isInverse ? group.slice(0, -INVERSE_SUFFIX.length) : group;
-  const profile = profileForName(groupBase);
-
-  // Anchor both scales to the picked slot so the seed reproduces exactly there.
-  // Exception: picking the inverse group's bg-default (a vivid fill) shouldn't force
-  // that color onto regular's bg-default (a pale background) — leave regular
-  // unanchored there instead. Neutral's template can't anchor at all.
-  let regularAnchor: TokenName | undefined;
-  if (profile !== 'neutral') {
-    regularAnchor = isInverse && slot === 'bg-default' ? undefined : (slot as TokenName);
-  }
-  const inverseAnchor = profile === 'neutral' ? undefined : (slot as TokenName);
-
-  return {
-    inverseAnchor,
-    inverseGroupPath: [...prefix, `${groupBase}${INVERSE_SUFFIX}`].join('.'),
-    profile,
-    regularAnchor,
-    regularGroupPath: [...prefix, groupBase].join('.'),
-  };
 };
 
 const tag = 'wizard-step-form';
@@ -190,7 +147,7 @@ export class WizardStepForm extends LitElement {
     }
     const formData = new FormData(event.target);
 
-    // Keep submitted paths separate from the possibly-expanded token list below (for markStepComplete).
+    // Keep submitted paths separate from the possibly-expanded token list below (for completed steps).
     const selections = Array.from(formData.entries()).flatMap(([path, value]) => {
       if (typeof value !== 'string' || value === '') {
         return [];
@@ -244,9 +201,13 @@ export class WizardStepForm extends LitElement {
       }),
     );
 
-    for (const { path } of selections) {
-      markStepComplete(path);
-    }
+    event.target.dispatchEvent(
+      new CustomEvent<StepsCompletedDetail>(STEPS_COMPLETED_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail: { paths: selections.map(({ path }) => path) },
+      }),
+    );
 
     // Redirect after submission
     if (this.returnUrl) {

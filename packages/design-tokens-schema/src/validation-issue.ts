@@ -1,5 +1,6 @@
 import * as z from 'zod';
 import { TokenPath } from './tokens/base-token';
+import { type ColorValue, stringifyColor } from './tokens/color-token';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
 export const ERROR_CODES = {
@@ -17,7 +18,7 @@ export type ContrastIssue = z.core.$ZodSuperRefineIssue & {
   tokens: [string] | [string, string];
   path: TokenPath;
   code: 'too_small';
-  message: 'Insufficient contrast';
+  message: string;
   minimum: number;
   origin: 'number';
 };
@@ -113,20 +114,29 @@ export type ThemeValidationIssue =
 
 export const createContrastIssue = ({
   actual,
+  colors,
   minimum,
   path,
   tokens,
 }: {
   actual: number;
+  colors: [ColorValue, ColorValue];
   tokens: [string] | [string, string];
   path: TokenPath;
   minimum: number;
 }): ContrastIssue => {
+  // Floor so a near-miss like 4.496 never displays as the 4.5 minimum
+  const actualRounded = Math.floor(actual * 100) / 100;
+  const [tokenA, tokenB] = tokens;
+  const [colorA, colorB] = colors.map(stringifyColor);
+  const subject = tokenB
+    ? `between "${tokenA}" (${colorA}) and "${tokenB}" (${colorB})`
+    : `for "${tokenA}" (${colorA}) against ${colorB}`;
   return {
     actual,
     code: 'too_small',
     ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-    message: 'Insufficient contrast',
+    message: `Insufficient contrast ${subject}: expected at least ${minimum}:1, received ${actualRounded}:1`,
     minimum,
     origin: 'number',
     path,

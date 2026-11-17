@@ -1,5 +1,5 @@
 import { terseLog } from '@nl-design-system-community/vite-plugin-terse-log';
-import { globSync } from 'node:fs';
+import { globSync, readFileSync } from 'node:fs';
 import { extname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
@@ -18,6 +18,8 @@ export function getFiles(pattern: string | string[], relativeTo = 'src') {
 }
 
 const thisDir = fileURLToPath(new URL('.', import.meta.url));
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const deps = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
 
 export default defineConfig(() => ({
   build: {
@@ -29,18 +31,13 @@ export default defineConfig(() => ({
     },
     minify: false,
     rollupOptions: {
-      external: [
-        'lit',
-        'lit/decorators.js',
-        'lit/directives/class-map.js',
-        'lit/directives/if-defined.js',
-        'lit/directives/ref.js',
-        'lit/directives/style-map.js',
-        'lit/directives/unsafe-svg.js',
-        'react',
-        'react-dom',
-        'react-dom/client',
-      ],
+      external: (id: string) =>
+        // Vite query imports (`?inline` CSS, `?raw` icons) only resolve in Vite, so they stay bundled.
+        // So do the *-tokens packages: they are JSON imports, which Node only accepts with
+        // `with { type: 'json' }`, and Rolldown strips that attribute from external imports.
+        !id.includes('?') &&
+        !/(?:-tokens|\.json)$/.test(id) &&
+        deps.some((dep) => id === dep || id.startsWith(`${dep}/`)),
       input: getFiles('src/**/index.ts'),
       output: {
         assetFileNames: (assetInfo) => {

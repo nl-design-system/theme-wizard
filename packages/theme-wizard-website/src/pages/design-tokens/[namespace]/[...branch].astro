@@ -1,0 +1,43 @@
+---
+import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
+import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
+import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
+import { capitalize } from 'es-toolkit';
+
+export function getStaticPaths() {
+  return getStaticPathsDesignTokens('branch');
+}
+const { pageData } = Astro.props;
+const namespace = getTokenNamespace(Astro.props.namespace);
+---
+
+<DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+  {pageData.metaData?.tokenPath ? (
+    <wizard-tokens-presets path={namespace.nav.tokenPathFor(pageData.metaData.tokenPath)}></wizard-tokens-presets>
+  ) : null}
+  {pageData.items ? (
+    <wizard-unstyled-list>
+      {pageData.items
+        .filter((item) => item.metaData?.tokenPath)
+        .map((item) => (
+          <li>
+            <wizard-link-to-token path={namespace.nav.tokenPathFor(item.metaData.tokenPath)}>
+              <a slot="link" href={item.href}>
+                Navigeer naar {item.label}
+              </a>
+              {capitalize(item.label)}
+            </wizard-link-to-token>
+          </li>
+        ))}
+    </wizard-unstyled-list>
+  ) : null}
+</DesignTokensLayout>
+
+<script>
+  import type { WizardTokensPresets } from '@nl-design-system-community/theme-wizard-app';
+  import { components } from '@/lib/components';
+
+  for (const element of document.querySelectorAll<WizardTokensPresets>('wizard-tokens-presets')) {
+    element.components = components;
+  }
+</script>

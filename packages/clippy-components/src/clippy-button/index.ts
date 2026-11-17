@@ -64,6 +64,7 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
         return undefined;
       },
     },
+    reflect: true,
     type: String,
   })
   purpose: Purpose | undefined;

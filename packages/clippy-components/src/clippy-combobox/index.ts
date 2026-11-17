@@ -3,6 +3,7 @@ import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 import ZoomIcon from '@tabler/icons/outline/zoom.svg?raw';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import utrechtCustomizableTextInputStyles from '@utrecht/customizable-text-input-css?inline';
+import formLabelStyles from '@utrecht/form-label-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
@@ -16,8 +17,8 @@ import memoize from 'memoize';
 import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only';
-import styles from './styles';
 import './../clippy-icon';
+import styles from './styles';
 
 type Option = {
   label: string;
@@ -70,6 +71,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     unsafeCSS(listboxStyles),
     unsafeCSS(textboxStyles),
     unsafeCSS(utrechtCustomizableTextInputStyles),
+    unsafeCSS(formLabelStyles),
     styles,
     srOnly,
   ];
@@ -130,6 +132,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   fetchAdditionalOptions(_query: string) {
     const empty: T[] = [];
     return Promise.resolve(empty);
+  }
+
+  /**
+   * Override this function to customize when a committed value counts as a change
+   */
+  isSameValue(a: T['value'] | null, b: T['value'] | null): boolean {
+    return dequal(a, b);
   }
 
   /**
@@ -204,26 +213,26 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.emit('focus');
   };
 
-  readonly #handleInput = (event: InputEvent) => {
+  readonly #handleInput = async (event: InputEvent) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
     this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
     if (this.query.length > 3) {
-      this.#addAdditionalOptions(this.query);
+      await this.#addAdditionalOptions(this.query);
     }
     this.emit('input');
   };
 
-  readonly #handleKeydown = ({ key }: KeyboardEvent) => {
+  readonly #handleKeydown = async ({ key }: KeyboardEvent) => {
     const index = this.activeIndex;
     const count = this.filteredOptions.length;
     switch (key) {
       case 'ArrowDown':
-        return this.#setActiveItem(index + 1, true);
+        return await this.#setActiveItem(index + 1, true);
       case 'ArrowUp':
-        return this.#setActiveItem(index - 1, true);
+        return await this.#setActiveItem(index - 1, true);
       case 'Enter':
         if (index > -1) {
           return this.#commitActiveItem(index);
@@ -234,20 +243,22 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         }
         return undefined;
       case 'Escape':
-        return this.#setActiveItem(-1);
+        return await this.#setActiveItem(-1);
       case 'Home':
-        return this.#setActiveItem(0);
+        return await this.#setActiveItem(0);
       case 'End':
-        return this.#setActiveItem(count - 1);
+        return await this.#setActiveItem(count - 1);
       default:
         return undefined;
     }
   };
 
-  #setActiveItem(index: number, open: boolean = false) {
+  async #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
     this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
     if (this.activeIndex > -1) {
+      // Options only render while open, so wait for the render before scrolling
+      await this.updateComplete;
       const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
       element?.scrollIntoView({
         behavior: 'smooth',
@@ -258,11 +269,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   #commit(value: T['value'] | null) {
-    if (!dequal(this.value, value)) {
+    // Close first, so the popover state is set before (potentially slow) change listeners run
+    this.open = false;
+    if (!this.isSameValue(this.value, value)) {
       this.value = value;
       this.emit('change');
     }
-    this.open = false;
   }
 
   #commitActiveItem(index: number) {
@@ -330,6 +342,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const labelClasses = {
       'clippy-combobox__label': true,
       'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+      'utrecht-form-label': true,
     };
     const popoverClasses = {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
@@ -410,7 +423,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                 aria-haspopup="listbox"
                 aria-controls=${this.#listId}
                 aria-expanded=${this.open}
-                aria-activedescendant=${ifDefined(this.#getOptionId())}
+                aria-activedescendant=${ifDefined(this.open ? this.#getOptionId() : undefined)}
                 aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
                 aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
                 aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
@@ -432,7 +445,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             tabindex="-1"
           >
             <ul class="utrecht-listbox__list" role="none">
-              ${this.filteredOptions.map((option, index) => {
+              ${(this.open ? this.filteredOptions : []).map((option, index) => {
                 const active = index === this.activeIndex;
                 const selected = dequal(option, currentOption);
                 const interactionClasses = {

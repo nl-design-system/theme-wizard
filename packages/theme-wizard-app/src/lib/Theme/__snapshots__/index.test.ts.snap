@@ -21,7 +21,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-breadcrumb-line-height: var(--basis-text-line-height-md)
 	--ams-breadcrumb-link-color: var(--basis-color-action-2-color-default)
 	--ams-breadcrumb-link-hover-color: var(--basis-color-action-2-color-hover)
-	--ams-breadcrumb-link-hover-text-decoration-line: None
+	--ams-breadcrumb-link-hover-text-decoration-line: none
 	--ams-breadcrumb-link-outline-offset: auto
 	--ams-breadcrumb-link-text-decoration-line: underline
 	--ams-breadcrumb-link-text-decoration-thickness: auto
@@ -37,7 +37,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-card-link-color: var(--basis-color-action-2-color-default)
 	--ams-card-link-hover-color: var(--basis-color-action-2-color-hover)
 	--ams-card-link-hover-text-decoration-line: underline
-	--ams-card-link-text-decoration-line: None
+	--ams-card-link-text-decoration-line: none
 	--ams-card-link-text-decoration-thickness: auto
 	--ams-card-link-text-underline-offset: auto
 	--ams-card-outline-offset: auto
@@ -100,7 +100,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-file-input-button-cursor: default
 	--ams-file-input-button-disabled-color: var(--basis-color-disabled-color-subtle)
 	--ams-file-input-button-disabled-cursor: disabled
-	--ams-file-input-button-hover-box-shadow: None
+	--ams-file-input-button-hover-box-shadow: none
 	--ams-file-input-button-hover-color: var(--basis-color-action-1-color-hover)
 	--ams-file-input-button-line-height: var(--basis-text-line-height-md)
 	--ams-file-input-button-margin-inline-end: var(--basis-space-inline-xl)
@@ -200,7 +200,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-page-footer-menu-link-font-size: var(--basis-text-font-size-md)
 	--ams-page-footer-menu-link-font-weight: var(--basis-text-font-weight-default)
 	--ams-page-footer-menu-link-hover-color: var(--basis-color-action-1-color-hover)
-	--ams-page-footer-menu-link-hover-text-decoration-line: None
+	--ams-page-footer-menu-link-hover-text-decoration-line: none
 	--ams-page-footer-menu-link-line-height: var(--basis-text-line-height-md)
 	--ams-page-footer-menu-link-outline-offset: auto
 	--ams-page-footer-menu-link-text-decoration-line: underline
@@ -232,7 +232,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-page-header-menu-item-outline-offset: auto
 	--ams-page-header-menu-item-padding-block: var(--basis-space-block-lg)
 	--ams-page-header-menu-link-hover-text-decoration-line: underline
-	--ams-page-header-menu-link-text-decoration-line: None
+	--ams-page-header-menu-link-text-decoration-line: none
 	--ams-page-header-menu-link-text-decoration-thickness: auto
 	--ams-page-header-menu-link-text-underline-offset: auto
 	--ams-page-header-menu-row-gap: var(--basis-space-row-3xl)
@@ -1060,7 +1060,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-side-navigation-expand-button-expanded-transform: rotate(180deg)
 	--denhaag-side-navigation-expand-button-inline-size: var(--basis-pointer-target-min-block-size)
 	--denhaag-side-navigation-expand-button-transform: rotate(0deg)
-	--denhaag-side-navigation-expand-button-transition: None
+	--denhaag-side-navigation-expand-button-transition: none
 	--denhaag-side-navigation-expand-separator-color: var(--basis-color-default-border-subtle)
 	--denhaag-side-navigation-expand-separator-inline-size: var(--basis-border-width-sm)
 	--denhaag-side-navigation-expand-separator-margin-inline-end: var(--basis-space-column-md)
@@ -1085,7 +1085,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-side-navigation-link-padding-block-start: var(--basis-space-block-lg)
 	--denhaag-side-navigation-list-margin-inline-start: var(--basis-space-inline-4xl)
 	--denhaag-side-navigation-min-width: 240px
-	--denhaag-side-navigation-mobile-display: None
+	--denhaag-side-navigation-mobile-display: none
 	--denhaag-side-navigation-row-gap: var(--basis-space-row-3xl)
 	--denhaag-step-marker-border-width: var(--basis-border-width-md)
 	--denhaag-step-marker-checked-background-color: var(--basis-color-positive-inverse-bg-default)
@@ -1512,7 +1512,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--nl-link-disabled-color: var(--basis-color-disabled-color-subtle)
 	--nl-link-disabled-cursor: disabled
 	--nl-link-hover-color: var(--basis-color-action-2-color-hover)
-	--nl-link-hover-text-decoration-line: None
+	--nl-link-hover-text-decoration-line: none
 	--nl-link-hover-text-decoration-thickness: auto
 	--nl-link-text-decoration-color: var(--basis-color-action-2-color-default)
 	--nl-link-text-decoration-line: underline
@@ -1597,14 +1597,14 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-breadcrumb-nav-item-padding-inline-start: var(--basis-space-none)
 	--todo-breadcrumb-nav-line-height: var(--basis-text-line-height-md)
 	--todo-breadcrumb-nav-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-breadcrumb-nav-link-active-text-decoration: None
+	--todo-breadcrumb-nav-link-active-text-decoration: none
 	--todo-breadcrumb-nav-link-color: var(--basis-color-action-2-color-default)
 	--todo-breadcrumb-nav-link-column-gap: var(--basis-space-text-xs)
 	--todo-breadcrumb-nav-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-breadcrumb-nav-link-focus-visible-color: var(--basis-focus-color)
-	--todo-breadcrumb-nav-link-focus-visible-text-decoration: None
+	--todo-breadcrumb-nav-link-focus-visible-text-decoration: none
 	--todo-breadcrumb-nav-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-breadcrumb-nav-link-hover-text-decoration: None
+	--todo-breadcrumb-nav-link-hover-text-decoration: none
 	--todo-breadcrumb-nav-link-icon-size: var(--basis-size-icon-md)
 	--todo-breadcrumb-nav-link-text-decoration: underline
 	--todo-breadcrumb-nav-separator-color: var(--basis-color-default-color-subtle)
@@ -1669,7 +1669,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-card-as-link-heading-font-weight: var(--basis-heading-font-weight)
 	--todo-card-as-link-heading-hover-text-decoration: underline
 	--todo-card-as-link-heading-line-height: var(--basis-text-line-height-xl)
-	--todo-card-as-link-heading-text-decoration: None
+	--todo-card-as-link-heading-text-decoration: none
 	--todo-card-as-link-hover-background-color: var(--basis-color-default-bg-hover)
 	--todo-card-as-link-hover-border-color: var(--todo-card-as-link-border-color)
 	--todo-card-as-link-icon-color: var(--todo-card-as-link-color)
@@ -1680,7 +1680,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-card-as-link-label-font-weight: var(--basis-text-font-weight-bold)
 	--todo-card-as-link-label-hover-text-decoration: underline
 	--todo-card-as-link-label-line-height: var(--basis-text-line-height-md)
-	--todo-card-as-link-label-text-decoration: None
+	--todo-card-as-link-label-text-decoration: none
 	--todo-card-as-link-link-icon-color: var(--basis-color-action-2-color-default)
 	--todo-card-as-link-link-icon-size: var(--basis-size-icon-md)
 	--todo-card-as-link-max-inline-size: 48rem
@@ -1740,7 +1740,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-card-as-link-task-border-width: var(--basis-border-width-sm)
 	--todo-card-as-link-task-checked-icon-color: var(--basis-color-positive-color-default)
 	--todo-card-as-link-task-footer-padding-inline-start: var(--basis-space-none)
-	--todo-card-as-link-task-max-inline-size: None
+	--todo-card-as-link-task-max-inline-size: none
 	--todo-card-as-link-task-pre-header-padding-block-end: var(--basis-space-block-xl)
 	--todo-card-as-link-task-pre-header-padding-block-start: var(--basis-space-block-xl)
 	--todo-card-as-link-task-pre-header-padding-inline-start: var(--basis-space-inline-xl)
@@ -1869,7 +1869,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-pagination-page-link-active-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-active-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-pagination-page-link-active-text-decoration: None
+	--todo-pagination-page-link-active-text-decoration: none
 	--todo-pagination-page-link-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-border-radius: var(--basis-border-radius-none)
@@ -1879,15 +1879,15 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-pagination-page-link-current-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-current-color: var(--basis-color-default-color-document)
 	--todo-pagination-page-link-current-font-weight: var(--basis-text-font-weight-bold)
-	--todo-pagination-page-link-current-text-decoration: None
+	--todo-pagination-page-link-current-text-decoration: none
 	--todo-pagination-page-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-pagination-page-link-focus-visible-color: var(--basis-focus-color)
-	--todo-pagination-page-link-focus-visible-text-decoration: None
+	--todo-pagination-page-link-focus-visible-text-decoration: none
 	--todo-pagination-page-link-font-weight: var(--basis-text-font-weight-default)
 	--todo-pagination-page-link-hover-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-hover-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-pagination-page-link-hover-text-decoration: None
+	--todo-pagination-page-link-hover-text-decoration: none
 	--todo-pagination-page-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--todo-pagination-page-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
 	--todo-pagination-page-link-padding-block-end: var(--basis-space-block-lg)
@@ -1898,7 +1898,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-pagination-relative-link-active-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-active-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-pagination-relative-link-active-text-decoration: None
+	--todo-pagination-relative-link-active-text-decoration: none
 	--todo-pagination-relative-link-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-border-radius: var(--basis-border-radius-none)
@@ -1908,15 +1908,15 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-pagination-relative-link-disabled-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-disabled-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-disabled-color: var(--basis-color-disabled-color-subtle)
-	--todo-pagination-relative-link-disabled-text-decoration: None
+	--todo-pagination-relative-link-disabled-text-decoration: none
 	--todo-pagination-relative-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-pagination-relative-link-focus-visible-color: var(--basis-focus-color)
-	--todo-pagination-relative-link-focus-visible-text-decoration: None
+	--todo-pagination-relative-link-focus-visible-text-decoration: none
 	--todo-pagination-relative-link-font-weight: var(--basis-text-font-weight-default)
 	--todo-pagination-relative-link-hover-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-hover-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-pagination-relative-link-hover-text-decoration: None
+	--todo-pagination-relative-link-hover-text-decoration: none
 	--todo-pagination-relative-link-icon-size: var(--basis-size-icon-md)
 	--todo-pagination-relative-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--todo-pagination-relative-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
@@ -2208,15 +2208,15 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-breadcrumb-nav-item-padding-inline-start: var(--basis-space-inline-md)
 	--utrecht-breadcrumb-nav-line-height: var(--basis-text-line-height-md)
 	--utrecht-breadcrumb-nav-link-active-color: var(--basis-color-action-2-color-active)
-	--utrecht-breadcrumb-nav-link-active-text-decoration: None
+	--utrecht-breadcrumb-nav-link-active-text-decoration: none
 	--utrecht-breadcrumb-nav-link-color: var(--basis-color-action-2-color-default)
 	--utrecht-breadcrumb-nav-link-current-font-weight: var(--basis-text-font-weight-default)
 	--utrecht-breadcrumb-nav-link-disabled-color: var(--basis-color-disabled-color-subtle)
 	--utrecht-breadcrumb-nav-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-breadcrumb-nav-link-focus-color: var(--basis-focus-color)
-	--utrecht-breadcrumb-nav-link-focus-text-decoration: None
+	--utrecht-breadcrumb-nav-link-focus-text-decoration: none
 	--utrecht-breadcrumb-nav-link-hover-color: var(--basis-color-action-2-color-hover)
-	--utrecht-breadcrumb-nav-link-hover-text-decoration: None
+	--utrecht-breadcrumb-nav-link-hover-text-decoration: none
 	--utrecht-breadcrumb-nav-link-text-decoration: underline
 	--utrecht-breadcrumb-nav-min-block-size: var(--basis-pointer-target-min-block-size)
 	--utrecht-breadcrumb-nav-separator-color: var(--basis-color-default-color-subtle)
@@ -2601,17 +2601,17 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-link-column-gap: var(--basis-space-text-xs)
 	--utrecht-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-link-focus-color: var(--basis-focus-color)
-	--utrecht-link-focus-visible-text-decoration: None
+	--utrecht-link-focus-visible-text-decoration: none
 	--utrecht-link-focus-visible-text-decoration-thickness: auto
 	--utrecht-link-hover-color: var(--basis-color-action-2-color-hover)
-	--utrecht-link-hover-text-decoration: None
+	--utrecht-link-hover-text-decoration: none
 	--utrecht-link-hover-text-decoration-thickness: auto
 	--utrecht-link-icon-size: var(--basis-size-icon-md)
 	--utrecht-link-list-icon-inset-block-start: var(--basis-space-none)
 	--utrecht-link-list-icon-size: var(--basis-size-icon-md)
 	--utrecht-link-list-link-column-gap: var(--basis-space-text-xs)
 	--utrecht-link-list-link-font-weight: var(--basis-text-font-weight-default)
-	--utrecht-link-list-link-text-decoration: None
+	--utrecht-link-list-link-text-decoration: none
 	--utrecht-link-list-margin-block-end: var(--basis-space-none)
 	--utrecht-link-list-margin-block-start: var(--basis-space-none)
 	--utrecht-link-list-row-gap: var(--basis-space-row-md)
@@ -2772,7 +2772,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-pagination-relative-link-padding-inline-end: var(--basis-space-inline-xl)
 	--utrecht-pagination-relative-link-padding-inline-start: var(--basis-space-inline-xl)
 	--utrecht-pagination-relative-link-text-decoration: underline
-	--utrecht-pagination-relative-link-text-transform: None
+	--utrecht-pagination-relative-link-text-transform: none
 	--utrecht-paragraph-color: var(--basis-color-default-color-document)
 	--utrecht-paragraph-font-family: var(--basis-text-font-family-default)
 	--utrecht-paragraph-font-size: var(--basis-text-font-size-md)
@@ -2880,7 +2880,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-skip-link-color: var(--basis-color-default-inverse-color-document)
 	--utrecht-skip-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-skip-link-focus-color: var(--basis-focus-color)
-	--utrecht-skip-link-focus-visible-text-decoration: None
+	--utrecht-skip-link-focus-visible-text-decoration: none
 	--utrecht-skip-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--utrecht-skip-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
 	--utrecht-skip-link-padding-block-end: var(--basis-space-block-lg)
@@ -2926,7 +2926,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-status-badge-success-background-color: var(--basis-color-positive-bg-default)
 	--utrecht-status-badge-success-border-color: var(--basis-color-transparent)
 	--utrecht-status-badge-success-color: var(--basis-color-positive-color-default)
-	--utrecht-status-badge-text-transform: None
+	--utrecht-status-badge-text-transform: none
 	--utrecht-status-badge-valid-background-color: var(--basis-color-positive-bg-default)
 	--utrecht-status-badge-valid-border-color: var(--basis-color-transparent)
 	--utrecht-status-badge-valid-color: var(--basis-color-positive-color-default)
@@ -3009,6 +3009,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-textbox-hover-background-color: var(--basis-form-control-hover-background-color)
 	--utrecht-textbox-hover-border-color: var(--basis-form-control-hover-border-color)
 	--utrecht-textbox-hover-color: var(--basis-form-control-hover-color)
+	--utrecht-textbox-icon-size: var(--basis-size-icon-md)
 	--utrecht-textbox-invalid-background-color: var(--basis-form-control-invalid-background-color)
 	--utrecht-textbox-invalid-border-block-end-width: var(--utrecht-textbox-invalid-border-width)
 	--utrecht-textbox-invalid-border-color: var(--basis-form-control-invalid-border-color)
@@ -3056,7 +3057,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-breadcrumb-line-height: var(--basis-text-line-height-md)
 	--ams-breadcrumb-link-color: var(--basis-color-action-2-color-default)
 	--ams-breadcrumb-link-hover-color: var(--basis-color-action-2-color-hover)
-	--ams-breadcrumb-link-hover-text-decoration-line: None
+	--ams-breadcrumb-link-hover-text-decoration-line: none
 	--ams-breadcrumb-link-outline-offset: auto
 	--ams-breadcrumb-link-text-decoration-line: underline
 	--ams-breadcrumb-link-text-decoration-thickness: auto
@@ -3072,7 +3073,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-card-link-color: var(--basis-color-action-2-color-default)
 	--ams-card-link-hover-color: var(--basis-color-action-2-color-hover)
 	--ams-card-link-hover-text-decoration-line: underline
-	--ams-card-link-text-decoration-line: None
+	--ams-card-link-text-decoration-line: none
 	--ams-card-link-text-decoration-thickness: auto
 	--ams-card-link-text-underline-offset: auto
 	--ams-card-outline-offset: auto
@@ -3135,7 +3136,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-file-input-button-cursor: default
 	--ams-file-input-button-disabled-color: var(--basis-color-disabled-color-subtle)
 	--ams-file-input-button-disabled-cursor: disabled
-	--ams-file-input-button-hover-box-shadow: None
+	--ams-file-input-button-hover-box-shadow: none
 	--ams-file-input-button-hover-color: var(--basis-color-action-1-color-hover)
 	--ams-file-input-button-line-height: var(--basis-text-line-height-md)
 	--ams-file-input-button-margin-inline-end: var(--basis-space-inline-xl)
@@ -3235,7 +3236,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-page-footer-menu-link-font-size: var(--basis-text-font-size-md)
 	--ams-page-footer-menu-link-font-weight: var(--basis-text-font-weight-default)
 	--ams-page-footer-menu-link-hover-color: var(--basis-color-action-1-color-hover)
-	--ams-page-footer-menu-link-hover-text-decoration-line: None
+	--ams-page-footer-menu-link-hover-text-decoration-line: none
 	--ams-page-footer-menu-link-line-height: var(--basis-text-line-height-md)
 	--ams-page-footer-menu-link-outline-offset: auto
 	--ams-page-footer-menu-link-text-decoration-line: underline
@@ -3267,7 +3268,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-page-header-menu-item-outline-offset: auto
 	--ams-page-header-menu-item-padding-block: var(--basis-space-block-lg)
 	--ams-page-header-menu-link-hover-text-decoration-line: underline
-	--ams-page-header-menu-link-text-decoration-line: None
+	--ams-page-header-menu-link-text-decoration-line: none
 	--ams-page-header-menu-link-text-decoration-thickness: auto
 	--ams-page-header-menu-link-text-underline-offset: auto
 	--ams-page-header-menu-row-gap: var(--basis-space-row-3xl)
@@ -4095,7 +4096,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-side-navigation-expand-button-expanded-transform: rotate(180deg)
 	--denhaag-side-navigation-expand-button-inline-size: var(--basis-pointer-target-min-block-size)
 	--denhaag-side-navigation-expand-button-transform: rotate(0deg)
-	--denhaag-side-navigation-expand-button-transition: None
+	--denhaag-side-navigation-expand-button-transition: none
 	--denhaag-side-navigation-expand-separator-color: var(--basis-color-default-border-subtle)
 	--denhaag-side-navigation-expand-separator-inline-size: var(--basis-border-width-sm)
 	--denhaag-side-navigation-expand-separator-margin-inline-end: var(--basis-space-column-md)
@@ -4120,7 +4121,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-side-navigation-link-padding-block-start: var(--basis-space-block-lg)
 	--denhaag-side-navigation-list-margin-inline-start: var(--basis-space-inline-4xl)
 	--denhaag-side-navigation-min-width: 240px
-	--denhaag-side-navigation-mobile-display: None
+	--denhaag-side-navigation-mobile-display: none
 	--denhaag-side-navigation-row-gap: var(--basis-space-row-3xl)
 	--denhaag-step-marker-border-width: var(--basis-border-width-md)
 	--denhaag-step-marker-checked-background-color: var(--basis-color-positive-inverse-bg-default)
@@ -4547,7 +4548,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--nl-link-disabled-color: var(--basis-color-disabled-color-subtle)
 	--nl-link-disabled-cursor: disabled
 	--nl-link-hover-color: var(--basis-color-action-2-color-hover)
-	--nl-link-hover-text-decoration-line: None
+	--nl-link-hover-text-decoration-line: none
 	--nl-link-hover-text-decoration-thickness: auto
 	--nl-link-text-decoration-color: var(--basis-color-action-2-color-default)
 	--nl-link-text-decoration-line: underline
@@ -4632,14 +4633,14 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-breadcrumb-nav-item-padding-inline-start: var(--basis-space-none)
 	--todo-breadcrumb-nav-line-height: var(--basis-text-line-height-md)
 	--todo-breadcrumb-nav-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-breadcrumb-nav-link-active-text-decoration: None
+	--todo-breadcrumb-nav-link-active-text-decoration: none
 	--todo-breadcrumb-nav-link-color: var(--basis-color-action-2-color-default)
 	--todo-breadcrumb-nav-link-column-gap: var(--basis-space-text-xs)
 	--todo-breadcrumb-nav-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-breadcrumb-nav-link-focus-visible-color: var(--basis-focus-color)
-	--todo-breadcrumb-nav-link-focus-visible-text-decoration: None
+	--todo-breadcrumb-nav-link-focus-visible-text-decoration: none
 	--todo-breadcrumb-nav-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-breadcrumb-nav-link-hover-text-decoration: None
+	--todo-breadcrumb-nav-link-hover-text-decoration: none
 	--todo-breadcrumb-nav-link-icon-size: var(--basis-size-icon-md)
 	--todo-breadcrumb-nav-link-text-decoration: underline
 	--todo-breadcrumb-nav-separator-color: var(--basis-color-default-color-subtle)
@@ -4704,7 +4705,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-card-as-link-heading-font-weight: var(--basis-heading-font-weight)
 	--todo-card-as-link-heading-hover-text-decoration: underline
 	--todo-card-as-link-heading-line-height: var(--basis-text-line-height-xl)
-	--todo-card-as-link-heading-text-decoration: None
+	--todo-card-as-link-heading-text-decoration: none
 	--todo-card-as-link-hover-background-color: var(--basis-color-default-bg-hover)
 	--todo-card-as-link-hover-border-color: var(--todo-card-as-link-border-color)
 	--todo-card-as-link-icon-color: var(--todo-card-as-link-color)
@@ -4715,7 +4716,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-card-as-link-label-font-weight: var(--basis-text-font-weight-bold)
 	--todo-card-as-link-label-hover-text-decoration: underline
 	--todo-card-as-link-label-line-height: var(--basis-text-line-height-md)
-	--todo-card-as-link-label-text-decoration: None
+	--todo-card-as-link-label-text-decoration: none
 	--todo-card-as-link-link-icon-color: var(--basis-color-action-2-color-default)
 	--todo-card-as-link-link-icon-size: var(--basis-size-icon-md)
 	--todo-card-as-link-max-inline-size: 48rem
@@ -4775,7 +4776,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-card-as-link-task-border-width: var(--basis-border-width-sm)
 	--todo-card-as-link-task-checked-icon-color: var(--basis-color-positive-color-default)
 	--todo-card-as-link-task-footer-padding-inline-start: var(--basis-space-none)
-	--todo-card-as-link-task-max-inline-size: None
+	--todo-card-as-link-task-max-inline-size: none
 	--todo-card-as-link-task-pre-header-padding-block-end: var(--basis-space-block-xl)
 	--todo-card-as-link-task-pre-header-padding-block-start: var(--basis-space-block-xl)
 	--todo-card-as-link-task-pre-header-padding-inline-start: var(--basis-space-inline-xl)
@@ -4904,7 +4905,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-pagination-page-link-active-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-active-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-pagination-page-link-active-text-decoration: None
+	--todo-pagination-page-link-active-text-decoration: none
 	--todo-pagination-page-link-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-border-radius: var(--basis-border-radius-none)
@@ -4914,15 +4915,15 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-pagination-page-link-current-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-current-color: var(--basis-color-default-color-document)
 	--todo-pagination-page-link-current-font-weight: var(--basis-text-font-weight-bold)
-	--todo-pagination-page-link-current-text-decoration: None
+	--todo-pagination-page-link-current-text-decoration: none
 	--todo-pagination-page-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-pagination-page-link-focus-visible-color: var(--basis-focus-color)
-	--todo-pagination-page-link-focus-visible-text-decoration: None
+	--todo-pagination-page-link-focus-visible-text-decoration: none
 	--todo-pagination-page-link-font-weight: var(--basis-text-font-weight-default)
 	--todo-pagination-page-link-hover-background-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-hover-border-color: var(--basis-color-transparent)
 	--todo-pagination-page-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-pagination-page-link-hover-text-decoration: None
+	--todo-pagination-page-link-hover-text-decoration: none
 	--todo-pagination-page-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--todo-pagination-page-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
 	--todo-pagination-page-link-padding-block-end: var(--basis-space-block-lg)
@@ -4933,7 +4934,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-pagination-relative-link-active-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-active-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-active-color: var(--basis-color-action-2-color-active)
-	--todo-pagination-relative-link-active-text-decoration: None
+	--todo-pagination-relative-link-active-text-decoration: none
 	--todo-pagination-relative-link-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-border-radius: var(--basis-border-radius-none)
@@ -4943,15 +4944,15 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-pagination-relative-link-disabled-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-disabled-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-disabled-color: var(--basis-color-disabled-color-subtle)
-	--todo-pagination-relative-link-disabled-text-decoration: None
+	--todo-pagination-relative-link-disabled-text-decoration: none
 	--todo-pagination-relative-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-pagination-relative-link-focus-visible-color: var(--basis-focus-color)
-	--todo-pagination-relative-link-focus-visible-text-decoration: None
+	--todo-pagination-relative-link-focus-visible-text-decoration: none
 	--todo-pagination-relative-link-font-weight: var(--basis-text-font-weight-default)
 	--todo-pagination-relative-link-hover-background-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-hover-border-color: var(--basis-color-transparent)
 	--todo-pagination-relative-link-hover-color: var(--basis-color-action-2-color-hover)
-	--todo-pagination-relative-link-hover-text-decoration: None
+	--todo-pagination-relative-link-hover-text-decoration: none
 	--todo-pagination-relative-link-icon-size: var(--basis-size-icon-md)
 	--todo-pagination-relative-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--todo-pagination-relative-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
@@ -5243,15 +5244,15 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-breadcrumb-nav-item-padding-inline-start: var(--basis-space-inline-md)
 	--utrecht-breadcrumb-nav-line-height: var(--basis-text-line-height-md)
 	--utrecht-breadcrumb-nav-link-active-color: var(--basis-color-action-2-color-active)
-	--utrecht-breadcrumb-nav-link-active-text-decoration: None
+	--utrecht-breadcrumb-nav-link-active-text-decoration: none
 	--utrecht-breadcrumb-nav-link-color: var(--basis-color-action-2-color-default)
 	--utrecht-breadcrumb-nav-link-current-font-weight: var(--basis-text-font-weight-default)
 	--utrecht-breadcrumb-nav-link-disabled-color: var(--basis-color-disabled-color-subtle)
 	--utrecht-breadcrumb-nav-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-breadcrumb-nav-link-focus-color: var(--basis-focus-color)
-	--utrecht-breadcrumb-nav-link-focus-text-decoration: None
+	--utrecht-breadcrumb-nav-link-focus-text-decoration: none
 	--utrecht-breadcrumb-nav-link-hover-color: var(--basis-color-action-2-color-hover)
-	--utrecht-breadcrumb-nav-link-hover-text-decoration: None
+	--utrecht-breadcrumb-nav-link-hover-text-decoration: none
 	--utrecht-breadcrumb-nav-link-text-decoration: underline
 	--utrecht-breadcrumb-nav-min-block-size: var(--basis-pointer-target-min-block-size)
 	--utrecht-breadcrumb-nav-separator-color: var(--basis-color-default-color-subtle)
@@ -5636,17 +5637,17 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-link-column-gap: var(--basis-space-text-xs)
 	--utrecht-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-link-focus-color: var(--basis-focus-color)
-	--utrecht-link-focus-visible-text-decoration: None
+	--utrecht-link-focus-visible-text-decoration: none
 	--utrecht-link-focus-visible-text-decoration-thickness: auto
 	--utrecht-link-hover-color: var(--basis-color-action-2-color-hover)
-	--utrecht-link-hover-text-decoration: None
+	--utrecht-link-hover-text-decoration: none
 	--utrecht-link-hover-text-decoration-thickness: auto
 	--utrecht-link-icon-size: var(--basis-size-icon-md)
 	--utrecht-link-list-icon-inset-block-start: var(--basis-space-none)
 	--utrecht-link-list-icon-size: var(--basis-size-icon-md)
 	--utrecht-link-list-link-column-gap: var(--basis-space-text-xs)
 	--utrecht-link-list-link-font-weight: var(--basis-text-font-weight-default)
-	--utrecht-link-list-link-text-decoration: None
+	--utrecht-link-list-link-text-decoration: none
 	--utrecht-link-list-margin-block-end: var(--basis-space-none)
 	--utrecht-link-list-margin-block-start: var(--basis-space-none)
 	--utrecht-link-list-row-gap: var(--basis-space-row-md)
@@ -5807,7 +5808,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-pagination-relative-link-padding-inline-end: var(--basis-space-inline-xl)
 	--utrecht-pagination-relative-link-padding-inline-start: var(--basis-space-inline-xl)
 	--utrecht-pagination-relative-link-text-decoration: underline
-	--utrecht-pagination-relative-link-text-transform: None
+	--utrecht-pagination-relative-link-text-transform: none
 	--utrecht-paragraph-color: var(--basis-color-default-color-document)
 	--utrecht-paragraph-font-family: var(--basis-text-font-family-default)
 	--utrecht-paragraph-font-size: var(--basis-text-font-size-md)
@@ -5915,7 +5916,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-skip-link-color: var(--basis-color-default-inverse-color-document)
 	--utrecht-skip-link-focus-background-color: var(--basis-focus-background-color)
 	--utrecht-skip-link-focus-color: var(--basis-focus-color)
-	--utrecht-skip-link-focus-visible-text-decoration: None
+	--utrecht-skip-link-focus-visible-text-decoration: none
 	--utrecht-skip-link-min-block-size: var(--basis-pointer-target-min-block-size)
 	--utrecht-skip-link-min-inline-size: var(--basis-pointer-target-min-inline-size)
 	--utrecht-skip-link-padding-block-end: var(--basis-space-block-lg)
@@ -5961,7 +5962,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-status-badge-success-background-color: var(--basis-color-positive-bg-default)
 	--utrecht-status-badge-success-border-color: var(--basis-color-transparent)
 	--utrecht-status-badge-success-color: var(--basis-color-positive-color-default)
-	--utrecht-status-badge-text-transform: None
+	--utrecht-status-badge-text-transform: none
 	--utrecht-status-badge-valid-background-color: var(--basis-color-positive-bg-default)
 	--utrecht-status-badge-valid-border-color: var(--basis-color-transparent)
 	--utrecht-status-badge-valid-color: var(--basis-color-positive-color-default)
@@ -6044,6 +6045,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-textbox-hover-background-color: var(--basis-form-control-hover-background-color)
 	--utrecht-textbox-hover-border-color: var(--basis-form-control-hover-border-color)
 	--utrecht-textbox-hover-color: var(--basis-form-control-hover-color)
+	--utrecht-textbox-icon-size: var(--basis-size-icon-md)
 	--utrecht-textbox-invalid-background-color: var(--basis-form-control-invalid-background-color)
 	--utrecht-textbox-invalid-border-block-end-width: var(--utrecht-textbox-invalid-border-width)
 	--utrecht-textbox-invalid-border-color: var(--basis-form-control-invalid-border-color)

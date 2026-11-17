@@ -3,6 +3,7 @@ import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
@@ -11,16 +12,17 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import { getExtension, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
+import { color_group as colorGroupName, convert as convertColor } from '@projectwallace/color-sorter';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
 import Color from 'colorjs.io';
 import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import type { StagedDesignToken } from '../../utils';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
-import PersistentStorage from '../../lib/PersistentStorage';
+import { STAGE_SCRAPED_TOKEN_EVENT, type StageScrapedTokenDetail } from '../../utils/events';
 import { dimensionToPx } from '../../utils/token-utils';
+import '../wizard-table-scroller';
 import styles from './styles';
 
 const tag = 'wizard-scraped-tokens-preview';
@@ -42,9 +44,6 @@ export class WizardScrapedTokensPreview extends LitElement {
     unsafeCSS(srOnlyStyles),
   ];
 
-  // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
-  readonly #scrapedTokensStorage = new PersistentStorage({ prefix: 'scraped-tokens' });
-
   @consume({ context: scrapedTokensContext, subscribe: true })
   scrapedTokens: StagedDesignToken[] = [];
 
@@ -52,15 +51,11 @@ export class WizardScrapedTokensPreview extends LitElement {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
 
-    const isStaged = Boolean(target.checked);
-
-    // TODO: this shouldn't write to storage directly but call enable/disable on a tokenStore
-    this.#scrapedTokensStorage.setJSON(
-      this.scrapedTokens.map((token) => {
-        if (getExtension(token, EXTENSION_TOKEN_ID) === target.id) {
-          token.$extensions[EXTENSION_TOKEN_STAGED] = isStaged;
-        }
-        return token;
+    this.dispatchEvent(
+      new CustomEvent<StageScrapedTokenDetail>(STAGE_SCRAPED_TOKEN_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail: { id: target.id, staged: target.checked },
       }),
     );
   };

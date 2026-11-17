@@ -49,6 +49,17 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('adds token path extensions when loading tokens', () => {
+    const theme = new Theme();
+    const strippedTokens = JSON.parse(
+      JSON.stringify(theme.tokens, (key, value) => (key === '$extensions' ? undefined : value)),
+    );
+    theme.load(strippedTokens);
+    expect(dlv(theme.tokens, 'basis.color.default.bg-document.$extensions')).toMatchObject({
+      'nl.nldesignsystem.path': 'basis.color.default.bg-document',
+    });
+  });
+
   it('can update token at a specific path', async () => {
     const theme = new Theme();
     const initialTokens = structuredClone(theme.tokens);
@@ -77,6 +88,19 @@ describe('Theme', () => {
     const updatedCSS = normalizeCss(await theme.toCSS());
     expect(updatedCSS).toMatchSnapshot();
     return expect(initialCSS).not.toMatch(updatedCSS);
+  });
+
+  it('clones without resetting state or stylesheet', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const css = theme.css;
+    const cloned = theme.clone();
+    expect(cloned).not.toBe(theme);
+    expect(cloned.tokens).toBe(theme.tokens);
+    expect(cloned.modified).toBe(theme.modified);
+    expect(cloned.issues).toEqual(theme.issues);
+    expect(cloned.stylesheet).toBe(theme.stylesheet);
+    expect(cloned.css).toBe(css);
   });
 
   it('has a different JSON output after token update', async () => {

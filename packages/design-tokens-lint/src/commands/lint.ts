@@ -2,6 +2,7 @@ import { styleText } from 'node:util';
 import { loadAndValidate, writeJsonToFile, type LoadOptions } from '../shared.ts';
 
 export type LintOptions = LoadOptions & {
+  maxErrors: number;
   outPath: string | undefined;
 };
 
@@ -27,5 +28,5 @@ export async function lint(files: string[], opts: LintOptions): Promise<void> {
     process.stderr.write(`• ${prefix}${issue.message}\n`);
   }
 
-  process.exit(1);
+  process.exit(result.issues.length <= opts.maxErrors ? 0 : 1);
 }

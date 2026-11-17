@@ -79,7 +79,7 @@ export class WizardThemePresetForm extends LitElement {
                   <ul>
                     ${result.softIssues.map((issue) => {
                       const validationIssue = new ValidationIssue(issue);
-                      return html`<li>${t(`validation.error.${validationIssue.code}.detailed`, validationIssue)}</li>`;
+                      return html`<li>${t(`validation.error.${validationIssue.code}.message`, validationIssue)}</li>`;
                     })}
                   </ul>
                 </details>

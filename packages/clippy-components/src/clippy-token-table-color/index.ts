@@ -16,6 +16,13 @@ import styles from './styles';
 
 const tag = 'clippy-token-table-color';
 
+const BACKGROUND_COLUMNS = ['bg-document', 'bg-subtle', 'bg-default', 'bg-hover', 'bg-active'];
+const BORDER_COLUMNS = ['border-subtle', 'border-default', 'border-hover', 'border-active'];
+const FOREGROUND_COLUMNS = ['color-subtle', 'color-default', 'color-hover', 'color-active', 'color-document'];
+const COLUMNS = [...BACKGROUND_COLUMNS, ...BORDER_COLUMNS, ...FOREGROUND_COLUMNS];
+
+const getTokenName = (token: BaseDesignToken) => getTokenPath(token).split('.').at(-1);
+
 declare global {
   interface HTMLElementTagNameMap {
     [tag]: ClippyTokenTableColor;
@@ -93,15 +100,15 @@ export class ClippyTokenTableColor extends LitElement {
           <thead class="utrecht-table__header">
             <tr class="utrecht-table__row" aria-hidden>
               <th></th>
-              <th class="utrecht-table__header-cell" aria-hidden colspan="5">
+              <th class="utrecht-table__header-cell" aria-hidden colspan="${BACKGROUND_COLUMNS.length}">
                 <span class="clippy-token-table-color__mastheader" data-testid="background-label"
                   >${this.backgroundLabel}</span
                 >
               </th>
-              <th class="utrecht-table__header-cell" aria-hidden colspan="4">
+              <th class="utrecht-table__header-cell" aria-hidden colspan="${BORDER_COLUMNS.length}">
                 <span class="clippy-token-table-color__mastheader" data-testid="border-label">${this.borderLabel}</span>
               </th>
-              <th class="utrecht-table__header-cell" aria-hidden colspan="5">
+              <th class="utrecht-table__header-cell" aria-hidden colspan="${FOREGROUND_COLUMNS.length}">
                 <span class="clippy-token-table-color__mastheader" data-testid="foreground-label"
                   >${this.foregroundLabel}</span
                 >
@@ -109,50 +116,15 @@ export class ClippyTokenTableColor extends LitElement {
             </tr>
             <tr class="utrecht-table__row">
               <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell"></th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">background-</span>document
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">background-</span>subtle
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">background-</span>default
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">background-</span>hover
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">background-</span>active
-              </th>
-
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">border-</span>subtle
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">border-</span>default
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">border-</span>hover
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">border-</span>active
-              </th>
-
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">color-</span>subtle
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">color-</span>default
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">color-</span>hover
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">color-</span>active
-              </th>
-              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-                <span class="sr-only">color-</span>document
-              </th>
+              ${COLUMNS.map((column) => {
+                const [prefix, ...rest] = column.split('-');
+                const srPrefix = prefix === 'bg' ? 'background' : prefix;
+                return html`
+                  <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                    <span class="sr-only">${srPrefix}-</span>${rest.join('-')}
+                  </th>
+                `;
+              })}
             </tr>
           </thead>
           <tbody class="utrecht-table__body">
@@ -162,7 +134,11 @@ export class ClippyTokenTableColor extends LitElement {
                   <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="row">
                     ${name.split('.').at(-1)}
                   </th>
-                  ${tokens.map((token) => {
+                  ${COLUMNS.map((column) => {
+                    const token = tokens.find((token) => getTokenName(token) === column);
+                    if (!token) {
+                      return html`<td class="clippy-token-table-color__cell | utrecht-table__cell"></td>`;
+                    }
                     return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
                       <button
                         class="clippy-token-table-color__button-sample"

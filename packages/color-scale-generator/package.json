@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/color-scale-generator",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "type": "module",
   "types": "./dist/index.d.ts",
   "module": "./dist/color-scale-generator.js",
@@ -24,7 +24,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "vite build --watch --mode development",
+    "dev": "vite build --watch --mode development --emptyOutDir false",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "build": "pnpm run type-check && vite build && publint",
@@ -44,12 +44,12 @@
   },
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@vitest/coverage-v8": "5.0.3",
+    "@vitest/coverage-v8": "5.0.5",
     "premove": "4.0.0",
     "publint": "0.3.25",
     "typescript": "6.0.3",
     "unplugin-dts": "1.1.2",
-    "vite": "8.3.2",
-    "vitest": "5.0.3"
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
   }
 }

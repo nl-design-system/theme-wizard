@@ -8,6 +8,7 @@ import {
   isTokenLike,
   isTokenWithRef,
   isValueObject,
+  isValueToken,
   type TokenRefError,
   type TokenWithRefLike,
 } from './tokens/token-reference';
@@ -55,12 +56,8 @@ export const walkObject = <T = unknown>(
 };
 
 export const isColorToken = (token: unknown): token is ColorToken => {
-  if (!isValueObject(token)) return false;
   return (
-    Object.hasOwn(token, '$type') &&
-    token['$type'] === 'color' &&
-    Object.hasOwn(token, '$value') &&
-    (isRef(token['$value']) || isValueObject(token['$value']))
+    isValueToken(token) && token['$type'] === 'color' && (isRef(token['$value']) || isValueObject(token['$value']))
   );
 };
 

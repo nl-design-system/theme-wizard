@@ -108,3 +108,45 @@ describe('unknown / fallback', () => {
     expect(stringifyToken(token)).toBe('{"foo":"bar"}');
   });
 });
+
+describe('duration token', () => {
+  it('returns value with ms unit', () => {
+    const token = { $type: 'duration', $value: { unit: 'ms', value: 200 } };
+    expect(stringifyToken(token)).toBe('200ms');
+  });
+
+  it('returns value with s unit', () => {
+    const token = { $type: 'duration', $value: { unit: 's', value: 1.5 } };
+    expect(stringifyToken(token)).toBe('1.5s');
+  });
+
+  it('falls back to JSON.stringify for invalid duration value', () => {
+    const token = { $type: 'duration', $value: '200ms' };
+    expect(stringifyToken(token)).toBe('"200ms"');
+  });
+});
+
+describe('shadow token', () => {
+  const shadow = {
+    blur: { unit: 'px', value: 4 },
+    color: { colorSpace: 'srgb', components: [0, 0, 0] as [number, number, number] },
+    offsetX: { unit: 'px', value: 0 },
+    offsetY: { unit: 'px', value: 2 },
+    spread: { unit: 'px', value: 0 },
+  };
+
+  it('returns box-shadow for a single shadow', () => {
+    const token = { $type: 'shadow', $value: shadow };
+    expect(stringifyToken(token)).toBe('0px 2px 4px 0px #000000');
+  });
+
+  it('returns comma-separated box-shadow for multiple shadows', () => {
+    const token = { $type: 'shadow', $value: [shadow, { ...shadow, inset: true }] };
+    expect(stringifyToken(token)).toBe('0px 2px 4px 0px #000000, inset 0px 2px 4px 0px #000000');
+  });
+
+  it('falls back to JSON.stringify for shadow containing a reference', () => {
+    const token = { $type: 'shadow', $value: { ...shadow, blur: '{basis.size.sm}' } };
+    expect(stringifyToken(token)).toBe(JSON.stringify(token.$value));
+  });
+});

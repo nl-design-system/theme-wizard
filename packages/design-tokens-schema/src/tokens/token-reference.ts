@@ -32,17 +32,12 @@ export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
 };
 
-export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
-  if (!isValueObject(obj)) {
-    return false;
-  }
-  // Must have a `$type: string`
-  if (!Object.hasOwn(obj, '$type') || typeof obj['$type'] !== 'string') {
-    return false;
-  }
-  // Must have a `$value`
-  return Object.hasOwn(obj, '$value');
-};
+// Any object with an own `$value`, `$type` optional (may be inherited from its group)
+export const isValueToken = (obj: unknown): obj is Record<string, unknown> & { $value: unknown } =>
+  isValueObject(obj) && Object.hasOwn(obj, '$value');
+
+export const isTokenLike = (obj: unknown): obj is BaseDesignToken =>
+  isValueToken(obj) && Object.hasOwn(obj, '$type') && typeof obj['$type'] === 'string';
 
 /** @deprecated use `BaseDesignToken` instead */
 export type TokenLike = {

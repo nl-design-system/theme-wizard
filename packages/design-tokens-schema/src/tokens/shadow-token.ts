@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import { BaseDesignTokenSchema } from './base-token';
-import { ColorValueSchema } from './color-token';
-import { ModernDimensionValueSchema } from './dimension-token';
+import { ColorValueSchema, stringifyColor } from './color-token';
+import { ModernDimensionValueSchema, stringifyDimension } from './dimension-token';
 import { TokenReferenceSchema } from './token-reference';
 
 // 9.6 Shadow
@@ -52,3 +52,36 @@ export type ShadowWithRef = z.infer<typeof ShadowWithRefSchema>;
 
 export const ShadowTokenSchema = z.union([ModernShadowTokenSchema, ShadowWithRefSchema]);
 export type ShadowToken = z.infer<typeof ShadowTokenSchema>;
+
+// Shadow value without any token references, ready to be stringified
+export const ResolvedShadowLayerSchema = z.strictObject({
+  blur: ModernDimensionValueSchema,
+  color: ColorValueSchema,
+  inset: z.boolean().optional(),
+  offsetX: ModernDimensionValueSchema,
+  offsetY: ModernDimensionValueSchema,
+  spread: ModernDimensionValueSchema,
+});
+export type ResolvedShadowLayer = z.infer<typeof ResolvedShadowLayerSchema>;
+
+export const ResolvedShadowValueSchema = z.union([ResolvedShadowLayerSchema, z.array(ResolvedShadowLayerSchema)]);
+export type ResolvedShadowValue = z.infer<typeof ResolvedShadowValueSchema>;
+
+const stringifyShadowLayer = (layer: ResolvedShadowLayer): string => {
+  const parts = [
+    stringifyDimension(layer.offsetX),
+    stringifyDimension(layer.offsetY),
+    stringifyDimension(layer.blur),
+    stringifyDimension(layer.spread),
+    stringifyColor(layer.color),
+  ];
+  if (layer.inset) {
+    parts.unshift('inset');
+  }
+  return parts.join(' ');
+};
+
+export const stringifyBoxShadow = (value: ResolvedShadowValue): string => {
+  const layers = Array.isArray(value) ? value : [value];
+  return layers.map(stringifyShadowLayer).join(', ');
+};

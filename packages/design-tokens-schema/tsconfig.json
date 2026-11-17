@@ -10,6 +10,7 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
+    "rootDir": "src",
     "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,
@@ -17,6 +18,5 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true
   },
-  "include": ["src"],
-  "exclude": ["**/*.test.ts"]
+  "include": ["src"]
 }

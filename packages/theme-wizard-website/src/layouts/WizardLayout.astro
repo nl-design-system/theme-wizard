@@ -1,17 +1,17 @@
 ---
 import MainLayout from './MainLayout.astro';
-import '@nl-design-system-candidate/link-css/link.css'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import '@nl-design-system-candidate/link-css/link.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
 
 interface Props {
   title?: string;
   backLink?: {
     href: string;
     label: string;
-  }
+  };
 }
 
-const { title = 'Wizard - Theme Wizard', backLink = { label: 'Naar overzicht',href: './'} } = Astro.props;
+const { title = 'Wizard - Theme Wizard', backLink = { label: 'Naar overzicht', href: './' } } = Astro.props;
 ---
 
 <script>
@@ -19,7 +19,14 @@ const { title = 'Wizard - Theme Wizard', backLink = { label: 'Naar overzicht',hr
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
 
-<MainLayout title={title} metaTitle={`${title} - Wizard`} layoutSize="xs" layoutBlockAlignment="center" backLink={backLink} mainPath="/wizard">
+<MainLayout
+  title={title}
+  metaTitle={`${title} - Wizard`}
+  layoutSize="xs"
+  layoutBlockAlignment="center"
+  backLink={backLink}
+  mainPath="/wizard"
+>
   <clippy-story-preview size="lg">
     <clippy-stack size="4xl">
       <slot />

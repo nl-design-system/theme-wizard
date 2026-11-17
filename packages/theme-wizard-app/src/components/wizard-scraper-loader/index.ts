@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import styles from './styles';
 
 const tag = 'wizard-scraper-loader';

@@ -12,6 +12,7 @@ import {
   type DurationWithRef,
   DurationTokenSchema,
   type DurationToken,
+  stringifyDuration,
 } from './duration-token';
 
 describe('DurationTypeSchema', () => {
@@ -143,5 +144,17 @@ describe('DurationTokenSchema', () => {
   it('rejects a token without $type', () => {
     const result = DurationTokenSchema.safeParse({ $value: { unit: 'ms', value: 200 } });
     expect(result.success).toBeFalsy();
+  });
+});
+
+describe('stringifyDuration', () => {
+  it.each([
+    [{ unit: 'ms', value: 200 } satisfies ModernDurationValue, '200ms'],
+    [{ unit: 's', value: 1.5 } satisfies ModernDurationValue, '1.5s'],
+    [{ unit: 'ms', value: 0 } satisfies ModernDurationValue, '0ms'],
+    [{ unit: 's', value: -0.25 } satisfies ModernDurationValue, '-0.25s'],
+    [{ unit: 's', value: 1.2e4 } satisfies ModernDurationValue, '12000s'],
+  ])('stringifies %o to %s', (input, expected) => {
+    expect(stringifyDuration(input)).toBe(expected);
   });
 });

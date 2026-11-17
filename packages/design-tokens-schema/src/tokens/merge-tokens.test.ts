@@ -46,6 +46,20 @@ describe('mergeTokens', () => {
     expect(mergeTokens([a, b, c])).toEqual({ color: { $value: 'blue' } });
   });
 
+  it('replaces a token as a whole instead of merging its properties', () => {
+    const a = {
+      color: { $type: 'color', $value: '#ff0000', original: { $type: 'color', $value: '{basis.color.accent-1}' } },
+    };
+    const b = { color: { $type: 'color', $value: '{basis.color.action-1}' } };
+    expect(mergeTokens([a, b])).toEqual({ color: { $type: 'color', $value: '{basis.color.action-1}' } });
+  });
+
+  it('keeps the earlier $type when the overriding token has none', () => {
+    const a = { color: { $type: 'color', $value: '#ff0000', original: { $value: '{a}' } } };
+    const b = { color: { $value: '#0000ff' } };
+    expect(mergeTokens([a, b])).toEqual({ color: { $type: 'color', $value: '#0000ff' } });
+  });
+
   it('does not mutate input groups', () => {
     const a = { color: { $value: 'red' } };
     const b = { color: { $value: 'blue' } };

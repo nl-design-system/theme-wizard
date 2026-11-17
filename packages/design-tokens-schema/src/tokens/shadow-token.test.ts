@@ -13,11 +13,14 @@ import {
   type ShadowWithRef,
   ShadowTokenSchema,
   type ShadowToken,
+  ResolvedShadowValueSchema,
+  type ResolvedShadowLayer,
+  stringifyBoxShadow,
 } from './shadow-token';
 
 /** Builds a fresh, valid shadow value. Pass dot-paths to deeply override properties. */
-const createShadow = (overrides: Record<string, unknown> = {}): ShadowValue => {
-  const shadow: ShadowValue = {
+const createShadow = (overrides: Record<string, unknown> = {}): ResolvedShadowLayer => {
+  const shadow: ResolvedShadowLayer = {
     blur: { unit: 'rem', value: 1.5 },
     color: { alpha: 0.5, colorSpace: 'srgb', components: [0, 0, 0] },
     offsetX: { unit: 'rem', value: 0.5 },
@@ -221,5 +224,51 @@ describe('ShadowTokenSchema', () => {
   it('rejects a token without $type', () => {
     const result = ShadowTokenSchema.safeParse({ $value: createShadow() });
     expect(result.success).toBeFalsy();
+  });
+});
+
+describe('ResolvedShadowValueSchema', () => {
+  it('accepts a shadow without references', () => {
+    expect(ResolvedShadowValueSchema.safeParse(createShadow()).success).toBeTruthy();
+  });
+
+  it('accepts an array of shadows without references', () => {
+    expect(ResolvedShadowValueSchema.safeParse([createShadow(), createShadow()]).success).toBeTruthy();
+  });
+
+  it('rejects a shadow containing a reference', () => {
+    const result = ResolvedShadowValueSchema.safeParse(createShadow({ blur: '{basis.size.sm}' }));
+    expect(result.success).toBeFalsy();
+  });
+
+  it('rejects an array containing a shadow reference', () => {
+    const result = ResolvedShadowValueSchema.safeParse([createShadow(), '{basis.shadow.md}']);
+    expect(result.success).toBeFalsy();
+  });
+});
+
+describe('stringifyBoxShadow', () => {
+  it('stringifies a single shadow', () => {
+    expect(stringifyBoxShadow(createShadow())).toBe('0.5rem 0.5rem 1.5rem 0rem #00000080');
+  });
+
+  it('prefixes inset shadows with "inset"', () => {
+    expect(stringifyBoxShadow(createShadow({ inset: true }))).toBe('inset 0.5rem 0.5rem 1.5rem 0rem #00000080');
+  });
+
+  it('omits "inset" when inset is false', () => {
+    expect(stringifyBoxShadow(createShadow({ inset: false }))).toBe('0.5rem 0.5rem 1.5rem 0rem #00000080');
+  });
+
+  it('stringifies an opaque color without alpha', () => {
+    const shadow = createShadow({ color: { colorSpace: 'srgb', components: [1, 0, 0] } });
+    expect(stringifyBoxShadow(shadow)).toBe('0.5rem 0.5rem 1.5rem 0rem #ff0000');
+  });
+
+  it('joins multiple shadows with a comma', () => {
+    const shadows = [createShadow(), createShadow({ inset: true, 'offsetX.value': 1, 'offsetY.unit': 'px' })];
+    expect(stringifyBoxShadow(shadows)).toBe(
+      '0.5rem 0.5rem 1.5rem 0rem #00000080, inset 1rem 0.5px 1.5rem 0rem #00000080',
+    );
   });
 });

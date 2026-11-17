@@ -17,6 +17,28 @@ describe('parseThemePreset', () => {
     expect(result.filledFromDefaultsPaths).toContain('basis.color.accent-1.bg-default');
   });
 
+  it('keeps uploaded token values over Start-thema references to other groups', async () => {
+    const upload = {
+      basis: {
+        color: {
+          'action-1': {
+            'color-default': { $type: 'color', $value: '#0000ff' },
+          },
+        },
+      },
+    };
+
+    const result = await parseThemePreset([toFile(upload)], false);
+
+    expect(result.success).toBe(true);
+    if (!result.success) {
+      return;
+    }
+    const token = dlv(result.data, 'basis.color.action-1.color-default');
+    expect(token.original).toBeUndefined();
+    expect(token.$value).toMatchObject({ colorSpace: 'srgb', components: [0, 0, 1] });
+  });
+
   it('allows a theme with only a soft issue (font-size below minimum)', async () => {
     const upload = {
       basis: {

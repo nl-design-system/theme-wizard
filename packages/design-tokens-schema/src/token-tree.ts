@@ -1,5 +1,5 @@
 import { TokenPath } from './tokens/base-token';
-import { isValueObject } from './tokens/token-reference';
+import { isValueObject, isValueToken } from './tokens/token-reference';
 
 export interface TokenTreeNode {
   key: string;
@@ -12,7 +12,7 @@ export interface TokenTreeNode {
 // Actual themes have `$value`
 // Theme *definitions* have no `$value` but have a `$type` only
 const isLeafNode = (data: unknown): boolean =>
-  isValueObject(data) && (Object.hasOwn(data, '$type') || Object.hasOwn(data, '$value'));
+  isValueToken(data) || (isValueObject(data) && Object.hasOwn(data, '$type'));
 
 const buildChildren = (obj: Record<string, unknown>, path: TokenPath): TokenTreeNode[] =>
   Object.keys(obj)

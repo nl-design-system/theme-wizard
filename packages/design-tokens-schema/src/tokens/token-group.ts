@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { BaseDesignTokenSchema, ExtensionsSchema, type BaseDesignToken, type Extensions } from './base-token';
-import { isValueObject, TokenReferenceSchema, type TokenReference } from './token-reference';
+import { isValueObject, isValueToken, TokenReferenceSchema, type TokenReference } from './token-reference';
 
 /**
  * @see https://www.designtokens.org/tr/2025.10/format/#group-properties
@@ -68,7 +68,7 @@ export const getGroupTokens = (tokenGroup: TokenGroup): BaseDesignToken[] => {
     if (KNOWN_GROUP_PROPERTIES.has(key)) {
       continue;
     }
-    if (isValueObject(tokenOrGroup) && Object.hasOwn(tokenOrGroup, '$value')) {
+    if (isValueToken(tokenOrGroup)) {
       tokens.push(tokenOrGroup as BaseDesignToken);
     }
   }
@@ -78,7 +78,7 @@ export const getGroupTokens = (tokenGroup: TokenGroup): BaseDesignToken[] => {
 
 export const getTokenGroupType = (tokenGroup: TokenGroup): TokenGroup['$type'] => {
   // Not an object, or it has a `$value` of its own (making it a token, not a group)
-  if (!isValueObject(tokenGroup) || Object.hasOwn(tokenGroup, '$value')) {
+  if (!isValueObject(tokenGroup) || isValueToken(tokenGroup)) {
     return undefined;
   }
 

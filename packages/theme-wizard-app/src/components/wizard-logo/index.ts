@@ -3,7 +3,6 @@ import { customElement } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import logoSvg from '../../assets/nl-design-system-beeldmerk.svg?raw';
 import styles from './styles';
-import '@nl-design-system-community/clippy-components/clippy-heading';
 
 const tag = 'wizard-logo';
 // Declare the custom element for TypeScript

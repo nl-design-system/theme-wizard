@@ -2,8 +2,20 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="Hergebruik je design tokens" metaTitle="Hergebruik design tokens" layoutSize="sm" layoutBlockAlignment="center">
-  <p class="nl-paragraph nl-paragraph--lead" slot="header">Laat de Theme Wizard suggesties doen om je design tokens zo optimaal mogelijk te hergebruiken. Voorwaarde is wel dat je tokens bestand valide is. Gebruik eventueel de <a href="/validate-tokens" class="nl-link">validatie-tool</a> om dat te controleren.</p>
+<MainLayout
+  title="Hergebruik je design tokens"
+  metaTitle="Hergebruik design tokens"
+  layoutSize="sm"
+  layoutBlockAlignment="center"
+>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">
+    Laat de Theme Wizard suggesties doen om je design tokens zo optimaal mogelijk te hergebruiken. Voorwaarde is wel dat
+    je tokens bestand valide is. Gebruik eventueel de{' '}
+    <a href="/validate-tokens" class="nl-link">
+      validatie-tool
+    </a>{' '}
+    om dat te controleren.
+  </p>
   <clippy-story-preview size="lg">
     <wizard-tokens-reuse-form></wizard-tokens-reuse-form>
   </clippy-story-preview>
