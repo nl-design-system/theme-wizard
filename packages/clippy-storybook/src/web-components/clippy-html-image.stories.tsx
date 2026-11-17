@@ -6,7 +6,7 @@ import { templateToHtml } from '../utils/templateToHtml';
 
 interface HTMLImageStoryArgs {
   hidden?: boolean;
-  forcedColorAdjust?: boolean;
+  'forced-color-adjust'?: boolean;
   'color-scheme'?: string;
 }
 
@@ -54,7 +54,7 @@ const meta: Meta<HTMLImageStoryArgs> = {
       description: 'Sets the color scheme for the image body. Accepts "dark" or "light".',
       options: [undefined, 'dark', 'light'],
     },
-    forcedColorAdjust: {
+    'forced-color-adjust': {
       control: 'boolean',
       description: 'When true, forces color adjustment to be auto on the image body.',
     },
@@ -74,11 +74,7 @@ const meta: Meta<HTMLImageStoryArgs> = {
   render: (args) =>
     React.createElement(
       'clippy-html-image',
-      {
-        colorScheme: args.colorScheme,
-        forcedColorAdjust: args.forcedColorAdjust,
-        hidden: args.hidden,
-      },
+      args,
       React.createElement('span', { slot: 'label' }, 'Voorbeeld titelgroottes'),
       React.createElement('h1', { style: { fontSize: '24px' } }, '24px: Example text'),
       React.createElement('h1', { style: { fontSize: '32px' } }, '32px: Example text'),
@@ -144,7 +140,7 @@ export const WithHidden: Story = {
 export const WithForcedColorAdjust: Story = {
   name: 'HTML image met `forcedColorAdjust`',
   args: {
-    forcedColorAdjust: true,
+    'forced-color-adjust': true,
   },
   parameters: {
     docs: {
@@ -160,7 +156,7 @@ export const WithForcedColorAdjust: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { forcedColorAdjust: true },
+      { 'forced-color-adjust': true },
       React.createElement('span', { slot: 'label' }, 'Forced color adjust example'),
       React.createElement('div', { style: { background: 'canvas', color: 'canvastext', padding: '20px' } }, 'Content'),
     ),
