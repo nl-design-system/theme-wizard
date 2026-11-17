@@ -1,5 +1,6 @@
 import type { ClippyContentSelect } from '@nl-design-system-community/clippy-components/clippy-content-select';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { arrayFromTokenList } from '@nl-design-system-community/clippy-components/lib/converters';
 import '@nl-design-system-community/clippy-components/clippy-content-select';
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -32,15 +33,16 @@ type PresetStory = {
 type PresetMatch = PresetStory & Pick<TokenPresetFolder, 'presets'>;
 
 /**
- * Renders a preset select with story preview for every component preset folder relevant to `path`.
+ * Renders a preset select with story preview for every component preset folder relevant to any of `paths`.
  * Choosing a preset dispatches `apply-token-preset` so wizard-app applies it to the theme.
  */
 @customElement(tag)
 export class WizardTokensPresets extends LitElement {
   static override readonly styles = [styles];
 
-  // Token path of the current page, e.g. `basis.color.accent-1`
-  @property() path = '';
+  // Space-separated token paths, e.g. `basis.color.accent-1 basis.color.accent-2`
+  @property({ converter: arrayFromTokenList })
+  paths: string[] | null = [];
 
   // Caller-supplied registry of components; stories opt in with `parameters.presets`
   @property({ attribute: false })
@@ -63,7 +65,7 @@ export class WizardTokensPresets extends LitElement {
       return;
     }
 
-    if (changedProperties.has('path')) {
+    if (changedProperties.has('paths')) {
       this.#recomputeMatches();
     }
   }
@@ -83,7 +85,11 @@ export class WizardTokensPresets extends LitElement {
   }
 
   #recomputeMatches() {
-    this.presetMatches = getRelevantPresetFolders(this.path).flatMap(({ folder, presets }) =>
+    // Dedupe folders matched by more than one path
+    const relevantFolders = new Map(
+      (this.paths ?? []).flatMap((path) => getRelevantPresetFolders(path)).map((folder) => [folder.folder, folder]),
+    );
+    this.presetMatches = [...relevantFolders.values()].flatMap(({ folder, presets }) =>
       this.#presetStories
         .filter((presetStory) => presetStory.folder === folder)
         .map((presetStory) => ({ ...presetStory, presets })),

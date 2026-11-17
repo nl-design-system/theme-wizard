@@ -56,6 +56,11 @@ describe('arrayFromTokenList', () => {
     const result = arrayFromTokenList('not-valid-json b');
     expect(result).toEqual(['not-valid-json', 'b']);
   });
+
+  it('should keep dots and hyphens in design token paths', () => {
+    const result = arrayFromTokenList('basis.color.accent-1 basis.color.accent-1-inverse');
+    expect(result).toEqual(['basis.color.accent-1', 'basis.color.accent-1-inverse']);
+  });
 });
 
 describe('arrayFromCommaList', () => {

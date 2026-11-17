@@ -1,0 +1,18 @@
+---
+interface Props {
+  paths: string[];
+}
+
+const { paths } = Astro.props;
+---
+
+<wizard-tokens-presets paths={paths.join(' ')}></wizard-tokens-presets>
+
+<script>
+  import type { WizardTokensPresets } from '@nl-design-system-community/theme-wizard-app';
+  import { components } from '@/lib/components';
+
+  for (const element of document.querySelectorAll<WizardTokensPresets>('wizard-tokens-presets')) {
+    element.components = components;
+  }
+</script>

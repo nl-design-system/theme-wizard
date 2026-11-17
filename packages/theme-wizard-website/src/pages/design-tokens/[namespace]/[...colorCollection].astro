@@ -1,4 +1,5 @@
 ---
+import PresetMatches from '@/components/PresetMatches.astro';
 import DesignTokensLayout from '@/layouts/DesignTokensLayout.astro';
 import { getStaticPaths as getStaticPathsDesignTokens } from '@/lib/design-tokens/design-tokens-nav';
 import { getTokenNamespace } from '@/lib/design-tokens/token-namespaces';
@@ -13,6 +14,13 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 ---
 
 <DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
+  {pageData?.items ? (
+    <PresetMatches
+      paths={pageData.items
+        .filter((item) => item.metaData?.tokenPath)
+        .map((item) => namespace.nav.tokenPathFor(item.metaData.tokenPath))}
+    />
+  ) : null}
   {pageData.items ? (
     <wizard-unstyled-list>
       {pageData.items
