@@ -44,7 +44,7 @@ export class WizardTokensPresets extends LitElement {
   @property({ converter: arrayFromTokenList })
   paths: string[] | null = [];
 
-  // Caller-supplied registry of components; stories opt in with `parameters.presets`
+  // Caller-supplied registry of components; modules opt in with meta `parameters.presets`, pick a story with `parameters.presetStory`
   @property({ attribute: false })
   components: ComponentStoriesRegistry = {};
 
@@ -77,9 +77,11 @@ export class WizardTokensPresets extends LitElement {
       return;
     }
 
-    this.#presetStories = loadedComponents.flatMap(({ meta, stories: [firstStory] }) => {
+    this.#presetStories = loadedComponents.flatMap(({ meta, stories }) => {
       const folder = meta.parameters?.['presets'];
-      return typeof folder === 'string' && firstStory ? [{ folder, meta, story: firstStory[1] }] : [];
+      // Story with `parameters.presetStory: true`, falling back to the first story
+      const [, story] = stories.find(([, story]) => story.parameters?.['presetStory'] === true) ?? stories[0] ?? [];
+      return typeof folder === 'string' && story ? [{ folder, meta, story }] : [];
     });
     this.#recomputeMatches();
   }

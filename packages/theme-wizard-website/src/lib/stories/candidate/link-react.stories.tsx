@@ -79,6 +79,7 @@ export const DesignLinkStates: Story = {
         },
       },
     },
+    presetStory: true,
   },
   render: RenderLinkStates,
 };
