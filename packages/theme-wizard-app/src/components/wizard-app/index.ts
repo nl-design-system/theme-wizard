@@ -137,21 +137,25 @@ export class WizardApp extends LitElement {
     this.dispatchEvent(new CustomEvent('theme-update', { bubbles: true, detail: { theme: this.theme } }));
   };
 
+  // Propagates theme changes to consumers and persists them
+  readonly #commitTheme = () => {
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
+  };
+
   readonly #handleUpdateTokens = (event: Event) => {
     const { detail } = event as SubmitSaveTokenFormEvent;
     this.theme.updateMany(detail.tokens);
     for (const { groupPath, seed } of detail.groupSeeds ?? []) {
       this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, seed);
     }
-    this.#forceUpdateTokens();
-    this.#themeStorage.setJSON(this.theme.tokens);
+    this.#commitTheme();
   };
 
   readonly #handleApplyTokenPreset = (event: Event) => {
     const { detail } = event as ApplyTokenPresetEvent;
     this.theme.applyTokens(detail.tokens);
-    this.#forceUpdateTokens();
-    this.#themeStorage.setJSON(this.theme.tokens);
+    this.#commitTheme();
   };
 
   readonly #handleScrapeDone = (event: Event) => {
@@ -191,8 +195,7 @@ export class WizardApp extends LitElement {
   readonly #handleSetThemeTokens = (event: Event) => {
     const { detail } = event as SetThemeTokensEvent;
     this.theme.load(detail.tokens);
-    this.#forceUpdateTokens();
-    this.#themeStorage.setJSON(this.theme.tokens);
+    this.#commitTheme();
     this.dispatchEvent(new Event('theme-upload'));
   };
 
@@ -208,8 +211,7 @@ export class WizardApp extends LitElement {
 
   readonly #handleReset = () => {
     this.theme.reset();
-    this.#forceUpdateTokens();
-    this.#themeStorage.setJSON(this.theme.tokens);
+    this.#commitTheme();
     this.scrapedTokens = [];
     this.#scrapedTokensStorage.removeJSON();
     this.completedSteps = [];
@@ -235,8 +237,7 @@ export class WizardApp extends LitElement {
       return;
     }
     this.theme.updateAt(target.name, value);
-    this.#forceUpdateTokens();
-    this.#themeStorage.setJSON(this.theme.tokens);
+    this.#commitTheme();
   };
 
   override render() {
