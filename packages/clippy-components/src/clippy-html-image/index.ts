@@ -24,8 +24,8 @@ export class ClippyHtmlImage extends LitElement {
     return html`
       <figure
         class="ma-html-image"
-        role=${this.label ? 'img' : undefined}
-        aria-labelledby=${this.label ? this.labelId : undefined}
+        role=${this.label ? 'img' : nothing}
+        aria-labelledby=${this.label ? this.labelId : nothing}
       >
         ${
           this.label
