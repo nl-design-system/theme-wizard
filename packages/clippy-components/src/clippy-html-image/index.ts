@@ -23,17 +23,17 @@ export class ClippyHtmlImage extends LitElement {
   override render() {
     return html`
       <figure
-        className="ma-html-image"
+        class="ma-html-image"
         role=${this.label ? 'img' : undefined}
         aria-labelledby=${this.label ? this.labelId : undefined}
       >
         ${
           this.label
-            ? html` <figcaption className="ma-html-image__label" hidden id=${this.labelId}>${this.label}</figcaption> `
+            ? html` <figcaption class="ma-html-image__label" hidden id=${this.labelId}>${this.label}</figcaption> `
             : nothing
         }
         <div
-          className=${classMap({
+          class=${classMap({
             'ma-html-image__body': true,
             'ma-html-image__body--forced-color-adjust': this.forcedColorAdjust,
           })}
