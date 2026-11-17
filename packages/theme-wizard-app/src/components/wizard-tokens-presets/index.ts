@@ -27,7 +27,7 @@ declare global {
 const PLACEHOLDER_VALUE = '';
 
 type PresetStory = {
-  // Value of the story meta's `parameters.presets`, e.g. `ams.page-header`
+  // Value of the story meta's `parameters.presets`, e.g. `nl.link`
   folder: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta: Meta<any>;

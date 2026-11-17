@@ -7,7 +7,7 @@ type TokenPreset = {
 };
 
 export type TokenPresetFolder = {
-  // Folder name, e.g. `ams.page-header`; stories opt in with `parameters.presets`
+  // Folder name, e.g. `nl.link`; stories opt in with `parameters.presets`
   folder: string;
   presets: TokenPreset[];
 };

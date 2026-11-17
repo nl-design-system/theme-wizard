@@ -58,7 +58,7 @@ const title = capitalize(pageData.label.replace(/-inverse$/, ''));
         .filter((item) => item.metaData?.tokenPath)
         .map((item) => (
           <li>
-            <wizard-link-to-token path={namespace.nav.tokenPathFor(item.metaData.tokenPath)}>
+            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
               <a slot="link" href={item.href}>
                 Navigeer naar {item.label}
               </a>

@@ -18,7 +18,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
     <PresetMatches
       paths={pageData.items
         .filter((item) => item.metaData?.tokenPath)
-        .map((item) => namespace.nav.tokenPathFor(item.metaData.tokenPath))}
+        .map((item) => `${namespace.id}.${item.metaData.tokenPath.join('.')}`)}
     />
   ) : null}
   {pageData.items ? (
@@ -27,7 +27,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
         .filter((item) => !item.href.includes('-inverse') && item.metaData.tokenPath)
         .map((item) => (
           <li>
-            <wizard-link-to-token path={namespace.nav.tokenPathFor(item.metaData.tokenPath)}>
+            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
               <a slot="link" href={item.href}>
                 Navigeer naar {item.label}
               </a>

@@ -28,6 +28,4 @@ const COMPONENT_TOKENS: Record<string, unknown> = {
   'skip-link': skipLinkTokens.nl['skip-link'],
 };
 
-export const getNlTokens = () => COMPONENT_TOKENS;
-
 export const getNlTokenTree = () => buildTokenTree(COMPONENT_TOKENS);

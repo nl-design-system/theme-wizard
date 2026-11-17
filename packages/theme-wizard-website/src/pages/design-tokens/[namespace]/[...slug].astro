@@ -17,7 +17,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
       {pageData.items.map((item) => (
         <li>
           <wizard-link-to-token
-            path={item.metaData.tokenPath ? namespace.nav.tokenPathFor(item.metaData.tokenPath) : undefined}
+            path={item.metaData.tokenPath ? `${namespace.id}.${item.metaData.tokenPath.join('.')}` : undefined}
           >
             <a slot="link" href={item.href}>
               Navigeer naar {item.label}

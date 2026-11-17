@@ -955,18 +955,6 @@ importers:
 
   packages/theme-wizard-website:
     dependencies:
-      '@amsterdam/design-system-css':
-        specifier: 4.4.0
-        version: 4.4.0(@amsterdam/design-system-tokens@4.3.0)
-      '@amsterdam/design-system-react':
-        specifier: 4.4.0
-        version: 4.4.0(@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-tokens@4.3.0))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@amsterdam/design-system-react-icons':
-        specifier: 2.2.0
-        version: 2.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@amsterdam/design-system-tokens':
-        specifier: 4.3.0
-        version: 4.3.0
       '@astrojs/react':
         specifier: 7.1.2
         version: 7.1.2(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.1)(jiti@2.7.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(yaml@2.9.1)
@@ -1221,34 +1209,15 @@ packages:
   '@amsterdam/design-system-assets@2.7.0':
     resolution: {integrity: sha512-O6vBpWhE6dl4hyeL9k//AkQyk1whRQtBU/2dLnS9dtiSr8pH5xZOnxYAJi0drMJUpntdKI82oXNnIvS6EnFF7Q==}
 
-  '@amsterdam/design-system-css@4.4.0':
-    resolution: {integrity: sha512-cxvTcdpNkwUo6y+PZwS4c8NKeClyQH1qWWld78lsezVGEL7YBi0O0MlEumrRBx0nC+8K76S8cB4Q4TIpoLK6hQ==}
-    peerDependencies:
-      '@amsterdam/design-system-assets': 2.6.0
-      '@amsterdam/design-system-tokens': 4.3.0
-
   '@amsterdam/design-system-css@4.5.0':
     resolution: {integrity: sha512-FGomskU30LOJi0LyQVOdgJheRJ5meexyaXEfn0BiOrWuvZtueel+39fdaeLdbxtVq0dlUB8mnhAexcIcgCrG5Q==}
     peerDependencies:
       '@amsterdam/design-system-assets': 2.7.0
       '@amsterdam/design-system-tokens': 4.4.0
 
-  '@amsterdam/design-system-react-icons@2.2.0':
-    resolution: {integrity: sha512-sE6tEN9wXYJMiGlznwCuGob3m2HoqMPc41JOEFUlGhg26lvBT/TejxERqeclHErdA5OsZIXihfi8fEEBFEW8xg==}
-    peerDependencies:
-      react: 16 - 19
-      react-dom: 16 - 19
-
   '@amsterdam/design-system-react-icons@2.3.0':
     resolution: {integrity: sha512-Sm4WR3c70bwB9UpQd7VzLI5tnJGeRyBOwzJSlqrafY5wV3ESic2GNx7I9lruO1mJN3t9/6l8826sJpiMhzP9ow==}
     peerDependencies:
-      react: 16 - 19
-      react-dom: 16 - 19
-
-  '@amsterdam/design-system-react@4.4.0':
-    resolution: {integrity: sha512-SrPQNvNkXCllCPAuO5RR1y73lI6/VGGvS2IQSLndwXU1abx6fNdQa5YmYbGdCkcU0oGKod/P8LzXO/+n+hQDSQ==}
-    peerDependencies:
-      '@amsterdam/design-system-css': 4.4.0
       react: 16 - 19
       react-dom: 16 - 19
 
@@ -1258,9 +1227,6 @@ packages:
       '@amsterdam/design-system-css': 4.5.0
       react: 16 - 19
       react-dom: 16 - 19
-
-  '@amsterdam/design-system-tokens@4.3.0':
-    resolution: {integrity: sha512-liXQHm6hy1MYoA8wi6n5to+9MDSnqKYl1HtyBatw4YNnmC2dP+Jp/6xevZmO00dhfJp0NoNT8hOY3nXlR2B/KA==}
 
   '@amsterdam/design-system-tokens@4.4.0':
     resolution: {integrity: sha512-RDNfSJ1SHFOJxipGezkGkSAhF1S/Pt83rBzShx0D6vGEhtO/AwHo87h/j+sw+PNyRhJ5UQsOs6UltXsJLKjKvg==}
@@ -8342,31 +8308,13 @@ snapshots:
 
   '@amsterdam/design-system-assets@2.7.0': {}
 
-  '@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-tokens@4.3.0)':
-    dependencies:
-      '@amsterdam/design-system-tokens': 4.3.0
-
   '@amsterdam/design-system-css@4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0)':
     dependencies:
       '@amsterdam/design-system-assets': 2.7.0
       '@amsterdam/design-system-tokens': 4.4.0
 
-  '@amsterdam/design-system-react-icons@2.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
-    dependencies:
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
-
   '@amsterdam/design-system-react-icons@2.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
-
-  '@amsterdam/design-system-react@4.4.0(@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-tokens@4.3.0))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
-    dependencies:
-      '@amsterdam/design-system-css': 4.4.0(@amsterdam/design-system-tokens@4.3.0)
-      '@amsterdam/design-system-react-icons': 2.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@babel/runtime': 7.29.7
-      clsx: 2.1.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
@@ -8378,8 +8326,6 @@ snapshots:
       clsx: 2.1.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-
-  '@amsterdam/design-system-tokens@4.3.0': {}
 
   '@amsterdam/design-system-tokens@4.4.0': {}
 

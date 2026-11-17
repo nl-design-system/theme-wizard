@@ -38,7 +38,7 @@ describe('presetMatchesPath', () => {
 describe('TOKEN_PRESET_FOLDERS', () => {
   it('groups preset files by folder', () => {
     const folders = TOKEN_PRESET_FOLDERS.map(({ folder }) => folder);
-    expect(folders).toEqual(expect.arrayContaining(['ams.page-header', 'nl.link']));
+    expect(folders).toEqual(expect.arrayContaining(['nl.link']));
   });
 });
 

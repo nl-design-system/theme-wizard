@@ -14,7 +14,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 
 <DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
   {pageData.metaData?.tokenPath ? (
-    <PresetMatches paths={[namespace.nav.tokenPathFor(pageData.metaData.tokenPath)]} />
+    <PresetMatches paths={[`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`]} />
   ) : null}
 
   {pageData.items ? (
@@ -23,7 +23,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
         .filter((item) => item.metaData?.tokenPath)
         .map((item) => (
           <li>
-            <wizard-link-to-token path={namespace.nav.tokenPathFor(item.metaData.tokenPath)}>
+            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
               <a slot="link" href={item.href}>
                 Navigeer naar {item.label}
               </a>

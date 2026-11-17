@@ -4,7 +4,7 @@ export class ComponentPage {
   constructor(public readonly page: Page) {}
 
   get url() {
-    return '/components/candidate/code-block';
+    return '/components/code-block';
   }
 
   async goto() {
