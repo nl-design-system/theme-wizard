@@ -1,4 +1,4 @@
-import { extractRef, isRef } from '@nl-design-system-community/design-tokens-schema';
+import { extractRef, isRef, isValueObject, isValueToken } from '@nl-design-system-community/design-tokens-schema';
 
 type TokenPreset = {
   // Filename without extension, e.g. `accent-1-inverse`
@@ -11,6 +11,8 @@ export type TokenPresetFolder = {
   folder: string;
   presets: TokenPreset[];
 };
+
+const collator = new Intl.Collator();
 
 const PRESET_FILE_PATTERN = /\/presets\/([^/]+)\/([^/]+)\.json$/;
 
@@ -33,16 +35,16 @@ export const TOKEN_PRESET_FOLDERS: TokenPresetFolder[] = Object.entries(presetMo
     presetFolder.presets.push({ name, tokens });
     return folders;
   }, [])
-  .map(({ folder, presets }) => ({ folder, presets: presets.toSorted((a, b) => a.name.localeCompare(b.name)) }));
+  .map(({ folder, presets }) => ({ folder, presets: presets.toSorted((a, b) => collator.compare(a.name, b.name)) }));
 
 const isAtOrUnder = (candidate: string, path: string) => candidate === path || candidate.startsWith(`${path}.`);
 
 // Yields `[tokenPath, $value]` for every token leaf (a plain object with `$value`)
 function* walkPresetTokens(group: unknown, path: string[] = []): Generator<[string, unknown]> {
-  if (typeof group !== 'object' || group === null) {
+  if (!isValueObject(group)) {
     return;
   }
-  if (Object.hasOwn(group, '$value')) {
+  if (isValueToken(group)) {
     yield [path.join('.'), (group as { $value: unknown }).$value];
     return;
   }
