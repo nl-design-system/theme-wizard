@@ -5,38 +5,42 @@ import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
 interface HTMLImageStoryArgs {
-  label?: string;
   hidden?: boolean;
   forcedColorAdjust?: boolean;
   'color-scheme'?: string;
 }
 
 const createDefaultTemplate = () =>
-  html`<clippy-html-image label="Voorbeeld titelgroottes">
+  html`<clippy-html-image>
+    <span slot="label">Voorbeeld titelgroottes</span>
     <h1 style="font-size: 24px">24px: Example text</h1>
     <h1 style="font-size: 32px">32px: Example text</h1>
     <h1 style="font-size: 48px">48px: Example text</h1>
   </clippy-html-image>`;
 
 const createHiddenTemplate = () =>
-  html`<clippy-html-image label="System architecture diagram" hidden>
+  html`<clippy-html-image hidden>
+    <span slot="label">System architecture diagram</span>
     <h1>clippy-html-image with label</h1>
   </clippy-html-image>`;
 
 const createForcedColorAdjustTemplate = () =>
-  html`<clippy-html-image label="Forced color adjust example" forced-color-adjust>
+  html`<clippy-html-image forced-color-adjust>
+    <span slot="label">Forced color adjust example</span>
     <div style="color: canvastext; background: canvas; padding: 20px;">Content</div>
   </clippy-html-image>`;
 
 const createDarkColorSchemeTemplate = () =>
-  html`<clippy-html-image label="Dark color scheme example" color-scheme="dark">
+  html`<clippy-html-image color-scheme="dark">
+    <span slot="label">Dark color scheme example</span>
     <div style="background: light-dark(white, black); color: light-dark(black, white); padding: 20px;">
       Dark themed content
     </div>
   </clippy-html-image>`;
 
 const createLightColorSchemeTemplate = () =>
-  html`<clippy-html-image label="Light color scheme example" color-scheme="light">
+  html`<clippy-html-image color-scheme="light">
+    <span slot="label">Light color scheme example</span>
     <div style="background: light-dark(white, black); color: light-dark(black, white); padding: 20px;">
       Light themed content
     </div>
@@ -58,16 +62,12 @@ const meta: Meta<HTMLImageStoryArgs> = {
       control: 'boolean',
       description: 'Hidden state',
     },
-    label: {
-      control: 'text',
-      description: 'Accessible name for the image. When provided, the element gets role="img".',
-    },
   },
   parameters: {
     docs: {
       description: {
         component:
-          '`<clippy-html-image>` is een web component om voorbeeld-HTML te renderen als een `figure` element. Het component ondersteunt een `label` property om de afbeelding een toegankelijk label te geven, een `forcedColorAdjust` property voor kleurenaanpassing, en een `color-scheme` property voor het instellen van het kleurenschema.',
+          '`<clippy-html-image>` is een web component om voorbeeld-HTML te renderen als een `figure` element. Het component ondersteunt een `label` slot om de afbeelding een toegankelijk label te geven, een `forcedColorAdjust` property voor kleurenaanpassing, en een `color-scheme` property voor het instellen van het kleurenschema.',
       },
     },
   },
@@ -78,8 +78,8 @@ const meta: Meta<HTMLImageStoryArgs> = {
         colorScheme: args.colorScheme,
         forcedColorAdjust: args.forcedColorAdjust,
         hidden: args.hidden,
-        label: args.label,
       },
+      React.createElement('span', { slot: 'label' }, 'Voorbeeld titelgroottes'),
       React.createElement('h1', { style: { fontSize: '24px' } }, '24px: Example text'),
       React.createElement('h1', { style: { fontSize: '32px' } }, '32px: Example text'),
       React.createElement('h1', { style: { fontSize: '48px' } }, '48px: Example text'),
@@ -94,9 +94,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Basis HTML image',
-  args: {
-    label: 'Voorbeeld titelgroottes',
-  },
   parameters: {
     docs: {
       source: {
@@ -111,7 +108,8 @@ export const Default: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { label: 'Voorbeeld titelgroottes' },
+      null,
+      React.createElement('span', { slot: 'label' }, 'Voorbeeld titelgroottes'),
       React.createElement('h1', { style: { fontSize: '24px' } }, '24px: Example text'),
       React.createElement('h1', { style: { fontSize: '32px' } }, '32px: Example text'),
       React.createElement('h1', { style: { fontSize: '48px' } }, '48px: Example text'),
@@ -122,7 +120,6 @@ export const WithHidden: Story = {
   name: 'HTML image met `hidden` attribuut',
   args: {
     hidden: true,
-    label: 'System architecture diagram',
   },
   parameters: {
     docs: {
@@ -138,7 +135,8 @@ export const WithHidden: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { hidden: true, label: 'System architecture diagram' },
+      { hidden: true },
+      React.createElement('span', { slot: 'label' }, 'System architecture diagram'),
       React.createElement('h1', null, 'clippy-html-image with label'),
     ),
 };
@@ -147,7 +145,6 @@ export const WithForcedColorAdjust: Story = {
   name: 'HTML image met `forcedColorAdjust`',
   args: {
     forcedColorAdjust: true,
-    label: 'Forced color adjust example',
   },
   parameters: {
     docs: {
@@ -163,7 +160,8 @@ export const WithForcedColorAdjust: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { forcedColorAdjust: true, label: 'Forced color adjust example' },
+      { forcedColorAdjust: true },
+      React.createElement('span', { slot: 'label' }, 'Forced color adjust example'),
       React.createElement('div', { style: { background: 'canvas', color: 'canvastext', padding: '20px' } }, 'Content'),
     ),
 };
@@ -172,7 +170,6 @@ export const WithDarkColorScheme: Story = {
   name: 'HTML image met `color-scheme="dark"`',
   args: {
     'color-scheme': 'dark',
-    label: 'Dark color scheme example',
   },
   parameters: {
     docs: {
@@ -188,7 +185,8 @@ export const WithDarkColorScheme: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { 'color-scheme': 'dark', label: 'Dark color scheme example' },
+      { 'color-scheme': 'dark' },
+      React.createElement('span', { slot: 'label' }, 'Dark color scheme example'),
       React.createElement(
         'div',
         { style: { background: 'light-dark(white, black)', color: 'light-dark(black, white)', padding: '20px' } },
@@ -201,7 +199,6 @@ export const WithLightColorScheme: Story = {
   name: 'HTML image met `color-scheme="light"`',
   args: {
     'color-scheme': 'light',
-    label: 'Light color scheme example',
   },
   parameters: {
     docs: {
@@ -217,7 +214,8 @@ export const WithLightColorScheme: Story = {
   render: () =>
     React.createElement(
       'clippy-html-image',
-      { 'color-scheme': 'light', label: 'Light color scheme example' },
+      { 'color-scheme': 'light' },
+      React.createElement('span', { slot: 'label' }, 'Light color scheme example'),
       React.createElement(
         'div',
         { style: { background: 'light-dark(white, black)', color: 'light-dark(black, white)', padding: '20px' } },

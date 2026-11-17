@@ -15,40 +15,61 @@ describe(`<${tag}>`, () => {
     expect(element).toBeDefined();
   });
 
-  it('renders without role when no label is provided', () => {
+  it('renders without role when no label slot content is provided', async () => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    const figure = document.querySelector('figure');
-    expect(figure).toBeDefined();
-    expect(figure?.getAttribute('role')).toBeNull();
-  });
-
-  it('renders with role="img" when label property is provided', async () => {
-    document.body.innerHTML = `<${tag} label="Test image"></${tag}>`;
-    const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+    const component = document.querySelector(tag) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await component?.updateComplete;
 
-    const figure = document.querySelector('figure');
+    const figure = component.shadowRoot.querySelector('figure');
+    expect(figure).toBeDefined();
+    expect(figure?.getAttribute('role')).toBeNull();
+    expect(figure?.getAttribute('aria-labelledby')).toBeNull();
+  });
+
+  it('renders with role="img" when label slot content is provided', async () => {
+    document.body.innerHTML = `<${tag}><span slot="label">Test image</span></${tag}>`;
+    const component = document.querySelector(tag) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await component?.updateComplete;
+
+    const figure = component.shadowRoot.querySelector('figure');
     expect(figure).toBeDefined();
     expect(figure?.getAttribute('role')).toBe('img');
   });
 
-  it('has aria-labelledby pointing to hidden figcaption when label is provided', async () => {
-    document.body.innerHTML = `<${tag} label="Test image"></${tag}>`;
-    const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+  it('has aria-labelledby pointing to hidden figcaption when label slot content is provided', async () => {
+    document.body.innerHTML = `<${tag}><span slot="label">Test image</span></${tag}>`;
+    const component = document.querySelector(tag) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await component?.updateComplete;
 
-    const figure = document.querySelector('figure');
+    const figure = component.shadowRoot.querySelector('figure');
     expect(figure?.getAttribute('aria-labelledby')).toBeTruthy();
 
-    const figcaption = document.querySelector('figcaption');
+    const figcaption = component.shadowRoot.querySelector('figcaption');
     expect(figcaption).toBeDefined();
-    expect(figcaption?.getAttribute('hidden')).toBe('true');
+    expect(figcaption?.hasAttribute('hidden')).toBe(true);
     expect(figcaption?.getAttribute('id')).toBe(figure?.getAttribute('aria-labelledby'));
   });
 
-  it('has accessible name when label property is provided', async () => {
-    document.body.innerHTML = `<${tag} label="my label"></${tag}>`;
+  it('has accessible name from label slot content', async () => {
+    document.body.innerHTML = `<${tag}><span slot="label">my label</span></${tag}>`;
     const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await component?.updateComplete;
 
     const imgElement = page.getByRole('img');
@@ -56,20 +77,27 @@ describe(`<${tag}>`, () => {
     expect(imgElement).toHaveAccessibleName('my label');
   });
 
-  it('does not have accessible name when label is not provided', async () => {
+  it('does not have accessible name when no label slot content is provided', async () => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+    const component = document.querySelector(tag) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await component?.updateComplete;
 
-    const figure = document.querySelector('figure');
+    const figure = component.shadowRoot.querySelector('figure');
     // Without label, figure has no role, so we check it directly
     expect(figure).toBeDefined();
     expect(figure?.getAttribute('role')).toBeNull();
   });
 
-  it('returns component via page.getByRole("img") when label is present', async () => {
-    document.body.innerHTML = `<${tag} label="Test"></${tag}>`;
+  it('returns component via page.getByRole("img") when label slot content is present', async () => {
+    document.body.innerHTML = `<${tag}><span slot="label">Test</span></${tag}>`;
     const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await component?.updateComplete;
 
     const imgElement = page.getByRole('img');
@@ -78,16 +106,21 @@ describe(`<${tag}>`, () => {
     expect(elementHandle).toBeTruthy();
   });
 
-  it('sets unique labels correctly when rendering multiple html-images', async () => {
+  it('sets unique label ids when rendering multiple html-images with label slots', async () => {
     document.body.innerHTML = `
-      <${tag} label="my first label"></${tag}>
-      <${tag} label="my second label"></${tag}>
+      <${tag}><span slot="label">my first label</span></${tag}>
+      <${tag}><span slot="label">my second label</span></${tag}>
     `;
 
-    const components = document.querySelectorAll(tag) as unknown as { updateComplete: Promise<void> }[];
+    const components = Array.from(document.querySelectorAll(tag)) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    }[];
+    await Promise.all(components.map((c) => c.updateComplete));
+    await new Promise((resolve) => setTimeout(resolve, 0));
     await Promise.all(components.map((c) => c.updateComplete));
 
-    const figures = document.querySelectorAll('figure[role="img"]');
+    const figures = components.map((c) => c.shadowRoot.querySelector('figure[role="img"]'));
     expect(figures).toHaveLength(2);
 
     const imgElement1 = page.getByRole('img').first();
@@ -95,6 +128,27 @@ describe(`<${tag}>`, () => {
 
     const imgElement2 = page.getByRole('img').last();
     expect(imgElement2).toHaveAccessibleName('my second label');
+  });
+
+  it('removes role and accessible name when label slot content is removed', async () => {
+    document.body.innerHTML = `<${tag}><span slot="label">Slot label</span></${tag}>`;
+    const component = document.querySelector(tag) as unknown as {
+      updateComplete: Promise<void>;
+      shadowRoot: ShadowRoot;
+    };
+    await component?.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await component?.updateComplete;
+
+    expect(component.shadowRoot.querySelector('figure')?.getAttribute('role')).toBe('img');
+
+    document.querySelector('span[slot="label"]')?.remove();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await component?.updateComplete;
+
+    const figure = component.shadowRoot.querySelector('figure');
+    expect(figure?.getAttribute('role')).toBeNull();
+    expect(figure?.getAttribute('aria-labelledby')).toBeNull();
   });
 
   it('applies forced-color-adjust class when forcedColorAdjust is true', async () => {
