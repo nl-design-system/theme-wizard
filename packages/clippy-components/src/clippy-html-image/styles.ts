@@ -2,12 +2,27 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    cursor: default;
-    forced-color-adjust: none;
-    user-select: none;
+    display: contents;
   }
 
-  slot[name='label'] {
-    display: none;
+  .ma-html-image {
+    margin-block: 0;
+    margin-inline: 0;
+  }
+
+  .ma-html-image__body {
+    forced-color-adjust: none;
+  }
+
+  :host([color-scheme='dark']) .ma-html-image__body {
+    color-scheme: only dark;
+  }
+
+  :host([color-scheme='light']) .ma-html-image__body {
+    color-scheme: only light;
+  }
+
+  .ma-html-image__body--forced-color-adjust {
+    forced-color-adjust: auto;
   }
 `;
