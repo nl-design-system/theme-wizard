@@ -7,6 +7,7 @@ import type Theme from '../../lib/Theme';
 import type { StoryRenderProps } from '../wizard-story-react';
 import '../wizard-story-react';
 import { themeContext } from '../../contexts/theme';
+import { StoryBaseThemeStyles, getStoryBaseTheme, renderWithStoryBaseTheme } from '../../utils/story-base-theme';
 import styles from './styles';
 
 const tag = 'wizard-story-example';
@@ -32,16 +33,29 @@ export class WizardStoryExample extends LitElement {
   componentMeta: StoryRenderProps['componentMeta'] = undefined;
   args: StoryRenderProps['args'] = undefined;
 
+  readonly #baseThemeStyles = new StoryBaseThemeStyles();
+
+  protected override willUpdate() {
+    this.#baseThemeStyles.adopt(this.shadowRoot, getStoryBaseTheme(this.componentMeta));
+  }
+
   override render() {
+    const baseTheme = getStoryBaseTheme(this.componentMeta);
+
     return html`
       <clippy-reset-theme>
-        <clippy-theme-provider .theme=${this.theme.tokens}>
-          <wizard-story-react
-            .story=${this.story}
-            .componentMeta=${this.componentMeta}
-            .args=${this.args ?? this.story?.args ?? {}}
-          ></wizard-story-react>
-        </clippy-theme-provider>
+        ${renderWithStoryBaseTheme(
+          baseTheme,
+          html`
+            <clippy-theme-provider .theme=${this.theme.tokens}>
+              <wizard-story-react
+                .story=${this.story}
+                .componentMeta=${this.componentMeta}
+                .args=${this.args ?? this.story?.args ?? {}}
+              ></wizard-story-react>
+            </clippy-theme-provider>
+          `,
+        )}
       </clippy-reset-theme>
     `;
   }

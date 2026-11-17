@@ -38,6 +38,7 @@ export * from './components/wizard-token-sample';
 export * from './components/wizard-token-upload-form';
 export * from './components/wizard-token-validation-form';
 export * from './components/wizard-tokens-download';
+export * from './components/wizard-tokens-presets';
 export * from './components/wizard-tokens-reuse-form';
 export * from './components/wizard-unstyled-list';
 

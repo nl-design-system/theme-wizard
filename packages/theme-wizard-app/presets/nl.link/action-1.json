@@ -1,0 +1,26 @@
+{
+  "nl": {
+    "link": {
+      "color": {
+        "$type": "color",
+        "$value": "{basis.color.action-1.color-default}"
+      },
+      "text-decoration-color": {
+        "$type": "color",
+        "$value": "{basis.color.action-1.color-default}"
+      },
+      "hover": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-hover}"
+        }
+      },
+      "active": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-active}"
+        }
+      }
+    }
+  }
+}

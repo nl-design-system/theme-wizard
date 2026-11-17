@@ -5,7 +5,7 @@ import { type Locator, type Page } from '@playwright/test';
 export class DesignTokenPage {
   constructor(
     public readonly page: Page,
-    private readonly namespace: 'basis' | 'nl',
+    private readonly namespace: 'basis' | 'nl' | 'community',
   ) {}
 
   urlFor(segments: string[]) {

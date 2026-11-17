@@ -6,8 +6,11 @@ import type { NavigationItem, NavigationItems } from '@/types';
 
 export const DESIGN_TOKENS_BASE_URL = '/design-tokens';
 
-export const createTokenTreeNav = (basePath: string, namespace: string) => {
+// `tokenPathPrefix` null means tree keys already start the token path, e.g. `ams.page-header`
+export const createTokenTreeNav = (basePath: string, tokenPathPrefix: string | null) => {
   const hrefFor = (path: TokenPath) => `${basePath}/${path.join('/')}`;
+
+  const tokenPathFor = (path: TokenPath) => (tokenPathPrefix ? `${tokenPathPrefix}.${path.join('.')}` : path.join('.'));
 
   const toNavigationItems = (tree: TokenTreeNode[], currentPath: TokenPath): NavigationItems =>
     tree.map((node): NavigationItem => ({
@@ -32,9 +35,9 @@ export const createTokenTreeNav = (basePath: string, namespace: string) => {
       navigationItems: toNavigationItems(tree, segments),
       node: findTreeNode(tree, segments)!,
       segments,
-      tokenPath: `${namespace}.${segments.join('.')}`,
+      tokenPath: tokenPathFor(segments),
     };
   };
 
-  return { hrefFor, resolveSlugPage, toNavigationItems };
+  return { hrefFor, resolveSlugPage, tokenPathFor, toNavigationItems };
 };

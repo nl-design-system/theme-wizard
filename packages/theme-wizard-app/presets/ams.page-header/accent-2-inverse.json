@@ -1,0 +1,54 @@
+{
+  "ams": {
+    "page-header": {
+      "background-color": {
+        "$type": "color",
+        "$value": "{basis.color.accent-2-inverse.bg-document}"
+      },
+      "brand-name": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.accent-2-inverse.color-document}"
+        }
+      },
+      "menu": {
+        "link": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.accent-2-inverse.color-default}"
+          }
+        },
+        "item": {
+          "hover": {
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.accent-2-inverse.color-hover}"
+            }
+          }
+        }
+      },
+      "mega-menu": {
+        "button": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.accent-2-inverse.color-default}"
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.accent-2-inverse.bg-default}"
+          },
+          "hover": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.accent-2-inverse.color-hover}"
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.accent-2-inverse.bg-hover}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,8 +17,10 @@ test('page has accessibility basics', async ({ page }) => {
   await expect.soft(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test.describe('shows sidebar with all components', () => {
-  componentsNavigationItems.forEach((item) => {
+test.describe('shows sidebar with all candidate components', () => {
+  const candidateItems = componentsNavigationItems.find((group) => group.href === '/components/candidate')?.items ?? [];
+
+  candidateItems.forEach((item) => {
     test(item.href, async ({ componentPage }) => {
       await expect(componentPage.sidebarLink(item.label)).toBeVisible();
     });
