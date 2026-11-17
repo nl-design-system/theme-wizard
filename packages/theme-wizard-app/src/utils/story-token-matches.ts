@@ -24,13 +24,7 @@ export type { ComponentStoriesRegistry } from './component-stories';
 
 // A story with an editable token, plus the token's own paths (e.g. `nl.link.color`) —
 // everything derivable from the story modules alone, independent of any theme or groups.
-export type StoryCandidate = {
-  componentId: string;
-  id: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: Meta<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  story: StoryObj<any>;
+export type StoryCandidate = Omit<StoryMatch, 'matchedTokens'> & {
   tokenPaths: string[];
 };
 
