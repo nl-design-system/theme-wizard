@@ -4,8 +4,8 @@ A preset is a set of component tokens that you can apply to the theme in one go,
 
 ## How it works
 
-1. Preset files live in `packages/theme-wizard-app/presets/<folder>/<name>.json`. A folder groups all presets for one component, e.g. `nl.link/accent-1.json` and `nl.link/accent-2.json`.
-2. A story module links itself to a folder with `parameters.presets: '<folder>'` in its meta.
+1. Each component has one preset module, `packages/theme-wizard-app/presets/<folder>.ts`, e.g. `nl.link.ts`. Its default export is a `TokenPreset[]` (`{ name, tokens }`). The filename without `.ts` is the folder name.
+2. A story module links itself to a preset module with `parameters.presets: '<folder>'` in its meta.
 3. A design token page renders `<PresetMatches paths={[...]} />` with the basis token path or paths it covers, e.g. `basis.color.accent-2`.
 4. `<wizard-tokens-presets>` shows a folder when **at least one** preset in it:
    - sets a token at or under one of the page's paths, or
@@ -17,25 +17,32 @@ A preset is a set of component tokens that you can apply to the theme in one go,
 
 ## Adding presets for a component
 
-1. Create a folder named after the component's token prefix, e.g. `presets/nl.button/`.
-2. Add one JSON file per preset. The filename (without `.json`) is the label in the select. Reference basis tokens so the preset matches the right pages:
+1. Create a module named after the component's token prefix, e.g. `presets/nl.button.ts`.
+2. Write a `createPreset` function that takes a basis color group name (`BasisColorName`) and returns a preset. Its `name` is the label in the select. Use references to basis tokens, not their values, so the preset matches the right pages and follows later basis edits:
 
-   ```json
-   {
-     "nl": {
-       "button": {
-         "background-color": {
-           "$type": "color",
-           "$value": "{basis.color.accent-2.bg-default}"
-         }
-       }
-     }
-   }
+   ```ts
+   import type { BasisColorName } from '@nl-design-system-community/design-tokens-schema';
+   import type { TokenPreset } from '../src/utils/token-presets';
+
+   const createPreset = (group: BasisColorName): TokenPreset => ({
+     name: group,
+     tokens: {
+       nl: {
+         button: {
+           'background-color': { $type: 'color', $value: `{basis.color.${group}.bg-default}` },
+         },
+       },
+     },
+   });
+
+   export default (['accent-2', 'action-1'] satisfies BasisColorName[]).map(createPreset);
    ```
 
-   This preset appears on the `basis.color.accent-2` page and on the color collection pages that include it.
+   The `accent-2` preset appears on the `basis.color.accent-2` page and on the color collection pages that include it. A misspelled group name fails the type check.
 
-The folder list is built at build time with `import.meta.glob`, so you don't need to register anything.
+   One-off presets can be exported as literal `{ name, tokens }` objects in the same array.
+
+The module list is built at build time with `import.meta.glob`, so you don't need to register anything.
 
 ## Linking a story
 

@@ -118,7 +118,8 @@ export const BASIS_COLOR_NAMES = [
   'selected-inverse',
   'warning',
   'warning-inverse',
-];
+] as const;
+export type BasisColorName = (typeof BASIS_COLOR_NAMES)[number];
 
 export const BasisColorSchema = z
   .strictObject(Object.fromEntries(BASIS_COLOR_NAMES.map((key) => [key, ColorNameSchema])))
