@@ -15,26 +15,40 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 
 <DesignTokensLayout title={pageData.label} metaTitle={`${pageData.label} - ${namespace.pageTitle}`}>
   {pageData?.items ? (
-    <PresetMatches
-      paths={pageData.items
-        .filter((item) => item.metaData?.tokenPath)
-        .map((item) => `${namespace.id}.${item.metaData.tokenPath.join('.')}`)}
-    />
-  ) : null}
-  {pageData.items ? (
-    <wizard-unstyled-list>
-      {pageData.items
-        .filter((item) => !item.href.includes('-inverse') && item.metaData.tokenPath)
-        .map((item) => (
-          <li>
-            <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
-              <a slot="link" href={item.href}>
-                Navigeer naar {item.label}
-              </a>
-              {capitalize(item.label)}
-            </wizard-link-to-token>
-          </li>
-        ))}
-    </wizard-unstyled-list>
+    <>
+      <wizard-unstyled-list>
+        {pageData.items
+          .filter((item) => !item.href.includes('-inverse') && item.metaData.tokenPath)
+          .map((item) => (
+            <li>
+              <wizard-link-to-token path={`${namespace.id}.${item.metaData.tokenPath.join('.')}`}>
+                <a slot="link" href={item.href}>
+                  Navigeer naar {item.label}
+                </a>
+                {capitalize(item.label)}
+              </wizard-link-to-token>
+            </li>
+          ))}
+      </wizard-unstyled-list>
+
+      <clippy-stack size="2xl">
+        <clippy-stack>
+          <clippy-heading level="2">Componenten</clippy-heading>
+          <p class="nl-paragraph">Voorbeelden van componenten met een {pageData.label} kleur.</p>
+        </clippy-stack>
+
+        <PresetMatches
+          label={pageData.label}
+          paths={pageData.items
+            .filter((item) => item.metaData?.tokenPath)
+            .map((item) => `${namespace.id}.${item.metaData.tokenPath.join('.')}`)}
+        />
+      </clippy-stack>
+    </>
   ) : null}
 </DesignTokensLayout>
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+</script>
