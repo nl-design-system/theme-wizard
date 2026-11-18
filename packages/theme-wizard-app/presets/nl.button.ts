@@ -14,15 +14,16 @@ const stateTokens = (group: BasisColorName, state: State) => ({
   color: colorRef(group, `color-${state}`),
 });
 
-const createPreset = (group: BasisColorName): TokenPreset => ({
-  name: group,
+// `interactionGroup` colors the hover and active states, defaults to `group`
+const createPreset = (group: BasisColorName, interactionGroup: BasisColorName = group): TokenPreset => ({
+  name: interactionGroup === group ? group : `${group} / ${interactionGroup}`,
   tokens: {
     nl: {
       button: {
         primary: {
           ...stateTokens(group, 'default'),
-          active: stateTokens(group, 'active'),
-          hover: stateTokens(group, 'hover'),
+          active: stateTokens(interactionGroup, 'active'),
+          hover: stateTokens(interactionGroup, 'hover'),
         },
       },
     },
@@ -40,4 +41,4 @@ const groups: BasisColorName[] = [
   'action-2-inverse',
 ];
 
-export default groups.map(createPreset);
+export default [...groups.map((group) => createPreset(group)), createPreset('action-1', 'action-1-inverse')];
