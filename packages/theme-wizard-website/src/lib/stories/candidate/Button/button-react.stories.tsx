@@ -1,5 +1,6 @@
 import type { Meta, StoryObj, StoryContext } from '@storybook/react-vite';
 import css from '@nl-design-system-candidate/button-css/button.css?inline';
+import testCss from '@nl-design-system-candidate/button-css/test.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import tokens from '@nl-design-system-candidate/button-tokens';
 import { type ComponentType } from 'react';
@@ -30,7 +31,7 @@ const meta = {
   id: 'button',
   component: ButtonComponent,
   parameters: {
-    css: [css],
+    css: [css, testCss],
     docs: {
       description: {
         component: 'Als de `purpose` prop is gezet, kan er optioneel een `hint` mee gegeven worden',
