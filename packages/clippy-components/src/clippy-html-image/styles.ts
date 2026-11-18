@@ -5,24 +5,24 @@ export default css`
     display: contents;
   }
 
-  .ma-html-image {
+  .clippy-html-image {
     margin-block: 0;
     margin-inline: 0;
   }
 
-  .ma-html-image__body {
+  .clippy-html-image__body {
     forced-color-adjust: none;
   }
 
-  :host([color-scheme='dark']) .ma-html-image__body {
+  :host([color-scheme='dark']) .clippy-html-image__body {
     color-scheme: only dark;
   }
 
-  :host([color-scheme='light']) .ma-html-image__body {
+  :host([color-scheme='light']) .clippy-html-image__body {
     color-scheme: only light;
   }
 
-  .ma-html-image__body--forced-color-adjust {
+  .clippy-html-image__body--forced-color-adjust {
     forced-color-adjust: auto;
   }
 `;

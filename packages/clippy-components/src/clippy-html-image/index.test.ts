@@ -124,12 +124,12 @@ describe(`<${tag}>`, () => {
 
   it('applies forced-color-adjust class when forcedColorAdjust is true', async () => {
     const component = await render(`<${tag} forced-color-adjust></${tag}>`);
-    expect(component.shadowRoot?.querySelector('.ma-html-image__body--forced-color-adjust')).toBeTruthy();
+    expect(component.shadowRoot?.querySelector('.clippy-html-image__body--forced-color-adjust')).toBeTruthy();
   });
 
   it('does not apply forced-color-adjust class when forcedColorAdjust is false', async () => {
     const component = await render(`<${tag}></${tag}>`);
-    expect(component.shadowRoot?.querySelector('.ma-html-image__body--forced-color-adjust')).toBeNull();
+    expect(component.shadowRoot?.querySelector('.clippy-html-image__body--forced-color-adjust')).toBeNull();
   });
 
   it('has default slot for content', async () => {

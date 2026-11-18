@@ -41,17 +41,17 @@ export class ClippyHtmlImage extends LitElement {
   override render() {
     return html`
       <figure
-        class="ma-html-image"
+        class="clippy-html-image"
         role=${this.hasLabelSlot ? 'img' : nothing}
         aria-labelledby=${this.hasLabelSlot ? this.labelId : nothing}
       >
-        <figcaption class="ma-html-image__label" hidden id=${this.labelId}>
+        <figcaption class="clippy-html-image__label" hidden id=${this.labelId}>
           <slot name="label" @slotchange=${this.onLabelSlotChange}></slot>
         </figcaption>
         <div
           class=${classMap({
-            'ma-html-image__body': true,
-            'ma-html-image__body--forced-color-adjust': this.forcedColorAdjust,
+            'clippy-html-image__body': true,
+            'clippy-html-image__body--forced-color-adjust': this.forcedColorAdjust,
           })}
           inert="true"
           aria-hidden="true"
