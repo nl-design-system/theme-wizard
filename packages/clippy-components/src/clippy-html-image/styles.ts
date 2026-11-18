@@ -6,8 +6,8 @@ export default css`
   }
 
   .clippy-html-image {
-    margin-block: 0;
-    margin-inline: 0;
+    margin-block: var(--basis-space-none);
+    margin-inline: var(--basis-space-none);
   }
 
   .clippy-html-image__body {
