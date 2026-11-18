@@ -1,4 +1,4 @@
-import { BaseDesignToken, ColorValue } from '@nl-design-system-community/design-tokens-schema';
+import type { BaseDesignToken, ColorValue } from '@nl-design-system-community/design-tokens-schema';
 
 export const UPDATE_DESIGN_TOKENS_EVENT = 'update-design-tokens';
 
