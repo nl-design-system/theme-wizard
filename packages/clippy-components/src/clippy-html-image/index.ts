@@ -1,74 +1,64 @@
 import { safeCustomElement } from '@lib/decorators';
-import { LitElement, html } from 'lit';
-import { query } from 'lit/decorators.js';
+import { isSlotEmpty } from '@src/lib/slot';
+import { LitElement, html, nothing } from 'lit';
+import { property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import styles from './styles';
 
 let labelCounter = 0;
 
 const tag = 'clippy-html-image';
 
+/**
+ * Wraps arbitrary HTML content and presents it to the accessibility tree as an image.
+ *
+ * @slot label - Accessible label content (rich HTML allowed). When provided, the figure gets
+ *   `role="img"` and is labelled by the visually hidden figcaption.
+ * @slot - Visual content — rendered with `inert` so it is skipped by assistive technology.
+ */
 @safeCustomElement(tag)
 export class ClippyHtmlImage extends LitElement {
   static override readonly styles = [styles];
 
-  @query('slot[name="label"]')
-  private readonly labelSlot?: HTMLSlotElement;
+  @property({ attribute: 'forced-color-adjust', type: Boolean })
+  forcedColorAdjust = false;
 
-  @query('[role="img"]')
-  private readonly imgDiv?: HTMLDivElement;
+  @state() private hasLabelSlot = false;
 
   private readonly labelId = `clippy-html-image-label-${++labelCounter}`;
-  private observer?: MutationObserver;
 
-  override connectedCallback() {
-    super.connectedCallback();
-    // Watch for changes to light DOM
-    this.observer = new MutationObserver(() => {
-      this.updateLabelledBy();
-    });
-    this.observer.observe(this, {
-      childList: true,
-      subtree: true,
-    });
-  }
-
-  override updated() {
-    this.updateLabelledBy();
-    if (this.labelSlot) {
-      this.labelSlot.addEventListener('slotchange', this.onLabelSlotChange);
+  protected override firstUpdated() {
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]');
+    if (slot) {
+      this.hasLabelSlot = !isSlotEmpty(slot);
     }
   }
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.observer?.disconnect();
-    this.labelSlot?.removeEventListener('slotchange', this.onLabelSlotChange);
-  }
-
-  private readonly onLabelSlotChange = () => {
-    this.updateLabelledBy();
+  private readonly onLabelSlotChange = (event: Event) => {
+    this.hasLabelSlot = !isSlotEmpty(event.target as HTMLSlotElement);
   };
 
-  private updateLabelledBy() {
-    if (!this.labelSlot || !this.imgDiv) return;
-
-    const nodes = this.labelSlot.assignedNodes({ flatten: true });
-    const hasLabel = nodes.length > 0;
-
-    if (hasLabel) {
-      this.imgDiv.setAttribute('aria-labelledby', this.labelId);
-    } else {
-      this.imgDiv.removeAttribute('aria-labelledby');
-    }
-  }
-
   override render() {
-    // `inert` is on a nested element to prevent the accessibility tree from marking this element as generic
-    return html`<div role="img">
-        <div inert>
+    return html`
+      <figure
+        class="clippy-html-image"
+        role=${this.hasLabelSlot ? 'img' : nothing}
+        aria-labelledby=${this.hasLabelSlot ? this.labelId : nothing}
+      >
+        <figcaption class="clippy-html-image__label" hidden id=${this.labelId}>
+          <slot name="label" @slotchange=${this.onLabelSlotChange}></slot>
+        </figcaption>
+        <div
+          class=${classMap({
+            'clippy-html-image__body': true,
+            'clippy-html-image__body--forced-color-adjust': this.forcedColorAdjust,
+          })}
+          inert="true"
+          aria-hidden="true"
+        >
           <slot></slot>
         </div>
-      </div>
-      <slot id=${this.labelId} name="label" @slotchange=${this.onLabelSlotChange}></slot>`;
+      </figure>
+    `;
   }
 }
