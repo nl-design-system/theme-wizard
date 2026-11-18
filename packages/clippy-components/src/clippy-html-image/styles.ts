@@ -6,8 +6,8 @@ export default css`
   }
 
   .ma-html-image {
-    margin-block: 0;
-    margin-inline: 0;
+    margin-block: var(--basis-space-none);
+    margin-inline: var(--basis-space-none);
   }
 
   .ma-html-image__body {
