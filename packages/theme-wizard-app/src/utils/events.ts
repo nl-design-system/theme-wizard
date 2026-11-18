@@ -1,11 +1,11 @@
-import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, ColorValue } from '@nl-design-system-community/design-tokens-schema';
 
 export const UPDATE_DESIGN_TOKENS_EVENT = 'update-design-tokens';
 
 export type UpdateDesignTokensDetail = {
   tokens: { path: string; value: BaseDesignToken['$value'] }[];
   /** Group-level $extensions to set alongside the token updates, e.g. the color-scale seed. */
-  groupSeeds?: { groupPath: string; seed: unknown }[];
+  groupSeeds?: { groupPath: string; seed: ColorValue }[];
 };
 
 export type SubmitSaveTokenFormEvent = CustomEvent<UpdateDesignTokensDetail>;
