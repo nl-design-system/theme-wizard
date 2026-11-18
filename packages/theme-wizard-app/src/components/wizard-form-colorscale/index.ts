@@ -185,6 +185,7 @@ export class WizardFormColorscale extends LitElement {
   }
 
   #handleColorChange = (event: Event) => {
+    event.stopPropagation();
     const target = event.target;
     if (target instanceof ClippyTokenCombobox && target.value) {
       const rawSelectedToken = target.value as ColorToken;
@@ -193,7 +194,6 @@ export class WizardFormColorscale extends LitElement {
 
       this.selectedColorToken = rawSelectedToken;
       if (!this.isConnected) return;
-      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
 
       if (this.form) {
         this.form.requestSubmit();
