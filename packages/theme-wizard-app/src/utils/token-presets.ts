@@ -1,41 +1,35 @@
 import { extractRef, isRef, isValueObject, isValueToken } from '@nl-design-system-community/design-tokens-schema';
 
-type TokenPreset = {
-  // Filename without extension, e.g. `accent-1-inverse`
+export type TokenPreset = {
+  // Label in the select, e.g. `accent-1-inverse`
   name: string;
   tokens: Record<string, unknown>;
 };
 
 export type TokenPresetFolder = {
-  // Folder name, e.g. `nl.link`; stories opt in with `parameters.presets`
+  // Preset module filename, e.g. `nl.link`; stories opt in with `parameters.presets`
   folder: string;
   presets: TokenPreset[];
 };
 
 const collator = new Intl.Collator();
 
-const PRESET_FILE_PATTERN = /\/presets\/([^/]+)\/([^/]+)\.json$/;
+const PRESET_FILE_PATTERN = /\/presets\/([^/]+)\.ts$/;
 
-const presetModules = import.meta.glob<Record<string, unknown>>('../../presets/*/*.json', {
+const presetModules = import.meta.glob<TokenPreset[]>('../../presets/*.ts', {
   eager: true,
   import: 'default',
 });
 
-export const TOKEN_PRESET_FOLDERS: TokenPresetFolder[] = Object.entries(presetModules)
-  .reduce<TokenPresetFolder[]>((folders, [filePath, tokens]) => {
-    const [, folder, name] = PRESET_FILE_PATTERN.exec(filePath) ?? [];
-    if (!folder || !name) {
-      return folders;
+export const TOKEN_PRESET_FOLDERS: TokenPresetFolder[] = Object.entries(presetModules).flatMap(
+  ([filePath, presets]) => {
+    const [, folder] = PRESET_FILE_PATTERN.exec(filePath) ?? [];
+    if (!folder) {
+      return [];
     }
-    let presetFolder = folders.find((candidate) => candidate.folder === folder);
-    if (!presetFolder) {
-      presetFolder = { folder, presets: [] };
-      folders.push(presetFolder);
-    }
-    presetFolder.presets.push({ name, tokens });
-    return folders;
-  }, [])
-  .map(({ folder, presets }) => ({ folder, presets: presets.toSorted((a, b) => collator.compare(a.name, b.name)) }));
+    return [{ folder, presets: presets.toSorted((a, b) => collator.compare(a.name, b.name)) }];
+  },
+);
 
 const isAtOrUnder = (candidate: string, path: string) => candidate === path || candidate.startsWith(`${path}.`);
 
