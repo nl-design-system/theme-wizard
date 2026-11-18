@@ -143,22 +143,36 @@ export default class Theme {
     return tokens;
   }
 
-  updateAt(path: string, value: DesignToken['$value']) {
-    this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
-    const tokens = structuredClone(this.tokens);
-    Theme.#updateAt(tokens, path, value);
+  // Updates an existing token's value, or adds the token when the theme doesn't have it yet
+  static #applyToken(tokens: DesignTokens, path: string, token: Partial<DesignToken>) {
+    if (dlv(tokens, path)) {
+      Theme.#updateAt(tokens, path, token.$value);
+    } else {
+      dset(tokens, path, structuredClone(token));
+    }
+  }
+
+  // Single write path for all public update methods
+  #commit(entries: Iterable<[string, Partial<DesignToken>]>) {
+    const tokens = structuredClone(this.#tokens);
+    for (const [path, token] of entries) {
+      Theme.#applyToken(tokens, path, token);
+    }
     this.#runThemeProcessors(tokens);
     this.tokens = tokens;
   }
 
+  updateAt(path: string, value: DesignToken['$value']) {
+    this.updateMany([{ path, value }]);
+  }
+
   updateMany(values: { path: string; value: DesignToken['$value'] }[]) {
-    const tokens = structuredClone(this.#tokens);
-    this.#modified = true;
-    for (const { path, value } of values) {
-      Theme.#updateAt(tokens, path, value);
-    }
-    this.#runThemeProcessors(tokens);
-    this.tokens = tokens;
+    this.#commit(values.map(({ path, value }) => [path, { $value: value }]));
+  }
+
+  // Applies a nested token tree, e.g. from a component preset
+  applyTokens(values: Record<string, unknown>) {
+    this.#commit(Object.entries(flattenTokens(values)));
   }
 
   // Replaces all tokens with external input (upload, storage), running the processors the setter skips.

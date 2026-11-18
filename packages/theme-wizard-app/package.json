@@ -26,6 +26,7 @@
       "import": "./dist/components/*/index.js",
       "types": "./dist/components/*/index.d.ts"
     },
+    "./presets/*": "./presets/*",
     "./utils": {
       "types": "./src/utils/index.ts",
       "import": "./dist/utils/index.js"
@@ -33,6 +34,7 @@
   },
   "files": [
     "dist",
+    "presets",
     "theme.css",
     "clippy-tokens.css"
   ],
