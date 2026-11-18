@@ -56,6 +56,7 @@ export class WizardTokensPresets extends LitElement {
   @state() private presetMatches: PresetMatch[] = [];
   @state() private selectedPresets: Record<string, string> = {};
 
+  // By default the component has the `hidden` attribute unless the component is populated with presets
   override hidden = true;
 
   // Stories that opted in to presets, derived once per `components` assignment
