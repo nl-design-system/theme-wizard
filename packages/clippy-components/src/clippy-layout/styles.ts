@@ -57,6 +57,7 @@ export default css`
       'header'
       'aside'
       'body';
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto auto auto 1fr;
   }
 
