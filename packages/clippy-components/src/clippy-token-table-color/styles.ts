@@ -66,4 +66,13 @@ export default css`
       cursor: pointer;
     }
   }
+
+  /**
+   * Fix for the table overflowing the page
+   * 1. This will place the table-container on a new composite layer
+   *    so it will not interfere with the rest of the page
+   */
+  .utrecht-table-container {
+    will-change: transform; /* [1] */
+  }
 `;
