@@ -19,12 +19,13 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { describeColor } from '../../lib/ColorDescription';
-import { INVERSE_SUFFIX } from '../../lib/ColorScale';
+import { FALLBACK_COLOR, INVERSE_FALLBACK_COLOR, INVERSE_SUFFIX } from '../../lib/ColorScale';
 import { getRelevantTokens } from '../../lib/relevant-tokens';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { StagedDesignToken } from '../../utils';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { hasChangedProperty } from '../../utils/lit';
+import { getReferenceOptions } from '../wizard-token-field/reference-options';
 import styles from './styles';
 
 const tag = 'wizard-form-colorscale';
@@ -136,7 +137,17 @@ export class WizardFormColorscale extends LitElement {
   }
 
   #tokensToOptions = () => {
-    this.options = this._tokens.map((token) => {
+    const isInverse = this.path.endsWith(INVERSE_SUFFIX);
+    const referenceOptions = getReferenceOptions(this.theme.tokens);
+
+    // Find all tokens that are not in the current path and end with the fallback color
+    const references = referenceOptions.filter((option) => {
+      return (
+        !option.path.startsWith(this.path) && option.path.endsWith(isInverse ? INVERSE_FALLBACK_COLOR : FALLBACK_COLOR)
+      );
+    });
+
+    const tokenOptions = this._tokens.map((token) => {
       const color = stringifyToken(token);
 
       return {
@@ -145,6 +156,8 @@ export class WizardFormColorscale extends LitElement {
         value: token,
       };
     });
+
+    this.options = [...references, ...tokenOptions];
   };
 
   get #seedColorToken(): ColorToken | undefined {
@@ -163,8 +176,6 @@ export class WizardFormColorscale extends LitElement {
       return fallBackToken;
     }
   }
-
-  // #createTokenValue (color: ColorValue)
 
   protected override willUpdate(changed: PropertyValues) {
     if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'theme'])) {
