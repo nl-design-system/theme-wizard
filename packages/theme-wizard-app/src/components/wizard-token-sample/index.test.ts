@@ -7,8 +7,9 @@ const colorToken = (hex: string) => ({ $type: 'color', $value: { hex } });
 
 describe('getColorGroupSample', () => {
   it('prefers the colorscale seed color over any other fallback', () => {
+    const seed = { colorSpace: 'srgb', components: [1, 0, 0], hex: '#ff0000' };
     const group: TokenGroup = {
-      $extensions: { [EXTENSION_COLORSCALE_SEED]: { hex: '#ff0000' } },
+      $extensions: { [EXTENSION_COLORSCALE_SEED]: seed },
       $type: 'color',
       'bg-default': colorToken('#000000'),
       'color-default': colorToken('#ffffff'),
@@ -16,8 +17,18 @@ describe('getColorGroupSample', () => {
 
     expect(getColorGroupSample(group, 'basis.color.accent-1')).toEqual({
       $type: 'color',
-      $value: { hex: '#ff0000' },
+      $value: seed,
     });
+  });
+
+  it('ignores a seed that is not a full color value and falls back instead', () => {
+    const group: TokenGroup = {
+      $extensions: { [EXTENSION_COLORSCALE_SEED]: { hex: '#ff0000' } },
+      $type: 'color',
+      'color-default': colorToken('#ffffff'),
+    };
+
+    expect(getColorGroupSample(group, 'basis.color.accent-1')).toEqual(colorToken('#ffffff'));
   });
 
   it('falls back to bg-default when the path is an -inverse variant', () => {
@@ -40,13 +51,13 @@ describe('getColorGroupSample', () => {
     expect(getColorGroupSample(group, 'basis.color.accent-1')).toEqual(colorToken('#ffffff'));
   });
 
-  it('falls back to color-default on an -inverse path when bg-default is missing', () => {
+  it('returns undefined on an -inverse path when bg-default is missing', () => {
     const group: TokenGroup = {
       $type: 'color',
       'color-default': colorToken('#ffffff'),
     };
 
-    expect(getColorGroupSample(group, 'basis.color.accent-1-inverse')).toEqual(colorToken('#ffffff'));
+    expect(getColorGroupSample(group, 'basis.color.accent-1-inverse')).toBeUndefined();
   });
 
   it('ignores bg-default on a non-inverse path', () => {
@@ -59,24 +70,24 @@ describe('getColorGroupSample', () => {
     expect(getColorGroupSample(group, 'basis.color.accent-1')).not.toEqual(colorToken('#000000'));
   });
 
-  it('ignores a bg-default that is not a valid color token', () => {
+  it('passes bg-default through as-is on an -inverse path, even when it is not a valid color token', () => {
     const group: TokenGroup = {
       $type: 'color',
       'bg-default': { not: 'a color token' } as unknown as TokenGroup,
       'color-default': colorToken('#ffffff'),
     };
 
-    expect(getColorGroupSample(group, 'basis.color.accent-1-inverse')).toEqual(colorToken('#ffffff'));
+    expect(getColorGroupSample(group, 'basis.color.accent-1-inverse')).toEqual({ not: 'a color token' });
   });
 
-  it('falls back to the single token in the group when no other fallback matches', () => {
+  it('returns undefined when no path-based fallback matches, even if the group has a single token', () => {
     // Mirrors a real-world group like `basis.form.control.placeholder`
     const group: TokenGroup = {
       $type: 'color',
       'placeholder-color': colorToken('#808080'),
     };
 
-    expect(getColorGroupSample(group, 'basis.form.control.placeholder')).toEqual(colorToken('#808080'));
+    expect(getColorGroupSample(group, 'basis.form.control.placeholder')).toBeUndefined();
   });
 
   it('returns undefined when there is no seed, no fallback, and multiple tokens in the group', () => {
@@ -124,15 +135,16 @@ describe(`<${tag}>`, () => {
   });
 
   it('resolves the seed color for a color token group', async () => {
+    const seed = { colorSpace: 'srgb', components: [1, 0, 0], hex: '#ff0000' };
     const group = {
-      $extensions: { [EXTENSION_COLORSCALE_SEED]: { hex: '#ff0000' } },
+      $extensions: { [EXTENSION_COLORSCALE_SEED]: seed },
       $type: 'color',
     };
     const el = await mount('basis.color.accent-1', {
       at: () => group as never,
     });
 
-    expect(getSampledToken(el)).toEqual({ $type: 'color', $value: { hex: '#ff0000' } });
+    expect(getSampledToken(el)).toEqual({ $type: 'color', $value: seed });
   });
 
   it('resolves the inverse fallback for a color token group on an -inverse path', async () => {
