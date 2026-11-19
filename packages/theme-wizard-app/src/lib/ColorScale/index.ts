@@ -5,6 +5,8 @@ import {
   type ProfileName,
 } from '@nl-design-system-community/color-scale-generator';
 export const INVERSE_SUFFIX = '-inverse';
+export const FALLBACK_COLOR = 'color-default';
+export const INVERSE_FALLBACK_COLOR = 'bg-default';
 
 export interface ColorScaleParams {
   /** e.g. `basis.color.accent-1` */

@@ -13,7 +13,7 @@ import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
-import { INVERSE_SUFFIX } from '../../lib/ColorScale';
+import { FALLBACK_COLOR, INVERSE_FALLBACK_COLOR, INVERSE_SUFFIX } from '../../lib/ColorScale';
 
 const tag = 'wizard-token-sample';
 
@@ -22,9 +22,6 @@ declare global {
     [tag]: WizardTokenSample;
   }
 }
-
-const FALLBACK_COLOR = 'color-default';
-const INVERSE_FALLBACK_COLOR = 'bg-default';
 
 // Picks a representative color token for a color token group: seed color, path-based fallback, or sole member
 export function getColorGroupSample(value: TokenGroup, path: string) {
