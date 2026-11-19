@@ -68,6 +68,25 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('can apply tokens, including tokens it does not have yet', () => {
+    const theme = new Theme();
+    const newHoverValue = '{basis.color.accent-1.bg-active}';
+    expect(dlv(theme.tokens, 'ams.page-header.background-color.$value')).toBeUndefined();
+    expect(dlv(theme.tokens, 'basis.color.accent-1.color-hover.$value')).not.toBe(newHoverValue);
+    expect(theme.modified).toBe(false);
+
+    // Do the update
+    theme.applyTokens({
+      ams: { 'page-header': { 'background-color': { $type: 'color', $value: '{basis.color.accent-1.bg-document}' } } },
+      basis: {
+        color: { 'accent-1': { 'color-hover': { $type: 'color', $value: newHoverValue } } },
+      },
+    });
+    expect(dlv(theme.tokens, 'ams.page-header.background-color.$value')).toBe('{basis.color.accent-1.bg-document}');
+    expect(dlv(theme.tokens, 'basis.color.accent-1.color-hover.$value')).toBe(newHoverValue);
+    expect(theme.modified).toBe(true);
+  });
+
   it('has a different CSS output after token update', async () => {
     const theme = new Theme();
     const initialCSS = normalizeCss(await theme.toCSS());

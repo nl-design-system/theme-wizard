@@ -15,6 +15,7 @@ const meta: Meta<typeof LinkComponent> = {
         component: description,
       },
     },
+    presets: 'nl.link',
     tokens,
   },
   title: 'Link',
@@ -79,6 +80,7 @@ export const DesignLinkStates: Story = {
         },
       },
     },
+    presetStory: true,
   },
   render: RenderLinkStates,
 };
