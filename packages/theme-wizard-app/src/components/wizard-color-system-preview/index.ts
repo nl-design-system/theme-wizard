@@ -12,6 +12,7 @@ import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
 import { hasChangedProperty } from '../../utils/lit';
 import { getTokenCollectionByTokenPaths } from '../wizard-style-guide/utils';
+import styles from './styles';
 
 const tag = 'wizard-color-system-preview';
 
@@ -23,6 +24,8 @@ declare global {
 
 @safeCustomElement(tag)
 export class WizardColorSystemPreview extends LitElement {
+  static override readonly styles = [styles];
+
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
