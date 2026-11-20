@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-declarations-per-rule, projectwallace/max-declarations-per-rule */
   :host(:not([hidden])) {
     display: block;
   }

@@ -27,7 +27,9 @@ export default css`
   wizard-scraper-loader {
     grid-area: 1 / 1;
     opacity: 0%;
-    transition: opacity 500ms ease-in-out;
+    transition-duration: 500ms;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;

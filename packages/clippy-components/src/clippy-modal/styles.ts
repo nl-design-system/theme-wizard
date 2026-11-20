@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export const amsModalDialogOverideStyles = css`
+  /* stylelint-disable projectwallace/max-average-declarations-per-rule */
   :host {
     --ams-modal-dialog-vi-medium-max-block-size: var(--ams-modal-dialog-max-block-size);
     --ams-modal-dialog-header-vi-medium-padding-block: var(--basis-space-block-3xl);

@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-declarations-per-rule */
   .wizard-token-sample {
     --wizard-basis-token-sample-size: var(--basis-size-sm);
     --clippy-token-sample-border-size: var(--wizard-basis-token-sample-size);

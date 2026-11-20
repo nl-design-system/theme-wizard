@@ -15,6 +15,7 @@ export default css`
     --nl-heading-level-2-font-family: var(--nl-heading-level-4-font-family);
     --nl-heading-level-2-color: var(--nl-heading-level-4-color);
 
+    /* stylelint-disable-next-line projectwallace/no-unused-container-names */
     container-name: table-of-contents;
     container-type: inline-size;
   }

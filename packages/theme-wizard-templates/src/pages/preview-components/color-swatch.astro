@@ -32,7 +32,9 @@ const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
 
   .clippy-template-color-swatch-grid__swatches > template-color-swatch {
     /* 14 columns for 14 color swatches */
-    flex: 0 0 calc(100% / 14);
+    flex-basis: calc(100% / 14);
+    flex-grow: 0;
+    flex-shrink: 0;
   }
 
   @media print {

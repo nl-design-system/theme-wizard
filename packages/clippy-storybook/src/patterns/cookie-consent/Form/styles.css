@@ -1,3 +1,5 @@
+/* stylelint-disable projectwallace/max-declarations-per-rule */
+
 .clippy-cookie-consent {
   /* Clippy variables linked to basis tokens */
   --clippy-color-accent-1-bg-subtle: var(--basis-color-accent-1-bg-subtle);
