@@ -1,5 +1,23 @@
 # @nl-design-system-community/clippy-components
 
+## 3.10.0
+
+### Minor Changes
+
+- 6d8ea10: `clippy-layout` now prevents horizontal overflowing
+  `clippy-token-table-color` renders on it's own composite layer, preventing overflowing the page
+- c0b82fe: fix: Update `clippy-html-image` component with
+    - Choice between interactive and inert examples
+    - Allow forced colors mode in examples, but allow exceptions
+
+### Patch Changes
+
+- 99fb095: `clippy-combobox` now has a styled label
+  `color-scale-generator` now also has an action profile, and exports the profiles
+  Add a `wizard-form-colorscale` to `theme-wizard-app`.
+- Updated dependencies [243fe80]
+  - @nl-design-system-community/design-tokens-schema@2.8.0
+
 ## 3.9.0
 
 ### Minor Changes

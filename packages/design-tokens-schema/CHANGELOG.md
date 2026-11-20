@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.8.0
+
+### Minor Changes
+
+- 243fe80: feat: add `stringfyBoxShadow()` and `stringifyDuration()`
+
 ## 2.7.0
 
 ### Minor Changes
