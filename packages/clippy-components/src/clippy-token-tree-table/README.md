@@ -31,18 +31,12 @@ When `theme` is not passed, or is `null` or `undefined`, the element renders not
 
 ## Attributes & properties
 
-| Attribute / Property | Type                 | Description                                                  | Default     |
-| -------------------- | -------------------- | ------------------------------------------------------------ | ----------- |
-| `theme`              | `TokenGroup \| null` | The full token tree. Renders nothing when not set.           | `undefined` |
-| `path`               | `string`             | Dot-separated path to the group to render; also the caption. | `''`        |
-| `example-label`      | `string`             | Label for the example header                                 | `'Example'` |
-| `name-label`         | `string`             | Label for the name header                                    | `'Name'`    |
-| `value-label`        | `string`             | Label for the value header                                   | `'Value'`   |
-| `actions-label`      | `string`             | Label for the actions header                                 | `'Actions'` |
-| `copy-label`         | `string`             | Label for the copy to clipboard button                       | `'Copy'`    |
-
-## CSS Custom Properties
-
-| Property                            | Type     | Description                       |
-| ----------------------------------- | -------- | --------------------------------- |
-| `--clippy-token-sample-border-size` | `string` | Border size of the token samples. |
+| Attribute / Property | Type                 | Description                                                    | Default     |
+| -------------------- | -------------------- | -------------------------------------------------------------- | ----------- |
+| `theme`              | `TokenGroup \| null` | The full token tree. Renders nothing when not set.             | `undefined` |
+| `path`               | `string`             | Dot-separated path to the group to render; also the caption.   | `''`        |
+| `example-label`      | `string`             | Label for the example header                                   | `'Example'` |
+| `name-label`         | `string`             | Label for the name header                                      | `'Name'`    |
+| `value-label`        | `string`             | Label for the value header                                     | `'Value'`   |
+| `actions-label`      | `string`             | Label for the actions header                                   | `'Actions'` |
+| `copy-label`         | `string`             | Label for the copy button; toggletip shows `<label> "<value>"` | `'Copy'`    |

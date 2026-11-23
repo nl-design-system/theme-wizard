@@ -7,7 +7,6 @@ import {
   isRef,
   isTokenGroup,
   isTokenLike,
-  stringifyToken,
   type TokenGroup,
 } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
@@ -32,8 +31,6 @@ declare global {
  * Clippy Token Tree Table Component
  *
  * Renders the token group at `path` of a full token tree as a table, including nested groups.
- *
- * @cssprop --clippy-token-sample-border-size - Border size of the token samples
  */
 @safeCustomElement(tag)
 export class ClippyTokenTreeTable extends LitElement {
@@ -58,7 +55,7 @@ export class ClippyTokenTreeTable extends LitElement {
   }
 
   readonly #renderTokenRow = (name: string, token: BaseDesignToken): TemplateResult => {
-    const tokenString = stringifyToken(token);
+    const tokenString = stringifyTokenValue(token);
     return html`
       <tr class="clippy-token-tree-table__row">
         <td class="clippy-token-tree-table__cell">
@@ -67,11 +64,9 @@ export class ClippyTokenTreeTable extends LitElement {
           </div>
         </td>
         <td class="clippy-token-tree-table__cell">${name}</td>
+        <td class="clippy-token-tree-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
         <td class="clippy-token-tree-table__cell">
-          ${isRef(token.$value) ? token.$value : stringifyTokenValue(token)}
-        </td>
-        <td class="clippy-token-tree-table__cell">
-          <clippy-toggletip text=${this.copyLabel}>
+          <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
             <clippy-button
               icon-only
               purpose="subtle"

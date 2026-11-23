@@ -108,6 +108,18 @@ describe(`<${tag}>`, () => {
       const button = component.shadowRoot?.querySelector('clippy-button');
       expect(button?.textContent).toContain('Kopieer');
     });
+
+    it('renders the copy-label and quoted value in the toggletip', async () => {
+      const component = await render();
+      const toggletip = component.shadowRoot?.querySelector('clippy-toggletip');
+      expect(toggletip?.getAttribute('text')).toBe(`Copy "${stringifyTokenValue(firstToken)}"`);
+    });
+
+    it('renders a custom copy-label in the toggletip', async () => {
+      const component = await render('path="basis.color" copy-label="Kopieer"');
+      const toggletip = component.shadowRoot?.querySelector('clippy-toggletip');
+      expect(toggletip?.getAttribute('text')).toBe(`Kopieer "${stringifyTokenValue(firstToken)}"`);
+    });
   });
 
   describe('empty states', () => {
@@ -168,11 +180,22 @@ describe(`<${tag}>`, () => {
     }
   });
 
-  it('copies the token to the clipboard', async () => {
+  it('copies the token value to the clipboard', async () => {
     const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     const component = await render();
     const button = component.shadowRoot?.querySelector<HTMLElement>('clippy-button');
     button?.click();
-    expect(writeText).toHaveBeenCalledWith(stringifyToken(firstToken));
+    expect(writeText).toHaveBeenCalledWith(stringifyTokenValue(firstToken));
+  });
+
+  it('copies the resolved value instead of the reference for ref tokens', async () => {
+    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    const component = await render('path="basis.color.accent-1"', themeFixture);
+    const button = component.shadowRoot?.querySelector<HTMLElement>('clippy-button');
+    button?.click();
+    const refToken: BaseDesignToken = dlv(themeFixture, 'basis.color.accent-1.bg-default');
+    const resolvedToken: BaseDesignToken = dlv(themeFixture, 'brand.color.blue.100');
+    expect(writeText).toHaveBeenCalledWith(stringifyToken(resolvedToken));
+    expect(writeText).not.toHaveBeenCalledWith(refToken.$value);
   });
 });
