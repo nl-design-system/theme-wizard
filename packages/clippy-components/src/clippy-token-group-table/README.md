@@ -1,13 +1,13 @@
-# `<clippy-token-tree-table>`
+# `<clippy-token-group-table>`
 
 Renders the token group at `path` of a full token tree as a table. Nested groups are rendered as group header rows followed by their tokens.
 
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-token-tree-table';
+import '@nl-design-system-community/clippy-components/clippy-token-group-table';
 
-const table = document.querySelector('clippy-token-tree-table');
+const table = document.querySelector('clippy-token-group-table');
 
 table.theme = {
   basis: {
@@ -22,7 +22,7 @@ table.theme = {
 ```
 
 ```html
-<clippy-token-tree-table path="basis.color"></clippy-token-tree-table>
+<clippy-token-group-table path="basis.color"></clippy-token-group-table>
 ```
 
 `theme` can also be set as an HTML attribute containing a JSON string.

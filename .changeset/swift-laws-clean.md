@@ -6,10 +6,10 @@
 
 ## clippy-components
 
-- add `clippy-token-tree-table`
+- add `clippy-token-group-table`
 
 ## theme-wizard-app
-- add wizard-token-tree-table as a light wrapper around `clippy-token-tree-table`
+- add wizard-token-group-table as a light wrapper around `clippy-token-group-table`
 
 ## design-tokens-schema
 - fix stringification of tokens with reference value

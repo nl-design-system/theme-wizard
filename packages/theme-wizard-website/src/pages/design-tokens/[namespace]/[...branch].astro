@@ -47,9 +47,9 @@ const namespace = getTokenNamespace(Astro.props.namespace);
           <clippy-heading level="3" id="alle-tokens">
             Alle tokens
           </clippy-heading>
-          <wizard-token-tree-table
+          <wizard-token-group-table
             path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}
-          ></wizard-token-tree-table>
+          ></wizard-token-group-table>
         </clippy-stack>
       )}
     </clippy-stack>

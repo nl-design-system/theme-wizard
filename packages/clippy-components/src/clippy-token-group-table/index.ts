@@ -19,21 +19,21 @@ import { map } from 'lit/directives/map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import styles from './styles';
 
-const tag = 'clippy-token-tree-table';
+const tag = 'clippy-token-group-table';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyTokenTreeTable;
+    [tag]: ClippyTokenGroupTable;
   }
 }
 
 /**
- * Clippy Token Tree Table Component
+ * Clippy Token Group Table Component
  *
  * Renders the token group at `path` of a full token tree as a table, including nested groups.
  */
 @safeCustomElement(tag)
-export class ClippyTokenTreeTable extends LitElement {
+export class ClippyTokenGroupTable extends LitElement {
   static override readonly styles = [styles];
 
   /** Renders nothing while `null` or `undefined` */
@@ -57,15 +57,15 @@ export class ClippyTokenTreeTable extends LitElement {
   readonly #renderTokenRow = (name: string, token: BaseDesignToken): TemplateResult => {
     const tokenString = stringifyTokenValue(token);
     return html`
-      <tr class="clippy-token-tree-table__row">
-        <td class="clippy-token-tree-table__cell">
-          <div class="clippy-token-tree-table__token-sample">
+      <tr class="clippy-token-group-table__row">
+        <td class="clippy-token-group-table__cell">
+          <div class="clippy-token-group-table__token-sample">
             <clippy-token-sample .token=${token}>Aa</clippy-token-sample>
           </div>
         </td>
-        <td class="clippy-token-tree-table__cell">${name}</td>
-        <td class="clippy-token-tree-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
-        <td class="clippy-token-tree-table__cell">
+        <td class="clippy-token-group-table__cell">${name}</td>
+        <td class="clippy-token-group-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
+        <td class="clippy-token-group-table__cell">
           <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
             <clippy-button
               icon-only
@@ -92,8 +92,8 @@ export class ClippyTokenTreeTable extends LitElement {
         if (isTokenGroup(item)) {
           const nestedProperty = name.concat(property);
           return html`
-            <tr class="clippy-token-tree-table__group-row">
-              <td class="clippy-token-tree-table__cell clippy-token-tree-table__group-cell" colspan="4">
+            <tr class="clippy-token-group-table__group-row">
+              <td class="clippy-token-group-table__cell clippy-token-group-table__group-cell" colspan="4">
                 ${nestedProperty.join('.')}
               </td>
             </tr>
@@ -112,26 +112,26 @@ export class ClippyTokenTreeTable extends LitElement {
     const group = this.#getGroupAtPath(this.theme);
     const rootPath = this.path ? [this.path] : [];
     return html`
-      <table class="clippy-token-tree-table__table">
+      <table class="clippy-token-group-table__table">
         ${
           this.path
-            ? html`<caption class="clippy-token-tree-table__caption">
+            ? html`<caption class="clippy-token-group-table__caption">
                 ${this.path}
               </caption>`
             : nothing
         }
-        <thead class="clippy-token-tree-table__head">
+        <thead class="clippy-token-group-table__head">
           <tr>
-            <th class="clippy-token-tree-table__cell clippy-token-tree-table__header-cell" scope="col">
+            <th class="clippy-token-group-table__cell clippy-token-group-table__header-cell" scope="col">
               ${this.exampleLabel}
             </th>
-            <th class="clippy-token-tree-table__cell clippy-token-tree-table__header-cell" scope="col">
+            <th class="clippy-token-group-table__cell clippy-token-group-table__header-cell" scope="col">
               ${this.nameLabel}
             </th>
-            <th class="clippy-token-tree-table__cell clippy-token-tree-table__header-cell" scope="col">
+            <th class="clippy-token-group-table__cell clippy-token-group-table__header-cell" scope="col">
               ${this.valueLabel}
             </th>
-            <th class="clippy-token-tree-table__cell clippy-token-tree-table__header-cell" scope="col">
+            <th class="clippy-token-group-table__cell clippy-token-group-table__header-cell" scope="col">
               ${this.actionsLabel}
             </th>
           </tr>

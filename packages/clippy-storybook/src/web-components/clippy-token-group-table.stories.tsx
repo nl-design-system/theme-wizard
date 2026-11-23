@@ -1,17 +1,17 @@
 import type { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
-import '@nl-design-system-community/clippy-components/clippy-token-tree-table';
+import '@nl-design-system-community/clippy-components/clippy-token-group-table';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { themeFixture } from '@nl-design-system-community/clippy-components/src/clippy-token-tree-table/fixtures.js';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-token-tree-table/README.md?raw';
+import { themeFixture } from '@nl-design-system-community/clippy-components/src/clippy-token-group-table/fixtures.js';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-token-group-table/README.md?raw';
 import React from 'react';
 
-type TokenTreeTableStoryArgs = {
+type TokenGroupTableStoryArgs = {
   path: string;
   theme: TokenGroup;
 };
 
 const meta = {
-  id: 'clippy-token-tree-table',
+  id: 'clippy-token-group-table',
   args: {
     path: 'basis.text.font-size',
     theme: themeFixture,
@@ -33,10 +33,10 @@ const meta = {
       },
     },
   },
-  render: (args: TokenTreeTableStoryArgs) => React.createElement('clippy-token-tree-table', args),
+  render: (args: TokenGroupTableStoryArgs) => React.createElement('clippy-token-group-table', args),
   tags: ['autodocs'],
-  title: 'Clippy/Design Tokens/Token Tree Table',
-} satisfies Meta<TokenTreeTableStoryArgs>;
+  title: 'Clippy/Design Tokens/Token Group Table',
+} satisfies Meta<TokenGroupTableStoryArgs>;
 
 export default meta;
 

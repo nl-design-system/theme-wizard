@@ -8,9 +8,9 @@ import dlv from 'dlv';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { themeFixture } from './fixtures';
 import './index';
-import { ClippyTokenTreeTable } from './index';
+import { ClippyTokenGroupTable } from './index';
 
-const tag = 'clippy-token-tree-table';
+const tag = 'clippy-token-group-table';
 
 const theme: TokenGroup = {
   basis: {
@@ -32,7 +32,7 @@ const labels: Array<[string, string]> = [
 
 const render = async (attributes = 'path="basis.color"', tokens: TokenGroup | null | undefined = theme) => {
   document.body.innerHTML = `<${tag} ${attributes}></${tag}>`;
-  const component = document.querySelector(tag) as ClippyTokenTreeTable;
+  const component = document.querySelector(tag) as ClippyTokenGroupTable;
   component.theme = tokens;
   await component.updateComplete;
   return component;
@@ -40,7 +40,7 @@ const render = async (attributes = 'path="basis.color"', tokens: TokenGroup | nu
 
 const firstToken: BaseDesignToken = dlv(theme, 'basis.color.accent-1.bg-default');
 
-const getRows = (component: ClippyTokenTreeTable) =>
+const getRows = (component: ClippyTokenGroupTable) =>
   Array.from(component.shadowRoot?.querySelectorAll<HTMLTableRowElement>('tbody tr') ?? []);
 
 describe(`<${tag}>`, () => {
@@ -49,7 +49,7 @@ describe(`<${tag}>`, () => {
   });
 
   describe('rendering', () => {
-    let component: ClippyTokenTreeTable;
+    let component: ClippyTokenGroupTable;
 
     beforeEach(async () => {
       component = await render();
@@ -64,24 +64,24 @@ describe(`<${tag}>`, () => {
     });
 
     it('renders a group row with the joined path for nested groups', () => {
-      const groupRow = component.shadowRoot?.querySelector('.clippy-token-tree-table__group-row');
+      const groupRow = component.shadowRoot?.querySelector('.clippy-token-group-table__group-row');
       expect(groupRow?.textContent?.trim()).toBe('basis.color.accent-1');
     });
 
     it('renders a row for every token in the group', () => {
-      const tokenRows = getRows(component).filter((row) => row.classList.contains('clippy-token-tree-table__row'));
+      const tokenRows = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
       expect(tokenRows).toHaveLength(2);
       expect(tokenRows[0].cells[1].textContent?.trim()).toBe('bg-default');
       expect(tokenRows[1].cells[1].textContent?.trim()).toBe('bg-subtle');
     });
 
     it('shows the reference for aliased tokens', () => {
-      const [, aliasRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-tree-table__row'));
+      const [, aliasRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
       expect(aliasRow.cells[2].textContent?.trim()).toBe('{basis.color.accent-1.bg-default}');
     });
 
     it('shows the value for non-aliased tokens', () => {
-      const [valueRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-tree-table__row'));
+      const [valueRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
       expect(valueRow.cells[2].textContent?.trim()).toBe(stringifyTokenValue(firstToken));
     });
   });
@@ -125,7 +125,7 @@ describe(`<${tag}>`, () => {
   describe('empty states', () => {
     it('renders nothing when theme is not passed', async () => {
       document.body.innerHTML = `<${tag} path="basis.color"></${tag}>`;
-      const component = document.querySelector(tag) as ClippyTokenTreeTable;
+      const component = document.querySelector(tag) as ClippyTokenGroupTable;
       await component.updateComplete;
       expect(component.shadowRoot?.querySelector('table')).toBeNull();
     });
@@ -153,7 +153,7 @@ describe(`<${tag}>`, () => {
 
     it('renders nothing when the theme attribute is "null"', async () => {
       document.body.innerHTML = `<${tag} path="basis.color" theme="null"></${tag}>`;
-      const component = document.querySelector(tag) as ClippyTokenTreeTable;
+      const component = document.querySelector(tag) as ClippyTokenGroupTable;
       await component.updateComplete;
       expect(component.shadowRoot?.querySelector('table')).toBeNull();
     });
