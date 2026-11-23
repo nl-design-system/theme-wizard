@@ -19,15 +19,15 @@ const namespace = getTokenNamespace(Astro.props.namespace);
         <clippy-heading level="2">Component</clippy-heading>
       </clippy-stack>
 
-      <wizard-tokens-table path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}></wizard-tokens-table>
-
       <PresetMatches label={pageData.label} paths={[`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`]} />
     </clippy-stack>
   ) : null}
 
   {pageData.items ? (
     <clippy-stack size="2xl">
-      <clippy-heading level="2">Tokens</clippy-heading>
+      <clippy-heading level="2" id="tokens">
+        Tokens
+      </clippy-heading>
       <wizard-unstyled-list>
         {pageData.items
           .filter((item) => item.metaData?.tokenPath)
@@ -42,6 +42,16 @@ const namespace = getTokenNamespace(Astro.props.namespace);
             </li>
           ))}
       </wizard-unstyled-list>
+      {namespace.id !== 'basis' && (
+        <clippy-stack size="xl">
+          <clippy-heading level="3" id="alle-tokens">
+            Alle tokens
+          </clippy-heading>
+          <wizard-token-tree-table
+            path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}
+          ></wizard-token-tree-table>
+        </clippy-stack>
+      )}
     </clippy-stack>
   ) : null}
 </DesignTokensLayout>
