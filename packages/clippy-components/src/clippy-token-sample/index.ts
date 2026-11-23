@@ -55,6 +55,14 @@ export class ClippyTokenSample extends LitElement {
             >
               <slot>${FALLBACK_TEXT}</slot>
             </clippy-token-sample-text>`;
+          case 'line-height':
+            return html`<clippy-token-sample-text
+              data-testid=${testId}
+              line-height=${stringifyTokenValue(this.token)}
+              truncate
+            >
+              <slot>${FALLBACK_TEXT}</slot>
+            </clippy-token-sample-text>`;
           case 'space-block':
           case 'space-inline':
           case 'space-text':

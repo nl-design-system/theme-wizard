@@ -19,6 +19,8 @@ const namespace = getTokenNamespace(Astro.props.namespace);
         <clippy-heading level="2">Component</clippy-heading>
       </clippy-stack>
 
+      <wizard-tokens-table path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}></wizard-tokens-table>
+
       <PresetMatches label={pageData.label} paths={[`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`]} />
     </clippy-stack>
   ) : null}
