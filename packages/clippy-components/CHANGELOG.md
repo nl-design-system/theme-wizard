@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-components
 
+## 3.10.1
+
+### Patch Changes
+
+- 49e1cd9: clippy-split-button: wrap a long start label onto multiple lines, with the end button stretched to the same height
+
 ## 3.10.0
 
 ### Minor Changes
