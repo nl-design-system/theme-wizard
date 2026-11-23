@@ -2,7 +2,7 @@
 
 Joins a button at the start and a button at the end, which opens a menu or is a second action, into one control. The corners where the two buttons meet are squared, and their borders form a single line: the divider of a `purpose="primary"` start button, otherwise the border of the end button.
 
-The slotted buttons are expected to render an `nl-button` (such as `<clippy-button>`), which reads its corners from `--nl-button-border-radius`. The split button overrides that per button with the theme's own value, also in right-to-left layouts.
+The slotted buttons are expected to render an `nl-button` (such as `<clippy-button>`), which reads its corners from `--nl-button-border-radius`. The split button overrides that per button with the theme's own value, also in right-to-left layouts. A start label too long for one line wraps, and the end button grows with it to the same height.
 
 The menu is anchored to the buttons with [CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning): it opens below them, aligned to the start, and is at least as wide as them. When there is no room, it flips to the other side. Make the menu a `popover` and open it from the end button with `showPopover()`: the browser closes it on Escape or a click outside, and keeping `expanded` on the end button in sync is up to the application.
 
