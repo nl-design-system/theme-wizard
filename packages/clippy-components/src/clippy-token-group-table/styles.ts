@@ -3,8 +3,20 @@ import { css } from 'lit';
 export default css`
   :host(:not([hidden])) {
     --clippy-token-sample-border-size: var(--basis-size-sm);
+    --_clippy-token-group-table-font-family: var(
+      --clippy-token-group-table-font-family,
+      var(--basis-text-font-family-default)
+    );
+    --_clippy-token-group-table-font-size: var(--clippy-token-group-table-font-size, var(--basis-text-font-size-md));
+    --_clippy-token-group-table-line-height: var(
+      --clippy-token-group-table-line-height,
+      var(--basis-text-line-height-md)
+    );
 
     display: contents;
+    font-family: var(--_clippy-token-group-table-font-family);
+    font-size: var(--_clippy-token-group-table-font-size);
+    line-height: var(--_clippy-token-group-table-line-height);
   }
 
   .clippy-token-group-table__table {
