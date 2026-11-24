@@ -4,8 +4,7 @@ import '../clippy-toggletip';
 import '../clippy-token-sample';
 import {
   type BaseDesignToken,
-  extractRef,
-  isRef,
+  getRefChain,
   isTokenGroup,
   isTokenLike,
   stringifyToken,
@@ -59,48 +58,33 @@ export class ClippyTokenGroupTable extends LitElement {
     return isTokenGroup(group) ? group : Object.create(null);
   }
 
-  #getTokenBreadCrumb(path: string, theme: TokenGroup): string[] {
-    const items: string[] = [];
-    let value: unknown = dlv(theme, path)?.$value;
-
-    while (isRef(value)) {
-      const referencedPath = extractRef(value);
-      // Guard against circular references
-      if (items.includes(value)) {
-        break;
-      }
-      items.push(value);
-      value = dlv(theme, referencedPath)?.$value;
-    }
-
-    return items;
-  }
-
-  #renderTokenValue(token: BaseDesignToken, tokenPath: string): string {
+  #renderTokenValue(token: BaseDesignToken): string {
     if (this.valueDisplay === 'as-authored') {
       return stringifyToken(token);
     }
 
-    // Show the first `basis` token in the chain, or fall back to plain stringified token
-    if (this.valueDisplay === 'common') {
-      const breadcrumb = this.#getTokenBreadCrumb(tokenPath, this.theme ?? {});
-      const basisToken = breadcrumb.find((token) => token.startsWith('{basis.'));
-      return basisToken ?? stringifyToken(token);
-    }
+    if (this.theme) {
+      // Show the first `basis` token in the chain, or fall back to plain stringified token
+      if (this.valueDisplay === 'common') {
+        const breadcrumb = getRefChain(this.theme, token.$value);
+        const basisToken = breadcrumb.find((token) => token.startsWith('{basis.'));
+        return basisToken ?? stringifyToken(token);
+      }
 
-    // Show the first `brand` token in the chain, or fall back to plain stringified token
-    if (this.valueDisplay === 'brand') {
-      const breadcrumb = this.#getTokenBreadCrumb(tokenPath, this.theme ?? {});
-      const firstBrandToken = breadcrumb.find((token) => token.startsWith('{brand.'));
-      return firstBrandToken ?? stringifyToken(token);
+      // Show the first `brand` token in the chain, or fall back to plain stringified token
+      if (this.valueDisplay === 'brand') {
+        const breadcrumb = getRefChain(this.theme, token.$value);
+        const firstBrandToken = breadcrumb.find((token) => token.startsWith('{brand.'));
+        return firstBrandToken ?? stringifyToken(token);
+      }
     }
 
     // Display resolved value
     return stringifyTokenValue(token);
   }
 
-  readonly #renderTokenRow = (name: string, token: BaseDesignToken, tokenPath: string): TemplateResult => {
-    const displayValue = this.#renderTokenValue(token, tokenPath);
+  readonly #renderTokenRow = (name: string, token: BaseDesignToken): TemplateResult => {
+    const displayValue = this.#renderTokenValue(token);
     const resolvedValue = this.valueDisplay === 'resolved' ? displayValue : stringifyTokenValue(token);
     return html`
       <tr class="clippy-token-group-table__row">
@@ -133,7 +117,7 @@ export class ClippyTokenGroupTable extends LitElement {
     return html`
       ${map(Object.entries(group), ([property, item]) => {
         if (isTokenLike(item)) {
-          return this.#renderTokenRow(property, item, name.concat(property).join('.'));
+          return this.#renderTokenRow(property, item);
         }
         if (isTokenGroup(item)) {
           const nestedProperty = name.concat(property);

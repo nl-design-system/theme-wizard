@@ -1,5 +1,12 @@
 import { it, describe, expect, vi } from 'vitest';
-import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM, resolveRef, resolveRefs, validateRefs } from './resolve-refs';
+import {
+  EXTENSION_RESOLVED_AS,
+  EXTENSION_RESOLVED_FROM,
+  getRefChain,
+  resolveRef,
+  resolveRefs,
+  validateRefs,
+} from './resolve-refs';
 
 describe('constants', () => {
   it('EXTENSION_RESOLVED_FROM', () => {
@@ -82,6 +89,77 @@ describe('resolveRef', () => {
       },
     };
     expect(resolveRef(root, '{color.a}')).toBeUndefined();
+  });
+});
+
+describe('getRefChain', () => {
+  it.each([['#fff'], [{ unit: 'px', value: 1 }], [undefined]])(
+    'returns an empty chain for non-ref value %o',
+    (value) => {
+      expect(getRefChain({}, value)).toEqual([]);
+    },
+  );
+
+  it('returns a single ref that points to a hard value', () => {
+    const root = { color: { a: { $type: 'color', $value: '#fff' } } };
+    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}']);
+  });
+
+  it('keeps the order of a multi-level chain', () => {
+    const root = {
+      basis: { y: { $type: 'color', $value: '{brand.z}' } },
+      brand: { z: { $type: 'color', $value: '#fff' } },
+      nl: { x: { $type: 'color', $value: '{basis.y}' } },
+    };
+    expect(getRefChain(root, '{nl.x}')).toEqual(['{nl.x}', '{basis.y}', '{brand.z}']);
+  });
+
+  it('ends with the unresolvable ref when the target is missing', () => {
+    const root = { color: { a: { $type: 'color', $value: '{color.missing}' } } };
+    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.missing}']);
+  });
+
+  it('falls back to brand. prefix and keeps following', () => {
+    const root = {
+      brand: {
+        color: {
+          blue: { $type: 'color', $value: '{brand.color.navy}' },
+          navy: { $type: 'color', $value: '#000080' },
+        },
+      },
+    };
+    expect(getRefChain(root, '{color.blue}')).toEqual(['{color.blue}', '{brand.color.navy}']);
+  });
+
+  it('ends the chain when the target is a group instead of a token', () => {
+    const root = { color: { group: { a: { $type: 'color', $value: '#fff' } } } };
+    expect(getRefChain(root, '{color.group}')).toEqual(['{color.group}']);
+  });
+
+  it('stops on direct self-reference', () => {
+    const root = { color: { a: { $type: 'color', $value: '{color.a}' } } };
+    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}']);
+  });
+
+  it('stops on two-token cycle (a → b → a)', () => {
+    const root = {
+      color: {
+        a: { $type: 'color', $value: '{color.b}' },
+        b: { $type: 'color', $value: '{color.a}' },
+      },
+    };
+    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.b}']);
+  });
+
+  it('stops on longer cycle (a → b → c → a)', () => {
+    const root = {
+      color: {
+        a: { $type: 'color', $value: '{color.b}' },
+        b: { $type: 'color', $value: '{color.c}' },
+        c: { $type: 'color', $value: '{color.a}' },
+      },
+    };
+    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.b}', '{color.c}']);
   });
 });
 

@@ -29,30 +29,33 @@ export type ResolvedToken = BaseDesignToken & {
   };
 };
 
-export const resolveRef = (
-  root: object,
-  path: TokenReference,
-  visited = new Set<string>(),
-): BaseDesignToken | undefined => {
-  const refPath = extractRef(path);
-
-  // Keep track of visited paths to prevent infinite loops on circular references
-  if (visited.has(refPath)) return undefined;
-  visited.add(refPath);
-
-  // Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
+// Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
+const findReferencedToken = (root: object, ref: TokenReference): BaseDesignToken | undefined => {
+  const refPath = extractRef(ref);
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+  return isTokenLike(resolved) ? resolved : undefined;
+};
 
-  if (isTokenLike(resolved)) {
-    const tokenValue = resolved.$value;
-    // If the resolved value is a token object with a $value that is itself a reference, recursively resolve it
-    if (typeof tokenValue === 'string' && isRef(tokenValue)) {
-      return resolveRef(root, tokenValue, visited);
-    }
-    return resolved;
+/** Every reference followed from `value` until a non-ref value, a missing token or a cycle */
+export const getRefChain = (root: object, value: unknown): TokenReference[] => {
+  const chain: TokenReference[] = [];
+  let current = value;
+
+  while (isRef(current) && !chain.includes(current)) {
+    chain.push(current);
+    current = findReferencedToken(root, current)?.$value;
   }
 
-  return undefined;
+  return chain;
+};
+
+/** The token at the end of the ref chain, or `undefined` for a missing token or a cycle */
+export const resolveRef = (root: object, path: TokenReference): BaseDesignToken | undefined => {
+  const lastRef = getRefChain(root, path).at(-1);
+  const resolved = lastRef ? findReferencedToken(root, lastRef) : undefined;
+
+  // A ref value on the last token means the chain stopped at a cycle
+  return resolved && !isRef(resolved.$value) ? resolved : undefined;
 };
 
 /**

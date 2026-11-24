@@ -282,23 +282,6 @@ describe(`<${tag}>`, () => {
       expect(getValueCell(component, 'one')).toBe('{a.two}');
     });
 
-    it('keeps the breadcrumb collected before a circular reference', async () => {
-      const circular = {
-        basis: {
-          one: { $type: 'color', $value: '{brand.one}' },
-        },
-        brand: {
-          one: { $type: 'color', $value: '{basis.one}' },
-        },
-        nl: {
-          button: { color: { $type: 'color', $value: '{basis.one}' } },
-        },
-      } as unknown as TokenGroup;
-      const component = await render('path="nl.button" value-display="brand"', circular);
-      // Breadcrumb is [{basis.one}, {brand.one}] before the loop back to {basis.one}
-      expect(getValueCell(component, 'color')).toBe('{brand.one}');
-    });
-
     it('updates when the value-display attribute changes', async () => {
       const component = await renderButton('as-authored');
       component.setAttribute('value-display', 'brand');
