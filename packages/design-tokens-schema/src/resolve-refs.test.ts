@@ -102,7 +102,7 @@ describe('getRefChain', () => {
 
   it('returns a single ref that points to a hard value', () => {
     const root = { color: { a: { $type: 'color', $value: '#fff' } } };
-    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}']);
+    expect(getRefChain(root, '{color.a}')).toEqual(['color.a']);
   });
 
   it('keeps the order of a multi-level chain', () => {
@@ -111,12 +111,12 @@ describe('getRefChain', () => {
       brand: { z: { $type: 'color', $value: '#fff' } },
       nl: { x: { $type: 'color', $value: '{basis.y}' } },
     };
-    expect(getRefChain(root, '{nl.x}')).toEqual(['{nl.x}', '{basis.y}', '{brand.z}']);
+    expect(getRefChain(root, '{nl.x}')).toEqual(['nl.x', 'basis.y', 'brand.z']);
   });
 
   it('ends with the unresolvable ref when the target is missing', () => {
     const root = { color: { a: { $type: 'color', $value: '{color.missing}' } } };
-    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.missing}']);
+    expect(getRefChain(root, '{color.a}')).toEqual(['color.a', 'color.missing']);
   });
 
   it('falls back to brand. prefix and keeps following', () => {
@@ -128,17 +128,17 @@ describe('getRefChain', () => {
         },
       },
     };
-    expect(getRefChain(root, '{color.blue}')).toEqual(['{color.blue}', '{brand.color.navy}']);
+    expect(getRefChain(root, '{color.blue}')).toEqual(['color.blue', 'brand.color.navy']);
   });
 
   it('ends the chain when the target is a group instead of a token', () => {
     const root = { color: { group: { a: { $type: 'color', $value: '#fff' } } } };
-    expect(getRefChain(root, '{color.group}')).toEqual(['{color.group}']);
+    expect(getRefChain(root, '{color.group}')).toEqual(['color.group']);
   });
 
   it('stops on direct self-reference', () => {
     const root = { color: { a: { $type: 'color', $value: '{color.a}' } } };
-    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}']);
+    expect(getRefChain(root, '{color.a}')).toEqual(['color.a']);
   });
 
   it('stops on two-token cycle (a → b → a)', () => {
@@ -148,7 +148,7 @@ describe('getRefChain', () => {
         b: { $type: 'color', $value: '{color.a}' },
       },
     };
-    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.b}']);
+    expect(getRefChain(root, '{color.a}')).toEqual(['color.a', 'color.b']);
   });
 
   it('stops on longer cycle (a → b → c → a)', () => {
@@ -159,7 +159,7 @@ describe('getRefChain', () => {
         c: { $type: 'color', $value: '{color.a}' },
       },
     };
-    expect(getRefChain(root, '{color.a}')).toEqual(['{color.a}', '{color.b}', '{color.c}']);
+    expect(getRefChain(root, '{color.a}')).toEqual(['color.a', 'color.b', 'color.c']);
   });
 });
 

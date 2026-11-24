@@ -4,6 +4,7 @@ import '../clippy-toggletip';
 import '../clippy-token-sample';
 import {
   type BaseDesignToken,
+  createReference,
   getRefChain,
   isTokenGroup,
   isTokenLike,
@@ -67,15 +68,15 @@ export class ClippyTokenGroupTable extends LitElement {
       // Show the first `basis` token in the chain, or fall back to plain stringified token
       if (this.valueDisplay === 'common') {
         const breadcrumb = getRefChain(this.theme, token.$value);
-        const basisToken = breadcrumb.find((token) => token.startsWith('{basis.'));
-        return basisToken ?? stringifyToken(token);
+        const basisPath = breadcrumb.find((path) => path.startsWith('basis.'));
+        return basisPath ? createReference([basisPath]) : stringifyToken(token);
       }
 
       // Show the first `brand` token in the chain, or fall back to plain stringified token
       if (this.valueDisplay === 'brand') {
         const breadcrumb = getRefChain(this.theme, token.$value);
-        const firstBrandToken = breadcrumb.find((token) => token.startsWith('{brand.'));
-        return firstBrandToken ?? stringifyToken(token);
+        const brandPath = breadcrumb.find((path) => path.startsWith('brand.'));
+        return brandPath ? createReference([brandPath]) : stringifyToken(token);
       }
     }
 

@@ -30,20 +30,23 @@ export type ResolvedToken = BaseDesignToken & {
 };
 
 // Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
-const findReferencedToken = (root: object, ref: TokenReference): BaseDesignToken | undefined => {
-  const refPath = extractRef(ref);
+const findReferencedToken = (root: object, refPath: string): BaseDesignToken | undefined => {
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
   return isTokenLike(resolved) ? resolved : undefined;
 };
 
-/** Every reference followed from `value` until a non-ref value, a missing token or a cycle */
-export const getRefChain = (root: object, value: unknown): TokenReference[] => {
-  const chain: TokenReference[] = [];
+/** Paths of every reference followed from `value`, until a non-ref value, a missing token or a cycle */
+export const getRefChain = (root: object, value: unknown): string[] => {
+  const chain: string[] = [];
   let current = value;
 
-  while (isRef(current) && !chain.includes(current)) {
-    chain.push(current);
-    current = findReferencedToken(root, current)?.$value;
+  while (isRef(current)) {
+    const refPath = extractRef(current);
+    if (chain.includes(refPath)) {
+      break;
+    }
+    chain.push(refPath);
+    current = findReferencedToken(root, refPath)?.$value;
   }
 
   return chain;
@@ -51,8 +54,8 @@ export const getRefChain = (root: object, value: unknown): TokenReference[] => {
 
 /** The token at the end of the ref chain, or `undefined` for a missing token or a cycle */
 export const resolveRef = (root: object, path: TokenReference): BaseDesignToken | undefined => {
-  const lastRef = getRefChain(root, path).at(-1);
-  const resolved = lastRef ? findReferencedToken(root, lastRef) : undefined;
+  const lastRefPath = getRefChain(root, path).at(-1);
+  const resolved = lastRefPath ? findReferencedToken(root, lastRefPath) : undefined;
 
   // A ref value on the last token means the chain stopped at a cycle
   return resolved && !isRef(resolved.$value) ? resolved : undefined;
@@ -68,7 +71,9 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     const ref = resolveRef(root, token.$value);
 
     // Ensure ref is a token object with $value and $type
-    if (!isTokenLike(ref)) return;
+    if (!isTokenLike(ref)) {
+      return;
+    }
 
     // Clear any previously resolved value before setting to avoid array concatenation
     // when resolveRefs is called multiple times on the same token object.
