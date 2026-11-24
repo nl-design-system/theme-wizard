@@ -30,7 +30,7 @@
     "@eslint/json": "2.1.1",
     "@nl-design-system/eslint-config": "2.4.0",
     "@stylistic/eslint-plugin": "5.10.0",
-    "@types/node": "24.19.2",
+    "@types/node": "26.6.6",
     "@vitest/eslint-plugin": "1.6.28",
     "eslint": "10.14.0",
     "eslint-config-prettier": "10.1.8",
