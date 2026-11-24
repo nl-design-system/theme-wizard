@@ -20,10 +20,6 @@
     "node": "^24.22.3 || ^26.13.1",
     "pnpm": "^12"
   },
-  "workspaces": [
-    "./packages/*",
-    "./proprietary/*"
-  ],
   "devDependencies": {
     "@changesets/cli": "3.0.3",
     "@eslint/js": "10.0.1",
