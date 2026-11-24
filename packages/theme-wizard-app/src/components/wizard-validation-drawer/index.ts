@@ -1,11 +1,15 @@
 import { consume } from '@lit/context';
+import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { type ClippyDrawer } from '@nl-design-system-community/clippy-components/clippy-drawer';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
 import AccessibleIcon from '@tabler/icons/outline/accessible.svg?raw';
-import { html, LitElement, nothing } from 'lit';
 import '@nl-design-system-community/clippy-components/clippy-button';
 import '@nl-design-system-community/clippy-components/clippy-drawer';
+import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { query, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
@@ -25,7 +29,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class WizardValidationDrawer extends LitElement {
-  static override readonly styles = [styles];
+  static override readonly styles = [styles, unsafeCSS(linkCss), unsafeCSS(paragraphCss)];
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -56,12 +60,13 @@ export class WizardValidationDrawer extends LitElement {
 
   override render() {
     console.log('this.theme.groupedIssues', this.theme.groupedIssues);
-    if (!this.theme.errorCount) {
-      return nothing;
-    }
     return html`
       <clippy-button
         icon-only
+        class=${classMap({
+          'wizard-validation-drawer__toggle': true,
+          'wizard-validation-drawer__toggle--has-notification': this.theme.errorCount,
+        })}
         purpose="subtle-inverse"
         .expanded=${this.isDrawerOpen}
         slot="end"
@@ -72,33 +77,40 @@ export class WizardValidationDrawer extends LitElement {
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
         Toon toegankelijkheidsmeldingen
+        <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
       <clippy-drawer actions="none" side="inline-end" id="wizard-validation-drawer">
         <span slot="title">Fouten, waarschuwingen of tips</span>
-        ${Object.entries(this.theme.groupedIssues).map(([errorCode, errors]) => {
-          if (!errors || errors.length === 0) return nothing;
+        ${!this.theme.errorCount ? html`<p>Goed bezig! Je thema ziet er goed uit.</p>` : nothing}
+        <clippy-stack size="3xl">
+          ${Object.entries(this.theme.groupedIssues).map(([errorCode, errors]) => {
+            if (!errors || errors.length === 0) return nothing;
 
-          return html`
-            <details>
-              <summary>${t(`validation.error.${errorCode}.label`)} (${errors.length})</summary>
-              <ul>
-                ${errors.map(
-                  (error) => html`
-                    <li>
-                      <b><a href=${`/design-tokens/${error.path.replaceAll('.', '/')}`}>${error.path}</a></b
-                      >:
-                      <br />
-                      ${t(`validation.error.${error.code}.message`, {
-                        ...error,
-                      })}
-                    </li>
-                  `,
-                )}
-              </ul>
-            </details>
-          `;
-        })}
+            return html`
+              <clippy-stack size="lg">
+                <clippy-heading level=${2}
+                  >${t(`validation.error.${errorCode}.label`)} (${errors.length})</clippy-heading
+                >
+
+                <clippy-stack>
+                  ${errors.map(
+                    (error) => html`
+                      <p class="nl-paragraph">
+                        <b><a href=${`/design-tokens/${error.path.replaceAll('.', '/')}`}>${error.path}</a></b
+                        >:
+                        <br />
+                        ${t(`validation.error.${error.code}.message`, {
+                          ...error,
+                        })}
+                      </p>
+                    `,
+                  )}
+                </clippy-stack>
+              </clippy-stack>
+            `;
+          })}
+        </clippy-stack>
       </clippy-drawer>
     `;
   }
