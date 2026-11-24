@@ -49,6 +49,7 @@ const namespace = getTokenNamespace(Astro.props.namespace);
           </clippy-heading>
           <wizard-token-group-table
             path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}
+            value-display="as-authored"
           ></wizard-token-group-table>
         </clippy-stack>
       )}

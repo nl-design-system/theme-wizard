@@ -4,9 +4,11 @@ import '../clippy-toggletip';
 import '../clippy-token-sample';
 import {
   type BaseDesignToken,
+  extractRef,
   isRef,
   isTokenGroup,
   isTokenLike,
+  stringifyToken,
   type TokenGroup,
 } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
@@ -27,6 +29,8 @@ declare global {
   }
 }
 
+export type ValueDisplay = 'as-authored' | 'common' | 'brand' | 'resolved';
+
 /**
  * Clippy Token Group Table Component
  *
@@ -39,6 +43,7 @@ export class ClippyTokenGroupTable extends LitElement {
   /** Renders nothing while `null` or `undefined` */
   @property({ type: Object }) theme?: TokenGroup | null;
   @property({ type: String }) path = '';
+  @property({ attribute: 'value-display', type: String }) valueDisplay: ValueDisplay = 'as-authored';
 
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'name-label', type: String }) nameLabel = 'Name';
@@ -54,8 +59,49 @@ export class ClippyTokenGroupTable extends LitElement {
     return isTokenGroup(group) ? group : Object.create(null);
   }
 
-  readonly #renderTokenRow = (name: string, token: BaseDesignToken): TemplateResult => {
-    const tokenString = stringifyTokenValue(token);
+  #getTokenBreadCrumb(path: string, theme: TokenGroup): string[] {
+    const items: string[] = [];
+    let value: unknown = dlv(theme, path)?.$value;
+
+    while (isRef(value)) {
+      const referencedPath = extractRef(value);
+      // Guard against circular references
+      if (items.includes(value)) {
+        break;
+      }
+      items.push(value);
+      value = dlv(theme, referencedPath)?.$value;
+    }
+
+    return items;
+  }
+
+  #renderTokenValue(token: BaseDesignToken, tokenPath: string): string {
+    if (this.valueDisplay === 'as-authored') {
+      return stringifyToken(token);
+    }
+
+    // Show the first `basis` token in the chain, or fall back to plain stringified token
+    if (this.valueDisplay === 'common') {
+      const breadcrumb = this.#getTokenBreadCrumb(tokenPath, this.theme ?? {});
+      const basisToken = breadcrumb.find((token) => token.startsWith('{basis.'));
+      return basisToken ?? stringifyToken(token);
+    }
+
+    // Show the first `brand` token in the chain, or fall back to plain stringified token
+    if (this.valueDisplay === 'brand') {
+      const breadcrumb = this.#getTokenBreadCrumb(tokenPath, this.theme ?? {});
+      const firstBrandToken = breadcrumb.find((token) => token.startsWith('{brand.'));
+      return firstBrandToken ?? stringifyToken(token);
+    }
+
+    // Display resolved value
+    return stringifyTokenValue(token);
+  }
+
+  readonly #renderTokenRow = (name: string, token: BaseDesignToken, tokenPath: string): TemplateResult => {
+    const displayValue = this.#renderTokenValue(token, tokenPath);
+    const resolvedValue = this.valueDisplay === 'resolved' ? displayValue : stringifyTokenValue(token);
     return html`
       <tr class="clippy-token-group-table__row">
         <td class="clippy-token-group-table__cell">
@@ -64,16 +110,16 @@ export class ClippyTokenGroupTable extends LitElement {
           </div>
         </td>
         <td class="clippy-token-group-table__cell">${name}</td>
-        <td class="clippy-token-group-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
+        <td class="clippy-token-group-table__cell">${displayValue}</td>
         <td class="clippy-token-group-table__cell">
-          <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
+          <clippy-toggletip text=${`${this.copyLabel} "${resolvedValue}"`}>
             <clippy-button
               icon-only
               purpose="subtle"
               size="small"
-              @click=${() => navigator.clipboard.writeText(tokenString)}
+              @click=${() => navigator.clipboard.writeText(resolvedValue)}
             >
-              ${this.copyLabel} ${tokenString}
+              ${this.copyLabel} ${resolvedValue}
               <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
             </clippy-button>
           </clippy-toggletip>
@@ -87,7 +133,7 @@ export class ClippyTokenGroupTable extends LitElement {
     return html`
       ${map(Object.entries(group), ([property, item]) => {
         if (isTokenLike(item)) {
-          return this.#renderTokenRow(property, item);
+          return this.#renderTokenRow(property, item, name.concat(property).join('.'));
         }
         if (isTokenGroup(item)) {
           const nestedProperty = name.concat(property);
@@ -106,11 +152,12 @@ export class ClippyTokenGroupTable extends LitElement {
   };
 
   override render() {
-    if (this.theme === null || this.theme === undefined) {
+    if (!this.theme) {
       return nothing;
     }
     const group = this.#getGroupAtPath(this.theme);
     const rootPath = this.path ? [this.path] : [];
+
     return html`
       <table class="clippy-token-group-table__table">
         ${

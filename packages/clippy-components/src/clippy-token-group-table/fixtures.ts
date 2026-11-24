@@ -20,8 +20,21 @@ const ref = (path: string, type: 'color' | 'dimension', subtype: string) => ({
 
 /* eslint-disable perfectionist/sort-objects */
 const tokens = {
+  nl: {
+    button: {
+      'background-color': ref('basis.color.default.bg-default', 'color', 'background-color'),
+      'border-color': ref('basis.color.accent-1.border-default', 'color', 'border-color'),
+      color: ref('brand.color.blue.900', 'color', 'color'),
+      'font-size': ref('basis.text.font-size.md', 'dimension', 'font-size'),
+      'min-block-size': dimension(44, 'px', 'size'),
+      'padding-block': ref('basis.space.block.md', 'dimension', 'space-block'),
+    },
+  },
   basis: {
     color: {
+      default: {
+        'bg-default': ref('basis.color.accent-1.bg-default', 'color', 'background-color'),
+      },
       'accent-1': {
         'bg-default': ref('brand.color.blue.100', 'color', 'background-color'),
         'bg-subtle': ref('brand.color.blue.50', 'color', 'background-color'),
@@ -75,5 +88,5 @@ const tokens = {
 
 resolveRefs(tokens, tokens);
 
-/** Theme with hard values (`brand`, `basis.text`) and ref values (`basis.color`, `basis.space`) */
+/** Theme with hard values (`brand`, `basis.text`) and ref chains (`nl` → `basis` → `brand`) */
 export const themeFixture = tokens as unknown as TokenGroup;

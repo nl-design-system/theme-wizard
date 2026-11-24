@@ -8,6 +8,7 @@ import React from 'react';
 type TokenGroupTableStoryArgs = {
   path: string;
   theme: TokenGroup;
+  valueDisplay?: 'as-authored' | 'common' | 'brand' | 'resolved';
 };
 
 const meta = {
@@ -15,6 +16,7 @@ const meta = {
   args: {
     path: 'basis.text.font-size',
     theme: themeFixture,
+    valueDisplay: 'as-authored',
   },
   argTypes: {
     path: {
@@ -25,11 +27,24 @@ const meta = {
       control: false,
       description: 'The full token tree',
     },
+    valueDisplay: {
+      control: 'select',
+      description: 'Which value to show for tokens that reference other tokens',
+      options: ['as-authored', 'common', 'brand', 'resolved'],
+    },
   },
   parameters: {
     docs: {
       description: {
         component: readme,
+      },
+      source: {
+        // Omit the theme object from the code snippet, it's too large to be readable
+        transform: (_code: string, storyContext: { args: TokenGroupTableStoryArgs }) => {
+          const { path, valueDisplay } = storyContext.args;
+          return `<clippy-token-group-table path="${path}" value-display="${valueDisplay}"></clippy-token-group-table>`;
+        },
+        type: 'code',
       },
     },
   },
@@ -67,5 +82,37 @@ export const RefValues: Story = {
   name: 'Ref values',
   args: {
     path: 'basis.color.accent-1',
+  },
+};
+
+export const ValueDisplayAsAuthored: Story = {
+  name: 'Value display: as authored',
+  args: {
+    path: 'nl.button',
+    valueDisplay: 'as-authored',
+  },
+};
+
+export const ValueDisplayCommon: Story = {
+  name: 'Value display: common',
+  args: {
+    path: 'nl.button',
+    valueDisplay: 'common',
+  },
+};
+
+export const ValueDisplayBrand: Story = {
+  name: 'Value display: brand',
+  args: {
+    path: 'nl.button',
+    valueDisplay: 'brand',
+  },
+};
+
+export const ValueDisplayResolved: Story = {
+  name: 'Value display: resolved',
+  args: {
+    path: 'nl.button',
+    valueDisplay: 'resolved',
   },
 };
