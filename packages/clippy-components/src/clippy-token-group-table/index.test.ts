@@ -199,6 +199,78 @@ describe(`<${tag}>`, () => {
     expect(writeText).not.toHaveBeenCalledWith(refToken.$value);
   });
 
+  describe('sorting', () => {
+    const token = { $type: 'color', $value: '#000000' };
+    const states = { 'background-color': token, color: token };
+
+    // Shuffled on purpose
+    /* eslint-disable perfectionist/sort-objects */
+    const button = {
+      subtle: { hover: states, color: token },
+      hover: states,
+      disabled: states,
+      color: token,
+      'primary-action': {
+        disabled: states,
+        hover: states,
+        color: token,
+        active: states,
+      },
+      icon: { size: token },
+      'focus-visible': states,
+      focus: states,
+      active: states,
+      'background-color': token,
+    };
+    /* eslint-enable perfectionist/sort-objects */
+
+    it('renders rows in sorted order at every level', async () => {
+      const component = await render('path="button"', { button } as unknown as TokenGroup);
+      const names = getRows(component).map((row) =>
+        row.classList.contains('clippy-token-group-table__group-row')
+          ? row.cells[0].textContent?.trim()
+          : row.cells[1].textContent?.trim(),
+      );
+      expect(names).toEqual([
+        'background-color',
+        'color',
+        'button.icon',
+        'size',
+        'button.active',
+        'background-color',
+        'color',
+        'button.focus',
+        'background-color',
+        'color',
+        'button.focus-visible',
+        'background-color',
+        'color',
+        'button.hover',
+        'background-color',
+        'color',
+        'button.disabled',
+        'background-color',
+        'color',
+        'button.primary-action',
+        'color',
+        'button.primary-action.active',
+        'background-color',
+        'color',
+        'button.primary-action.hover',
+        'background-color',
+        'color',
+        'button.primary-action.disabled',
+        'background-color',
+        'color',
+        'button.subtle',
+        'color',
+        'button.subtle.hover',
+        'background-color',
+        'color',
+      ]);
+    });
+  });
+
   describe('value-display', () => {
     const getValueCell = (component: ClippyTokenGroupTable, name: string) =>
       getRows(component)

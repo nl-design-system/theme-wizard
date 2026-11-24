@@ -8,6 +8,7 @@ import {
 import Color from 'colorjs.io';
 import { describe, expect, it } from 'vitest';
 import {
+  compareTokenEntries,
   getTokenColor,
   getTokenDimensionSpaceConcept,
   getTokenPath,
@@ -153,5 +154,44 @@ describe('getTokenDimensionSpaceConcept', () => {
       },
     });
     expect(result).toBe('');
+  });
+});
+
+describe('compareTokenEntries', () => {
+  const token = { $type: 'color', $value: '#000000' };
+  const states = { 'background-color': token, color: token };
+
+  // Shuffled on purpose
+  /* eslint-disable perfectionist/sort-objects */
+  const button = {
+    subtle: { hover: states, color: token },
+    hover: states,
+    disabled: states,
+    color: token,
+    'primary-action': { hover: states, color: token },
+    icon: { size: token },
+    'focus-visible': states,
+    focus: states,
+    active: states,
+    'background-color': token,
+  };
+  /* eslint-enable perfectionist/sort-objects */
+
+  it('sorts tokens, elements, user action states, component states, then appearances', () => {
+    const names = Object.entries(button)
+      .toSorted(compareTokenEntries)
+      .map(([name]) => name);
+    expect(names).toEqual([
+      'background-color',
+      'color',
+      'icon',
+      'active',
+      'focus',
+      'focus-visible',
+      'hover',
+      'disabled',
+      'primary-action',
+      'subtle',
+    ]);
   });
 });
