@@ -83,7 +83,7 @@ const pickRepresentative = (groupIssues: ValidationIssue[], tokens: TokenGroup):
  * group, so a change to one coupled token shows up as one issue instead of one per token.
  * All other issues are grouped per error code, as before.
  */
-export const groupValidationIssues = (issues: ValidationIssue[], tokens: DesignTokensLike): ValidationIssueGroup[] => {
+export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGroup): ValidationIssueGroup[] => {
   const ds = new DisjointSet(issues.length);
 
   // Map token path -> indices of linkable issues whose `tokens` include it
