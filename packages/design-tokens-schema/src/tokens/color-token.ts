@@ -1,7 +1,7 @@
 import Color, { type Coords } from 'colorjs.io';
 import * as z from 'zod';
 import { BaseDesignTokenSchema } from './base-token';
-import { TokenReferenceSchema } from './token-reference';
+import { isRef, TokenReferenceSchema } from './token-reference';
 
 // 8.1 Color -> 4.1 Color Module: Format
 
@@ -91,7 +91,9 @@ export const stringifyColor = (color: Color | ColorValue): string => {
     const reference = color instanceof Color ? color : colorTokenValueToColorJS(color);
     return colorJSToHex(reference);
   } catch {
-    console.warn('Could not parse color:', color);
+    if (!isRef(color)) {
+      console.warn('Could not parse color:', color);
+    }
     return '#0000';
   }
 };

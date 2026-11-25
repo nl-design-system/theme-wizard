@@ -40,6 +40,7 @@ export * from './components/wizard-token-validation-form';
 export * from './components/wizard-tokens-download';
 export * from './components/wizard-tokens-presets';
 export * from './components/wizard-tokens-reuse-form';
+export * from './components/wizard-token-group-table';
 export * from './components/wizard-unstyled-list';
 
 export * from './utils/index';

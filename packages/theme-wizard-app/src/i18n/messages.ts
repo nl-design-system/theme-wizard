@@ -330,6 +330,13 @@ export const en = {
   tokensPresets: {
     placeholder: 'Choose a preset',
   },
+  tokensTable: {
+    name: 'Name',
+    actions: 'Actions',
+    copy: 'Copy',
+    example: 'Example',
+    value: 'Value',
+  },
   tokenValidationForm: {
     downloadTokens: 'Download theme (JSON)',
     excludeParentKeys: {
@@ -787,6 +794,13 @@ export const nl = {
   },
   tokensPresets: {
     placeholder: 'Kies een voorinstelling',
+  },
+  tokensTable: {
+    name: 'Naam',
+    actions: 'Acties',
+    copy: 'Kopieer',
+    example: 'Voorbeeld',
+    value: 'Waarde',
   },
   tokenValidationForm: {
     downloadTokens: 'Download thema (JSON)',
