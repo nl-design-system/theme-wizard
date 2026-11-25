@@ -17,6 +17,7 @@ import Color, { type ColorTypes } from 'colorjs.io';
 /** Converts a token path (e.g. `['nl', 'color', 'red']`) into a CSS custom property name (`--nl-color-red`). */
 export const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
+/** Stringify a token value, using the resolved_as value, if available */
 export const stringifyTokenValue = (token: BaseDesignToken): string => {
   const resolvedAs = getExtension(token, EXTENSION_RESOLVED_AS);
   return stringifyToken(isRef(token.$value) && resolvedAs ? { $type: token.$type, $value: resolvedAs } : token);

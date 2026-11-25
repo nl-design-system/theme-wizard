@@ -25,7 +25,9 @@ const namespace = getTokenNamespace(Astro.props.namespace);
 
   {pageData.items ? (
     <clippy-stack size="2xl">
-      <clippy-heading level="2">Tokens</clippy-heading>
+      <clippy-heading level="2" id="tokens">
+        Tokens
+      </clippy-heading>
       <wizard-unstyled-list>
         {pageData.items
           .filter((item) => item.metaData?.tokenPath)
@@ -40,6 +42,16 @@ const namespace = getTokenNamespace(Astro.props.namespace);
             </li>
           ))}
       </wizard-unstyled-list>
+      {namespace.id !== 'basis' && (
+        <clippy-stack size="xl">
+          <clippy-heading level="3" id="alle-tokens">
+            Alle tokens
+          </clippy-heading>
+          <wizard-token-group-table
+            path={`${namespace.id}.${pageData.metaData.tokenPath.join('.')}`}
+          ></wizard-token-group-table>
+        </clippy-stack>
+      )}
     </clippy-stack>
   ) : null}
 </DesignTokensLayout>

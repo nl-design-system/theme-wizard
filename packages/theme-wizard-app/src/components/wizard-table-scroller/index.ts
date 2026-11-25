@@ -27,6 +27,8 @@ export class WizardTableScroller extends LitElement {
     super.connectedCallback();
     this.style.inlineSize = '100%';
     this.style.overflowX = 'auto';
+    // Stop the table's min-content width from leaking into ancestor sizing
+    this.style.contain = 'inline-size';
   }
 
   override render() {

@@ -1,5 +1,5 @@
 import './index';
-import { stringifyToken } from '@nl-design-system-community/design-tokens-schema';
+import { type BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import { ClippyColorSample } from '@src/clippy-color-sample';
 import { ClippyTokenSampleBorder } from '@src/clippy-token-sample-border';
 import { ClippyTokenSampleSpacing } from '@src/clippy-token-sample-spacing';
@@ -55,6 +55,22 @@ describe(`<${tag}>`, () => {
     const textSample = component.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
     await expect.element(textSample).toBeInTheDocument();
     expect(textSample.getAttribute('font-size')).toBe(stringifyToken(textFontSizeFixture));
+  });
+
+  it('Renders with a dimension line-height token', async () => {
+    const lineHeightDimensionFixture: BaseDesignToken = {
+      $extensions: {
+        'nl.nldesignsystem.token-subtype': 'line-height',
+      },
+      $type: 'dimension',
+      $value: { unit: 'rem', value: 1.5 },
+    };
+    component.token = lineHeightDimensionFixture;
+    await component.updateComplete;
+    const textSample = component.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
+    await expect.element(textSample).toBeInTheDocument();
+    expect(textSample.getAttribute('line-height')).toBe(stringifyToken(lineHeightDimensionFixture));
+    expect(textSample.hasAttribute('font-size')).toBe(false);
   });
 
   it('Renders with a border token', async () => {

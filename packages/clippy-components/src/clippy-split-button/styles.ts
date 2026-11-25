@@ -15,8 +15,14 @@ export default css`
     --clippy-split-button-menu-border-width: var(--basis-border-width-sm);
     --clippy-split-button-menu-box-shadow: var(--basis-box-shadow-md);
     --clippy-split-button-menu-item-border-radius: 0;
+    --_clippy-split-button-min-block-size: var(--nl-button-min-block-size, 44px);
 
     anchor-name: --clippy-split-button;
+  }
+
+  /* Stretch both buttons to the height of the tallest, e.g. a start button with a wrapping label. */
+  ::slotted(:is([slot='start'], [slot='end'])) {
+    --nl-button-min-block-size: max(var(--_clippy-split-button-min-block-size), 100%);
   }
 
   /* border-radius takes its corners in physical order: top-left, top-right, bottom-right, bottom-left. */

@@ -10,6 +10,7 @@ type Purpose = 'primary' | 'secondary';
 
 type StoryArgs = {
   startPurpose: Purpose;
+  startLabel: string;
   endPurpose: Purpose;
   menuItems: string[];
   open: boolean;
@@ -47,7 +48,7 @@ const SplitButtonDemo = ({ args }: { args: StoryArgs }) => {
   return React.createElement(
     'clippy-split-button',
     null,
-    React.createElement('clippy-button', { purpose: args.startPurpose, slot: 'start' }, labels[args.startPurpose]),
+    React.createElement('clippy-button', { purpose: args.startPurpose, slot: 'start' }, args.startLabel),
     React.createElement(
       'clippy-button',
       {
@@ -97,6 +98,7 @@ const meta = {
     endPurpose: 'primary',
     menuItems: ['Action one', 'Action two'],
     open: false,
+    startLabel: 'Primary',
     startPurpose: 'primary',
   },
   argTypes: {
@@ -112,6 +114,10 @@ const meta = {
     open: {
       control: 'boolean',
       description: 'Whether the menu is open initially',
+    },
+    startLabel: {
+      control: 'text',
+      description: 'Label of the start button',
     },
     startPurpose: {
       control: 'select',
@@ -168,6 +174,7 @@ export const SecondaryPurpose: Story = {
   name: 'Secondary Purpose',
   args: {
     endPurpose: 'secondary',
+    startLabel: 'Secondary',
     startPurpose: 'secondary',
   },
 };
@@ -199,5 +206,18 @@ export const MixedPurpose: Story = {
       null,
       React.createElement('clippy-button', { purpose: 'primary', slot: 'start' }, 'Primary'),
       React.createElement('clippy-button', { purpose: 'secondary', slot: 'end' }, 'Secondary'),
+    ),
+};
+
+export const LongLabel: Story = {
+  name: 'Long Label',
+  args: {
+    startLabel: 'A start label that is far too long to fit on a single line',
+  },
+  render: (args: StoryArgs) =>
+    React.createElement(
+      'div',
+      { style: { inlineSize: '12rem', minBlockSize: '10rem' } },
+      React.createElement(SplitButtonDemo, { args, key: String(args.open) }),
     ),
 };
