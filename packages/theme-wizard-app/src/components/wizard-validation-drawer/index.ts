@@ -76,7 +76,7 @@ export class WizardValidationDrawer extends LitElement {
         }}
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
-        Toon toegankelijkheidsmeldingen
+        Toon toegankelijkheidsmeldingen ${this.theme.errorCount ? `(${this.theme.errorCount} meldingen)` : nothing}
         <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
@@ -89,9 +89,9 @@ export class WizardValidationDrawer extends LitElement {
 
             return html`
               <clippy-stack size="lg">
-                <clippy-heading level=${2}
-                  >${t(`validation.error.${errorCode}.label`)} (${errors.length})</clippy-heading
-                >
+                <clippy-heading level=${2}>
+                  ${t(`validation.error.${errorCode}.label`)} (${errors.length})
+                </clippy-heading>
 
                 <clippy-stack>
                   ${errors.map(
