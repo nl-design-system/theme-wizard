@@ -1,7 +1,7 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { describe, expect, it } from 'vitest';
 import type ValidationIssue from './index';
-import { groupValidationIssues, type DesignTokensLike } from './group';
+import { groupValidationIssues } from './group';
 
 const contrastIssue = (
   path: string,
@@ -24,7 +24,7 @@ const BG_HOVER = 'basis.color.accent-1.bg-hover';
 const BUTTON_COLOR = 'ams.button.color';
 const BUTTON_BG = 'ams.button.background-color';
 
-const tokens: DesignTokensLike = {
+const tokens = {
   ams: {
     button: {
       'background-color': { $type: 'color', $value: `{${BG_DEFAULT}}` },

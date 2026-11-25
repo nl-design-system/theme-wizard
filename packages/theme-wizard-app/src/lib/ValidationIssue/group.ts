@@ -3,8 +3,6 @@ import dlv from 'dlv';
 import type ValidationIssue from './index';
 import type { ErrorCode } from './index';
 
-export type DesignTokensLike = Record<string, unknown>;
-
 export type ValidationIssueGroup = {
   /**
    * Stable identifier for the group, e.g.

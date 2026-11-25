@@ -29,5 +29,4 @@ export default class ValidationIssue {
   }
 }
 
-export { groupValidationIssues } from './group';
-export type { DesignTokensLike, ValidationIssueGroup } from './group';
+export { groupValidationIssues, type ValidationIssueGroup } from './group';
