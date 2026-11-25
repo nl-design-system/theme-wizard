@@ -387,6 +387,10 @@ export const en = {
         },
       },
     },
+    group: {
+      affectedTokens: ({ count }: { count: number }): string =>
+        count === 1 ? 'Affects 1 token' : `Affects ${count} tokens`,
+    },
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ token }: { token: string }) => {
@@ -843,6 +847,10 @@ export const nl = {
           return html` ${t('validation.issue.unexpectedUnit', { token: issue.referredToken })}.`;
         },
       },
+    },
+    group: {
+      affectedTokens: ({ count }: { count: number }): string =>
+        count === 1 ? 'Betreft 1 token' : `Betreft ${count} tokens`,
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',

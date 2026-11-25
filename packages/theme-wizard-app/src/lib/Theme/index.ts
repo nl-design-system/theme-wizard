@@ -28,7 +28,7 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
+import ValidationIssue, { groupValidationIssues, type ValidationIssueGroup } from '../ValidationIssue';
 import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
@@ -47,6 +47,7 @@ export default class Theme {
   readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] | null = null; // null means not validated yet
+  #issueGroups: ValidationIssueGroup[] | null = null; // null means not grouped yet
 
   /**
    * Flatten a nested DesignTokens object into a flat map of token paths to DesignToken objects.
@@ -69,6 +70,7 @@ export default class Theme {
       this.#tokens = source.#tokens;
       this.#modified = source.#modified;
       this.#validationIssues = source.#validationIssues && [...source.#validationIssues];
+      this.#issueGroups = source.#issueGroups && [...source.#issueGroups];
       return;
     }
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
@@ -106,6 +108,7 @@ export default class Theme {
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
     this.#validationIssues = null;
+    this.#issueGroups = null;
     this.#tokens = values;
     this.toCSS();
   }
@@ -204,8 +207,14 @@ export default class Theme {
     return this.issues.length;
   }
 
-  get groupedIssues(): GroupedIssues {
-    return Object.groupBy(this.issues, ({ code }) => code);
+  /**
+   * Issues grouped for display: contrast issues on coupled or referencing tokens are merged
+   * into a single group, so one displayed issue can carry a details/summary of all connected
+   * issues. `issues` and `errorCount` still expose the raw, ungrouped issues.
+   */
+  get groupedIssues(): ValidationIssueGroup[] {
+    this.#issueGroups ??= groupValidationIssues(this.issues, this.#tokens);
+    return this.#issueGroups;
   }
 
   get issues(): ValidationIssue[] {

@@ -167,4 +167,31 @@ describe('Theme', () => {
     theme.reset();
     expect(theme.modified).toBe(false);
   });
+
+  it('groups contrast issues on coupled and referencing tokens into a single group', () => {
+    const theme = new Theme();
+    // Same value as basis.color.default.bg-default (#f1f1f1), so the pair fails contrast
+    theme.updateAt('basis.color.default.color-default', '#f1f1f1');
+
+    const contrastIssues = theme.issues.filter((issue) => issue.code === 'insufficient_contrast');
+    // The failing pair emits two issues, and every token referencing the pair emits its own
+    expect(contrastIssues.length).toBeGreaterThan(2);
+    expect(theme.errorCount).toBe(theme.issues.length);
+
+    const contrastGroups = theme.groupedIssues.filter((group) => group.code === 'insufficient_contrast');
+    expect(contrastGroups).toHaveLength(1);
+    expect(contrastGroups[0].issues).toHaveLength(contrastIssues.length);
+    // The representative points at the root cause, not at a referencing token
+    expect(contrastGroups[0].representative.path).toBe('basis.color.default.color-default');
+  });
+
+  it('invalidates grouped issues when tokens change', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.default.color-default', '#f1f1f1');
+    const failingGroups = theme.groupedIssues;
+    expect(failingGroups.some((group) => group.code === 'insufficient_contrast')).toBe(true);
+
+    theme.resetAt('basis.color.default.color-default');
+    expect(theme.groupedIssues.some((group) => group.code === 'insufficient_contrast')).toBe(false);
+  });
 });

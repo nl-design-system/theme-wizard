@@ -35,9 +35,21 @@ export class WizardValidationMessage extends LitElement {
   @property({ converter: String })
   path: string = '';
 
+  /**
+   * Pass the issue directly when it is already known (e.g. from a ValidationIssueGroup).
+   * Takes precedence over the `path` lookup, which is ambiguous when one path has multiple issues.
+   */
+  @property({ attribute: false })
+  issue: ValidationIssue | undefined = undefined;
+
   #issue: ValidationIssue | undefined = undefined;
 
   protected override willUpdate(changedProperties: PropertyValues) {
+    if (this.issue) {
+      this.#issue = this.issue;
+      return;
+    }
+
     if (!hasChangedProperty(changedProperties, ['theme', 'path'])) {
       return;
     }

@@ -59,7 +59,8 @@ export class WizardValidationDrawer extends LitElement {
   }
 
   override render() {
-    console.log('this.theme.groupedIssues', this.theme.groupedIssues);
+    const groupsByCode = Object.groupBy(this.theme.groupedIssues, ({ code }) => code);
+    const groupCount = this.theme.groupedIssues.length;
     return html`
       <clippy-button
         icon-only
@@ -76,7 +77,7 @@ export class WizardValidationDrawer extends LitElement {
         }}
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
-        Toon toegankelijkheidsmeldingen ${this.theme.errorCount ? `(${this.theme.errorCount} meldingen)` : nothing}
+        Toon toegankelijkheidsmeldingen ${groupCount ? `(${groupCount} meldingen)` : nothing}
         <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
@@ -84,19 +85,35 @@ export class WizardValidationDrawer extends LitElement {
         <span slot="title">Fouten, waarschuwingen of tips</span>
         ${!this.theme.errorCount ? html`<p>Goed bezig! Je thema ziet er goed uit.</p>` : nothing}
         <clippy-stack size="3xl">
-          ${Object.entries(this.theme.groupedIssues).map(([errorCode, errors]) => {
-            if (!errors || errors.length === 0) return nothing;
+          ${Object.entries(groupsByCode).map(([errorCode, groups]) => {
+            if (!groups || groups.length === 0) return nothing;
 
             return html`
               <clippy-stack size="lg">
                 <clippy-heading level=${2}>
-                  ${t(`validation.error.${errorCode}.label`)} (${errors.length})
+                  ${t(`validation.error.${errorCode}.label`)} (${groups.length})
                 </clippy-heading>
 
                 <clippy-stack>
-                  ${errors.map(
-                    (error) => html`<wizard-validation-message path=${error.path}></wizard-validation-message>`,
-                  )}
+                  ${groups.map((group) => {
+                    if (group.issues.length === 1) {
+                      return html`<wizard-validation-message .issue=${group.issues[0]}></wizard-validation-message>`;
+                    }
+
+                    return html`
+                      <div>
+                        <wizard-validation-message .issue=${group.representative}></wizard-validation-message>
+                        <details>
+                          <summary>${t('validation.group.affectedTokens', { count: group.issues.length })}</summary>
+                          <clippy-stack>
+                            ${group.issues.map(
+                              (issue) => html`<wizard-validation-message .issue=${issue}></wizard-validation-message>`,
+                            )}
+                          </clippy-stack>
+                        </details>
+                      </div>
+                    `;
+                  })}
                 </clippy-stack>
               </clippy-stack>
             `;
