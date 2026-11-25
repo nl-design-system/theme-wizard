@@ -105,7 +105,7 @@ describe('groupValidationIssues', () => {
   });
 
   it('follows reference chains when linking issues', () => {
-    const chainedTokens: DesignTokensLike = {
+    const chainedTokens = {
       ...tokens,
       ams: {
         ...(tokens['ams'] as object),
