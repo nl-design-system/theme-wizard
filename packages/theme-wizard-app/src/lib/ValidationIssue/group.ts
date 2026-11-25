@@ -67,9 +67,12 @@ const refTargetsOf = (path: string, tokens: DesignTokensLike): string[] => {
 /** Issues that can be linked to each other through token references. */
 const isLinkable = (issue: ValidationIssue): boolean => issue.code === ERROR_CODES.INSUFFICIENT_CONTRAST;
 
+/** Alphabetical comparator so sorting is deterministic across locales (SonarQube S3358). */
+const byLocaleCompare = (a: string, b: string): number => a.localeCompare(b);
+
 /** Canonical key for the token pair of an issue, order-independent. */
 const pairKey = (issue: ValidationIssue): string =>
-  issue.tokens && issue.tokens.length > 0 ? [...issue.tokens].sort().join('|') : issue.path;
+  issue.tokens && issue.tokens.length > 0 ? [...issue.tokens].sort(byLocaleCompare).join('|') : issue.path;
 
 const pickRepresentative = (groupIssues: ValidationIssue[], tokens: TokenGroup): ValidationIssue => {
   // Prefer an issue on a token that is not itself a reference: it points at the root cause
@@ -131,7 +134,7 @@ export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGr
     clusters.set(root, cluster);
   });
   for (const cluster of clusters.values()) {
-    const involvedTokens = [...new Set(cluster.flatMap((issue) => issue.tokens ?? [issue.path]))].sort();
+    const involvedTokens = [...new Set(cluster.flatMap((issue) => issue.tokens ?? [issue.path]))].sort(byLocaleCompare);
     groups.push({
       id: `${cluster[0].code}:${involvedTokens.join('|')}`,
       code: cluster[0].code,
