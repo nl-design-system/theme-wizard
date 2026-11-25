@@ -13,7 +13,6 @@ export default css`
     --nl-heading-level-1-font-size: var(--nl-heading-level-3-font-size);
     --nl-heading-level-1-font-family: var(--nl-heading-level-3-font-family);
     --nl-heading-level-1-color: var(--nl-heading-level-3-color);
-
     --nl-heading-level-2-margin-block-start: var(--nl-heading-level-4-margin-block-start);
     --nl-heading-level-2-margin-block-end: var(--nl-heading-level-4-margin-block-end);
     --nl-heading-level-2-line-height: var(--nl-heading-level-4-line-height);
