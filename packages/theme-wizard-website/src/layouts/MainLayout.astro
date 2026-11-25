@@ -109,12 +109,18 @@ const breadCrumbNavigationItems = getBreadcrumbNavigationItems(navigationItems);
 
     <script>
       import '@nl-design-system-community/theme-wizard-app';
+      import { provideTokenUrlResolver } from '@nl-design-system-community/theme-wizard-app';
+      import { resolveTokenUrl } from '@/lib/design-tokens/token-url';
       import '@nl-design-system-community/clippy-components/clippy-heading';
       import '@nl-design-system-community/clippy-components/clippy-stack';
       import '@nl-design-system-community/clippy-components/clippy-page-layout';
       import '@nl-design-system-community/clippy-components/clippy-layout';
       import '@nl-design-system-community/clippy-components/clippy-main';
       import '@nl-design-system-community/clippy-components/clippy-breadcrumb-navigation';
+
+      // Tell the wizard app how to resolve token paths to design-token page URLs, so links
+      // are only rendered for pages this website actually generates.
+      provideTokenUrlResolver(document.body, resolveTokenUrl);
     </script>
   </body>
 </html>

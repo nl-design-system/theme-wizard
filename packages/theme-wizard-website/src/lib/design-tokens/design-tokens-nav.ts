@@ -169,7 +169,7 @@ export const getDesignTokensNavItems = (current?: CurrentDesignTokenPage): Navig
 };
 
 // Flatten the navigation tree into a list of all pages
-const flattenNavigation = (navigation: NavigationItems): NavigationItems => {
+export const flattenNavigation = (navigation: NavigationItems): NavigationItems => {
   return navigation.flatMap((item) => {
     if (item.items) {
       return [item, ...flattenNavigation(item.items)];
