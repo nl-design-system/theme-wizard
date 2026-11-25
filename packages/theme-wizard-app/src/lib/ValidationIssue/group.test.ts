@@ -1,4 +1,4 @@
-import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
+import { ERROR_CODES, TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { describe, expect, it } from 'vitest';
 import type ValidationIssue from './index';
 import { groupValidationIssues } from './group';
@@ -24,7 +24,7 @@ const BG_HOVER = 'basis.color.accent-1.bg-hover';
 const BUTTON_COLOR = 'ams.button.color';
 const BUTTON_BG = 'ams.button.background-color';
 
-const tokens = {
+const tokens: TokenGroup = {
   ams: {
     button: {
       'background-color': { $type: 'color', $value: `{${BG_DEFAULT}}` },
@@ -105,7 +105,7 @@ describe('groupValidationIssues', () => {
   });
 
   it('follows reference chains when linking issues', () => {
-    const chainedTokens = {
+    const chainedTokens: TokenGroup = {
       ...tokens,
       ams: {
         ...(tokens['ams'] as object),

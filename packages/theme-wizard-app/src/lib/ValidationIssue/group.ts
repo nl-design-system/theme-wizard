@@ -1,4 +1,4 @@
-import { ERROR_CODES, extractRef, isRef } from '@nl-design-system-community/design-tokens-schema';
+import { ERROR_CODES, extractRef, isRef, TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 import type ValidationIssue from './index';
 import type { ErrorCode } from './index';
@@ -71,7 +71,7 @@ const isLinkable = (issue: ValidationIssue): boolean => issue.code === ERROR_COD
 const pairKey = (issue: ValidationIssue): string =>
   issue.tokens && issue.tokens.length > 0 ? [...issue.tokens].sort().join('|') : issue.path;
 
-const pickRepresentative = (groupIssues: ValidationIssue[], tokens: DesignTokensLike): ValidationIssue => {
+const pickRepresentative = (groupIssues: ValidationIssue[], tokens: TokenGroup): ValidationIssue => {
   // Prefer an issue on a token that is not itself a reference: it points at the root cause
   // rather than at a token that merely inherits the referenced value.
   return groupIssues.find((issue) => refTargetsOf(issue.path, tokens).length === 0) ?? groupIssues[0];
