@@ -95,16 +95,7 @@ export class WizardValidationDrawer extends LitElement {
 
                 <clippy-stack>
                   ${errors.map(
-                    (error) => html`
-                      <p class="nl-paragraph">
-                        <b><a href=${`/design-tokens/${error.path.replaceAll('.', '/')}`}>${error.path}</a></b
-                        >:
-                        <br />
-                        ${t(`validation.error.${error.code}.message`, {
-                          ...error,
-                        })}
-                      </p>
-                    `,
+                    (error) => html`<wizard-validation-message path=${error.path}></wizard-validation-message>`,
                   )}
                 </clippy-stack>
               </clippy-stack>
