@@ -77,13 +77,13 @@ export class WizardValidationDrawer extends LitElement {
         }}
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
-        Toon toegankelijkheidsmeldingen ${this.theme.errorCount ? `(${this.theme.errorCount} meldingen)` : nothing}
+        ${t('wizard.validationDrawer.toggle', { count: this.theme.errorCount })}
         <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
       <clippy-drawer actions="none" side="inline-end" id="wizard-validation-drawer">
-        <span slot="title">Fouten, waarschuwingen of tips</span>
-        ${!this.theme.errorCount ? html`<p>Goed bezig! Je thema ziet er goed uit.</p>` : nothing}
+        <span slot="title">${t('wizard.validationDrawer.title')}</span>
+        ${!this.theme.errorCount ? html`<p class="nl-paragraph">${t('wizard.validationDrawer.noIssues')}</p>` : nothing}
         <clippy-stack size="3xl">
           ${Object.entries(this.theme.groupedIssues).map(([errorCode, errors]) => {
             if (!errors || errors.length === 0) return nothing;
