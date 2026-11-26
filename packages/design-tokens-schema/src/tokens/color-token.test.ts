@@ -2,7 +2,7 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import Color from 'colorjs.io';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { describe, it, expect, expectTypeOf } from 'vitest';
+import { describe, it, expect, expectTypeOf, vi } from 'vitest';
 import { StrictThemeSchema } from '../theme';
 import {
   ColorAlphaSchema,
@@ -211,5 +211,22 @@ describe('stringify token to string', () => {
     // @ts-expect-error - Cannot pass undefined, but this test exists as a safe-guard
     const result = stringifyColor(undefined);
     expect(result).toBe('#0000');
+  });
+
+  it('warns when a non-color cannot be parsed', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // @ts-expect-error - Cannot pass undefined, but this test exists as a safe-guard
+    stringifyColor(undefined);
+    expect(warn).toHaveBeenCalledWith('Could not parse color:', undefined);
+    warn.mockRestore();
+  });
+
+  it('returns a transparent fallback for a reference without warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // @ts-expect-error - References are not a ColorValue, but can end up here when unresolved
+    const result = stringifyColor('{basis.color.accent-1.bg-default}');
+    expect(result).toBe('#0000');
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 });

@@ -6,6 +6,7 @@ import { safeCustomElement } from '@nl-design-system-community/clippy-components
 import AccessibleIcon from '@tabler/icons/outline/accessible.svg?raw';
 import '@nl-design-system-community/clippy-components/clippy-button';
 import '@nl-design-system-community/clippy-components/clippy-drawer';
+import '../wizard-validation-message';
 import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { query, state } from 'lit/decorators.js';
@@ -77,13 +78,13 @@ export class WizardValidationDrawer extends LitElement {
         }}
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
-        Toon toegankelijkheidsmeldingen ${groupCount ? `(${groupCount} meldingen)` : nothing}
+        ${t('wizard.validationDrawer.toggle', { count: groupCount })}
         <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
       <clippy-drawer actions="none" side="inline-end" id="wizard-validation-drawer">
-        <span slot="title">Fouten, waarschuwingen of tips</span>
-        ${!this.theme.errorCount ? html`<p>Goed bezig! Je thema ziet er goed uit.</p>` : nothing}
+        <span slot="title">${t('wizard.validationDrawer.title')}</span>
+        ${!this.theme.errorCount ? html`<p class="nl-paragraph">${t('wizard.validationDrawer.noIssues')}</p>` : nothing}
         <clippy-stack size="3xl">
           ${Object.entries(groupsByCode).map(([errorCode, groups]) => {
             if (!groups || groups.length === 0) return nothing;

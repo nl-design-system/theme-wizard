@@ -45,12 +45,11 @@ export class WizardValidationMessage extends LitElement {
   #issue: ValidationIssue | undefined = undefined;
 
   protected override willUpdate(changedProperties: PropertyValues) {
-    if (this.issue) {
-      this.#issue = this.issue;
+    if (!hasChangedProperty(changedProperties, ['theme', 'path', 'issue'])) {
       return;
     }
-
-    if (!hasChangedProperty(changedProperties, ['theme', 'path'])) {
+    if (this.issue) {
+      this.#issue = this.issue;
       return;
     }
 
@@ -69,9 +68,7 @@ export class WizardValidationMessage extends LitElement {
         <b><a href=${`/design-tokens/${this.#issue.path.replaceAll('.', '/')}`}>${this.#issue.path}</a></b
         >:
         <br />
-        ${t(`validation.error.${this.#issue.code}.message`, {
-          ...this.#issue,
-        })}
+        ${t(`validation.error.${this.#issue.code}.message`, this.#issue)}
       </p>
     `;
   }

@@ -68,7 +68,7 @@ export class WizardPageHeader extends LitElement {
         <a class="wizard-page-header__logo" href="/" slot="logo">
           <wizard-logo></wizard-logo>
         </a>
-        <wizard-validation-drawer slot="end"></wizard-validation-drawer>
+        <wizard-validation-drawer slot="end" hidden></wizard-validation-drawer>
       </clippy-page-header>
     `;
   }

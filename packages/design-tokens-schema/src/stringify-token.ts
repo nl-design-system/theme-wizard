@@ -5,9 +5,14 @@ import { ModernDurationValueSchema, stringifyDuration } from './tokens/duration-
 import { ModernFontFamilyValueSchema, stringifyFontFamily } from './tokens/fontfamily-token';
 import { stringifyNumber } from './tokens/number-token';
 import { ResolvedShadowValueSchema, stringifyBoxShadow } from './tokens/shadow-token';
+import { isRef } from './tokens/token-reference';
 import { isColorToken } from './walker';
 
 export const stringifyToken = (token: BaseDesignToken): string => {
+  if (isRef(token.$value)) {
+    return token.$value;
+  }
+
   if (isColorToken(token)) {
     return stringifyColor(token.$value);
   }
