@@ -7,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type Theme from '../../lib/Theme';
 import { WizardValidationDrawer } from '.';
 import { themeContext } from '../../contexts/theme';
-import '../wizard-validation-message';
 import '.';
 import ValidationIssue from '../../lib/ValidationIssue';
 

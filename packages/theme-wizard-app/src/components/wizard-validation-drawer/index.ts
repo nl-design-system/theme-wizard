@@ -6,6 +6,7 @@ import { safeCustomElement } from '@nl-design-system-community/clippy-components
 import AccessibleIcon from '@tabler/icons/outline/accessible.svg?raw';
 import '@nl-design-system-community/clippy-components/clippy-button';
 import '@nl-design-system-community/clippy-components/clippy-drawer';
+import '../wizard-validation-message';
 import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { query, state } from 'lit/decorators.js';
