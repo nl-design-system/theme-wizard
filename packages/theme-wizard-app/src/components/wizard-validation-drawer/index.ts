@@ -85,34 +85,34 @@ export class WizardValidationDrawer extends LitElement {
       <clippy-drawer actions="none" side="inline-end" id="wizard-validation-drawer">
         <span slot="title">${t('wizard.validationDrawer.title')}</span>
         ${!this.theme.errorCount ? html`<p class="nl-paragraph">${t('wizard.validationDrawer.noIssues')}</p>` : nothing}
-        <clippy-stack size="3xl">
+        <clippy-stack size="4xl">
           ${Object.entries(groupsByCode).map(([errorCode, groups]) => {
             if (!groups || groups.length === 0) return nothing;
 
             return html`
-              <clippy-stack size="lg">
+              <clippy-stack>
                 <clippy-heading level=${2}>
                   ${t(`validation.error.${errorCode}.label`)} (${groups.length})
                 </clippy-heading>
 
-                <clippy-stack>
+                <clippy-stack size="xl">
                   ${groups.map((group) => {
                     if (group.issues.length === 1) {
                       return html`<wizard-validation-message .issue=${group.issues[0]}></wizard-validation-message>`;
                     }
 
                     return html`
-                      <div>
+                      <clippy-stack size="sm">
                         <wizard-validation-message .issue=${group.representative}></wizard-validation-message>
                         <details>
                           <summary>${t('validation.group.affectedTokens', { count: group.issues.length })}</summary>
-                          <clippy-stack>
+                          <clippy-stack class="wizard-validation-drawer__details">
                             ${group.issues.map(
                               (issue) => html`<wizard-validation-message .issue=${issue}></wizard-validation-message>`,
                             )}
                           </clippy-stack>
                         </details>
-                      </div>
+                      </clippy-stack>
                     `;
                   })}
                 </clippy-stack>

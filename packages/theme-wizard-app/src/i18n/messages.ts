@@ -876,6 +876,7 @@ export const nl = {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`<a
+          class="nl-link"
           href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte"
           target="_blank"
           >Bekijk richtlijnen</a
@@ -893,6 +894,7 @@ export const nl = {
       lineHeight: 'Regelafstand: {{value}}',
       lineHeightTooSmall: ({ token }: { token: string }) => {
         const guidelinesLink = html`<a
+          class="nl-link"
           href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
           target="_blank"
           >Bekijk richtlijnen</a
