@@ -42,6 +42,8 @@ export * from './components/wizard-tokens-presets';
 export * from './components/wizard-tokens-reuse-form';
 export * from './components/wizard-token-group-table';
 export * from './components/wizard-unstyled-list';
+export * from './components/wizard-validation-drawer';
+export * from './components/wizard-validation-message';
 
 export * from './utils/index';
 export * from './lib/Theme/lib';

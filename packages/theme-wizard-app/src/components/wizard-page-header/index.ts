@@ -6,6 +6,7 @@ import '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 import '@nl-design-system-community/clippy-components/clippy-page-header';
 import '../wizard-logo';
+
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
@@ -67,6 +68,7 @@ export class WizardPageHeader extends LitElement {
         <a class="wizard-page-header__logo" href="/" slot="logo">
           <wizard-logo></wizard-logo>
         </a>
+        <wizard-validation-drawer slot="end" hidden></wizard-validation-drawer>
       </clippy-page-header>
     `;
   }

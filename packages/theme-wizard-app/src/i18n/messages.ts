@@ -471,6 +471,12 @@ export const en = {
       done: 'Task completed',
       navigateTo: 'Navigate to ‘{{item}}’',
     },
+    validationDrawer: {
+      noIssues: 'Well done! Your theme looks good.',
+      title: 'Errors, warnings or tips',
+      toggle: ({ count }: { count?: number }) =>
+        count ? `Show accessibility notifications (${count} notifications)` : 'Show accessibility notifications',
+    },
   },
 };
 
@@ -931,6 +937,12 @@ export const nl = {
     taskNavigation: {
       done: 'Taak afgerond',
       navigateTo: 'Navigeer naar ‘{{item}}’',
+    },
+    validationDrawer: {
+      noIssues: 'Goed bezig! Je thema ziet er goed uit.',
+      title: 'Fouten, waarschuwingen of tips',
+      toggle: ({ count }: { count?: number }) =>
+        count ? `Toon toegankelijkheidsmeldingen (${count} meldingen)` : 'Toon toegankelijkheidsmeldingen',
     },
   },
 } satisfies typeof en;
