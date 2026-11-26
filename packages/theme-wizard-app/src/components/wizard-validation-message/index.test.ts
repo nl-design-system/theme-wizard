@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import '.';
 import type Theme from '../../lib/Theme';
 import { WizardValidationMessage } from '.';
+import { provideTokenUrlResolver, type TokenUrlResolver } from '../../contexts/token-url';
 import i18n from '../../i18n';
 import ValidationIssue from '../../lib/ValidationIssue';
 
@@ -23,11 +24,20 @@ const makeIssue = (
     ...extra,
   } as ThemeValidationIssue);
 
-const mount = async (path: string, theme: Partial<Theme>): Promise<WizardValidationMessage> => {
-  document.body.innerHTML = `<${tag}></${tag}>`;
-  const el = document.querySelector<WizardValidationMessage>(tag)!;
+const mount = async (
+  path: string,
+  theme: Partial<Theme>,
+  tokenUrlResolver?: TokenUrlResolver,
+): Promise<WizardValidationMessage> => {
+  document.body.innerHTML = '<div id="context-host"></div>';
+  const host = document.querySelector('#context-host') as HTMLElement;
+  if (tokenUrlResolver) {
+    provideTokenUrlResolver(host, tokenUrlResolver);
+  }
+  const el = document.createElement(tag) as WizardValidationMessage;
   el.path = path;
   (el as unknown as { theme: Theme }).theme = theme as Theme;
+  host.append(el);
   await el.updateComplete;
   return el;
 };
@@ -77,13 +87,39 @@ describe(`<${tag}>`, () => {
 
   describe('when an issue matches the path', () => {
     it('renders the issue path as a link to the design-tokens page', async () => {
-      const el = await mount('basis.line-height.md', {
-        issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)],
-      });
+      const el = await mount(
+        'basis.line-height.md',
+        {
+          issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)],
+        },
+        (tokenPath) => `/design-tokens/${tokenPath.replaceAll('.', '/')}`,
+      );
 
       const anchor = getParagraph(el)?.querySelector('a');
       expect(anchor?.textContent).toBe('basis.line-height.md');
       expect(anchor?.getAttribute('href')).toBe('/design-tokens/basis/line-height/md');
+    });
+
+    it('renders the issue path without a link when no token URL resolver is provided', async () => {
+      const el = await mount('basis.line-height.md', {
+        issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)],
+      });
+
+      expect(getParagraph(el)?.querySelector('a')).toBeNull();
+      expect(getText(el)).toContain('basis.line-height.md');
+    });
+
+    it('renders the issue path without a link when the resolver has no page for the path', async () => {
+      const el = await mount(
+        'basis.line-height.md',
+        {
+          issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)],
+        },
+        () => undefined,
+      );
+
+      expect(getParagraph(el)?.querySelector('a')).toBeNull();
+      expect(getText(el)).toContain('basis.line-height.md');
     });
 
     it('renders the translated message for the issue code', async () => {
