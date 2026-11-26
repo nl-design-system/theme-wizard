@@ -7,6 +7,7 @@ import '@nl-design-system-community/clippy-components/clippy-drawer';
 import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { themeContext } from '../../contexts/theme';
+import { tokenUrlContext, type TokenUrlResolver } from '../../contexts/token-url';
 import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
 import ValidationIssue from '../../lib/ValidationIssue';
@@ -31,6 +32,10 @@ export class WizardValidationMessage extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
+
+  @consume({ context: tokenUrlContext, subscribe: true })
+  @state()
+  private tokenUrlResolver?: TokenUrlResolver;
 
   @property({ converter: String })
   path: string = '';
@@ -63,13 +68,12 @@ export class WizardValidationMessage extends LitElement {
       return nothing;
     }
 
+    // Only link when the host provided a resolver and a page exists for this token path
+    const href = this.tokenUrlResolver?.(this.#issue.path);
+
     return html`
       <p class="nl-paragraph">
-        <b>
-          <a class="nl-link" href=${`/design-tokens/${this.#issue.path.replaceAll('.', '/')}`}
-            >${this.#issue.path}</a
-          ></b
-        >:
+        ${href ? html`<b><a class="nl-link" href=${href}>${this.#issue.path}</a></b>` : html`<b>${this.#issue.path}</b>`}:
         <br />
         ${t(`validation.error.${this.#issue.code}.message`, this.#issue)}
       </p>
