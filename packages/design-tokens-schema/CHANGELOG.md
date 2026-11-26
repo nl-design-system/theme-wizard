@@ -1,5 +1,21 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.8.1
+
+### Patch Changes
+
+- 2eec08a: ## clippy-components
+  
+  - add `clippy-token-group-table`
+  
+  ## theme-wizard-app
+  - add wizard-token-group-table as a light wrapper around `clippy-token-group-table`
+  
+  ## design-tokens-schema
+  - fix stringification of tokens with reference value
+  - fix missing support for `clippy-token-sample` when `line-height` token has a unit
+  - make color-tokens less chatty: do not `console.warn` when trying to parse a reference value
+
 ## 2.8.0
 
 ### Minor Changes
