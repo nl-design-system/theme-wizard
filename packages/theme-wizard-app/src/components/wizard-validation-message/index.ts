@@ -57,9 +57,7 @@ export class WizardValidationMessage extends LitElement {
         <b><a href=${`/design-tokens/${this.#issue.path.replaceAll('.', '/')}`}>${this.#issue.path}</a></b
         >:
         <br />
-        ${t(`validation.error.${this.#issue.code}.message`, {
-          ...this.#issue,
-        })}
+        ${t(`validation.error.${this.#issue.code}.message`, this.#issue)}
       </p>
     `;
   }

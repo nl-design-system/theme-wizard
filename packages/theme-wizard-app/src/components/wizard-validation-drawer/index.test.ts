@@ -12,9 +12,11 @@ import ValidationIssue from '../../lib/ValidationIssue';
 
 const tag = 'wizard-validation-drawer';
 
+const whitespaceRegex = /\s+/g;
+
 const makeIssue = (
   path: string,
-  errorCode: (typeof ERROR_CODES)[keyof typeof ERROR_CODES],
+  errorCode: ValidationIssue['ERROR_CODE'] = undefined,
   extra: Record<string, unknown> = {},
 ): ValidationIssue =>
   new ValidationIssue({
@@ -59,7 +61,8 @@ const getHeadings = (el: WizardValidationDrawer): Element[] =>
 const getMessages = (el: WizardValidationDrawer): Element[] =>
   Array.from(el.shadowRoot?.querySelectorAll('wizard-validation-message') ?? []);
 
-const getText = (el: WizardValidationDrawer): string => (el.shadowRoot?.textContent ?? '').replace(/\s+/g, ' ').trim();
+const getText = (el: WizardValidationDrawer): string =>
+  (el.shadowRoot?.textContent ?? '').replace(whitespaceRegex, ' ').trim();
 
 const hasNotification = (el: WizardValidationDrawer): boolean =>
   getToggle(el)?.classList.contains('wizard-validation-drawer__toggle--has-notification') ?? false;
@@ -114,7 +117,9 @@ describe(`<${tag}>`, () => {
         ]),
       );
 
-      const headings = getHeadings(el).map((heading) => (heading.textContent ?? '').replace(/\s+/g, ' ').trim());
+      const headings = getHeadings(el).map((heading) =>
+        (heading.textContent ?? '').replace(whitespaceRegex, ' ').trim(),
+      );
       expect(headings).toEqual(['Onverwachte eenheid (2)', 'Lettergrootte te klein (1)']);
     });
 
@@ -134,7 +139,7 @@ describe(`<${tag}>`, () => {
 
       await vi.waitFor(() => {
         const [message] = getMessages(el);
-        expect((message?.shadowRoot?.textContent ?? '').replace(/\s+/g, ' ')).toContain(
+        expect((message?.shadowRoot?.textContent ?? '').replace(whitespaceRegex, ' ')).toContain(
           'Onverwachte eenheid. Gebruik alleen nummers.',
         );
       });
@@ -190,7 +195,7 @@ describe(`<${tag}>`, () => {
 
       expect(getText(el)).toContain('(1 meldingen)');
       expect(getText(el)).not.toContain('Goed bezig! Je thema ziet er goed uit.');
-      expect(getHeadings(el).map((h) => (h.textContent ?? '').replace(/\s+/g, ' ').trim())).toEqual([
+      expect(getHeadings(el).map((h) => (h.textContent ?? '').replace(whitespaceRegex, ' ').trim())).toEqual([
         'Onverwachte eenheid (1)',
       ]);
       expect(getMessages(el).map((m) => m.getAttribute('path'))).toEqual(['basis.line-height.md']);

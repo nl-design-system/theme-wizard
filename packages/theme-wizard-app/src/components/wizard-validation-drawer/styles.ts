@@ -26,7 +26,7 @@ export default css`
     position: relative;
 
     &::after {
-      background-color: #f14848;
+      background-color: var(--basis-color-warning-border-subtle);
       block-size: var(--basis-space-inline-md);
       border-radius: var(--basis-border-radius-round);
       content: '';
