@@ -8,7 +8,7 @@ import ValidationIssue from '../../lib/ValidationIssue';
 
 const tag = 'wizard-validation-message';
 
-const whitespaceRegex = /\s+/g;
+const normalizeWhitespace = (value: string): string => value.replace(/\s+/g, ' ').trim();
 
 const makeIssue = (
   path: string,
@@ -39,8 +39,7 @@ const setTheme = (el: WizardValidationMessage, theme: Partial<Theme>) => {
 const getParagraph = (el: WizardValidationMessage): HTMLParagraphElement | null =>
   el.shadowRoot?.querySelector('p.nl-paragraph') ?? null;
 
-const getText = (el: WizardValidationMessage): string =>
-  (el.shadowRoot?.textContent ?? '').replace(whitespaceRegex, ' ').trim();
+const getText = (el: WizardValidationMessage): string => normalizeWhitespace(el.shadowRoot?.textContent ?? '');
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
