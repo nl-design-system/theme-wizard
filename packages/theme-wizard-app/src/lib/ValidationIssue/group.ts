@@ -17,6 +17,14 @@ export type ValidationIssueGroup = {
   representative: ValidationIssue;
 };
 
+/**
+ * Union-find (disjoint-set) over issue indices, with path compression in `find`.
+ *
+ * Needed because grouping is transitive: if issue A shares a token with issue B, and B
+ * references a token used by issue C, then A, B and C all belong to the same group even
+ * though A and C are never compared directly. `union`/`find` track those connected
+ * components in near-constant time, so each cluster can be collected with a single pass.
+ */
 class DisjointSet {
   readonly #parent: number[];
 
@@ -49,7 +57,7 @@ class DisjointSet {
  * token path, e.g. `['basis.color.default.color-default']` for a component token that
  * references it directly or through intermediate tokens.
  */
-const refTargetsOf = (path: string, tokens: DesignTokensLike): string[] => {
+const refTargetsOf = (path: string, tokens: TokenGroup): string[] => {
   const targets: string[] = [];
   const visited = new Set<string>();
   let current = path;
