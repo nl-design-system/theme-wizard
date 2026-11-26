@@ -60,7 +60,6 @@ export class WizardValidationDrawer extends LitElement {
   }
 
   override render() {
-    console.log('this.theme.groupedIssues', this.theme.groupedIssues);
     return html`
       <clippy-button
         icon-only
