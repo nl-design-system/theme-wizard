@@ -330,6 +330,13 @@ export const en = {
   tokensPresets: {
     placeholder: 'Choose a preset',
   },
+  tokensTable: {
+    name: 'Name',
+    actions: 'Actions',
+    copy: 'Copy',
+    example: 'Example',
+    value: 'Value',
+  },
   tokenValidationForm: {
     downloadTokens: 'Download theme (JSON)',
     excludeParentKeys: {
@@ -463,6 +470,12 @@ export const en = {
     taskNavigation: {
       done: 'Task completed',
       navigateTo: 'Navigate to ‘{{item}}’',
+    },
+    validationDrawer: {
+      noIssues: 'Well done! Your theme looks good.',
+      title: 'Errors, warnings or tips',
+      toggle: ({ count }: { count?: number }) =>
+        count ? `Show accessibility notifications (${count} notifications)` : 'Show accessibility notifications',
     },
   },
 };
@@ -788,6 +801,13 @@ export const nl = {
   tokensPresets: {
     placeholder: 'Kies een voorinstelling',
   },
+  tokensTable: {
+    name: 'Naam',
+    actions: 'Acties',
+    copy: 'Kopieer',
+    example: 'Voorbeeld',
+    value: 'Waarde',
+  },
   tokenValidationForm: {
     downloadTokens: 'Download thema (JSON)',
     excludeParentKeys: {
@@ -917,6 +937,12 @@ export const nl = {
     taskNavigation: {
       done: 'Taak afgerond',
       navigateTo: 'Navigeer naar ‘{{item}}’',
+    },
+    validationDrawer: {
+      noIssues: 'Goed bezig! Je thema ziet er goed uit.',
+      title: 'Fouten, waarschuwingen of tips',
+      toggle: ({ count }: { count?: number }) =>
+        count ? `Toon toegankelijkheidsmeldingen (${count} meldingen)` : 'Toon toegankelijkheidsmeldingen',
     },
   },
 } satisfies typeof en;

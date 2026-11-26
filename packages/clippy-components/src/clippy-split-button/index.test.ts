@@ -13,10 +13,10 @@ describe(`<${tag}>`, () => {
   const getButton = (slot: 'start' | 'end') => component.querySelector<ClippyButton>(`[slot="${slot}"]`)!;
   const getInnerButton = (slot: 'start' | 'end') => getButton(slot).shadowRoot!.querySelector('button')!;
 
-  const render = async (startPurpose = 'primary', endPurpose = 'primary') => {
+  const render = async (startPurpose = 'primary', endPurpose = 'primary', startLabel = 'Primary') => {
     document.body.innerHTML = `
       <${tag} style="--nl-button-border-radius: 8px; --nl-button-primary-border-width: 1px; --nl-button-secondary-border-width: 1px; --basis-color-action-1-border-subtle: #dbb8e6">
-        <clippy-button slot="start" purpose="${startPurpose}">Primary</clippy-button>
+        <clippy-button slot="start" purpose="${startPurpose}">${startLabel}</clippy-button>
         <clippy-button slot="end" purpose="${endPurpose}" icon-only>Secondary</clippy-button>
         <ul slot="menu" popover>
           <li><button type="button">Action one</button></li>
@@ -116,6 +116,33 @@ describe(`<${tag}>`, () => {
       expect(getInnerButton('end').getBoundingClientRect().left).toBe(
         getButton('start').getBoundingClientRect().right - 1,
       );
+    });
+
+    describe('with a start label too long for one line', () => {
+      const width = 120;
+      let singleLineHeight: number;
+
+      beforeEach(async () => {
+        singleLineHeight = getInnerButton('start').getBoundingClientRect().height;
+        await render('primary', 'primary', 'A start label that is far too long to fit on a single line');
+        const wrapper = document.createElement('div');
+        wrapper.style.inlineSize = `${width}px`;
+        document.body.append(wrapper);
+        wrapper.append(component);
+      });
+
+      it('wraps the label within the available width', () => {
+        const start = getInnerButton('start').getBoundingClientRect();
+
+        expect(component.getBoundingClientRect().width).toBeLessThanOrEqual(width);
+        expect(start.height).toBeGreaterThan(singleLineHeight);
+      });
+
+      it('stretches the end button to the height of the start button', () => {
+        expect(getInnerButton('end').getBoundingClientRect().height).toBe(
+          getInnerButton('start').getBoundingClientRect().height,
+        );
+      });
     });
 
     it('anchors the menu below the buttons', () => {

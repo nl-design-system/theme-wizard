@@ -64,9 +64,7 @@ export class WizardValidationMessage extends LitElement {
       <p class="nl-paragraph">
         ${href ? html`<b><a href=${href}>${this.#issue.path}</a></b>` : html`<b>${this.#issue.path}</b>`}:
         <br />
-        ${t(`validation.error.${this.#issue.code}.message`, {
-          ...this.#issue,
-        })}
+        ${t(`validation.error.${this.#issue.code}.message`, this.#issue)}
       </p>
     `;
   }

@@ -150,3 +150,15 @@ describe('shadow token', () => {
     expect(stringifyToken(token)).toBe(JSON.stringify(token.$value));
   });
 });
+
+describe('reference token', () => {
+  it('returns the reference as-is', () => {
+    expect(stringifyToken({ $type: 'color', $value: '{basis.color.accent-1.bg-default}' })).toBe(
+      '{basis.color.accent-1.bg-default}',
+    );
+  });
+
+  it('returns the reference as-is regardless of $type', () => {
+    expect(stringifyToken({ $type: 'dimension', $value: '{basis.space.inline.md}' })).toBe('{basis.space.inline.md}');
+  });
+});
