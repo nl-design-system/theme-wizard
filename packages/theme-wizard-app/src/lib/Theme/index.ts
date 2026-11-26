@@ -23,6 +23,7 @@ import {
   addTokenPathExtensions,
   EXTENSION_TOKEN_PATH,
   EXTENSION_USAGE_COUNT,
+  TokenGroup,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -32,29 +33,22 @@ import ValidationIssue, { groupValidationIssues, type ValidationIssueGroup } fro
 import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
-type DesignTokens = Record<string, unknown>;
-type DesignToken = {
-  $value: unknown;
-  $type?: string;
-  [key: string]: unknown;
-};
-
 export default class Theme {
   name = 'wizard';
-  readonly #defaults: Record<string, unknown>; // Every Theme has private defaults to revert to.
+  readonly #defaults: TokenGroup; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
-  #tokens: DesignTokens = Object.create(null); // In practice this will be set via the this.tokens() setter in the constructor
+  #tokens: TokenGroup = Object.create(null); // In practice this will be set via the this.tokens() setter in the constructor
   readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] | null = null; // null means not validated yet
   #issueGroups: ValidationIssueGroup[] | null = null; // null means not grouped yet
 
   /**
-   * Flatten a nested DesignTokens object into a flat map of token paths to DesignToken objects.
+   * Flatten a nested TokenGroup object into a flat map of token paths to DesignToken objects.
    * @param tokens
    * @returns
    */
-  static flatten(tokens: DesignTokens): Record<string, BaseDesignToken> {
+  static flatten(tokens: TokenGroup): Record<string, BaseDesignToken> {
     return flattenTokens(tokens);
   }
 
@@ -62,7 +56,7 @@ export default class Theme {
    * @param tokens Default token set for the theme, defaults to start tokens. Resetting a theme will revert to these tokens.
    * @param source Theme to copy state from without re-running processors, validation or CSS generation (used by `clone()`).
    */
-  constructor(tokens?: DesignTokens, source?: Theme) {
+  constructor(tokens?: TokenGroup, source?: Theme) {
     if (source) {
       this.#defaults = source.#defaults;
       this.#rule = source.#rule;
@@ -73,7 +67,7 @@ export default class Theme {
       this.#issueGroups = source.#issueGroups && [...source.#issueGroups];
       return;
     }
-    this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
+    this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as TokenGroup));
     const [styleSheet, rule] = createStylesheet();
     this.#rule = rule;
     this.#stylesheet = styleSheet;
@@ -105,7 +99,7 @@ export default class Theme {
     return this.#tokens;
   }
 
-  set tokens(values: DesignTokens) {
+  set tokens(values: TokenGroup) {
     this.#modified = !dequal(this.#defaults, values);
     this.#validationIssues = null;
     this.#issueGroups = null;
@@ -115,7 +109,7 @@ export default class Theme {
 
   // Updates a single token value at the given path, preserving other properties and extensions of the token.
   // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
-  static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
+  static #updateAt(tokens: TokenGroup, path: string, value: BaseDesignToken['$value']) {
     const { $extensions, ...original } = dlv(tokens, path);
     removeExtensions(tokens, {
       include: [
@@ -131,7 +125,7 @@ export default class Theme {
     });
   }
 
-  #runThemeProcessors(tokens: DesignTokens) {
+  #runThemeProcessors(tokens: TokenGroup) {
     useOriginalValue(tokens);
     upgradeLegacyTokens(tokens);
     addTokenSubTypeExtensions(tokens);
@@ -147,7 +141,7 @@ export default class Theme {
   }
 
   // Updates an existing token's value, or adds the token when the theme doesn't have it yet
-  static #applyToken(tokens: DesignTokens, path: string, token: Partial<DesignToken>) {
+  static #applyToken(tokens: TokenGroup, path: string, token: Partial<BaseDesignToken>) {
     if (dlv(tokens, path)) {
       Theme.#updateAt(tokens, path, token.$value);
     } else {
@@ -156,7 +150,7 @@ export default class Theme {
   }
 
   // Single write path for all public update methods
-  #commit(entries: Iterable<[string, Partial<DesignToken>]>) {
+  #commit(entries: Iterable<[string, Partial<BaseDesignToken>]>) {
     const tokens = structuredClone(this.#tokens);
     for (const [path, token] of entries) {
       Theme.#applyToken(tokens, path, token);
@@ -165,11 +159,11 @@ export default class Theme {
     this.tokens = tokens;
   }
 
-  updateAt(path: string, value: DesignToken['$value']) {
+  updateAt(path: string, value: BaseDesignToken['$value']) {
     this.updateMany([{ path, value }]);
   }
 
-  updateMany(values: { path: string; value: DesignToken['$value'] }[]) {
+  updateMany(values: { path: string; value: BaseDesignToken['$value'] }[]) {
     this.#commit(values.map(({ path, value }) => [path, { $value: value }]));
   }
 
@@ -179,7 +173,7 @@ export default class Theme {
   }
 
   // Replaces all tokens with external input (upload, storage), running the processors the setter skips.
-  load(tokens: DesignTokens) {
+  load(tokens: TokenGroup) {
     this.tokens = this.#runThemeProcessors(structuredClone(tokens));
   }
 
@@ -195,7 +189,7 @@ export default class Theme {
     this.updateAt(path, defaultValue?.$value);
   }
 
-  at(path: string): DesignToken {
+  at(path: string): BaseDesignToken {
     return dlv(this.tokens, path);
   }
 
@@ -222,7 +216,7 @@ export default class Theme {
     return this.#validationIssues;
   }
 
-  static #validateTheme(theme: DesignTokens): ValidationIssue[] {
+  static #validateTheme(theme: TokenGroup): ValidationIssue[] {
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
     if (result.success) {
@@ -237,7 +231,7 @@ export default class Theme {
     this.#modified = false;
   }
 
-  toLegacyTokens(): DesignTokens {
+  toLegacyTokens(): TokenGroup {
     const legacyTokens = structuredClone(this.tokens);
 
     walkTokens(legacyTokens, (token) => {

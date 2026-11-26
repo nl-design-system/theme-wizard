@@ -1,8 +1,11 @@
-import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
+import { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
+import themeTokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
 import { is_declaration, is_rule, parse as parseCss } from '@projectwallace/css-parser';
 import dlv from 'dlv';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
+
+const tokens = themeTokens as unknown as TokenGroup;
 
 // CSSOM isn't stable in what it returns, so for testing purposes we normalize the CSS
 // so that the outcome is predictable.

@@ -1,11 +1,12 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
+import { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
-import { t } from '../../i18n';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '../wizard-token-upload-form';
+import { t } from '../../i18n';
 import { type ThemePresetResult, parseThemePreset } from '../../lib/TokenFiles';
 import ValidationIssue from '../../lib/ValidationIssue';
 import { SET_THEME_TOKENS_EVENT, type SetThemeTokensDetail } from '../../utils/events';
@@ -47,7 +48,7 @@ export class WizardThemePresetForm extends LitElement {
       new CustomEvent<SetThemeTokensDetail>(SET_THEME_TOKENS_EVENT, {
         bubbles: true,
         composed: true,
-        detail: { tokens: this.result.data },
+        detail: { tokens: this.result.data as TokenGroup },
       }),
     );
   };
