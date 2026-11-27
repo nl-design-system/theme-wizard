@@ -406,7 +406,7 @@ export const en = {
     },
     group: {
       affectedTokens: ({ count }: { count: number }): string =>
-        count === 1 ? 'Affects 1 token' : `Affects ${count} tokens`,
+        count === 1 ? '1 related issue' : `${count} related issues`,
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
@@ -880,7 +880,7 @@ export const nl = {
     },
     group: {
       affectedTokens: ({ count }: { count: number }): string =>
-        count === 1 ? 'Betreft 1 token' : `Betreft ${count} tokens`,
+        count === 1 ? '1 gerelateerde fout' : `${count} gerelateerde fouten`,
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
