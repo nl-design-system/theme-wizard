@@ -1,9 +1,8 @@
 import { consume } from '@lit/context';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import '@nl-design-system-community/clippy-components/clippy-button';
-import '@nl-design-system-community/clippy-components/clippy-drawer';
 import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { themeContext } from '../../contexts/theme';
@@ -27,7 +26,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class WizardValidationMessage extends LitElement {
-  static override readonly styles = [styles, unsafeCSS(linkCss), unsafeCSS(paragraphCss)];
+  static override readonly styles = [styles, unsafeCSS(dataBadgeCss), unsafeCSS(linkCss), unsafeCSS(paragraphCss)];
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -39,6 +38,9 @@ export class WizardValidationMessage extends LitElement {
 
   @property({ converter: String })
   path: string = '';
+
+  @property({ attribute: 'message-only', type: Boolean })
+  messageOnly: boolean = false;
 
   /**
    * Pass the issue directly when it is already known (e.g. from a ValidationIssueGroup).
@@ -63,6 +65,10 @@ export class WizardValidationMessage extends LitElement {
     }
   }
 
+  #renderMessage = (issue: ValidationIssue) => {
+    return t(`validation.error.${issue.code}.message`, issue);
+  };
+
   override render() {
     if (!this.#issue) {
       return nothing;
@@ -71,11 +77,15 @@ export class WizardValidationMessage extends LitElement {
     // Only link when the host provided a resolver and a page exists for this token path
     const href = this.tokenUrlResolver?.(this.#issue.path);
 
+    if (this.messageOnly) {
+      return html`<span>${this.#renderMessage(this.#issue)}</span>`;
+    }
+
     return html`
       <p class="nl-paragraph">
-        ${href ? html`<b><a class="nl-link" href=${href}>${this.#issue.path}</a></b>` : html`<b>${this.#issue.path}</b>`}:
+        <strong>${href ? html`<a class="nl-link" href=${href}>${this.#issue.path}</a>` : this.#issue.path}</strong>:
         <br />
-        ${t(`validation.error.${this.#issue.code}.message`, this.#issue)}
+        ${this.#renderMessage(this.#issue)}
       </p>
     `;
   }
