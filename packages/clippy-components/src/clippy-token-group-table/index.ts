@@ -40,6 +40,8 @@ export class ClippyTokenGroupTable extends LitElement {
   @property({ type: Object }) theme?: TokenGroup | null;
   @property({ type: String }) path = '';
 
+  /** Table caption; defaults to `this.path` */
+  @property({ type: String }) caption = '';
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'name-label', type: String }) nameLabel = 'Name';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
@@ -54,16 +56,17 @@ export class ClippyTokenGroupTable extends LitElement {
     return isTokenGroup(group) ? group : Object.create(null);
   }
 
-  readonly #renderTokenRow = (name: string, token: BaseDesignToken): TemplateResult => {
+  readonly #renderTokenRow = (path: string[], name: string, token: BaseDesignToken): TemplateResult => {
     const tokenString = stringifyTokenValue(token);
+    const tokenPath = path.concat(name).join('.');
     return html`
       <tr class="clippy-token-group-table__row">
         <td class="clippy-token-group-table__cell">
-          <div class="clippy-token-group-table__token-sample">
+          <div class="clippy-token-group-table__token-sample" aria-hidden="true">
             <clippy-token-sample .token=${token}>Aa</clippy-token-sample>
           </div>
         </td>
-        <td class="clippy-token-group-table__cell">${name}</td>
+        <th class="clippy-token-group-table__cell clippy-token-group-table__name-cell" scope="row">${name}</th>
         <td class="clippy-token-group-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
         <td class="clippy-token-group-table__cell">
           <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
@@ -73,7 +76,7 @@ export class ClippyTokenGroupTable extends LitElement {
               size="small"
               @click=${() => navigator.clipboard.writeText(tokenString)}
             >
-              ${this.copyLabel} ${tokenString}
+              ${this.copyLabel} ${tokenPath}
               <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
             </clippy-button>
           </clippy-toggletip>
@@ -83,25 +86,36 @@ export class ClippyTokenGroupTable extends LitElement {
   };
 
   // TODO: Sort sub-groups and properties as per https://github.com/nl-design-system/documentatie/blob/main/docs/handboek/huisstijl-vastleggen/_design-tokens-volgorde.md
-  readonly #renderTokenGroup = (name: string[], group: TokenGroup): TemplateResult => {
+  // Tables can't nest tbody, so every (nested) group becomes a sibling tbody: own tokens first, then sub-groups
+  readonly #renderTokenGroup = (path: string[], group: TokenGroup, isRoot = false): TemplateResult => {
+    const entries = Object.entries(group);
+    const tokens = entries.filter((entry): entry is [string, BaseDesignToken] => isTokenLike(entry[1]));
+    const groups = entries.filter(
+      (entry): entry is [string, TokenGroup] => !isTokenLike(entry[1]) && isTokenGroup(entry[1]),
+    );
+    const hasHeader = !isRoot;
     return html`
-      ${map(Object.entries(group), ([property, item]) => {
-        if (isTokenLike(item)) {
-          return this.#renderTokenRow(property, item);
-        }
-        if (isTokenGroup(item)) {
-          const nestedProperty = name.concat(property);
-          return html`
-            <tr class="clippy-token-group-table__group-row">
-              <td class="clippy-token-group-table__cell clippy-token-group-table__group-cell" colspan="4">
-                ${nestedProperty.join('.')}
-              </td>
-            </tr>
-            ${this.#renderTokenGroup(nestedProperty, item)}
-          `;
-        }
-        return nothing;
-      })}
+      ${
+        hasHeader || tokens.length > 0
+          ? html`<tbody class="clippy-token-group-table__group">
+              ${
+                hasHeader
+                  ? html`<tr class="clippy-token-group-table__group-row">
+                      <th
+                        class="clippy-token-group-table__cell clippy-token-group-table__group-cell"
+                        colspan="4"
+                        scope="rowgroup"
+                      >
+                        ${path.join('.')}
+                      </th>
+                    </tr>`
+                  : nothing
+              }
+              ${map(tokens, ([name, token]) => this.#renderTokenRow(path, name, token))}
+            </tbody>`
+          : nothing
+      }
+      ${map(groups, ([name, item]) => this.#renderTokenGroup(path.concat(name), item))}
     `;
   };
 
@@ -111,12 +125,13 @@ export class ClippyTokenGroupTable extends LitElement {
     }
     const group = this.#getGroupAtPath(this.theme);
     const rootPath = this.path ? [this.path] : [];
+    const caption = this.caption || this.path;
     return html`
       <table class="clippy-token-group-table__table">
         ${
-          this.path
+          caption
             ? html`<caption class="clippy-token-group-table__caption">
-                ${this.path}
+                ${caption}
               </caption>`
             : nothing
         }
@@ -136,9 +151,7 @@ export class ClippyTokenGroupTable extends LitElement {
             </th>
           </tr>
         </thead>
-        <tbody>
-          ${this.#renderTokenGroup(rootPath, group)}
-        </tbody>
+        ${this.#renderTokenGroup(rootPath, group, true)}
       </table>
     `;
   }

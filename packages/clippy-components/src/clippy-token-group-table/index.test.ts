@@ -75,6 +75,34 @@ describe(`<${tag}>`, () => {
       expect(tokenRows[1].cells[1].textContent?.trim()).toBe('bg-subtle');
     });
 
+    it('renders the token name as row header', () => {
+      const [tokenRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
+      const nameCell = tokenRow.cells[1];
+      expect(nameCell.tagName).toBe('TH');
+      expect(nameCell.getAttribute('scope')).toBe('row');
+    });
+
+    it('renders every group in its own tbody with a rowgroup header', () => {
+      const groupHeader = component.shadowRoot?.querySelector('tbody th[scope="rowgroup"]');
+      expect(groupHeader?.textContent?.trim()).toBe('basis.color.accent-1');
+      expect(groupHeader?.closest('tbody')?.querySelectorAll('.clippy-token-group-table__row')).toHaveLength(2);
+    });
+
+    it('hides the redundant samples from assistive technology', () => {
+      const samples = Array.from(
+        component.shadowRoot?.querySelectorAll('.clippy-token-group-table__token-sample') ?? [],
+      );
+      expect(samples.length).toBeGreaterThan(0);
+      for (const sample of samples) {
+        expect(sample.getAttribute('aria-hidden')).toBe('true');
+      }
+    });
+
+    it('includes the token path in the copy button label', () => {
+      const button = component.shadowRoot?.querySelector('clippy-button');
+      expect(button?.textContent).toContain('Copy basis.color.accent-1.bg-default');
+    });
+
     it('shows the reference for aliased tokens', () => {
       const [, aliasRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
       expect(aliasRow.cells[2].textContent?.trim()).toBe('{basis.color.accent-1.bg-default}');
@@ -119,6 +147,18 @@ describe(`<${tag}>`, () => {
       const component = await render('path="basis.color" copy-label="Kopieer"');
       const toggletip = component.shadowRoot?.querySelector('clippy-toggletip');
       expect(toggletip?.getAttribute('text')).toBe(`Kopieer "${stringifyTokenValue(firstToken)}"`);
+    });
+  });
+
+  describe('caption', () => {
+    it('renders a custom caption', async () => {
+      const component = await render('path="basis.color" caption="Colors"');
+      expect(component.shadowRoot?.querySelector('caption')?.textContent?.trim()).toBe('Colors');
+    });
+
+    it('renders a custom caption without a path', async () => {
+      const component = await render('caption="All tokens"');
+      expect(component.shadowRoot?.querySelector('caption')?.textContent?.trim()).toBe('All tokens');
     });
   });
 
