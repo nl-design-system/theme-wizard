@@ -208,7 +208,7 @@ describe(`<${tag}>`, () => {
       ]);
     });
 
-    it('collapses a failing contrast pair into a single group with a details section', async () => {
+    it('collapses a failing contrast pair into a single group with one message', async () => {
       const color = 'basis.color.default.color-default';
       const background = 'basis.color.default.bg-default';
       const el = await mount(
@@ -217,9 +217,12 @@ describe(`<${tag}>`, () => {
 
       expect(getHeadings(el)).toEqual(['Onvoldoende contrast (1)']);
 
-      const details = el.shadowRoot?.querySelector('details');
-      expect(normalizeWhitespace(details?.querySelector('summary')?.textContent ?? '')).toBe('Betreft 2 tokens');
-      expect(getMessages(el)).toHaveLength(3);
+      // The issue on the referred token is the opposite of the first issue and is removed,
+      // so the group holds a single issue and renders without a details section
+      expect(el.shadowRoot?.querySelector('details')).toBeNull();
+      const messages = getMessages(el);
+      expect(messages).toHaveLength(1);
+      expect(messages[0].issue?.path).toBe(color);
     });
 
     it('counts multiple groups with the same error code in the heading and the toggle label', async () => {
@@ -233,7 +236,9 @@ describe(`<${tag}>`, () => {
       );
 
       expect(getHeadings(el)).toEqual(['Onvoldoende contrast (2)']);
-      expect(el.shadowRoot?.querySelectorAll('details')).toHaveLength(2);
+      // Each pair collapses to its first issue, so no group has a details section anymore
+      expect(el.shadowRoot?.querySelectorAll('details')).toHaveLength(0);
+      expect(getMessages(el)).toHaveLength(2);
       expect(getToggleText(el)).toBe('Toon toegankelijkheidsmeldingen (2 meldingen)');
     });
   });
