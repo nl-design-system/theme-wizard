@@ -50,6 +50,7 @@ export default css`
     transition:
       opacity 120ms ease,
       visibility 120ms ease;
+    user-select: none;
     visibility: hidden;
     z-index: var(--clippy-toggletip-z-index);
   }
