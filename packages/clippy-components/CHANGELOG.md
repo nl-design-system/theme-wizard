@@ -1,5 +1,16 @@
 # @nl-design-system-community/clippy-components
 
+## 3.11.1
+
+### Patch Changes
+
+- 4de7643: - Add `user-select: none` to `<clippy-toggletip>` popover
+  - Add button to `<clippy-token-group-table>` to copy token path as CSS variable
+  - Render token references in `<clippy-token-group-table>` as an NL Data Badge
+  - Add `label=""` attribute to `<clippy-token-group-table>`
+  - Add `label=""` attribute to `<clippy-token-sample-text>`
+  - Add `label=""` attribute to `<clippy-token-sample>`
+
 ## 3.11.0
 
 ### Minor Changes
