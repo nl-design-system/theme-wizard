@@ -192,20 +192,18 @@ describe(`<${tag}>`, () => {
 
       const details = el.shadowRoot?.querySelector('details');
       expect(details).not.toBeNull();
-      expect(normalizeWhitespace(details?.querySelector('summary')?.textContent ?? '')).toBe('Betreft 2 tokens');
+      // The representative is rendered above the details, so the summary counts only the rest
+      expect(normalizeWhitespace(details?.querySelector('summary')?.textContent ?? '')).toBe('Betreft 1 token');
 
       const messages = getMessages(el);
-      // 1 representative message + 1 message per issue inside the details section
-      expect(messages).toHaveLength(3);
+      // 1 representative message + 1 message per remaining issue inside the details section
+      expect(messages).toHaveLength(2);
       expect(messages[0].issue?.path).toBe('basis.text.font-size.sm');
 
       const detailsMessages = [
         ...(details?.querySelectorAll('wizard-validation-message') ?? []),
       ] as WizardValidationMessage[];
-      expect(detailsMessages.map((message) => message.issue?.path).sort()).toEqual([
-        'basis.text.font-size.sm',
-        'basis.text.font-size.xs',
-      ]);
+      expect(detailsMessages.map((message) => message.issue?.path)).toEqual(['basis.text.font-size.xs']);
     });
 
     it('collapses a failing contrast pair into a single group with one message', async () => {
@@ -348,7 +346,7 @@ describe(`<${tag}>`, () => {
       expect(headings).toEqual(expect.arrayContaining(['Unexpected unit. (1)', 'Font size too small (1)']));
 
       const summary = el.shadowRoot?.querySelector('details summary');
-      expect(normalizeWhitespace(summary?.textContent ?? '')).toBe('Affects 2 tokens');
+      expect(normalizeWhitespace(summary?.textContent ?? '')).toBe('Affects 1 token');
     });
   });
 });

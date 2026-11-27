@@ -101,13 +101,17 @@ export class WizardValidationDrawer extends LitElement {
                       return html`<wizard-validation-message .issue=${group.issues[0]}></wizard-validation-message>`;
                     }
 
+                    // The representative is already rendered above the details, so only the
+                    // remaining issues are listed (and counted) inside the details section
+                    const affectedIssues = group.issues.filter((issue) => issue !== group.representative);
+
                     return html`
                       <clippy-stack size="sm">
                         <wizard-validation-message .issue=${group.representative}></wizard-validation-message>
                         <details>
-                          <summary>${t('validation.group.affectedTokens', { count: group.issues.length })}</summary>
+                          <summary>${t('validation.group.affectedTokens', { count: affectedIssues.length })}</summary>
                           <clippy-stack class="wizard-validation-drawer__details">
-                            ${group.issues.map(
+                            ${affectedIssues.map(
                               (issue) => html`<wizard-validation-message .issue=${issue}></wizard-validation-message>`,
                             )}
                           </clippy-stack>
