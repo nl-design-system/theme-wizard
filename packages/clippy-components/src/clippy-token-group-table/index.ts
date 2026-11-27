@@ -2,18 +2,21 @@ import '../clippy-button';
 import '../clippy-icon';
 import '../clippy-toggletip';
 import '../clippy-token-sample';
+import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import {
   type BaseDesignToken,
+  extractRef,
   isRef,
   isTokenGroup,
   isTokenLike,
+  stringifyToken,
   type TokenGroup,
 } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { stringifyTokenValue } from '@src/lib/tokens';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import dlv from 'dlv';
-import { LitElement, type TemplateResult, html, nothing } from 'lit';
+import { LitElement, type TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
@@ -34,7 +37,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippyTokenGroupTable extends LitElement {
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), styles];
 
   /** Renders nothing while `null` or `undefined` */
   @property({ type: Object }) theme?: TokenGroup | null;
@@ -57,7 +60,7 @@ export class ClippyTokenGroupTable extends LitElement {
   }
 
   readonly #renderTokenRow = (path: string[], name: string, token: BaseDesignToken): TemplateResult => {
-    const tokenString = stringifyTokenValue(token);
+    const tokenString = stringifyToken(token);
     const tokenPath = path.concat(name).join('.');
     return html`
       <tr class="clippy-token-group-table__row">
@@ -67,7 +70,13 @@ export class ClippyTokenGroupTable extends LitElement {
           </div>
         </td>
         <th class="clippy-token-group-table__cell clippy-token-group-table__name-cell" scope="row">${name}</th>
-        <td class="clippy-token-group-table__cell">${isRef(token.$value) ? token.$value : tokenString}</td>
+        <td class="clippy-token-group-table__cell">
+          ${
+            isRef(token.$value)
+              ? html`<span class="nl-data-badge">${extractRef(token.$value)}</span>`
+              : html`<code class="nl-code">${tokenString}</code>`
+          }
+        </td>
         <td class="clippy-token-group-table__cell">
           <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
             <clippy-button
