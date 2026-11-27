@@ -1,8 +1,4 @@
-import {
-  type BaseDesignToken,
-  stringifyToken,
-  type TokenGroup,
-} from '@nl-design-system-community/design-tokens-schema';
+import { type BaseDesignToken, type TokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { stringifyTokenValue } from '@src/lib/tokens';
 import dlv from 'dlv';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -43,6 +39,26 @@ const firstToken: BaseDesignToken = dlv(theme, 'basis.color.accent-1.bg-default'
 const getRows = (component: ClippyTokenGroupTable) =>
   Array.from(component.shadowRoot?.querySelectorAll<HTMLTableRowElement>('tbody tr') ?? []);
 
+const getTokenRows = (component: ClippyTokenGroupTable) =>
+  getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
+
+const NAME_CELL = 1;
+const ACTIONS_CELL = 3;
+
+const getCopyButton = (row: HTMLTableRowElement, cellIndex: number) =>
+  row.cells[cellIndex].querySelector<HTMLElement>('clippy-button');
+
+const getCopyToggletip = (row: HTMLTableRowElement, cellIndex: number) =>
+  row.cells[cellIndex].querySelector('clippy-toggletip');
+
+// Name cell also holds the copy button, so only take its own text nodes
+const getTokenName = (row: HTMLTableRowElement) =>
+  Array.from(row.cells[NAME_CELL].childNodes)
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((node) => node.textContent)
+    .join('')
+    .trim();
+
 describe(`<${tag}>`, () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -69,15 +85,15 @@ describe(`<${tag}>`, () => {
     });
 
     it('renders a row for every token in the group', () => {
-      const tokenRows = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
+      const tokenRows = getTokenRows(component);
       expect(tokenRows).toHaveLength(2);
-      expect(tokenRows[0].cells[1].textContent?.trim()).toBe('bg-default');
-      expect(tokenRows[1].cells[1].textContent?.trim()).toBe('bg-subtle');
+      expect(getTokenName(tokenRows[0])).toBe('bg-default');
+      expect(getTokenName(tokenRows[1])).toBe('bg-subtle');
     });
 
     it('renders the token name as row header', () => {
-      const [tokenRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
-      const nameCell = tokenRow.cells[1];
+      const [tokenRow] = getTokenRows(component);
+      const nameCell = tokenRow.cells[NAME_CELL];
       expect(nameCell.tagName).toBe('TH');
       expect(nameCell.getAttribute('scope')).toBe('row');
     });
@@ -98,19 +114,26 @@ describe(`<${tag}>`, () => {
       }
     });
 
-    it('includes the token path in the copy button label', () => {
-      const button = component.shadowRoot?.querySelector('clippy-button');
-      expect(button?.textContent).toContain('Copy basis.color.accent-1.bg-default');
+    it('includes the token path in the value copy button label', () => {
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyButton(tokenRow, ACTIONS_CELL)?.textContent).toContain('Copy basis.color.accent-1.bg-default');
     });
 
-    it('shows the reference for aliased tokens', () => {
-      const [, aliasRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
-      expect(aliasRow.cells[2].textContent?.trim()).toBe('{basis.color.accent-1.bg-default}');
+    it('includes the CSS variable in the name copy button label', () => {
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyButton(tokenRow, NAME_CELL)?.textContent).toContain('Copy var(--basis-color-accent-1-bg-default)');
     });
 
-    it('shows the value for non-aliased tokens', () => {
-      const [valueRow] = getRows(component).filter((row) => row.classList.contains('clippy-token-group-table__row'));
-      expect(valueRow.cells[2].textContent?.trim()).toBe(stringifyTokenValue(firstToken));
+    it('shows the reference for aliased tokens as a data badge', () => {
+      const [, aliasRow] = getTokenRows(component);
+      const badge = aliasRow.cells[2].querySelector('.nl-data-badge');
+      expect(badge?.textContent?.trim()).toBe('basis.color.accent-1.bg-default');
+    });
+
+    it('shows the value for non-aliased tokens as code', () => {
+      const [valueRow] = getTokenRows(component);
+      const code = valueRow.cells[2].querySelector('.nl-code');
+      expect(code?.textContent?.trim()).toBe(stringifyTokenValue(firstToken));
     });
   });
 
@@ -133,20 +156,36 @@ describe(`<${tag}>`, () => {
 
     it('renders a custom copy-label', async () => {
       const component = await render('path="basis.color" copy-label="Kopieer"');
-      const button = component.shadowRoot?.querySelector('clippy-button');
-      expect(button?.textContent).toContain('Kopieer');
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyButton(tokenRow, NAME_CELL)?.textContent).toContain('Kopieer');
+      expect(getCopyButton(tokenRow, ACTIONS_CELL)?.textContent).toContain('Kopieer');
     });
 
-    it('renders the copy-label and quoted value in the toggletip', async () => {
+    it('renders the copy-label and quoted value in the value toggletip', async () => {
       const component = await render();
-      const toggletip = component.shadowRoot?.querySelector('clippy-toggletip');
-      expect(toggletip?.getAttribute('text')).toBe(`Copy "${stringifyTokenValue(firstToken)}"`);
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyToggletip(tokenRow, ACTIONS_CELL)?.getAttribute('text')).toBe(
+        `Copy "${stringifyTokenValue(firstToken)}"`,
+      );
     });
 
-    it('renders a custom copy-label in the toggletip', async () => {
+    it('renders the copy-label and quoted CSS variable in the name toggletip', async () => {
+      const component = await render();
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyToggletip(tokenRow, NAME_CELL)?.getAttribute('text')).toBe(
+        'Copy "var(--basis-color-accent-1-bg-default)"',
+      );
+    });
+
+    it('renders a custom copy-label in the toggletips', async () => {
       const component = await render('path="basis.color" copy-label="Kopieer"');
-      const toggletip = component.shadowRoot?.querySelector('clippy-toggletip');
-      expect(toggletip?.getAttribute('text')).toBe(`Kopieer "${stringifyTokenValue(firstToken)}"`);
+      const [tokenRow] = getTokenRows(component);
+      expect(getCopyToggletip(tokenRow, NAME_CELL)?.getAttribute('text')).toBe(
+        'Kopieer "var(--basis-color-accent-1-bg-default)"',
+      );
+      expect(getCopyToggletip(tokenRow, ACTIONS_CELL)?.getAttribute('text')).toBe(
+        `Kopieer "${stringifyTokenValue(firstToken)}"`,
+      );
     });
   });
 
@@ -223,19 +262,32 @@ describe(`<${tag}>`, () => {
   it('copies the token value to the clipboard', async () => {
     const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     const component = await render();
-    const button = component.shadowRoot?.querySelector<HTMLElement>('clippy-button');
-    button?.click();
+    const [tokenRow] = getTokenRows(component);
+    getCopyButton(tokenRow, ACTIONS_CELL)?.click();
     expect(writeText).toHaveBeenCalledWith(stringifyTokenValue(firstToken));
   });
 
-  it('copies the resolved value instead of the reference for ref tokens', async () => {
+  it('copies the CSS variable to the clipboard', async () => {
+    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    const component = await render();
+    const [tokenRow] = getTokenRows(component);
+    getCopyButton(tokenRow, NAME_CELL)?.click();
+    expect(writeText).toHaveBeenCalledWith('var(--basis-color-accent-1-bg-default)');
+  });
+
+  it('copies the reference as a CSS variable for ref tokens', async () => {
     const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     const component = await render('path="basis.color.accent-1"', themeFixture);
-    const button = component.shadowRoot?.querySelector<HTMLElement>('clippy-button');
-    button?.click();
-    const refToken: BaseDesignToken = dlv(themeFixture, 'basis.color.accent-1.bg-default');
-    const resolvedToken: BaseDesignToken = dlv(themeFixture, 'brand.color.blue.100');
-    expect(writeText).toHaveBeenCalledWith(stringifyToken(resolvedToken));
-    expect(writeText).not.toHaveBeenCalledWith(refToken.$value);
+    const [tokenRow] = getTokenRows(component);
+    getCopyButton(tokenRow, ACTIONS_CELL)?.click();
+    expect(writeText).toHaveBeenCalledWith('var(--brand-color-blue-100)');
+  });
+
+  it('shows the referenced CSS variable in the value toggletip for ref tokens', async () => {
+    const component = await render();
+    const [, aliasRow] = getTokenRows(component);
+    expect(getCopyToggletip(aliasRow, ACTIONS_CELL)?.getAttribute('text')).toBe(
+      'Copy "var(--basis-color-accent-1-bg-default)"',
+    );
   });
 });

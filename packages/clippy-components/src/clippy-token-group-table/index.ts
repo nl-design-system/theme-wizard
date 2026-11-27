@@ -59,10 +59,16 @@ export class ClippyTokenGroupTable extends LitElement {
     return isTokenGroup(group) ? group : Object.create(null);
   }
 
+  readonly #tokenPathToCssVar = (path: string[]): string => {
+    return `var(--${path.join('-')})`;
+  };
+
   readonly #renderTokenRow = (path: string[], name: string, token: BaseDesignToken): TemplateResult => {
-    const tokenString = stringifyToken(token);
+    const tokenString = isRef(token.$value)
+      ? this.#tokenPathToCssVar(extractRef(token.$value).split('.'))
+      : stringifyToken(token);
     const tokenPath = path.concat(name);
-    const pathAsCssVar = `var(--${tokenPath.join('-')})`;
+    const pathAsCssVar = this.#tokenPathToCssVar(tokenPath);
     return html`
       <tr class="clippy-token-group-table__row">
         <td class="clippy-token-group-table__cell">
