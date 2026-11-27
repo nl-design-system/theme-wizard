@@ -12,11 +12,20 @@ export type TokenUrlResolver = (tokenPath: string) => string | undefined;
  */
 export const tokenUrlContext = createContext<TokenUrlResolver>('token-url');
 
+let providedResolver: TokenUrlResolver | undefined;
+
+/**
+ * The resolver the host provided via `provideTokenUrlResolver`, also readable outside the lit
+ * context — e.g. from i18n messages, which are plain functions without access to contexts.
+ */
+export const getTokenUrlResolver = (): TokenUrlResolver | undefined => providedResolver;
+
 /**
  * Hosts call this once, on an ancestor of the wizard components (e.g. `document.body`), to
  * provide the resolver. Context requests made before this call are buffered by the
  * ContextRoot (attached in `contexts/theme.ts`) and answered once the provider is attached.
  */
 export const provideTokenUrlResolver = (host: HTMLElement, resolver: TokenUrlResolver): void => {
+  providedResolver = resolver;
   new ContextProvider(host, { context: tokenUrlContext, initialValue: resolver });
 };

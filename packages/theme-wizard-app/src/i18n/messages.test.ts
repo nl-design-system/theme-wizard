@@ -1,7 +1,8 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
-import { html } from 'lit';
-import { describe, expect, it, vi } from 'vitest';
+import { html, render, type TemplateResult } from 'lit';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createContrastIssue, createInvalidRefIssue } from '../../test/utils';
+import { provideTokenUrlResolver } from '../contexts/token-url';
 
 // Mock the t function BEFORE importing messages to avoid circular dependency
 vi.mock('./index', () => ({
@@ -94,20 +95,60 @@ describe('messages', () => {
     });
 
     describe('validation.issue', () => {
+      const renderMessage = (result: TemplateResult): HTMLElement => {
+        const container = document.createElement('div');
+        render(result, container);
+        return container;
+      };
+
       it('contrastValue has correct template', () => {
         expect(messages.validation.issue.contrastValue).toBe('Contrast: {{value}}');
       });
 
       describe('invalidContrastWith', () => {
         it('returns TemplateResult with the token in a strong tag', () => {
-          const result = messages.validation.issue.invalidContrastWith({ token: 'basis.color.primary' });
-          expect(result.strings.join('')).toContain('<strong>');
-          expect(result.values).toContain('basis.color.primary');
+          const container = renderMessage(
+            messages.validation.issue.invalidContrastWith({ token: 'basis.color.primary' }),
+          );
+          expect(container.querySelector('strong')?.textContent).toBe('basis.color.primary');
+          expect(container.querySelector('a')).toBeNull();
         });
 
         it('renders plain text when token is empty', () => {
           const result = messages.validation.issue.invalidContrastWith({ token: '' });
           expect(result.strings.join('')).not.toContain('<strong>');
+        });
+      });
+
+      describe('token links', () => {
+        afterEach(() => {
+          provideTokenUrlResolver(document.createElement('div'), () => undefined);
+        });
+
+        it('links the token when the token URL resolver has a page for it', () => {
+          provideTokenUrlResolver(document.createElement('div'), (tokenPath) =>
+            tokenPath === 'basis.color.primary' ? '/design-tokens/basis/color/primary' : undefined,
+          );
+
+          const container = renderMessage(
+            messages.validation.issue.invalidContrastWith({ token: 'basis.color.primary' }),
+          );
+
+          const anchor = container.querySelector('a.nl-link');
+          expect(anchor?.getAttribute('href')).toBe('/design-tokens/basis/color/primary');
+          expect(anchor?.textContent).toBe('basis.color.primary');
+          expect(container.querySelector('strong')).not.toBeNull();
+        });
+
+        it('renders the token without a link when the resolver has no page for it', () => {
+          provideTokenUrlResolver(document.createElement('div'), () => undefined);
+
+          const container = renderMessage(
+            messages.validation.issue.invalidContrastWith({ token: 'basis.color.primary' }),
+          );
+
+          expect(container.querySelector('a')).toBeNull();
+          expect(container.querySelector('strong')?.textContent).toBe('basis.color.primary');
         });
       });
 

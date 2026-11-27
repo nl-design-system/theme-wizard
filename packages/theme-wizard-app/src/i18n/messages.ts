@@ -1,12 +1,22 @@
 import type { TemplateResult } from 'lit';
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { html } from 'lit';
+import { getTokenUrlResolver } from '../contexts/token-url';
 import ValidationIssue from '../lib/ValidationIssue';
 import { t } from './';
 
 const formatNumber = (value: number | undefined, locale: string): string => {
   if (value === undefined) return '';
   return new Intl.NumberFormat(locale, { maximumSignificantDigits: 3 }).format(value);
+};
+
+/**
+ * Renders a token path in bold, as a link to its editable page when the host provided a
+ * `TokenUrlResolver` with a URL for the token (see `provideTokenUrlResolver`).
+ */
+const renderToken = (token: string): TemplateResult => {
+  const href = getTokenUrlResolver()?.(token);
+  return html`<strong>${href ? html`<a class="nl-link" href=${href}>${token}</a>` : token}</strong>`;
 };
 
 export const en = {
@@ -414,7 +424,7 @@ export const en = {
       invalidContrastWith: ({ token }: { token: string }) => {
         if (!token) return html`Insufficient contrast`;
 
-        return html`Insufficient contrast with <strong>${token}</strong>`;
+        return html`Insufficient contrast with ${renderToken(token)}`;
       },
       lineHeight: 'Line height: {{value}}',
       lineHeightTooSmall: ({ token }: { token: string }) => {
@@ -889,7 +899,7 @@ export const nl = {
       invalidContrastWith: ({ token }: { token: string }) => {
         if (!token) return html`Onvoldoende contrast`;
 
-        return html`Onvoldoende contrast met <strong>${token}</strong>`;
+        return html`Onvoldoende contrast met ${renderToken(token)}`;
       },
       lineHeight: 'Regelafstand: {{value}}',
       lineHeightTooSmall: ({ token }: { token: string }) => {
