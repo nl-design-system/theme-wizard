@@ -193,7 +193,7 @@ describe(`<${tag}>`, () => {
       const details = el.shadowRoot?.querySelector('details');
       expect(details).not.toBeNull();
       // The representative is rendered above the details, so the summary counts only the rest
-      expect(normalizeWhitespace(details?.querySelector('summary')?.textContent ?? '')).toBe('Betreft 1 token');
+      expect(normalizeWhitespace(details?.querySelector('summary')?.textContent ?? '')).toBe('1 gerelateerde fout');
 
       const messages = getMessages(el);
       // 1 representative message + 1 message per remaining issue inside the details section
@@ -346,7 +346,7 @@ describe(`<${tag}>`, () => {
       expect(headings).toEqual(expect.arrayContaining(['Unexpected unit. (1)', 'Font size too small (1)']));
 
       const summary = el.shadowRoot?.querySelector('details summary');
-      expect(normalizeWhitespace(summary?.textContent ?? '')).toBe('Affects 1 token');
+      expect(normalizeWhitespace(summary?.textContent ?? '')).toBe('1 related issue');
     });
   });
 });
