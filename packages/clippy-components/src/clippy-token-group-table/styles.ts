@@ -40,6 +40,11 @@ export default css`
     padding-inline: var(--basis-space-inline-md);
   }
 
+  .clippy-token-group-table__name-cell {
+    font-weight: inherit;
+    text-align: start;
+  }
+
   .clippy-token-group-table__header-cell {
     font-weight: var(--basis-text-font-weight-bold);
     text-align: start;
@@ -49,6 +54,7 @@ export default css`
     background-color: var(--basis-color-accent-1-bg-subtle);
     color: var(--basis-color-accent-1-color-default);
     font-weight: var(--basis-text-font-weight-bold);
+    text-align: start;
   }
 
   .clippy-token-group-table__token-sample {

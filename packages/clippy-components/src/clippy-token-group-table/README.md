@@ -31,15 +31,16 @@ When `theme` is not passed, or is `null` or `undefined`, the element renders not
 
 ## Attributes & properties
 
-| Attribute / Property | Type                 | Description                                                    | Default     |
-| -------------------- | -------------------- | -------------------------------------------------------------- | ----------- |
-| `theme`              | `TokenGroup \| null` | The full token tree. Renders nothing when not set.             | `undefined` |
-| `path`               | `string`             | Dot-separated path to the group to render; also the caption.   | `''`        |
-| `example-label`      | `string`             | Label for the example header                                   | `'Example'` |
-| `name-label`         | `string`             | Label for the name header                                      | `'Name'`    |
-| `value-label`        | `string`             | Label for the value header                                     | `'Value'`   |
-| `actions-label`      | `string`             | Label for the actions header                                   | `'Actions'` |
-| `copy-label`         | `string`             | Label for the copy button; toggletip shows `<label> "<value>"` | `'Copy'`    |
+| Attribute / Property | Type                 | Description                                                                      | Default     |
+| -------------------- | -------------------- | -------------------------------------------------------------------------------- | ----------- |
+| `theme`              | `TokenGroup \| null` | The full token tree. Renders nothing when not set.                               | `undefined` |
+| `path`               | `string`             | Dot-separated path to the group to render; also the caption.                     | `''`        |
+| `caption`            | `string`             | Table caption, overrides `path` as caption                                       | `''`        |
+| `example-label`      | `string`             | Label for the example header                                                     | `'Example'` |
+| `name-label`         | `string`             | Label for the name header                                                        | `'Name'`    |
+| `value-label`        | `string`             | Label for the value header                                                       | `'Value'`   |
+| `actions-label`      | `string`             | Label for the actions header                                                     | `'Actions'` |
+| `copy-label`         | `string`             | Copy button label is `<label> <token path>`; toggletip shows `<label> "<value>"` | `'Copy'`    |
 
 ## CSS Custom Properties
 
