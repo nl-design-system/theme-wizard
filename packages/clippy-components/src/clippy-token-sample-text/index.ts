@@ -7,6 +7,8 @@ import styles from './styles';
 
 const tag = 'clippy-token-sample-text';
 
+const FALLBACK_TEXT = 'Op brute wijze ving de schooljuf de quasi-kalme lynx.';
+
 declare global {
   interface HTMLElementTagNameMap {
     [tag]: ClippyTokenSampleText;
@@ -17,6 +19,7 @@ declare global {
  * Clippy Token Sample Text Component
  *
  * @slot - Default slot
+ * @property {string} label - Accessible label of the sample, defaults to the sample text
  *
  * @cssprop --clippy-token-sample-text-font-size - Font size
  * @cssprop --clippy-token-sample-text-font-family - Font family
@@ -36,6 +39,8 @@ export class ClippyTokenSampleText extends LitElement {
   @property({ attribute: 'line-height', type: String }) lineheight: string = '';
   @property({ type: String }) color: string = '';
   @property({ reflect: true, type: Boolean }) truncate: boolean = false;
+  /** Accessible label of the sample; defaults to the sample text */
+  @property({ type: String }) label: string = '';
 
   override willUpdate(changed: PropertyValues) {
     if (changed.has('size')) {
@@ -58,8 +63,9 @@ export class ClippyTokenSampleText extends LitElement {
   override render() {
     return html`
       <clippy-html-image>
+        <span slot="label">${this.label || this.textContent?.trim() || FALLBACK_TEXT}</span>
         <p class="clippy-token-sample-text__dummy | nl-paragraph">
-          <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
+          <slot>${FALLBACK_TEXT}</slot>
         </p>
       </clippy-html-image>
     `;

@@ -39,14 +39,15 @@ import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 
 ## Attributes & properties
 
-| Attribute / Property | Type      | Description   | Default                                     |
-| -------------------- | --------- | ------------- | ------------------------------------------- |
-| `font-size`          | `string`  | Font size     | `var(--basis-text-font-size-md)`            |
-| `font-family`        | `string`  | Font family   | `var(--basis-text-font-family-default)`     |
-| `font-weight`        | `string`  | Font weight   | `var(--basis-text-font-weight-default)`     |
-| `line-height`        | `string`  | Line height   | `var(--basis-text-line-height-md)`          |
-| `color`              | `string`  | Color         | `var(--basis-color-default-color-document)` |
-| `truncate`           | `boolean` | Truncate text | `false`                                     |
+| Attribute / Property | Type      | Description                    | Default                                     |
+| -------------------- | --------- | ------------------------------ | ------------------------------------------- |
+| `font-size`          | `string`  | Font size                      | `var(--basis-text-font-size-md)`            |
+| `font-family`        | `string`  | Font family                    | `var(--basis-text-font-family-default)`     |
+| `font-weight`        | `string`  | Font weight                    | `var(--basis-text-font-weight-default)`     |
+| `line-height`        | `string`  | Line height                    | `var(--basis-text-line-height-md)`          |
+| `color`              | `string`  | Color                          | `var(--basis-color-default-color-document)` |
+| `truncate`           | `boolean` | Truncate text                  | `false`                                     |
+| `label`              | `string`  | Accessible label of the sample | The sample text                             |
 
 ## CSS Custom Properties
 
