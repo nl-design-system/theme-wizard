@@ -37,4 +37,8 @@ export default css`
       position: absolute;
     }
   }
+
+  .wizard-validation-drawer__details {
+    margin-inline-start: var(--basis-space-inline-3xl);
+  }
 `;

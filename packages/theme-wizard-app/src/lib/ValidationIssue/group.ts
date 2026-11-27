@@ -1,0 +1,190 @@
+import { ERROR_CODES, extractRef, isRef, TokenGroup } from '@nl-design-system-community/design-tokens-schema';
+import dlv from 'dlv';
+import type ValidationIssue from './index';
+import type { ErrorCode } from './index';
+
+export type ValidationIssueGroup = {
+  /**
+   * Stable identifier for the group, e.g.
+   * `insufficient_contrast:basis.color.default.bg-default|basis.color.default.color-default`.
+   * Groups of non-linkable issues use the bare error code.
+   */
+  id: string;
+  code: ErrorCode;
+  /**
+   * All issues that belong to this group, including the ones only connected through references.
+   * Redundant opposites — two issues that are each other's `path`/`referredToken` — are removed:
+   * only the first of such a pair is kept.
+   */
+  issues: ValidationIssue[];
+  /** The issue that best explains the group: preferably one on a token that is not a reference itself. */
+  representative: ValidationIssue;
+};
+
+/**
+ * Union-find (disjoint-set) over issue indices, with path compression in `find`.
+ *
+ * Needed because grouping is transitive: if issue A shares a token with issue B, and B
+ * references a token used by issue C, then A, B and C all belong to the same group even
+ * though A and C are never compared directly. `union`/`find` track those connected
+ * components in near-constant time, so each cluster can be collected with a single pass.
+ */
+class DisjointSet {
+  readonly #parent: number[];
+
+  constructor(size: number) {
+    this.#parent = Array.from({ length: size }, (_, i) => i);
+  }
+
+  find(index: number): number {
+    let root = index;
+    while (this.#parent[root] !== root) root = this.#parent[root];
+    // Path compression
+    let current = index;
+    while (this.#parent[current] !== root) {
+      const next = this.#parent[current];
+      this.#parent[current] = root;
+      current = next;
+    }
+    return root;
+  }
+
+  union(a: number, b: number): void {
+    const rootA = this.find(a);
+    const rootB = this.find(b);
+    if (rootA !== rootB) this.#parent[rootB] = rootA;
+  }
+}
+
+/**
+ * Follows the `$value` reference chain of the token at `path` and returns every referenced
+ * token path, e.g. `['basis.color.default.color-default']` for a component token that
+ * references it directly or through intermediate tokens.
+ */
+const refTargetsOf = (path: string, tokens: TokenGroup): string[] => {
+  const targets: string[] = [];
+  const visited = new Set<string>();
+  let current = path;
+  while (!visited.has(current)) {
+    visited.add(current);
+    const token = dlv(tokens, current) as { $value?: unknown } | undefined;
+    if (!token || !isRef(token.$value)) break;
+    const target = extractRef(token.$value);
+    targets.push(target);
+    current = target;
+  }
+  return targets;
+};
+
+/** Issues that can be linked to each other through token references. */
+const isLinkable = (issue: ValidationIssue): boolean => issue.code === ERROR_CODES.INSUFFICIENT_CONTRAST;
+
+/** Alphabetical comparator so sorting is deterministic across locales (SonarQube S3358). */
+const byLocaleCompare = (a: string, b: string): number => a.localeCompare(b);
+
+/** Canonical key for the token pair of an issue, order-independent. */
+const pairKey = (issue: ValidationIssue): string =>
+  issue.tokens && issue.tokens.length > 0 ? [...issue.tokens].sort(byLocaleCompare).join('|') : issue.path;
+
+const pickRepresentative = (groupIssues: ValidationIssue[], tokens: TokenGroup): ValidationIssue => {
+  // Prefer an issue on a token that is not itself a reference: it points at the root cause
+  // rather than at a token that merely inherits the referenced value.
+  return groupIssues.find((issue) => refTargetsOf(issue.path, tokens).length === 0) ?? groupIssues[0];
+};
+
+/**
+ * Removes the redundant half of an opposite pair. A failing contrast check emits one issue per
+ * token of the pair, so a group can contain both `{ path: A, referredToken: B }` and
+ * `{ path: B, referredToken: A }`. Those two describe the same problem twice, so when an issue's
+ * `path`/`referredToken` are the exact opposite of an earlier issue in the group, the later one
+ * is dropped from the list.
+ */
+const withoutOppositeIssues = (groupIssues: ValidationIssue[]): ValidationIssue[] =>
+  groupIssues.filter(
+    (issue, index) =>
+      issue.referredToken === undefined ||
+      !groupIssues
+        .slice(0, index)
+        .some((other) => other.path === issue.referredToken && other.referredToken === issue.path),
+  );
+
+/**
+ * Groups validation issues into display groups. Contrast issues that involve the same token
+ * pair — or that sit on tokens referencing one of those tokens — are merged into a single
+ * group, so a change to one coupled token shows up as one issue instead of one per token.
+ * Within a group, the redundant second half of an opposite `path`/`referredToken` pair is
+ * removed from `issues`. All other issues are grouped per error code, as before.
+ */
+export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGroup): ValidationIssueGroup[] => {
+  const ds = new DisjointSet(issues.length);
+
+  // Map token path -> indices of linkable issues whose `tokens` include it
+  const issuesByToken = new Map<string, number[]>();
+  issues.forEach((issue, i) => {
+    if (!isLinkable(issue)) return;
+    for (const tokenPath of issue.tokens ?? []) {
+      const list = issuesByToken.get(tokenPath) ?? [];
+      list.push(i);
+      issuesByToken.set(tokenPath, list);
+    }
+  });
+
+  // Rule 1: same token pair -> same group. This collapses the two issues that a single
+  // failing contrast check emits (one per token of the pair).
+  const pairOwners = new Map<string, number>();
+  issues.forEach((issue, i) => {
+    if (!isLinkable(issue)) return;
+    const key = pairKey(issue);
+    const owner = pairOwners.get(key);
+    if (owner !== undefined) ds.union(owner, i);
+    else pairOwners.set(key, i);
+  });
+
+  // Rule 2: an issue on a token that references a token of another issue's pair belongs to
+  // that group too (e.g. component tokens referencing a failing basis color pair).
+  issues.forEach((issue, i) => {
+    if (!isLinkable(issue)) return;
+    for (const target of refTargetsOf(issue.path, tokens)) {
+      for (const j of issuesByToken.get(target) ?? []) {
+        if (j !== i) ds.union(i, j);
+      }
+    }
+  });
+
+  const groups: ValidationIssueGroup[] = [];
+
+  // Linkable issues: one group per cluster of connected issues
+  const clusters = new Map<number, ValidationIssue[]>();
+  issues.forEach((issue, i) => {
+    if (!isLinkable(issue)) return;
+    const root = ds.find(i);
+    const cluster = clusters.get(root) ?? [];
+    cluster.push(issue);
+    clusters.set(root, cluster);
+  });
+  for (const cluster of clusters.values()) {
+    const involvedTokens = [...new Set(cluster.flatMap((issue) => issue.tokens ?? [issue.path]))].sort(byLocaleCompare);
+    const issues = withoutOppositeIssues(cluster);
+    groups.push({
+      id: `${cluster[0].code}:${involvedTokens.join('|')}`,
+      code: cluster[0].code,
+      issues,
+      representative: pickRepresentative(issues, tokens),
+    });
+  }
+
+  // All other issues: one group per error code (previous behavior)
+  const byCode = new Map<ErrorCode, ValidationIssue[]>();
+  for (const issue of issues) {
+    if (isLinkable(issue)) continue;
+    const list = byCode.get(issue.code) ?? [];
+    list.push(issue);
+    byCode.set(issue.code, list);
+  }
+  for (const [code, groupIssues] of byCode) {
+    const issues = withoutOppositeIssues(groupIssues);
+    groups.push({ id: code, code, issues, representative: issues[0] });
+  }
+
+  return groups.sort((a, b) => a.code.localeCompare(b.code) || a.id.localeCompare(b.id));
+};

@@ -60,6 +60,8 @@ export class WizardValidationDrawer extends LitElement {
   }
 
   override render() {
+    const groupsByCode = Object.groupBy(this.theme.groupedIssues, ({ code }) => code);
+    const groupCount = this.theme.groupedIssues.length;
     return html`
       <clippy-button
         icon-only
@@ -76,27 +78,47 @@ export class WizardValidationDrawer extends LitElement {
         }}
       >
         <clippy-icon slot="iconStart">${unsafeSVG(AccessibleIcon)}</clippy-icon>
-        ${t('wizard.validationDrawer.toggle', { count: this.theme.errorCount })}
+        ${t('wizard.validationDrawer.toggle', { count: groupCount })}
         <clippy-icon slot="iconEnd">${unsafeSVG(ChevronDownIcon)}</clippy-icon>
       </clippy-button>
 
       <clippy-drawer actions="none" side="inline-end" id="wizard-validation-drawer">
         <span slot="title">${t('wizard.validationDrawer.title')}</span>
         ${!this.theme.errorCount ? html`<p class="nl-paragraph">${t('wizard.validationDrawer.noIssues')}</p>` : nothing}
-        <clippy-stack size="3xl">
-          ${Object.entries(this.theme.groupedIssues).map(([errorCode, errors]) => {
-            if (!errors || errors.length === 0) return nothing;
+        <clippy-stack size="4xl">
+          ${Object.entries(groupsByCode).map(([errorCode, groups]) => {
+            if (!groups || groups.length === 0) return nothing;
 
             return html`
-              <clippy-stack size="lg">
+              <clippy-stack>
                 <clippy-heading level=${2}>
-                  ${t(`validation.error.${errorCode}.label`)} (${errors.length})
+                  ${t(`validation.error.${errorCode}.label`)} (${groups.length})
                 </clippy-heading>
 
-                <clippy-stack>
-                  ${errors.map(
-                    (error) => html`<wizard-validation-message path=${error.path}></wizard-validation-message>`,
-                  )}
+                <clippy-stack size="xl">
+                  ${groups.map((group) => {
+                    if (group.issues.length === 1) {
+                      return html`<wizard-validation-message .issue=${group.issues[0]}></wizard-validation-message>`;
+                    }
+
+                    // The representative is already rendered above the details, so only the
+                    // remaining issues are listed (and counted) inside the details section
+                    const affectedIssues = group.issues.filter((issue) => issue !== group.representative);
+
+                    return html`
+                      <clippy-stack size="sm">
+                        <wizard-validation-message .issue=${group.representative}></wizard-validation-message>
+                        <details>
+                          <summary>${t('validation.group.affectedTokens', { count: affectedIssues.length })}</summary>
+                          <clippy-stack class="wizard-validation-drawer__details">
+                            ${affectedIssues.map(
+                              (issue) => html`<wizard-validation-message .issue=${issue}></wizard-validation-message>`,
+                            )}
+                          </clippy-stack>
+                        </details>
+                      </clippy-stack>
+                    `;
+                  })}
                 </clippy-stack>
               </clippy-stack>
             `;

@@ -29,4 +29,4 @@ export default class ValidationIssue {
   }
 }
 
-export type GroupedIssues = Partial<Record<ErrorCode, ValidationIssue[]>>;
+export { groupValidationIssues, type ValidationIssueGroup } from './group';

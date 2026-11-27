@@ -1,8 +1,11 @@
-import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
+import { TokenGroup } from '@nl-design-system-community/design-tokens-schema';
+import themeTokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
 import { is_declaration, is_rule, parse as parseCss } from '@projectwallace/css-parser';
 import dlv from 'dlv';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
+
+const tokens = themeTokens as unknown as TokenGroup;
 
 // CSSOM isn't stable in what it returns, so for testing purposes we normalize the CSS
 // so that the outcome is predictable.
@@ -166,5 +169,41 @@ describe('Theme', () => {
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     theme.reset();
     expect(theme.modified).toBe(false);
+  });
+
+  it('groups contrast issues on coupled and referencing tokens into a single group', () => {
+    const theme = new Theme();
+    // Same value as basis.color.default.bg-default (#f1f1f1), so the pair fails contrast
+    theme.updateAt('basis.color.default.color-default', '#f1f1f1');
+
+    const contrastIssues = theme.issues.filter((issue) => issue.code === 'insufficient_contrast');
+    // The failing pair emits two issues, and every token referencing the pair emits its own
+    expect(contrastIssues.length).toBeGreaterThan(2);
+    expect(theme.errorCount).toBe(theme.issues.length);
+
+    const contrastGroups = theme.groupedIssues.filter((group) => group.code === 'insufficient_contrast');
+    expect(contrastGroups).toHaveLength(1);
+    // The second half of each opposite path/referredToken pair is removed as redundant
+    const groupIssues = contrastGroups[0].issues;
+    expect(groupIssues.length).toBeLessThan(contrastIssues.length);
+    expect(
+      groupIssues.every(
+        (issue) =>
+          issue.referredToken === undefined ||
+          !groupIssues.some((other) => other.path === issue.referredToken && other.referredToken === issue.path),
+      ),
+    ).toBe(true);
+    // The representative points at the root cause, not at a referencing token
+    expect(contrastGroups[0].representative.path).toBe('basis.color.default.color-default');
+  });
+
+  it('invalidates grouped issues when tokens change', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.default.color-default', '#f1f1f1');
+    const failingGroups = theme.groupedIssues;
+    expect(failingGroups.some((group) => group.code === 'insufficient_contrast')).toBe(true);
+
+    theme.resetAt('basis.color.default.color-default');
+    expect(theme.groupedIssues.some((group) => group.code === 'insufficient_contrast')).toBe(false);
   });
 });

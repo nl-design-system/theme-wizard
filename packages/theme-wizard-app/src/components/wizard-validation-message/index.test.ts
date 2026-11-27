@@ -28,6 +28,7 @@ const mount = async (
   path: string,
   theme: Partial<Theme>,
   tokenUrlResolver?: TokenUrlResolver,
+  messageOnly: boolean | 'attribute' = false,
 ): Promise<WizardValidationMessage> => {
   document.body.innerHTML = '<div id="context-host"></div>';
   const host = document.querySelector('#context-host') as HTMLElement;
@@ -36,6 +37,11 @@ const mount = async (
   }
   const el = document.createElement(tag) as WizardValidationMessage;
   el.path = path;
+  if (messageOnly === 'attribute') {
+    el.setAttribute('message-only', '');
+  } else {
+    el.messageOnly = messageOnly;
+  }
   (el as unknown as { theme: Theme }).theme = theme as Theme;
   host.append(el);
   await el.updateComplete;
@@ -59,6 +65,7 @@ describe(`<${tag}>`, () => {
   afterEach(() => {
     document.body.innerHTML = '';
     i18n.locale('nl');
+    provideTokenUrlResolver(document.createElement('div'), () => undefined);
   });
 
   describe('when no issue matches', () => {
@@ -145,6 +152,39 @@ describe(`<${tag}>`, () => {
       expect(text).toContain('Minimaal vereist: 4,5');
     });
 
+    it('links the referred token in the message when the resolver has a page for it', async () => {
+      const issue = makeIssue('basis.color.accent-1.color-default', ERROR_CODES.INSUFFICIENT_CONTRAST, {
+        actual: 3.5,
+        minimum: 4.5,
+        tokens: ['basis.color.accent-1.color-default', 'basis.color.default.bg-document'],
+      });
+      const el = await mount(
+        issue.path,
+        { issues: [issue] },
+        (tokenPath) => `/design-tokens/${tokenPath.replaceAll('.', '/')}`,
+      );
+
+      const anchors = Array.from(getParagraph(el)?.querySelectorAll('a') ?? []);
+      const tokenAnchor = anchors.find((anchor) => anchor.textContent === 'basis.color.default.bg-document');
+      expect(tokenAnchor?.classList.contains('nl-link')).toBe(true);
+      expect(tokenAnchor?.getAttribute('href')).toBe('/design-tokens/basis/color/default/bg-document');
+    });
+
+    it('renders the referred token in the message without a link when the resolver has no page for it', async () => {
+      const issue = makeIssue('basis.color.accent-1.color-default', ERROR_CODES.INSUFFICIENT_CONTRAST, {
+        actual: 3.5,
+        minimum: 4.5,
+        tokens: ['basis.color.accent-1.color-default', 'basis.color.default.bg-document'],
+      });
+      const el = await mount(issue.path, { issues: [issue] }, (tokenPath) =>
+        tokenPath === issue.path ? '/design-tokens/basis/color/accent-1/color-default' : undefined,
+      );
+
+      const anchors = Array.from(getParagraph(el)?.querySelectorAll('a') ?? []);
+      expect(anchors.map((anchor) => anchor.textContent)).toEqual([issue.path]);
+      expect(getText(el)).toContain('Onvoldoende contrast met basis.color.default.bg-document');
+    });
+
     it('picks the issue with the exact path when multiple issues exist', async () => {
       const issues = [
         makeIssue('basis.line-height.sm', ERROR_CODES.UNEXPECTED_UNIT),
@@ -227,6 +267,37 @@ describe(`<${tag}>`, () => {
       });
 
       expect(getText(el)).toContain('Unexpected unit. Use a plain number instead.');
+    });
+  });
+
+  describe('messageOnly', () => {
+    it('renders the full paragraph with the issue path when messageOnly is false', async () => {
+      const el = await mount(
+        'basis.line-height.md',
+        { issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)] },
+        (tokenPath) => `/design-tokens/${tokenPath.replaceAll('.', '/')}`,
+        false,
+      );
+
+      expect(el.messageOnly).toBe(false);
+      expect(getParagraph(el)).not.toBeNull();
+      expect(getText(el)).toContain('basis.line-height.md');
+      expect(getText(el)).toContain('Onverwachte eenheid. Gebruik alleen nummers.');
+    });
+
+    it('renders only the message in a span when enabled via the message-only attribute', async () => {
+      const el = await mount(
+        'basis.line-height.md',
+        { issues: [makeIssue('basis.line-height.md', ERROR_CODES.UNEXPECTED_UNIT)] },
+        undefined,
+        'attribute',
+      );
+
+      expect(getParagraph(el)).toBeNull();
+      expect(el.shadowRoot?.querySelector('span')).not.toBeNull();
+      expect(getText(el)).toContain('Onverwachte eenheid. Gebruik alleen nummers.');
+      expect(getText(el)).not.toContain('basis.line-height.md');
+      expect(el.shadowRoot?.querySelector('a')).toBeNull();
     });
   });
 });
