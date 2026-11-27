@@ -9,6 +9,7 @@ import {
   getExtension,
   getTokenSubtype,
   isRef,
+  isTokenLike,
   stringifyToken,
   type TokenPath,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -55,3 +56,57 @@ export const getTokenDimensionSpaceConcept = (token: BaseDesignToken): string =>
   const subType = getTokenSubtype(token);
   return subType?.startsWith('space-') ? subType.split('-')[1] : '';
 };
+
+// Token order: https://github.com/nl-design-system/documentatie/blob/main/docs/handboek/huisstijl-vastleggen/_design-tokens-volgorde.md
+const KNOWN_ELEMENTS = new Set([
+  'description',
+  'header',
+  'footer',
+  'heading',
+  'icon',
+  'lead',
+  'indicator',
+  'label',
+  'marker',
+]);
+const USER_ACTION_STATES = new Set(['active', 'focus', 'focus-visible', 'hover']);
+// https://nldesignsystem.nl/handboek/developer/state-conventie/
+const COMPONENT_STATES = new Set([
+  'checked',
+  'current',
+  'disabled',
+  'expanded',
+  'indeterminate',
+  'invalid',
+  'pressed',
+  'read-only',
+  'readonly',
+  'required',
+  'selected',
+  'valid',
+  'visited',
+]);
+
+// States and elements are always English
+// Create a collator only once instead of creating a new one on every `String.localeCompare()`
+const collator = new Intl.Collator('en');
+
+// Tokens, elements, user action states, component states, then appearances
+const getSortTier = (name: string, item: unknown): number => {
+  if (isTokenLike(item)) {
+    return 0;
+  }
+  if (KNOWN_ELEMENTS.has(name)) {
+    return 1;
+  }
+  if (USER_ACTION_STATES.has(name)) {
+    return 2;
+  }
+  if (COMPONENT_STATES.has(name)) {
+    return 3;
+  }
+  return 4;
+};
+
+export const compareTokenEntries = ([nameA, itemA]: [string, unknown], [nameB, itemB]: [string, unknown]): number =>
+  getSortTier(nameA, itemA) - getSortTier(nameB, itemB) || collator.compare(nameA, nameB);

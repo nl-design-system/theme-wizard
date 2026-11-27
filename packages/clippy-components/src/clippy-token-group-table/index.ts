@@ -12,7 +12,7 @@ import {
   type TokenGroup,
 } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { stringifyTokenValue } from '@src/lib/tokens';
+import { compareTokenEntries, stringifyTokenValue } from '@src/lib/tokens';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import dlv from 'dlv';
 import { LitElement, type TemplateResult, html, nothing } from 'lit';
@@ -113,10 +113,9 @@ export class ClippyTokenGroupTable extends LitElement {
     `;
   };
 
-  // TODO: Sort sub-groups and properties as per https://github.com/nl-design-system/documentatie/blob/main/docs/handboek/huisstijl-vastleggen/_design-tokens-volgorde.md
   readonly #renderTokenGroup = (name: string[], group: TokenGroup): TemplateResult => {
     return html`
-      ${map(Object.entries(group), ([property, item]) => {
+      ${map(Object.entries(group).toSorted(compareTokenEntries), ([property, item]) => {
         if (isTokenLike(item)) {
           return this.#renderTokenRow(property, item);
         }
