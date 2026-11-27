@@ -22,6 +22,7 @@ detail.token = {
 
 ## Attributes & properties
 
-| Attribute / Property | Type              | Description                      | Default     |
-| -------------------- | ----------------- | -------------------------------- | ----------- |
-| `token`              | `BaseDesignToken` | The token to display as a sample | `undefined` |
+| Attribute / Property | Type              | Description                      | Default                        |
+| -------------------- | ----------------- | -------------------------------- | ------------------------------ |
+| `token`              | `BaseDesignToken` | The token to display as a sample | `undefined`                    |
+| `label`              | `string`          | Accessible label of the sample   | `'<subtype or $type> <value>'` |
