@@ -1,5 +1,4 @@
 import { consume } from '@lit/context';
-import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
@@ -26,7 +25,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class WizardValidationMessage extends LitElement {
-  static override readonly styles = [styles, unsafeCSS(dataBadgeCss), unsafeCSS(linkCss), unsafeCSS(paragraphCss)];
+  static override readonly styles = [styles, unsafeCSS(linkCss), unsafeCSS(paragraphCss)];
 
   @consume({ context: themeContext, subscribe: true })
   @state()
