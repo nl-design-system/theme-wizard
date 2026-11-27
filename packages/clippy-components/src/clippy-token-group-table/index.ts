@@ -61,7 +61,8 @@ export class ClippyTokenGroupTable extends LitElement {
 
   readonly #renderTokenRow = (path: string[], name: string, token: BaseDesignToken): TemplateResult => {
     const tokenString = stringifyToken(token);
-    const tokenPath = path.concat(name).join('.');
+    const tokenPath = path.concat(name);
+    const pathAsCssVar = `var(--${tokenPath.join('-')})`;
     return html`
       <tr class="clippy-token-group-table__row">
         <td class="clippy-token-group-table__cell">
@@ -69,7 +70,9 @@ export class ClippyTokenGroupTable extends LitElement {
             <clippy-token-sample .token=${token}>Aa</clippy-token-sample>
           </div>
         </td>
-        <th class="clippy-token-group-table__cell clippy-token-group-table__name-cell" scope="row">${name}</th>
+        <th class="clippy-token-group-table__cell clippy-token-group-table__name-cell" scope="row">
+          ${name} ${this.#renderCopyButton(pathAsCssVar, pathAsCssVar)}
+        </th>
         <td class="clippy-token-group-table__cell">
           ${
             isRef(token.$value)
@@ -77,22 +80,22 @@ export class ClippyTokenGroupTable extends LitElement {
               : html`<code class="nl-code">${tokenString}</code>`
           }
         </td>
-        <td class="clippy-token-group-table__cell">
-          <clippy-toggletip text=${`${this.copyLabel} "${tokenString}"`}>
-            <clippy-button
-              icon-only
-              purpose="subtle"
-              size="small"
-              @click=${() => navigator.clipboard.writeText(tokenString)}
-            >
-              ${this.copyLabel} ${tokenPath}
-              <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
-            </clippy-button>
-          </clippy-toggletip>
-        </td>
+        <td class="clippy-token-group-table__cell">${this.#renderCopyButton(tokenString, tokenPath.join('.'))}</td>
       </tr>
     `;
   };
+
+  /** `label` names the copy target for assistive tech; the toggletip shows the copied `value` */
+  #renderCopyButton(value: string, label: string): TemplateResult {
+    return html`
+      <clippy-toggletip text=${`${this.copyLabel} "${value}"`}>
+        <clippy-button icon-only purpose="subtle" size="small" @click=${() => navigator.clipboard.writeText(value)}>
+          ${this.copyLabel} ${label}
+          <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+        </clippy-button>
+      </clippy-toggletip>
+    `;
+  }
 
   // TODO: Sort sub-groups and properties as per https://github.com/nl-design-system/documentatie/blob/main/docs/handboek/huisstijl-vastleggen/_design-tokens-volgorde.md
   // Tables can't nest tbody, so every (nested) group becomes a sibling tbody: own tokens first, then sub-groups
@@ -133,7 +136,7 @@ export class ClippyTokenGroupTable extends LitElement {
       return nothing;
     }
     const group = this.#getGroupAtPath(this.theme);
-    const rootPath = this.path ? [this.path] : [];
+    const rootPath = this.path ? this.path.split('.') : [];
     const caption = this.caption || this.path;
     return html`
       <table class="clippy-token-group-table__table">
