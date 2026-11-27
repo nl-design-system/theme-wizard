@@ -81,6 +81,42 @@ describe(`<${tag}>`, () => {
     expect(borderSample.getAttribute('border-width')).toBe(stringifyToken(borderWidthFixture));
   });
 
+  it('labels a color sample with a default label', async () => {
+    component.token = colorFixture;
+    await component.updateComplete;
+    const colorSample = component.shadowRoot?.querySelector('clippy-color-sample') as ClippyColorSample;
+    expect(colorSample.label).toContain(stringifyToken(colorFixture));
+  });
+
+  it('labels the html-image of a spacing sample', async () => {
+    component.token = spacingFixture;
+    await component.updateComplete;
+    const label = component.shadowRoot?.querySelector('clippy-html-image [slot="label"]');
+    expect(label?.textContent).toContain(stringifyToken(spacingFixture));
+  });
+
+  it('labels the html-image of a border sample', async () => {
+    component.token = borderWidthFixture;
+    await component.updateComplete;
+    const label = component.shadowRoot?.querySelector('clippy-html-image [slot="label"]');
+    expect(label?.textContent).toBe(`border-width ${stringifyToken(borderWidthFixture)}`);
+  });
+
+  it('passes the label to a text sample', async () => {
+    component.token = textFontSizeFixture;
+    await component.updateComplete;
+    const textSample = component.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
+    expect(textSample.label).toBe(`font-size ${stringifyToken(textFontSizeFixture)}`);
+  });
+
+  it('uses a custom label', async () => {
+    component.token = borderWidthFixture;
+    component.label = 'Custom label';
+    await component.updateComplete;
+    const label = component.shadowRoot?.querySelector('clippy-html-image [slot="label"]');
+    expect(label?.textContent).toBe('Custom label');
+  });
+
   it('renders nothing with an undefined token', async () => {
     component.token = undefined;
     await component.updateComplete;
