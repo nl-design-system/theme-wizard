@@ -183,7 +183,16 @@ describe('Theme', () => {
 
     const contrastGroups = theme.groupedIssues.filter((group) => group.code === 'insufficient_contrast');
     expect(contrastGroups).toHaveLength(1);
-    expect(contrastGroups[0].issues).toHaveLength(contrastIssues.length);
+    // The second half of each opposite path/referredToken pair is removed as redundant
+    const groupIssues = contrastGroups[0].issues;
+    expect(groupIssues.length).toBeLessThan(contrastIssues.length);
+    expect(
+      groupIssues.every(
+        (issue) =>
+          issue.referredToken === undefined ||
+          !groupIssues.some((other) => other.path === issue.referredToken && other.referredToken === issue.path),
+      ),
+    ).toBe(true);
     // The representative points at the root cause, not at a referencing token
     expect(contrastGroups[0].representative.path).toBe('basis.color.default.color-default');
   });

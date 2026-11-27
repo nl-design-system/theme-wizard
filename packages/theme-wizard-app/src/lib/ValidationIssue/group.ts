@@ -11,7 +11,11 @@ export type ValidationIssueGroup = {
    */
   id: string;
   code: ErrorCode;
-  /** All issues that belong to this group, including the ones only connected through references. */
+  /**
+   * All issues that belong to this group, including the ones only connected through references.
+   * Redundant opposites — two issues that are each other's `path`/`referredToken` — are removed:
+   * only the first of such a pair is kept.
+   */
   issues: ValidationIssue[];
   /** The issue that best explains the group: preferably one on a token that is not a reference itself. */
   representative: ValidationIssue;
@@ -89,10 +93,27 @@ const pickRepresentative = (groupIssues: ValidationIssue[], tokens: TokenGroup):
 };
 
 /**
+ * Removes the redundant half of an opposite pair. A failing contrast check emits one issue per
+ * token of the pair, so a group can contain both `{ path: A, referredToken: B }` and
+ * `{ path: B, referredToken: A }`. Those two describe the same problem twice, so when an issue's
+ * `path`/`referredToken` are the exact opposite of an earlier issue in the group, the later one
+ * is dropped from the list.
+ */
+const withoutOppositeIssues = (groupIssues: ValidationIssue[]): ValidationIssue[] =>
+  groupIssues.filter(
+    (issue, index) =>
+      issue.referredToken === undefined ||
+      !groupIssues
+        .slice(0, index)
+        .some((other) => other.path === issue.referredToken && other.referredToken === issue.path),
+  );
+
+/**
  * Groups validation issues into display groups. Contrast issues that involve the same token
  * pair — or that sit on tokens referencing one of those tokens — are merged into a single
  * group, so a change to one coupled token shows up as one issue instead of one per token.
- * All other issues are grouped per error code, as before.
+ * Within a group, the redundant second half of an opposite `path`/`referredToken` pair is
+ * removed from `issues`. All other issues are grouped per error code, as before.
  */
 export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGroup): ValidationIssueGroup[] => {
   const ds = new DisjointSet(issues.length);
@@ -143,11 +164,12 @@ export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGr
   });
   for (const cluster of clusters.values()) {
     const involvedTokens = [...new Set(cluster.flatMap((issue) => issue.tokens ?? [issue.path]))].sort(byLocaleCompare);
+    const issues = withoutOppositeIssues(cluster);
     groups.push({
       id: `${cluster[0].code}:${involvedTokens.join('|')}`,
       code: cluster[0].code,
-      issues: cluster,
-      representative: pickRepresentative(cluster, tokens),
+      issues,
+      representative: pickRepresentative(issues, tokens),
     });
   }
 
@@ -160,7 +182,8 @@ export const groupValidationIssues = (issues: ValidationIssue[], tokens: TokenGr
     byCode.set(issue.code, list);
   }
   for (const [code, groupIssues] of byCode) {
-    groups.push({ id: code, code, issues: groupIssues, representative: groupIssues[0] });
+    const issues = withoutOppositeIssues(groupIssues);
+    groups.push({ id: code, code, issues, representative: issues[0] });
   }
 
   return groups.sort((a, b) => a.code.localeCompare(b.code) || a.id.localeCompare(b.id));

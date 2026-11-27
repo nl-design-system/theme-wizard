@@ -13,6 +13,8 @@ const contrastIssue = (
     code: ERROR_CODES.INSUFFICIENT_CONTRAST,
     message: 'Test message',
     path,
+    // Mirrors the ValidationIssue constructor: the token of the pair that is not the issue's own path
+    referredToken: tokens.find((token) => token !== path),
     tokens,
     ...overrides,
   }) as ValidationIssue;
@@ -56,8 +58,47 @@ describe('groupValidationIssues', () => {
 
     expect(groups).toHaveLength(1);
     expect(groups[0].code).toBe(ERROR_CODES.INSUFFICIENT_CONTRAST);
-    expect(groups[0].issues).toHaveLength(2);
+    expect(groups[0].issues).toHaveLength(1);
     expect(groups[0].id).toBe(`${ERROR_CODES.INSUFFICIENT_CONTRAST}:${BG_DEFAULT}|${COLOR_DEFAULT}`);
+  });
+
+  it("removes the second issue when two issues are each other's opposite", () => {
+    const issues = [
+      contrastIssue(COLOR_DEFAULT, [COLOR_DEFAULT, BG_DEFAULT]),
+      contrastIssue(BG_DEFAULT, [BG_DEFAULT, COLOR_DEFAULT]),
+    ];
+
+    const [group] = groupValidationIssues(issues, tokens);
+
+    expect(group.issues.map((issue) => issue.path)).toEqual([COLOR_DEFAULT]);
+    expect(group.representative.path).toBe(COLOR_DEFAULT);
+  });
+
+  it('keeps the first issue when an opposite pair is listed in reverse order', () => {
+    const issues = [
+      contrastIssue(BG_DEFAULT, [BG_DEFAULT, COLOR_DEFAULT]),
+      contrastIssue(COLOR_DEFAULT, [COLOR_DEFAULT, BG_DEFAULT]),
+    ];
+
+    const [group] = groupValidationIssues(issues, tokens);
+
+    expect(group.issues.map((issue) => issue.path)).toEqual([BG_DEFAULT]);
+  });
+
+  it('keeps an issue whose referredToken has an issue that is not its opposite', () => {
+    const issues = [
+      contrastIssue(COLOR_DEFAULT, [COLOR_DEFAULT, BG_DEFAULT]),
+      contrastIssue(BG_DEFAULT, [BG_DEFAULT, COLOR_DEFAULT]),
+      contrastIssue(BUTTON_COLOR, [BUTTON_COLOR, BG_DEFAULT]),
+    ];
+
+    const groups = groupValidationIssues(issues, tokens);
+
+    // ams.button.color references basis.color.default.color-default, so all issues land in one
+    // group. BG_DEFAULT's issue is the opposite of COLOR_DEFAULT's issue and is removed, but
+    // BUTTON_COLOR's referredToken (BG_DEFAULT) has no opposite issue, so it is kept.
+    expect(groups).toHaveLength(1);
+    expect(groups[0].issues.map((issue) => issue.path)).toEqual([COLOR_DEFAULT, BUTTON_COLOR]);
   });
 
   it('merges issues on tokens that reference the failing pair into the same group', () => {
@@ -71,9 +112,8 @@ describe('groupValidationIssues', () => {
     const groups = groupValidationIssues(issues, tokens);
 
     expect(groups).toHaveLength(1);
-    expect(groups[0].issues.map((issue) => issue.path).sort()).toEqual(
-      [BG_DEFAULT, BUTTON_BG, BUTTON_COLOR, COLOR_DEFAULT].sort(),
-    );
+    // The second half of each opposite path/referredToken pair is removed
+    expect(groups[0].issues.map((issue) => issue.path).sort()).toEqual([BUTTON_COLOR, COLOR_DEFAULT].sort());
   });
 
   it('keeps unrelated contrast pairs in separate groups', () => {
@@ -123,7 +163,9 @@ describe('groupValidationIssues', () => {
     const groups = groupValidationIssues(issues, chainedTokens);
 
     expect(groups).toHaveLength(1);
-    expect(groups[0].issues).toHaveLength(3);
+    // BG_DEFAULT's issue is the opposite of COLOR_DEFAULT's issue and is removed; ams.link.color's
+    // referredToken (BUTTON_BG) has no issue of its own, so it is kept
+    expect(groups[0].issues.map((issue) => issue.path)).toEqual([COLOR_DEFAULT, 'ams.link.color']);
   });
 
   it('prefers a non-reference token as the representative issue', () => {
